@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
             },
 
         price: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             allowNull: false
             },
 
@@ -29,6 +29,10 @@ module.exports = (sequelize) => {
             type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: false
             },
+
+        stock: {
+            type: DataTypes.INTEGER,
+            }
         },
 
     {timestamps: false})
