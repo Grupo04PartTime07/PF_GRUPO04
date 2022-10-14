@@ -5,7 +5,7 @@ const axios = require('axios')
 const url_products =  'https://63484f1a0b382d796c6eff8c.mockapi.io/api/productos'
 
 
-router.get('/products', async function(req, res){
+router.get('/', async function(req, res){
     try {
         const {data} = await axios.get(url_products)
         const product = data.map(p => {

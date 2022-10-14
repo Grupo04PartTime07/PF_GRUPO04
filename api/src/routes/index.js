@@ -5,7 +5,7 @@ const mwproducts = require('./products')
 const router = Router();
 
 router.use('/categories', mwcategories);
-router.get('/products', mwproducts)
+router.use('/products', mwproducts)
 
 
 
