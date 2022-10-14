@@ -14,7 +14,7 @@ router.get('/products', async function(req, res){
                 name: p.nombre,
                 price: p.precio,
                 description: p.descripcion,
-                image: p.imagen, 
+                image: [p.imagen], 
                 category: p.categoria
             }
         })
