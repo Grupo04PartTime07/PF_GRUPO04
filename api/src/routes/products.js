@@ -15,7 +15,7 @@ router.get('/', async function(req, res){
                 price: p.precio,
                 description: p.descripcion,
                 image: [p.imagen], 
-                category: p.categoria
+                stock: 0
             }
         })
         const Model = await Products.bulkCreate(product)
