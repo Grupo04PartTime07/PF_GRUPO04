@@ -2,12 +2,14 @@ const sequelize = require('sequelize')
 const DataTypes = require('sequelize')
 
 module.exports = (sequelize) => {
-    sequelize.define('Products', 
+    sequelize.define('products', 
     {
         id:{
             type:DataTypes.INTEGER,
             allowNull: false,
-            primaryKey: true
+            primaryKey: true,
+            
+            autoIncrement: true,
             },
 
         name: {
@@ -27,11 +29,15 @@ module.exports = (sequelize) => {
 
         image: {
             type: DataTypes.ARRAY(DataTypes.STRING),
-            allowNull: false
+            allowNull: true
             },
 
         stock: {
             type: DataTypes.INTEGER,
+            },
+        
+        score_promedio: {
+            type: DataTypes.FLOAT,
             }
         },
 
