@@ -10,6 +10,8 @@ import ListItemText from '@mui/material/ListItemText';
 import PaidTwoToneIcon from '@mui/icons-material/PaidTwoTone';
 import CategoryTwoToneIcon from '@mui/icons-material/CategoryTwoTone';
 import MenuIcon from '@mui/icons-material/Menu';
+import { Link } from 'react-router-dom';
+import './menu.css'
 
 export default function TemporaryDrawer() {
   const [state, setState] = React.useState({
@@ -33,14 +35,16 @@ export default function TemporaryDrawer() {
     >
       <List>
         {['Categorias', 'Promociones', 'Marcas'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <CategoryTwoToneIcon /> : <PaidTwoToneIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
+            <Link className='link' to={'/' + text}> 
+                <ListItemButton>
+                    <ListItem key={text} disablePadding>
+                        <ListItemIcon>
+                            {index % 2 === 0 ? <CategoryTwoToneIcon /> : <PaidTwoToneIcon />}
+                        </ListItemIcon>
+                        <ListItemText primary={text} /> 
+                    </ListItem>
+                </ListItemButton> 
+            </Link>
         ))}
       </List>
       <Divider />
