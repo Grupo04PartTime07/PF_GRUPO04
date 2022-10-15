@@ -1,10 +1,14 @@
 const { Router } = require('express');
 const router = Router();
-const { Categories, Products } = require('../db');
+const { getCategoriesDb } = require('./controllers');
 
 router.get('/', async (req, res)=>{
-    const categories = await Categories.findAll();
-    res.status(200).send(categories)
+    try{
+        const categories = await getCategoriesDb();
+        res.status(200).send(categories)
+    }catch(e){
+        console.log(e)
+    }
 });
 
 module.exports = router;

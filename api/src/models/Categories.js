@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
     },
     img: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true, //para probar de forma local 
     }
   },
   {timestamps: false}
