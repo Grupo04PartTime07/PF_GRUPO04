@@ -1,0 +1,20 @@
+.table{
+    display: inline-grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 50px;
+}
+.categorie_card{
+    margin: 25px;
+    width: 270px;
+    height: 130px;
+}
+.categorie_card:hover{
+    background-color: rgb(239, 237, 237);
+    cursor: pointer;
+}
+
+.categorie{
+    position: relative;
+    top: 35px;
+    color: rgb(49, 49, 49)
+}
