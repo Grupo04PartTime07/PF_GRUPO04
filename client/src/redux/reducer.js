@@ -1,13 +1,16 @@
 import { ORDER_BY_PRICE } from "./actions/order_price";
+import { ORDER_BY_RATE } from "./actions/order_rate";
 import {GET_ALL_PRODUCTS} from './actions/get_products';
 import {GET_PRODUCT_DETAILS} from './actions/get_product_details';
 import {CLEAN_PRODUCT_STATE} from './actions/clean_product_state';
 
+
 const initialState = {
     categories: [],
     products: [],
+    productsaux:[],
     productdetail: {},
-    productsaux:[]
+    
 };
 
 const reducer = (state = initialState, action) =>{
@@ -46,6 +49,30 @@ const reducer = (state = initialState, action) =>{
                 return {...state, productsaux: ordered}
               }
               break;
+        }
+        case ORDER_BY_RATE:{
+            let ordered = [];
+            if(action.payload === "good"){
+                ordered = state.productsaux.sort(function(a,b){
+                    if(a.rate > b.rate) return 1
+                    else if(b.rate > a.rate) return -1
+                    else return 0
+                  })
+                  return {...state, productsaux: ordered}
+            }else if(action.payload === "bad"){
+                ordered = state.productsaux.sort(function(a,b){
+                  if(a.rate > b.rate) return -1
+                  else if(b.rate > a.rate) return 1
+                  else return 0
+                })
+                return {...state, productsaux: ordered}
+              }
+              break;
+        }
+        case 'GET_NAME_PRODUCT':
+            return {
+                ...state,
+                productsaux: action.payload
         }   
         default: return state;
     }
