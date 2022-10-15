@@ -1,9 +1,12 @@
 import { ORDER_BY_PRICE } from "./actions/order_price";
 import {GET_ALL_PRODUCTS} from './actions/get_products';
+import {GET_PRODUCT_DETAILS} from './actions/get_product_details';
+import {CLEAN_PRODUCT_STATE} from './actions/clean_product_state';
 
 const initialState = {
     categories: [],
     products: [],
+    productdetail: {},
     productsaux:[]
 };
 
@@ -15,6 +18,16 @@ const reducer = (state = initialState, action) =>{
                 products: action.payload,
                 productsaux: action.payload
             }
+        case GET_PRODUCT_DETAILS:
+                return {
+                    ...state,
+                    productdetail: action.payload
+                }
+        case CLEAN_PRODUCT_STATE:
+                return {
+                    ...state,
+                    productdetail: {}
+                    }
         case ORDER_BY_PRICE: {
             let ordered = [];
             if(action.payload === "asc"){
