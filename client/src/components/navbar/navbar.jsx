@@ -16,9 +16,12 @@ import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import TemporaryDrawer from './menu';
 
+import {useDispatch} from "react-redux";
+import { getNameProduct } from "../../redux/actions/search_name";
+
 
 const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
+  position: 'relative', 
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
   '&:hover': {
@@ -60,9 +63,22 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const dispatch = useDispatch()
+  const [name, setName] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  function handleInputChange(e){
+    e.preventDefault()
+    setName(e.target.value)
+  };
+
+  function handleSubmit (e){
+    e.preventDefault()
+    dispatch(getNameProduct(name))
+    setName("")
+  };
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -179,6 +195,8 @@ export default function PrimarySearchAppBar() {
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              onChange={(e) => handleInputChange(e)}
+              onKeyDown={(e) =>{if(e.key === 'Enter'){handleSubmit()}}}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
