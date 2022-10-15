@@ -1,6 +1,6 @@
 const sequelize = require('sequelize')
 const DataTypes = require('sequelize')
-
+const cache = {listProducts: null}
 module.exports = (sequelize) => {
     sequelize.define('Products', 
     {
@@ -27,13 +27,20 @@ module.exports = (sequelize) => {
 
         image: {
             type: DataTypes.ARRAY(DataTypes.STRING),
-            allowNull: false
+            allowNull: true
             },
 
         stock: {
             type: DataTypes.INTEGER,
-            }
+            },
+
+        score_promedio: {
+            type: DataTypes.FLOAT
+        }
+
+        
         },
 
-    {timestamps: false})
+    {timestamps: false}),
+    cache
 }
