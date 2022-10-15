@@ -1,7 +1,7 @@
 import React,{useEffect} from "react";
 import Card from '../card/card'
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllProducts } from '../../redux/action.js';
+import { getAllProducts } from '../../redux/actions/get_products';
 
 
 export default function Home(){
