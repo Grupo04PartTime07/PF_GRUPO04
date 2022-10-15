@@ -4,6 +4,9 @@ import {GET_ALL_PRODUCTS} from './actions/get_products';
 import {GET_PRODUCT_DETAILS} from './actions/get_product_details';
 import {CLEAN_PRODUCT_STATE} from './actions/clean_product_state';
 import {GUEST_CREATE_ACCOUNT} from './actions/guest_create_account';
+import { FILTER_BY_CATEGORY } from "./actions/filter_by_category";
+import { GET_CATEGORIES } from './actions/get_categories'
+
 
 const initialState = {
     categories: [],
@@ -75,6 +78,18 @@ const reducer = (state = initialState, action) =>{
                 return {...state, productsaux: ordered}
               }
               break;
+        }
+        case FILTER_BY_CATEGORY:{
+            return {
+                ...state,
+                productsaux: action.payload
+            }
+        }
+        case GET_CATEGORIES: {
+            return {
+                ...state,
+                categories: action.payload
+            }
         }
         case 'GET_NAME_PRODUCT':
             return {
