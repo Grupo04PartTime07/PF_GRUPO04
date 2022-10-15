@@ -1,26 +1,21 @@
 const {Router} = require('express')
-const {Products} = require('../db')
+const {Products, cache} = require('../db')
 const router = Router()
-const axios = require('axios')
-const url_products =  'https://63484f1a0b382d796c6eff8c.mockapi.io/api/productos'
-
+const {getAllProducts} = require('./controller')
 
 router.get('/', async function(req, res){
+    let result
     try {
-        const {data} = await axios.get(url_products)
-        const product = data.map(p => {
-            return {
-                id: p.id,
-                name: p.nombre,
-                price: p.precio,
-                description: p.descripcion,
-                image: [p.imagen], 
-                stock: 0
-            }
-        })
-        const Model = await Products.bulkCreate(product)
-        res.send(Model)
-
+        if(!cache.listProducts){
+            
+            result = await getAllProducts()
+            console.log('from API')
+        }
+        else{
+            result = await Products.findAll()
+            console.log('From DB')
+        }
+        res.send(result)
     } catch (error) {
         console.log(error)
     }
