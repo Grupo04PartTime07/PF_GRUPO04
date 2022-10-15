@@ -9,6 +9,13 @@ const reducer = (state = initialState, action) =>{
         case "ALGO":{
             break;
         }
+
+        case 'GET_NAME_PRODUCT':
+            return {
+                ...state,
+                product: action.payload
+            }
+
         default: return state;
     }
 }

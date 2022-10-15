@@ -15,7 +15,8 @@ import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import ShoppingCartTwoToneIcon from '@mui/icons-material/ShoppingCartTwoTone';
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import MoreIcon from '@mui/icons-material/MoreVert';
-
+import {useDispatch} from "react-redux";
+import { getNameProduct } from "../../redux/action";
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -60,10 +61,22 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const dispatch = useDispatch()
+  const [name, setName] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+  function handleInputChange(e){
+    e.preventDefault()
+    setName(e.target.value)
+  };
+
+  function handleSubmit (e){
+    // e.preventDefault()
+    dispatch(getNameProduct(name))
+    setName("")
+  };
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -177,13 +190,17 @@ export default function PrimarySearchAppBar() {
             <img src='https://assets.soyhenry.com/logos/ISOLOGO_HENRY_BLACK.png' alt='HenryLogo' width={70}/>
           </Typography>
           <Search>
+          
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              onChange={(e) => handleInputChange(e)}
+              onKeyDown={(e) =>{if(e.key === 'Enter'){handleSubmit()}}}
             />
+          
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
