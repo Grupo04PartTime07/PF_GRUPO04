@@ -1,5 +1,6 @@
-//import actions
+import { ORDER_BY_PRICE } from "./action";
 import {GET_ALL_PRODUCTS} from './action.js';
+
 
 
 
@@ -17,8 +18,25 @@ const reducer = (state = initialState, action) =>{
                 products: action.payload,
                 productsaux: action.payload
             }
-            default: return state; 
+        case ORDER_BY_PRICE:{
+            let ordered = [];
+            if(action.payload === "asc"){
+                ordered = state.productsaux.sort(function(a,b){
+                    if(a.price > b.price) return 1
+                    else if(b.price > a.price) return -1
+                    else return 0
+                  })
+                  return {...state, productsaux: ordered}
+            }else if(action.payload === "desc"){
+                ordered = state.productsaux.sort(function(a,b){
+                  if(a.price > b.price) return -1
+                  else if(b.price > a.price) return 1
+                  else return 0
+                })
+                return {...state, productsaux: ordered}
+              }
         }
+        default: return state;
     }
 
 
