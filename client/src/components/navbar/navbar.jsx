@@ -9,12 +9,12 @@ import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import ShoppingCartTwoToneIcon from '@mui/icons-material/ShoppingCartTwoTone';
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import TemporaryDrawer from './menu';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -159,15 +159,11 @@ export default function PrimarySearchAppBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
+          <IconButton> 
+            
+<TemporaryDrawer></TemporaryDrawer>
           </IconButton>
+         
           <Typography
             variant="h6"
             noWrap
