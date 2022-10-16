@@ -4,17 +4,42 @@
     margin: 50px;
 }
 .categorie_card{
-    margin: 25px;
-    width: 270px;
-    height: 130px;
+    margin: 5px;
+    width: 370px;
+    height: 220px;
 }
 .categorie_card:hover{
     background-color: rgb(239, 237, 237);
     cursor: pointer;
 }
 
+.categoryIcon{
+    position: relative;
+    left: 110px;
+    top: 15px;
+}
+
 .categorie{
     position: relative;
-    top: 35px;
-    color: rgb(49, 49, 49)
+    color: rgb(49, 49, 49);
+    position: relative;
+    top: 15px;
+}
+
+@media screen and (max-width: 600px){
+    .table{
+        display: block;
+        grid-template-columns: repeat(3, 1fr);
+        margin: 50px;
+    }
+    .categorie_card{
+        width: 100%;
+        position: relative;
+        left: 0%;
+    }
+    .categoryIcon{
+        position: relative;
+        left: 83px;
+        top: 15px;
+    }
 }

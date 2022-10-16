@@ -16,9 +16,8 @@ function App() {
             <Route path='/' component={Navbar}/>
             <Route exact path='/' component={Home}/>
             <Route path='/Categorias' component={CategoriesList}/>
-            <Route path="/:id" component={Detail} />
+            {/* <Route exact path="/:id" component={Detail} /> */}
             <Route path="/" component={Footer} />
-            
           </div>
       </React.Fragment>
     </BrowserRouter>
