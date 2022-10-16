@@ -8,7 +8,6 @@ module.exports = (sequelize) => {
             type:DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
-            
             autoIncrement: true,
             },
 
@@ -29,7 +28,7 @@ module.exports = (sequelize) => {
 
         image: {
             type: DataTypes.ARRAY(DataTypes.STRING),
-            allowNull: true
+            allowNull: true,
             defaultValue: ["https://res.cloudinary.com/dnxvoi5ro/image/upload/o_78/v1665888428/bolsa-de-la-compra_p9yqic.png"]
             },
 
