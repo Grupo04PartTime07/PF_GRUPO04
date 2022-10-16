@@ -16,5 +16,11 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-  }, {timestamps: false});
+    img: {
+      type: DataTypes.STRING,
+      allowNull: true, //para probar de forma local 
+    }
+  },
+  {timestamps: false}
+  );
 };

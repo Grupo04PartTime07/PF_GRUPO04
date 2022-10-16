@@ -1,0 +1,90 @@
+.detailContainer{
+    margin: 90px 20px;
+    padding: 15px 35px;
+}
+
+.detailContainerArticles{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: rgb(228, 222, 222);
+    border-radius: 5px;
+    padding: 25px;
+    -webkit-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
+    box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
+}
+
+.detailTitle{
+    text-align: left;
+    padding: 0px 20px;
+}
+
+.detailPrice{
+    margin: 0px;
+    padding-left: 25px ;
+    text-align: left;
+    font-weight: 400;
+    font-size: 45px;
+}
+
+.detailDescription{
+    text-align: left;
+    padding-left: 25px;
+}
+
+.detailImagen{
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.detailImagen img{
+    border-radius: 5px;
+    width: 95%;
+}
+
+.detailButton{
+    padding-left: 25px;
+    margin-top: 25px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 45%;
+}
+
+.detailMargin{
+    margin-top: 50px;
+}
+
+.detailContainerOpinion{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    background-color: rgb(228, 222, 222);
+    border-radius: 5px;
+    padding: 25px;
+    -webkit-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
+    box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
+}
+
+.opinionContainer{
+    display: flex;
+    align-items: left;
+    margin-bottom: 30px;
+    flex-direction: column;
+    text-align: left;
+}
+
+.opinionContainer span{
+    margin-left: 25px;
+}
+
+.opinionTitle{
+    padding-left: 25px;
+    margin-bottom: 40px;
+}
