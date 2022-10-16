@@ -19,7 +19,15 @@ const getDbInfo = async () => {
             }
         });
         await Products.bulkCreate(productsList, { ignoreDuplicates: true})   //Esto es solamente provisorio mientras trabajamos con la DB local
-        const products = await Products.findAll();
+        const products = await Products.findAll({
+            include: {
+                model: Categories,
+                attribute: ['name'],
+                through: {
+                    attributes: [],
+                }
+            }
+        });
         return products;
     }catch(e){
         console.log(e)
