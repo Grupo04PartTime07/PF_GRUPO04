@@ -16,7 +16,7 @@ router.get('/', async function(req, res){
         }else if(categorie){
             //let products = await getProductsDb();
             console.log(categorie)
-            const productsFiltered = products.filter((e) => e.categories.includes((c) => c.name.toLowerCase()==categorie.toLowerCase()));
+            const productsFiltered = products.filter((e) => e.categories.includes(categorie));
             productsFiltered ? res.status(200).send(productsFiltered) : res.status(400).send('No hay productos dentro de la categoria')
         }else{
             res.status(200).send(products)
