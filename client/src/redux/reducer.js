@@ -6,13 +6,14 @@ import {CLEAN_PRODUCT_STATE} from './actions/clean_product_state';
 import {GUEST_CREATE_ACCOUNT} from './actions/guest_create_account';
 import { FILTER_BY_CATEGORY } from "./actions/filter_by_category";
 import { GET_CATEGORIES } from './actions/get_categories'
-
+import { ADD_TO_FAVORITE } from "./actions/add_to_favorite";
 
 const initialState = {
     categories: [],
     products: [],
     productsaux:[],
     productdetail: {},
+    favorites:[],
     message:""
     
 };
@@ -41,6 +42,11 @@ const reducer = (state = initialState, action) =>{
                     ...state,
                     message: action.payload
                     }
+        case ADD_TO_FAVORITE:    
+            return {
+                    ...state,
+                    favorites: [...state.favorites, action.payload]
+                    }           
         case ORDER_BY_PRICE: {
             let ordered = [];
             if(action.payload === "asc"){
