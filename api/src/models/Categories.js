@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    img: {
+    image: {
       type: DataTypes.STRING,
       allowNull: true, //para probar de forma local 
     }
