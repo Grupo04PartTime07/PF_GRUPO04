@@ -12,7 +12,8 @@ router.get('/', async function(req, res){
         const products = await getProductsDb();
         if(name){
             let productName = products.filter((e) => e.name.toLowerCase().includes(name.toLowerCase()));
-            productName ? res.status(200).send(productName) : res.status(400).send('El producto no fue encontrado');
+            console.log(productName)
+            productName.length ? res.status(200).send(productName) : res.status(200).send([{"name": "No contamos con el Producto en este momento", "price": null, "image": ["https://res.cloudinary.com/dnxvoi5ro/image/upload/o_78/v1665938859/no-hay-resultados_wth0ex.png"],"id": "0","stock": 100,}]);
         }else if(categorie){
             //let products = await getProductsDb();
             const productsFiltered = products.filter((e) => e.categories.includes((c) => c.name.toLowerCase()==categorie.toLowerCase()));
