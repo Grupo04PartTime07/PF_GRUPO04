@@ -1,46 +1,45 @@
 import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCategories } from '../../redux/actions/get_categories';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import { CardMedia } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import './categoriesList.css'
+
 
 function BasicCard(props) {
   return (
     <Card className='categorie_card' sx={{ bgcolor: 'info.main'}}>
+      <CardMedia 
+        className='categoryIcon'
+        component="img"
+        sx={{ width: 150 }}
+        height="150"
+        image={props.image}
+        alt={props.name}
+      />
       <CardContent>
         <Typography className='categorie' variant="h5" component="div">
-          {props.categorie}
+          {props.name}
         </Typography>
       </CardContent>
     </Card>
   );
 }
 
-const categoriesList = [
-    'Aceites y Vinagres',
-    'Agua',
-    'Almacén',
-    'Bebidas',
-    'Cuidado Personal',
-    'Desayuno y Merienda',
-    'Especias',
-    'Golosinas',
-    'Harinas',
-    'Lácteos',
-    'Licores',
-    'Limpieza',
-    'Mascotas',
-    'Pastas Secas', 
-    'Perfumeria',
-    'Reposteria',
-    'Salsas',
-    'Secos',
-]
-
 export default function CategoriesList(){
+  const categoriesList = useSelector(state => state.categories) 
+  const dispatch = useDispatch()
+  console.log(categoriesList)
+  React.useEffect(() => {
+      dispatch(getCategories())
+    }, [dispatch]
+  )
+
     return(
         <div className='table'>
-            {categoriesList.map(cat => <BasicCard categorie={cat}/>)}
+          {categoriesList.map(cat => <BasicCard image={cat.image} name={cat.name}/>)}
         </div>
     )
 }

@@ -9,6 +9,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 function footer() {
   return (
     <div className="footerContainer">
+      <div className="container_text">
       <div>
         <h3>Mi Cuenta</h3>
         <ul className="footerList">
@@ -56,6 +57,7 @@ function footer() {
                     </ul>
                 </div>
             </div>
+      </div>
       </div>
     </div>
   );

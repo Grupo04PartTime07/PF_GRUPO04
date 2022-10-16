@@ -192,7 +192,7 @@ export default function PrimarySearchAppBar() {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              sx={{ minWidth: 500 }}
+              sx={{ minWidth: 300 }}
               placeholder="Busca un producto…"
               inputProps={{ 'aria-label': 'search' }}
               onChange={(e) => handleInputChange(e)}
