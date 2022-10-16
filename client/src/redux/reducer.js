@@ -42,11 +42,22 @@ const reducer = (state = initialState, action) =>{
                     ...state,
                     message: action.payload
                     }
-        case ADD_TO_FAVORITE:    
+        case ADD_TO_FAVORITE:  
+        let favoritesCopy = state.favorites;
+        let itemExist = favoritesCopy.filter(e => e.name === action.payload.name) 
+        console.log(itemExist)
+        if(itemExist.length > 0) {
+            return {
+                    ...state,
+                    favorites: [...state.favorites]
+                    }
+                }else{
             return {
                     ...state,
                     favorites: [...state.favorites, action.payload]
-                    }           
+                    }
+
+                }           
         case ORDER_BY_PRICE: {
             let ordered = [];
             if(action.payload === "asc"){
