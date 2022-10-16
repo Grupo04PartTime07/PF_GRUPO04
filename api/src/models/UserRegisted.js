@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
  
-  sequelize.define('categories', {
+  sequelize.define('userRegisted', {
     id:{
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -12,15 +12,16 @@ module.exports = (sequelize) => {
       autoIncrement: true,
       primaryKey: true
     },
-    name: {
+    
+    email: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
-    img: {
-      type: DataTypes.STRING,
-      allowNull: true, //para probar de forma local 
+
+    password:{
+        type: DataTypes.STRING,
+        allowNull: true,
     }
-  },
-  {timestamps: false}
-  );
+    
+  },{timestamps: false});
 };
