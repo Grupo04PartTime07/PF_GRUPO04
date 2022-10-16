@@ -7,8 +7,13 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartTwoToneIcon from '@mui/icons-material/AddShoppingCartTwoTone';
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
+import { useDispatch } from 'react-redux';
+import { addToFavorite } from '../../redux/actions/add_to_favorite';
 
 export default function ImgMediaCard(props) {
+
+  const dispatch = useDispatch();
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
@@ -31,6 +36,7 @@ export default function ImgMediaCard(props) {
             size="large"
             aria-label="show 17 new notifications"
             color="inherit"
+            onClick={()=> dispatch(addToFavorite({name: props.name, image: props.image, price: props.price})) }
         >
             <FavoriteTwoToneIcon />
         </IconButton>
