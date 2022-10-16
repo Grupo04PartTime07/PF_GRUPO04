@@ -82,7 +82,7 @@ let brands = await Brand.findAll();
     }catch(e){
         console.log(e)
     }
-});
+}); 
 
 const data =  [
     {
