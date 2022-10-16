@@ -1,32 +1,29 @@
 const {Router} = require('express')
-const {Products, cache} = require('../db')
 const router = Router()
 
-const axios = require('axios')
 const { getDbInfo } = require('./controllers')
-const url_products =  'https://63484f1a0b382d796c6eff8c.mockapi.io/api/productos'
 
 
-const {getAllProducts} = require('./controller')
 
 
 router.get('/', async function(req, res){
-    let result
-    try {
-        if(!cache.listProducts){
-            
-            result = await getAllProducts()
-            console.log('from API')
+    try{
+        const { name, categorie } = req.query;
+        const products = await getDbInfo();
+        if(name){
+            let productName = products.filter((e) => e.name.toLowerCase().includes(name.toLocaleLowerCase()));
+            productName ? res.status(200).send(productName) : res.status(400).send('El producto no fue encontrado');
+        }else if(categorie){
+            let products = await getDbInfo();
+            const productsFiltered = products.filter((e) => e.category.includes(categorie));
+            productsFiltered ? res.status(200).send(productsFiltered) : res.status(400).send('No hay productos dentro de la categoria')
+        }else{
+            res.status(200).send(products)
         }
-        else{
-            result = await Products.findAll()
-            console.log('From DB')
-        }
-        res.send(result)
-    } catch (error) {
-        console.log(error)
+    }catch(e){
+        console.log(e)
     }
-})
+});
 
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
