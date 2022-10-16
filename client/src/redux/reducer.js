@@ -7,6 +7,7 @@ import {GUEST_CREATE_ACCOUNT} from './actions/guest_create_account';
 import { FILTER_BY_CATEGORY } from "./actions/filter_by_category";
 import { GET_CATEGORIES } from './actions/get_categories'
 import { ADD_TO_FAVORITE } from "./actions/add_to_favorite";
+import { ADD_TO_CART } from "./actions/add_to_cart";
 
 const initialState = {
     categories: [],
@@ -14,6 +15,7 @@ const initialState = {
     productsaux:[],
     productdetail: {},
     favorites:[],
+    cart:[],
     message:""
     
 };
@@ -42,10 +44,31 @@ const reducer = (state = initialState, action) =>{
                     ...state,
                     message: action.payload
                     }
+        case ADD_TO_CART:
+            let cartCopy = state.cart;
+            let productExist = cartCopy.filter(e => e.name === action.payload.name) 
+            if(productExist.length > 0) {
+            productExist[0].quantity = productExist[0].quantity + 1
+            //console.log("productExist:",productExist)
+            let newCartCopy = cartCopy.filter(e => e.name !== action.payload.name)
+            //console.log("newCartCopy:", newCartCopy)
+            let finalCart = newCartCopy.concat(productExist)
+            //console.log("finalCart:",finalCart)
+            return {
+                    ...state,
+                    cart: [...finalCart]
+                    }
+                }else{
+            return {
+                    ...state,
+                    cart: [...state.cart, action.payload]
+                    }
+
+                }          
         case ADD_TO_FAVORITE:  
         let favoritesCopy = state.favorites;
         let itemExist = favoritesCopy.filter(e => e.name === action.payload.name) 
-        console.log(itemExist)
+        //console.log(itemExist)
         if(itemExist.length > 0) {
             return {
                     ...state,

@@ -10,6 +10,7 @@ import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToFavorite } from '../../redux/actions/add_to_favorite';
+import { addToCart } from '../../redux/actions/add_to_cart';
 import './card.css'
 
 export default function ImgMediaCard(props) {
@@ -51,7 +52,8 @@ export default function ImgMediaCard(props) {
         { itemFound? <FavoriteTwoToneIcon /> : <FavoriteBorderOutlinedIcon/> }
         </IconButton>
 
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+        <IconButton size="large" aria-label="show 4 new mails" color="inherit"
+        onClick={()=> dispatch(addToCart({name: props.name, image: props.image, price: props.price, quantity: 1})) }>
             <AddShoppingCartTwoToneIcon />
         </IconButton>
       </CardActions>
