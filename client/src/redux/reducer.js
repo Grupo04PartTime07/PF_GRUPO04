@@ -3,6 +3,9 @@ import { ORDER_BY_RATE } from "./actions/order_rate";
 import {GET_ALL_PRODUCTS} from './actions/get_products';
 import {GET_PRODUCT_DETAILS} from './actions/get_product_details';
 import {CLEAN_PRODUCT_STATE} from './actions/clean_product_state';
+import {GUEST_CREATE_ACCOUNT} from './actions/guest_create_account';
+import { FILTER_BY_CATEGORY } from "./actions/filter_by_category";
+import { GET_CATEGORIES } from './actions/get_categories'
 
 
 const initialState = {
@@ -10,6 +13,7 @@ const initialState = {
     products: [],
     productsaux:[],
     productdetail: {},
+    message:""
     
 };
 
@@ -17,19 +21,25 @@ const reducer = (state = initialState, action) =>{
     switch(action.type) {
         case GET_ALL_PRODUCTS:
             return {
-                ...state,
-                products: action.payload,
-                productsaux: action.payload
-            }
+                    ...state,
+                    products: action.payload,
+                    productsaux: action.payload
+                }
         case GET_PRODUCT_DETAILS:
-                return {
+            return {
                     ...state,
                     productdetail: action.payload
                 }
         case CLEAN_PRODUCT_STATE:
-                return {
+            return {
                     ...state,
                     productdetail: {}
+                    }
+        case GUEST_CREATE_ACCOUNT:
+            alert(action.payload)
+            return {
+                    ...state,
+                    message: action.payload
                     }
         case ORDER_BY_PRICE: {
             let ordered = [];
@@ -68,6 +78,18 @@ const reducer = (state = initialState, action) =>{
                 return {...state, productsaux: ordered}
               }
               break;
+        }
+        case FILTER_BY_CATEGORY:{
+            return {
+                ...state,
+                productsaux: action.payload
+            }
+        }
+        case GET_CATEGORIES: {
+            return {
+                ...state,
+                categories: action.payload
+            }
         }
         case 'GET_NAME_PRODUCT':
             return {

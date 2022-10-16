@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const router = Router();
+
 const { getCategoriesDb } = require('./controllers');
 
 router.get('/', async (req, res)=>{
@@ -9,6 +10,7 @@ router.get('/', async (req, res)=>{
     }catch(e){
         console.log(e)
     }
+
 });
 
 module.exports = router;

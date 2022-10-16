@@ -15,10 +15,9 @@ import ShoppingCartTwoToneIcon from '@mui/icons-material/ShoppingCartTwoTone';
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import TemporaryDrawer from './menu';
-
+import { Link } from 'react-router-dom';
 import {useDispatch} from "react-redux";
 import { getNameProduct } from "../../redux/actions/search_name";
-
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative', 
@@ -176,24 +175,25 @@ export default function PrimarySearchAppBar() {
       <AppBar position="static">
         <Toolbar>
           <IconButton> 
-            
-<TemporaryDrawer></TemporaryDrawer>
+          <TemporaryDrawer/>
           </IconButton>
          
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            <img src='https://assets.soyhenry.com/logos/ISOLOGO_HENRY_BLACK.png' alt='HenryLogo' width={70}/>
+            sx={{ display: { xs: 'none', sm: 'block' }, color: 'black'}}
+          > 
+            <Link to='/'><img src='https://assets.soyhenry.com/logos/ISOLOGO_HENRY_BLACK.png' alt='HenryLogo' width={70}/></Link>
+            
           </Typography>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search…"
+              sx={{ minWidth: 500 }}
+              placeholder="Busca un producto…"
               inputProps={{ 'aria-label': 'search' }}
               onChange={(e) => handleInputChange(e)}
               onKeyDown={(e) =>{if(e.key === 'Enter'){handleSubmit()}}}
