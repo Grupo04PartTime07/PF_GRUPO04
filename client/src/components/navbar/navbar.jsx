@@ -74,7 +74,7 @@ export default function PrimarySearchAppBar() {
   };
 
   function handleSubmit (e){
-    e.preventDefault()
+    //e.preventDefault()
     dispatch(getNameProduct(name))
     setName("")
   };
