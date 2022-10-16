@@ -16,7 +16,7 @@ function App() {
             <Route path='/' component={Navbar}/>
             <Route exact path='/' component={Home}/>
             <Route path='/Categorias' component={CategoriesList}/>
-            {/* <Route exact path="/:id" component={Detail} /> */}
+            <Route exact path="/products/:id" component={Detail} />
             <Route path="/" component={Footer} />
           </div>
       </React.Fragment>

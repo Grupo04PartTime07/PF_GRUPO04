@@ -10,6 +10,8 @@ import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToFavorite } from '../../redux/actions/add_to_favorite';
+import { addToCart } from '../../redux/actions/add_to_cart';
+import './card.css'
 
 export default function ImgMediaCard(props) {
 
@@ -19,19 +21,24 @@ export default function ImgMediaCard(props) {
   let itemFound = favorites.find(e => e.name === props.name) 
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card 
+      className='card' 
+      sx={{ maxWidth: 245 }}       
+    >
       <CardMedia
+        className='productImg'
         component="img"
         alt={props.name}
-        height="140"
+        sx={{ maxWidth: 170 }}
+        height="170"
         image={props.image}
       />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {props.name}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography className="productPrice" gutterBottom variant="h5" component="div">
           ${props.price}
+        </Typography>
+        <Typography className="productName" variant="body2" color="text.secondary">
+          {props.name}
         </Typography>
       </CardContent>
       <CardActions>
@@ -45,7 +52,8 @@ export default function ImgMediaCard(props) {
         { itemFound? <FavoriteTwoToneIcon /> : <FavoriteBorderOutlinedIcon/> }
         </IconButton>
 
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+        <IconButton size="large" aria-label="show 4 new mails" color="inherit"
+        onClick={()=> dispatch(addToCart({name: props.name, image: props.image, price: props.price, quantity: 1})) }>
             <AddShoppingCartTwoToneIcon />
         </IconButton>
       </CardActions>

@@ -33,13 +33,14 @@
         margin: 50px;
     }
     .categorie_card{
-        width: 100%;
+        width: 270px;
         position: relative;
-        left: 0%;
+        left: 5%;
+        right: 5%;
     }
     .categoryIcon{
         position: relative;
-        left: 83px;
+        left: 22%;
         top: 15px;
     }
 }
