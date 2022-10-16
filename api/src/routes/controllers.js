@@ -50,7 +50,16 @@ const getCategoriesDb = async () => {
     }catch(e){
         console.log(e)
     }
-}
+};
+
+const getBrandsDb = async () => {
+    try{
+        let brands = await Brand.findAll();
+        return brands;
+    }catch(e){
+        console.log(e)
+    }   
+};
 
 module.exports = {
     getProductsDb,
