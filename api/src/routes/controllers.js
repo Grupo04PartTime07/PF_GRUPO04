@@ -40,11 +40,13 @@ const getProductsDb = async () => {
 const getCategoriesDb = async () => {
     try{
         
-        let categories = await Categories.findAll();
+        let categories = await Categories.findAll({
+            attributes: ['name', 'image']
+          });
         
         //let namesCategories = categories.map(e =>  e.name);
         
-        return categories.map(e =>  e.name);
+        return categories
     }catch(e){
         console.log(e)
     }
