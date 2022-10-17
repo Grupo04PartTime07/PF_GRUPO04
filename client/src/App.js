@@ -9,6 +9,7 @@ import Detail from './components/detail/detail.jsx';
 import CreateProduct from './components/createProduct/CreateProduct';
 import Marcas from './components/Brands/brands';
 import Categorie from './components/categorie/categorie';
+import CreateAccount from './components/account/account';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route exact path="/products/:id" component={Detail} />
             {/* modificar la ruta segun convenga */}
             <Route exact path="/createProduct" component={CreateProduct} />
+            <Route exact path="/createAccount" component={CreateAccount} />
             <Route exact path="/Marcas" component={Marcas} />
             <Route path="/" component={Footer} />
           </div>
