@@ -7,7 +7,6 @@ import Footer from './components/footer/footer.jsx';
 import CategoriesList from './components/categoriesList/categoriesList'
 import Detail from './components/detail/detail.jsx';
 import Marcas from './components/Brands/brands';
-import Marcas from './components/Brands/brands';
 import Categorie from './components/categorie/categorie';
 
 
