@@ -1,7 +1,7 @@
 import React from "react";
-import './promo.css'
+import './banner.css'
 
-export default function Promo(){
+export default function Banner(){
     return(
         <div>
             <div className="slider">
