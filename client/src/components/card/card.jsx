@@ -28,7 +28,7 @@ export default function ImgMediaCard(props) {
       className='card' 
       sx={{ maxWidth: 245 }}       
     >
-      <Link to={`/products/${props.id}`} style={{textDecoration:"none"}}>
+      <Link to={`/products/${props.id}`} style={{textDecoration:"none", color: "black"}} >
       <CardMedia
         className='productImg'
         component="img"
