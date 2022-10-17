@@ -53,7 +53,7 @@ export default function TemporaryDrawer() {
       <Divider />
       <List>
         {["Crear Articulo","Crear Categoria"].map((text, index) => ( //corregir la ruta de destino
-          <Link className='link' to={index !== 0 ? '/' + text : '/'}>
+          <Link className='link' to={index === 0 ? `/createProduct` : '/createCategory'}>
           <ListItemButton>
             <ListItem key={text} disablePadding>
             

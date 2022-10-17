@@ -8,9 +8,14 @@ import CategoriesList from './components/categoriesList/categoriesList'
 import Detail from './components/detail/detail.jsx';
 import Marcas from './components/Brands/brands';
 import Categorie from './components/categorie/categorie';
+<<<<<<<<< Temporary merge branch 1
+import CategoryForm from './components/categoryForm/categoryForm';
+import CreateProduct from './components/createProduct/CreateProduct';
+import Brand from './components/Brands/brand_products';
 
-
-
+=========
+import CreateAccount from './components/account/account';
+>>>>>>>>> Temporary merge branch 2
 
 function App() {
   return (
