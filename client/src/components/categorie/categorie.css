@@ -1,7 +1,73 @@
+.categorieTable{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 40%;
+}
+
+.categorieFilters{
+    width: 80%;
+    height: 93%;
+    position: relative;
+    top: 3%;
+    color:rgb(82, 82, 82);
+    margin-left: 15%;
+    border-right: 1.4px solid rgb(154, 154, 154);
+    text-align: start;
+}
+
+.linkToBack{
+    text-decoration: none;
+    color:rgb(0, 122, 170);
+    font-weight: 350;
+    margin-bottom: 15%;
+}
+
+.productsByCategorie{
+    width: 400%;
+}
+
 .categorieTitle{
     display: flex;
-    margin-left: 13%;
+    margin-left: 50px;
     margin-bottom: 0%;
     font-weight: 350;
     color: rgb(82, 82, 82);
 }
+
+.priceFilter, .ratingFilter{
+    margin: 8%;
+    margin-left: 0%;
+}
+
+.buttonsTable{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.filterButtons{
+    border: none;
+    color: rgb(82, 82, 82);
+    background: none;
+}
+
+.ratingButtons{
+    border: none;
+    color: rgb(82, 82, 82);
+    background: none;
+}
+
+.filterButtons:hover, .filterButtons:focus{
+    cursor: pointer;
+    background-color: rgb(1, 149, 207);
+    border-radius: 10px;
+    color: whitesmoke;
+}
+
+.ratingButtons:hover, .ratingButtons:focus{
+    cursor: pointer;
+    background-color: rgb(1, 149, 207);
+    border-radius: 10px;
+    color: whitesmoke;
+}
+
