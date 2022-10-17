@@ -6,6 +6,7 @@ import Home from './components/home/home';
 import Footer from './components/footer/footer.jsx';
 import CategoriesList from './components/categoriesList/categoriesList'
 import Detail from './components/detail/detail.jsx';
+import CreateProduct from './components/createProduct/CreateProduct';
 
 
 function App() {
@@ -17,6 +18,8 @@ function App() {
             <Route exact path='/' component={Home}/>
             <Route path='/Categorias' component={CategoriesList}/>
             <Route exact path="/products/:id" component={Detail} />
+            {/* modificar la ruta segun convenga */}
+            <Route exact path="/createProduct" component={CreateProduct} />
             <Route path="/" component={Footer} />
           </div>
       </React.Fragment>
