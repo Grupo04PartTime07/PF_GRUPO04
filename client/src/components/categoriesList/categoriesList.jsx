@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from '../../redux/actions/get_categories';
 import Card from '@mui/material/Card';
@@ -7,24 +8,33 @@ import { CardMedia } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import './categoriesList.css'
 
-
 function BasicCard(props) {
+  
+  const history = useHistory()
+
+  function handleClick() {
+    history.push({pathname: `/products?category=${props.name}`, state: props.name});
+    window.location.reload(true)
+  }
+  
   return (
-    <Card className='categorie_card' sx={{ bgcolor: 'info.main'}}>
-      <CardMedia 
-        className='categoryIcon'
-        component="img"
-        sx={{ width: 150 }}
-        height="150"
-        image={props.image}
-        alt={props.name}
-      />
-      <CardContent>
-        <Typography className='categorie' variant="h5" component="div">
-          {props.name}
-        </Typography>
-      </CardContent>
-    </Card>
+    
+      <Card className='categorie_card' sx={{ bgcolor: 'info.main'}} onClick={handleClick}>
+        <CardMedia 
+          className='categoryIcon'
+          component="img"
+          sx={{ width: 150 }}
+          height="150"
+          image={props.image}
+          alt={props.name}
+        />
+        <CardContent>
+          <Typography className='categorie' variant="h5" component="div">
+            {props.name}
+          </Typography>
+        </CardContent>
+      </Card>
+
   );
 }
 

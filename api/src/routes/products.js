@@ -1,7 +1,7 @@
 const {Router} = require('express')
 const router = Router()
 
-const { getProductsDb } = require('./controllers')
+const { getProductsDb, createProduct} = require('./controllers')
 
 
 
@@ -17,7 +17,9 @@ router.get('/', async function(req, res){
             //let products = await getProductsDb();
             console.log(categorie)
             const productsFiltered = products.filter((e) => e.categories.includes(categorie));
-            productsFiltered ? res.status(200).send(productsFiltered) : res.status(400).send('No hay productos dentro de la categoria')
+
+            productsFiltered.length ? res.status(200).send(productsFiltered) : res.status(400).send('No hay productos dentro de la categoria')
+
         }else{
             res.status(200).send(products)
         }
@@ -36,6 +38,17 @@ router.get('/:id', async (req, res) => {
             productId ? res.status(200).send(productId) : res.status(400).send('El producto no fue encontrado')
         }
         console.log(id);
+    }catch(e){
+        console.log(e)
+    }
+});
+
+
+router.post('/', async (req, res) => {
+    try{
+        const {name, price, description, image,stock, score, categories, brand} = req.body
+        let created = await createProduct(name, price, description, image,stock, score, categories, brand)
+        res.status(200).send(created)
     }catch(e){
         console.log(e)
     }
