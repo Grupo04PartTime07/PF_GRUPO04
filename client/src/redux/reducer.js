@@ -22,8 +22,8 @@ const initialState = {
     productdetail: {},
     favorites: [],
     cart: [],
+    account:[],
     message: ""
-
 };
 
 const reducer = (state = initialState, action) => {

@@ -8,6 +8,7 @@ import CategoriesList from './components/categoriesList/categoriesList'
 import Detail from './components/detail/detail.jsx';
 import Marcas from './components/Brands/brands';
 import Categorie from './components/categorie/categorie';
+import CreateAccount from './components/account/account';
 import CategoryForm from './components/categoryForm/categoryForm';
 import CreateProduct from './components/createProduct/CreateProduct';
 import Brand from './components/Brands/brand_products';
@@ -25,6 +26,7 @@ function App() {
             <Route exact path="/products/:id" component={Detail} />
             {/* modificar la ruta segun convenga */}
             <Route exact path="/createProduct" component={CreateProduct} />
+            <Route exact path="/createAccount" component={CreateAccount} />
             <Route exact path="/Marcas" component={Marcas} />
             <Route exact path='/createCategory' component={CategoryForm}/>
             <Route exact path='/brands' component={Brand}/>
