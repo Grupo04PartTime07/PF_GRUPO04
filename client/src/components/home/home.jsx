@@ -8,7 +8,7 @@ import './home.css'
 export default function Home(){
 
     const dispatch = useDispatch();
-    const products = useSelector( state => state.productsaux)
+    const products = useSelector( state => state.products)
     
     useEffect(() => {  // Didmount and DidUpdate controlled
         dispatch(getAllProducts());

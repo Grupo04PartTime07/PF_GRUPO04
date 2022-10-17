@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 
-const { getCategoriesDb } = require('./controllers');
+const { getCategoriesDb, createCategory } = require('./controllers');
 
 router.get('/', async (req, res)=>{
     try{
@@ -12,5 +12,15 @@ router.get('/', async (req, res)=>{
     }
 
 });
+
+router.post('/', async (req,res) => {
+    try{
+        const { name, image } = req.body;
+        let categoryCreated = await createCategory(name, image);
+        res.status(200).send(categoryCreated)
+    }catch(e){
+        console.log(e)
+    }
+})
 
 module.exports = router;

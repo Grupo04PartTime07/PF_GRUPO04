@@ -7,7 +7,8 @@ import Footer from './components/footer/footer.jsx';
 import CategoriesList from './components/categoriesList/categoriesList'
 import Detail from './components/detail/detail.jsx';
 import CreateProduct from './components/createProduct/CreateProduct';
-
+import Marcas from './components/Brands/brands';
+import Categorie from './components/categorie/categorie';
 
 function App() {
   return (
@@ -17,9 +18,11 @@ function App() {
             <Route path='/' component={Navbar}/>
             <Route exact path='/' component={Home}/>
             <Route path='/Categorias' component={CategoriesList}/>
+            <Route exact path='/products' component={Categorie}/>
             <Route exact path="/products/:id" component={Detail} />
             {/* modificar la ruta segun convenga */}
             <Route exact path="/createProduct" component={CreateProduct} />
+            <Route exact path="/Marcas" component={Marcas} />
             <Route path="/" component={Footer} />
           </div>
       </React.Fragment>

@@ -64,7 +64,62 @@ const getBrandsDb = async () => {
     }   
 };
 
+const createProduct = async (name, price, description, image,stock, score, categories, brand) => {
+    try {
+        var newProduct = await Products.create({
+                name: name,
+                price: price, 
+                description: description,
+                image: [image],
+                stock: stock,
+                score_promedio: score,
+        });
+
+        const brands = await Brand.findOne({
+            where: {
+                name: brand,
+            }
+        });
+
+        if(!brands){
+            await Brand.create({
+                name: brand
+            })
+        };
+
+        categories.map((e) => {
+            let category = Categories.findOne({
+                where: {
+                    name: e
+                }
+            })
+            newProduct.addCategories(category.id);
+        })
+
+        newProduct.setBrand(brands);
+
+        return newProduct
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+const createCategory = async (name, image) => {
+    try{
+        var newCategory = await Categories.create({
+            name: name,
+            image: image,
+        });
+
+        return newCategory
+    }catch(e){
+        console.log(e)
+    }
+}
 module.exports = {
     getProductsDb,
-    getCategoriesDb
+    getCategoriesDb,
+    getBrandsDb,
+    createProduct,
+    createCategory
 }
