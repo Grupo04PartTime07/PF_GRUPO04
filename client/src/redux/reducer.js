@@ -10,6 +10,9 @@ import { ADD_TO_FAVORITE } from "./actions/add_to_favorite";
 import { ADD_TO_CART } from "./actions/add_to_cart";
 import { CREATE_CATEGORY } from "./actions/create_category";
 import { NEW_PRODUCTS } from "./actions/new_products";
+import { GET_BRANDS } from './actions/get_brands'
+import { FILTER_BY_BRAND } from "./actions/filter_by_brand";
+
 
 const initialState = {
     categories: [],
@@ -140,10 +143,22 @@ const reducer = (state = initialState, action) => {
                 productsaux: action.payload
             }
         }
+        case FILTER_BY_BRAND: {
+            return {
+                ...state,
+                productsaux: action.payload
+            }
+        }
         case GET_CATEGORIES: {
             return {
                 ...state,
                 categories: action.payload
+            }
+        }
+        case GET_BRANDS: {
+            return {
+                ...state,
+                brand: action.payload
             }
         }
         case 'GET_NAME_PRODUCT':

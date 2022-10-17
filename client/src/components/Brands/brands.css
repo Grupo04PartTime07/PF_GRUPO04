@@ -1,0 +1,14 @@
+.brandTable{
+    display: inline-grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 3%;
+}
+
+.brandTitle{
+    display: flex;
+
+    margin-left: 5%;
+    margin-bottom: 0%;
+    font-weight: 350;
+    color: rgb(82, 82, 82);
+}

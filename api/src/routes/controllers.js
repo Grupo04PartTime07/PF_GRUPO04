@@ -104,9 +104,22 @@ const createProduct = async (name, price, description, image,stock, score, categ
     }
 };
 
+const createCategory = async (name, image) => {
+    try{
+        var newCategory = await Categories.create({
+            name: name,
+            image: image,
+        });
+
+        return newCategory
+    }catch(e){
+        console.log(e)
+    }
+}
 module.exports = {
     getProductsDb,
     getCategoriesDb,
     getBrandsDb,
-    createProduct
+    createProduct,
+    createCategory
 }
