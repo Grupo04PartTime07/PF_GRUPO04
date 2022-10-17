@@ -28,14 +28,15 @@ router.get('/', async function(req, res){
     }
 });
 
-router.get('products/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     const { id } = req.params;
     const allProducts = await getProductsDb();
     try{
         if(id){
             
             const productId = allProducts.filter((e) => e.id == id);
-            productId ? res.status(200).send(productId) : res.status(400).send('El producto no fue encontrado')
+            const obj = productId[0]
+            productId ? res.status(200).send(obj) : res.status(400).send('El producto no fue encontrado')
         }
         console.log(id);
     }catch(e){
