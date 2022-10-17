@@ -10,6 +10,8 @@ import ListItemText from '@mui/material/ListItemText';
 import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
 import PaidTwoToneIcon from '@mui/icons-material/PaidTwoTone';
 import CategoryTwoToneIcon from '@mui/icons-material/CategoryTwoTone';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import InventoryIcon from '@mui/icons-material/Inventory';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 import './menu.css'
@@ -49,18 +51,21 @@ export default function TemporaryDrawer() {
         ))}
       </List>
       <Divider />
-      {/* <List>
-        {[].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
+      <List>
+        {["Crear Articulo","Crear Categoria"].map((text, index) => ( //corregir la ruta de destino
+          <Link className='link' to={index !== 0 ? '/' + text : '/'}>
+          <ListItemButton>
+            <ListItem key={text} disablePadding>
+            
               <ListItemIcon>
-                {index % 2 === 0 ? <CategoryTwoToneIcon /> : <PaidTwoToneIcon />}
+                {index % 2 === 0 ? <InventoryIcon /> : <LocalOfferIcon />}
               </ListItemIcon>
               <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
+            </ListItem>
+          </ListItemButton>
+          </Link>
         ))}
-      </List> */}
+      </List>
     </Box>
   );
 
