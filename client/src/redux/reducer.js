@@ -8,7 +8,11 @@ import { FILTER_BY_CATEGORY } from "./actions/filter_by_category";
 import { GET_CATEGORIES } from './actions/get_categories'
 import { ADD_TO_FAVORITE } from "./actions/add_to_favorite";
 import { ADD_TO_CART } from "./actions/add_to_cart";
+import { CREATE_CATEGORY } from "./actions/create_category";
+import { NEW_PRODUCTS } from "./actions/new_products";
 import { GET_BRANDS } from './actions/get_brands'
+import { FILTER_BY_BRAND } from "./actions/filter_by_brand";
+
 
 const initialState = {
     categories: [],
@@ -46,6 +50,18 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 message: action.payload
             }
+        case CREATE_CATEGORY:
+            alert(action.payload)
+            return {
+                ...state,
+                message: action.payload
+                } 
+        case NEW_PRODUCTS:
+            //alert(action.payload)
+            return {
+                ...state,
+                message: action.payload
+                } 
         case ADD_TO_CART:
             let cartCopy = state.cart;
             let productExist = cartCopy.filter(e => e.name === action.payload.name)
@@ -127,6 +143,12 @@ const reducer = (state = initialState, action) => {
                 productsaux: action.payload
             }
         }
+        case FILTER_BY_BRAND: {
+            return {
+                ...state,
+                productsaux: action.payload
+            }
+        }
         case GET_CATEGORIES: {
             return {
                 ...state,
@@ -142,7 +164,7 @@ const reducer = (state = initialState, action) => {
         case 'GET_NAME_PRODUCT':
             return {
                 ...state,
-                productsaux: action.payload
+                products: action.payload
             }
         default: return state;
     }

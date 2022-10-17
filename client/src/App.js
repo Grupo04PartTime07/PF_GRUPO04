@@ -6,10 +6,11 @@ import Home from './components/home/home';
 import Footer from './components/footer/footer.jsx';
 import CategoriesList from './components/categoriesList/categoriesList'
 import Detail from './components/detail/detail.jsx';
-import CreateProduct from './components/createProduct/CreateProduct';
 import Marcas from './components/Brands/brands';
 import Categorie from './components/categorie/categorie';
-import CreateAccount from './components/account/account';
+
+
+
 
 function App() {
   return (
@@ -25,6 +26,8 @@ function App() {
             <Route exact path="/createProduct" component={CreateProduct} />
             <Route exact path="/createAccount" component={CreateAccount} />
             <Route exact path="/Marcas" component={Marcas} />
+            <Route exact path='/createCategory' component={CategoryForm}/>
+            <Route exact path='/brands' component={Brand}/>
             <Route path="/" component={Footer} />
           </div>
       </React.Fragment>

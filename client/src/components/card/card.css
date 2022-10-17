@@ -1,7 +1,6 @@
 .card{
     display: grid;
     margin: 5%;
-    transition: display 1s;
 }
 
 .card:hover{ 

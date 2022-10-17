@@ -1,0 +1,39 @@
+.slider{
+    width: 1100px;
+    height: 380px;
+    margin: auto;
+    overflow: hidden;
+}
+
+.slider ul{
+    display: flex;
+    padding: 0;
+    width: 300%; /*agregar 100 por cada imagen*/
+
+    animation: cambio 20s infinite alternate;
+    animation-timing-function: ease-in;
+}
+
+.slider li{
+    width: 100%;
+    list-style: none;
+}
+
+.promoImg{
+    width: 1100px;
+    height: 350px;
+    margin-top: 1%;
+    border-radius: 10px;
+}
+
+@keyframes cambio {
+    0% { margin-left: 0}
+    30% { margin-left: 0}
+
+    35% { margin-left: -100%}
+    65% { margin-left: -100%}
+
+    70% { margin-left: -200%}
+    100% { margin-left: -200%}
+
+}

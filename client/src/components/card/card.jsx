@@ -11,6 +11,8 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import { useDispatch, useSelector } from 'react-redux';
 import { addToFavorite } from '../../redux/actions/add_to_favorite';
 import { addToCart } from '../../redux/actions/add_to_cart';
+import { Link } from 'react-router-dom';
+
 import './card.css'
 
 export default function ImgMediaCard(props) {
@@ -18,13 +20,15 @@ export default function ImgMediaCard(props) {
   const dispatch = useDispatch();
   const favorites = useSelector(state => state.favorites)
 
-  let itemFound = favorites.find(e => e.name === props.name) 
+  let itemFound = favorites.find(e => e.name === props.name)
+  
 
   return (
     <Card 
       className='card' 
       sx={{ maxWidth: 245 }}       
     >
+      <Link to={`/products/${props.id}`} style={{textDecoration:"none", color: "black"}} >
       <CardMedia
         className='productImg'
         component="img"
@@ -41,6 +45,7 @@ export default function ImgMediaCard(props) {
           {props.name}
         </Typography>
       </CardContent>
+      </Link>
       <CardActions>
 
         <IconButton
