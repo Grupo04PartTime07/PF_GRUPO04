@@ -13,11 +13,11 @@ export default function Home(){
     useEffect(() => {  // Didmount and DidUpdate controlled
         dispatch(getAllProducts());
     },[dispatch]) 
-    console.log(products)
+    
     return(
         products[0] && products[0].price ? <div>
             <div className="homeTable">
-                { products.map(a => a.stock === 0 ? null : <Card name={a.name} image={a.image} price={a.price}/>) }
+                { products.map(a => a.stock === 0 ? null : <Card id={a.id} name={a.name} image={a.image} price={a.price}/>) }
             </div>
         </div> : <Loading/>
     )
