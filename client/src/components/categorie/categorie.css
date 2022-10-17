@@ -1,6 +1,7 @@
 .categorieTitle{
     display: flex;
     margin-left: 13%;
+    margin-bottom: 0%;
     font-weight: 350;
     color: rgb(82, 82, 82);
 }

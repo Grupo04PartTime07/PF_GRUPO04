@@ -1,0 +1,25 @@
+.brandCard{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 1%;
+    margin-right: 40px;
+    height: 100px;
+}
+
+.brandCard:hover{ 
+    transition: .2s;
+    transform: translate(-5%)
+}
+
+.brandImg{
+    position: relative;
+    left: 0%;
+    bottom: 10%
+}
+
+.brandName{
+    display: flex;
+    position: relative;
+    top: 20px;
+    font-weight: 500;
+}
