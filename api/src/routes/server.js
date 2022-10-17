@@ -29,6 +29,7 @@ let categories = await Categories.findAll();
 });
 
 router.get('/brand', async (req, res)=>{
+    try{
     await Brand.bulkCreate([
         { name: 'Matarazzo', image:"https://tuquejasuma.com/media/cache/f9/59/f959102d4e6da4b971aedd52271d6f59.png"},
         { name: 'Natura', image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIxIkg4eofyjtpKxQmsTAqACbIC4oTmG8iGg&usqp=CAU"},
@@ -60,7 +61,7 @@ router.get('/brand', async (req, res)=>{
         { name: 'Ferrero Rocher', image:"https://toppng.com/uploads/preview/ferrero-rocher-logo-vector-free-11574118921diaoadbmww.png"},
         { name: 'Arcor', image:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Arcor_logo.svg/1200px-Arcor_logo.svg.png"},
         { name: 'Granix', image:"https://mayoristasoto.com/img/m/26.jpg"},
-        { name: 'Pleny', image: "https:///res-console.cloudinary.com/dnxvoi5ro/thumbnails/transform/v1/image/upload/v1665959035/https:///res-console.cloudinary.com/dnxvoi5ro/thumbnails/transform/v1/image/upload//v1665959035/cGxlbnlfbmYwdXZs/drilldown" },
+        { name: 'Pleny', image: "https://http2.mlstatic.com/D_NQ_NP_902437-MLA44058564251_112020-O.webp" },
         { name: 'Águila', image: "https://seeklogo.com/images/C/cerveza-aguila-logo-F449B95D01-seeklogo.com.jpg" },
         { name: 'Coca-cola', image: "https://w7.pngwing.com/pngs/797/25/png-transparent-coca-cola-logo-coca-cola-fizzy-drinks-diet-coke-logo-cocacola-cdr-text-cola.png" },
         { name: 'Branca', image: "https://i.pinimg.com/originals/af/9b/bd/af9bbd2bed400b5c05d9dc0cfbd7a3bf.png" },
@@ -69,7 +70,7 @@ router.get('/brand', async (req, res)=>{
         { name: 'Gillette', image: "https://graffica.info/wp-content/uploads/2020/12/Gillette-Logo-2048x1161-3-2048x951-1-1200x720.png" },
         { name: 'Antonio Banderas', image: "https://www.logolynx.com/images/logolynx/cc/cc8a2a7039fe7180b804527f414560a7.jpeg" },
         { name: 'Boss', image: "https://www.hugoboss.com/on/demandware.static/Sites-US-Site/-/default/dw4fc964d1/svg/output_files/boss_logo.svg" },
-        { name: 'Valcatil', image: "https://scontent.fmar7-1.fna.fbcdn.net/v/t1.6435-9/150934883_1081466895598548_2726792265028117390_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=NHYjXjxVceYAX8oMiQS&_nc_ht=scontent.fmar7-1.fna&oh=00_AT8qRNK4ITUPRLGVeXYMS4sDDhZh1vTireCUNNHgn8jJow&oe=63729782" },
+        { name: 'Valcatil', image: "https://res.cloudinary.com/dnxvoi5ro/image/upload/v1665963536/download_kiwb4t.jpg" },
         { name: 'Megacistín', image: "https://www.megacistin.com.ar/sites/all/themes/theme1043/logo.png" },
         { name: 'Algabo', image: "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/130/470/themes/common/logo-1079655723-1657043240-e2f1a80fbbcef29907c1c9c6596452611657043240-480-0.png?0" },
         { name: 'Veet', image: "https://1000marcas.net/wp-content/uploads/2021/05/Veet-logo.png" },
@@ -78,7 +79,10 @@ router.get('/brand', async (req, res)=>{
       ], { ignoreDuplicates: true})
 let brands = await Brand.findAll();
     res.send(brands)
-});
+    }catch(e){
+        console.log(e)
+    }
+}); 
 
 const data =  [
     {
