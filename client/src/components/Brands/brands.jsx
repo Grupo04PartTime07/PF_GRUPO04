@@ -15,9 +15,9 @@ export default function Marcas(){
     },[dispatch]) 
     console.log(products)
     return(
-        products[0] && products[0].brand ? <div>
+        products[0] && products[0].name ? <div>
             <div className="brandTable">
-                { products.map(a => a.brand === 0 ? null : <Card brand={a.brand}/>) }
+                { products.map(a => a.name === 0 ? null : <Card name={a.name} image={a.image}/>) }
             </div>
         </div> : <Loading/>
     )
