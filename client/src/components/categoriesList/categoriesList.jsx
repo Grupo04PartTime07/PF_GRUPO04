@@ -13,8 +13,8 @@ function BasicCard(props) {
   const history = useHistory()
 
   function handleClick() {
-    history.push({pathname: `/products?category=${props.name}`, state: props.name});
-    window.location.reload(true)
+    history.push(`/products?category=${props.name}`, props.name);
+    
   }
   
   return (
