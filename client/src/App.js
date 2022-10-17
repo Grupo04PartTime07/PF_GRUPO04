@@ -23,7 +23,7 @@ function App() {
             <Route exact path='/products' component={Categorie}/>
             <Route exact path="/products/:id" component={Detail} />
             <Route exact path="/Marcas" component={Marcas} />
-            <Route exact path='/Category/form' component={CategoryForm}/>
+            <Route exact path='/createCategory' component={CategoryForm}/>
             <Route path="/" component={Footer} />
           </div>
       </React.Fragment>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styles from "./categoryForm.module.css";
+import styles from "./categoryFormDos.module.css";
 import { useState } from 'react';
 import { useDispatch } from 'react-redux'
 import { createCategory } from '../../redux/actions/create_category';
@@ -16,7 +16,7 @@ export default function CategoryForm() {
 
     function validateName(value) {
         if(!/^[a-z]+$/.test(value)) { // solo caracteres a-z minusculas y al menos uno
-        setErrorName('>>>> Solo caracteres de la "a-z" minusculas y al menos uno <<<<');
+        setErrorName('Solo caracteres de la "a-z" minusculas y al menos uno');
         } else {
         setErrorName('');
         }
@@ -25,7 +25,7 @@ export default function CategoryForm() {
 
     function validateImage (value) {
         if (!/^(http[s]?)/.test(value)){
-        setErrorImage('>>>> La Url de la imagen debe comenzar con http <<<< ')
+        setErrorImage('La Url de la imagen debe comenzar con http')
         } else {
         setErrorImage('');
         }
@@ -43,25 +43,22 @@ export default function CategoryForm() {
 
 return (
         <div>
-            <form type="POST"  className={styles.form} onSubmit={onSubmit}>
-
+            <h1>Ingresa una Categoria</h1>
+            <form type="POST"  className={styles.formContainer} onSubmit={onSubmit}>
+            
             <label className={styles.label}>Name: </label>
-             <input className={errorName? styles.invalido : styles.valido} // aca digo si hay error, aplicar la clase de estilos "invalido"
+             <input className={errorName? styles.invalido : styles.valido} 
              key="name" name="name" value={name} type="text" required onChange={(e) => validateName(e.target.value)}
-             placeholder= "Type the new category name here..." autoComplete="off"/>
-             {!errorName ? null : <span className={styles.errorMessage}>{errorName}</span>} 
+             autoComplete='off'/>
+             {!errorName ? null : <span className={styles.danger}>{errorName}</span>} 
 
              <label className={styles.imglabel}>Image: </label> 
              <input className={errorImage? styles.invalido : styles.valido}
              key="image" name="image" value={image} type="text"  required onChange={(e) => validateImage(e.target.value)}
-             placeholder= "Type the Url img here..." autoComplete="off"/>
-             {!errorImage ? null : <span className={styles.errorMessage}>{errorImage}</span> }
+             autoComplete='off'/>
+             {!errorImage ? null : <span className={styles.danger}>{errorImage}</span> }
 
-             <button name="submit"className={styles.button} type="submit"  disabled={ !image || errorImage  || !name || errorName ? true : false} >Create Category</button> 
-
-
-
-
+             <button name="submit"className={styles.button} type="submit"  disabled={ !image || errorImage  || !name || errorName ? true : false} >Crear Categoria</button> 
 
             </form>
         </div>
