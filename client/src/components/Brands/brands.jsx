@@ -1,7 +1,7 @@
 import React,{useEffect} from "react";
 import Card from './cardBrand'
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllProducts } from '../../redux/actions/get_products';
+import { getBrands } from '../../redux/actions/get_brands';
 import Loading from "../loading/loading";
 
 
@@ -11,7 +11,7 @@ export default function Marcas(){
     const products = useSelector( state => state.brand)
     
     useEffect(() => {  // Didmount and DidUpdate controlled
-        dispatch(getAllProducts());
+        dispatch(getBrands());
     },[dispatch]) 
     console.log(products)
     return(

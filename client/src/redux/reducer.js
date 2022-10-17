@@ -8,6 +8,7 @@ import { FILTER_BY_CATEGORY } from "./actions/filter_by_category";
 import { GET_CATEGORIES } from './actions/get_categories'
 import { ADD_TO_FAVORITE } from "./actions/add_to_favorite";
 import { ADD_TO_CART } from "./actions/add_to_cart";
+import { GET_BRANDS } from './actions/get_brands'
 
 const initialState = {
     categories: [],
@@ -130,6 +131,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 categories: action.payload
+            }
+        }
+        case GET_BRANDS: {
+            return {
+                ...state,
+                brand: action.payload
             }
         }
         case 'GET_NAME_PRODUCT':
