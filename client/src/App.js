@@ -7,8 +7,8 @@ import Footer from './components/footer/footer.jsx';
 import CategoriesList from './components/categoriesList/categoriesList'
 import Detail from './components/detail/detail.jsx';
 import Marcas from './components/Brands/brands';
-import Marcas from './components/Brands/brands';
 import Categorie from './components/categorie/categorie';
+import CategoryForm from './components/categoryForm/categoryForm';
 
 
 
@@ -23,6 +23,7 @@ function App() {
             <Route exact path='/products' component={Categorie}/>
             <Route exact path="/products/:id" component={Detail} />
             <Route exact path="/Marcas" component={Marcas} />
+            <Route exact path='/Category/form' component={CategoryForm}/>
             <Route path="/" component={Footer} />
           </div>
       </React.Fragment>

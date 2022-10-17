@@ -1,0 +1,86 @@
+.form {
+    display: block;
+    margin-top: 30px;
+    margin-left: 10px;
+    margin-bottom: 5px; 
+}
+
+.label {
+    display: flex;
+    align-items: flex-start;
+    font-weight: bolder;
+    color:white;
+    background-color:black;
+    width: 509px;
+    margin-top: 5px;
+    margin-left: 5px;
+    padding-left: 5px;
+}
+.imglabel {
+    display: flex;
+    align-items: flex-start;
+    font-weight: bolder;
+    color:white;
+    background-color: black;
+    width: 509px;
+    margin-top: 5px;
+    margin-left: 5px;
+    padding-left: 5px;
+}
+
+.invalido {
+    display:flex;
+    align-items: flex-start;
+    border: red 5px solid;
+    margin-left: 5px;
+    width: 500px;
+    
+}
+
+.valido {
+    display:flex;
+    align-items: flex-start;
+    border:black 5px solid;
+    margin-left: 5px;
+    width: 500px;
+}
+
+.errorMessage {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    font-size: 12px;
+    font-weight: bolder;
+    background-color: white;
+    width: 500px;
+  }
+
+  .button {
+    display:flex;
+    align-items: flex-start;
+    margin-left: 150px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: white;
+    border-radius: 10px;
+    border: black solid 3px;
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color:  rgb(94, 89, 89);;
+    }
+    .button[disabled] {
+        background-color: #aaa2a2;
+        cursor: no-drop;
+    }
+
