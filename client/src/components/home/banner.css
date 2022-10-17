@@ -10,8 +10,8 @@
     padding: 0;
     width: 300%; /*agregar 100 por cada imagen*/
 
-    animation: cambio 15s infinite;
-    animation-direction: alternate;
+    animation: cambio 20s infinite alternate;
+    animation-timing-function: ease-in;
 }
 
 .slider li{

@@ -149,7 +149,7 @@ const reducer = (state = initialState, action) => {
         case 'GET_NAME_PRODUCT':
             return {
                 ...state,
-                productsaux: action.payload
+                products: action.payload
             }
         default: return state;
     }
