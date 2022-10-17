@@ -35,7 +35,7 @@ router.get('/:id', async (req, res) => {
         if(id){
             
             const productId = allProducts.filter((e) => e.id == id);
-            productId ? res.status(200).send(productId) : res.status(400).send('El producto no fue encontrado')
+            productId ? res.status(200).send(productId) : res.status(400).send('El producto no fue encontrado');
         }
         console.log(id);
     }catch(e){
@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
     try{
         const {name, price, description, image,stock, score, categories, brand} = req.body
         let created = await createProduct(name, price, description, image,stock, score, categories, brand)
-        res.status(200).send(created)
+        created ? res.status(200).send('El producto fue creado con exito!') : res.status(400).send('El producto no pudo ser creado');
     }catch(e){
         console.log(e)
     }
