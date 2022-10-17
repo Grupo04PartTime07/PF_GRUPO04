@@ -13,7 +13,7 @@ const initialState = {
     categories: [],
     products: [],
     productsaux: [],
-    brand: [{brand:"matarazzo"}, {brand:"Natura"}],
+    brand: [],
     productdetail: {},
     favorites: [],
     cart: [],
