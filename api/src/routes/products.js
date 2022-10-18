@@ -1,7 +1,7 @@
 const {Router} = require('express')
 const router = Router()
 
-const { getProductsDb, createProduct, getProductDetail} = require('./controllers')
+const { getProductsDb, createProduct, getProductDetail, updateProduct} = require('./controllers')
 
 
 
@@ -46,6 +46,17 @@ router.post('/', async (req, res) => {
         const {name, price, description, image,stock, score, categories, brand} = req.body
         let created = await createProduct(name, price, description, image,stock, score, categories, brand)
         created ? res.status(200).json('El producto fue creado con exito!') : res.status(400).json('El producto no pudo ser creado');
+    }catch(e){
+        console.log(e)
+    }
+});
+
+router.put('/:id', async (req, res) => {
+    try{
+        const { id } = req.params;
+        let props = req.body;
+        let result = await updateProduct(id, props);
+        result ? res.status(200).send('El producto fue modificado con éxito!') : res.status(400).send('El producto no pudo ser modificado');
     }catch(e){
         console.log(e)
     }

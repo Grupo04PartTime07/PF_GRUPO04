@@ -159,11 +159,34 @@ const getProductDetail = async (id) => {
     }
 };
 
+const updateProduct = async (id, props) => {
+
+    try {
+        await Products.update(
+            {
+             name: props.name,
+             price: props.price,
+             description: props.description,
+             image: [...props.image]
+            }, {
+                where: {
+                    id: id
+                }
+            })
+
+        let productModified = await Products.findByPk(id)
+        return productModified
+    } catch(e) {
+        console.log(e)
+    }
+};
+
 module.exports = {
     getProductsDb,
     getCategoriesDb,
     getBrandsDb,
     createProduct,
     createCategory,
-    getProductDetail
+    getProductDetail,
+    updateProduct
 }
