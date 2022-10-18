@@ -12,7 +12,7 @@ import { CREATE_CATEGORY } from "./actions/create_category";
 import { NEW_PRODUCTS } from "./actions/new_products";
 import { GET_BRANDS } from './actions/get_brands'
 import { FILTER_BY_BRAND } from "./actions/filter_by_brand";
-
+import { CLEAN_PRODUCTS } from "./actions/clean_products";
 
 const initialState = {
     categories: [],
@@ -43,6 +43,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 productdetail: {}
+            }
+        case CLEAN_PRODUCTS:
+            return {
+                ...state,
+                productsaux: {}
             }
         case GUEST_CREATE_ACCOUNT:
             alert(action.payload)
