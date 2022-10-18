@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { guestCreateAccount } from "../../redux/actions/guest_create_account";
 import { Link, useHistory } from "react-router-dom";
-
+import "./account.css"
 
 function CreateAccount() {
     const dispatch = useDispatch();
@@ -86,7 +86,7 @@ const regexEmail =/\S+@\S+\.\S+/
         e.preventDefault(e);
 
         //dispatch(newProducts(input));
-        alert("usuario creado");
+        //alert("usuario creado");
         // setInput({
         //     name: "",
         //     lastName: "",
@@ -159,7 +159,7 @@ const regexEmail =/\S+@\S+\.\S+/
 
                         <label>Ciudad:</label>
                         <input
-                            type="number"
+                            type="text"
                             value={input.country}
                             name="country"
                             onChange={(e) => handleChange(e)}
@@ -177,9 +177,9 @@ const regexEmail =/\S+@\S+\.\S+/
                     </div>
                 </div>
                 <div >
-                    <button className="button"><Link to="/" >Volver</Link></button>
+                <button className="button buttonLink"><Link to="/" className="buttonLink">Volver</Link></button>
                     {button.complete === false ? <button disabled="disabled" className="button disable">Crear</button> : <button type="submit" className="button">Crear</button>}
-                    <button type="submit" onClick={e => handleReset(e)} className="button">Limpiar</button>
+                    <button type="boton" onClick={e => handleReset(e)} className="button">Limpiar</button>
                 </div>
             </form>
         </div>
