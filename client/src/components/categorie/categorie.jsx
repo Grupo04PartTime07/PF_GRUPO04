@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { filterByCategory } from '../../redux/actions/filter_by_category';
 import { orderByPrice } from '../../redux/actions/order_price';
 import { orderByRate } from "../../redux/actions/order_rate";
+import { cleanProducts } from "../../redux/actions/clean_products";
 import Loading from "../loading/loading";
 import './categorie.css'
 
@@ -16,6 +17,9 @@ export default function Categorie(props){
 
     useEffect(() => {  // Didmount and DidUpdate controlled
         dispatch(filterByCategory(props.history.location.state)); 
+        return(() => {
+            dispatch(cleanProducts({}))
+        })
     },[dispatch])
 
     function handlePrice(e){
