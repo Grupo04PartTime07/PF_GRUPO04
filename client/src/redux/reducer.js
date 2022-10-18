@@ -88,9 +88,10 @@ const reducer = (state = initialState, action) => {
             let itemExist = favoritesCopy.filter(e => e.name === action.payload.name)
             //console.log(itemExist)
             if (itemExist.length > 0) {
+                let newfav = favoritesCopy.filter(e => e.name !== action.payload.name)
                 return {
                     ...state,
-                    favorites: [...state.favorites]
+                    favorites: newfav
                 }
             } else {
                 return {
