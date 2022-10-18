@@ -43,6 +43,10 @@
 
 }
 
+.formSecondDiv{
+   max-width: 200px;
+}
+
 .button{
     border-radius: 5px;
     border:none;
@@ -60,6 +64,11 @@
     box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
 }
 
+.buttonLink{
+    color: antiquewhite;
+    text-decoration: none;
+}
+
 .disable{
     background-color: gray;
 }
@@ -74,4 +83,25 @@
     color: rgb(209, 3, 3);
     font-size: 12px;
     font-weight: 600;
+}
+
+.formCategories{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 12px;
+    
+}
+
+.inputCategories{
+    margin-top: 4px;
+    margin-right: 4px;
+    padding: 4px 9px;
+    border: 1px black solid;
+    border-radius: 9999px;
+}
+
+.inputCategories p{
+    margin:0px;
 }

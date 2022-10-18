@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector} from "react-redux";
 import { useState, useEffect} from "react";
 import  {getCategories}  from "../../redux/actions/get_categories";
+import { newProducts } from '../../redux/actions/new_products';
 import { Link, useHistory} from "react-router-dom";
 import "./createProduct.css"
 
@@ -116,30 +117,35 @@ function CreateProduct() {
 
     
     function handleSelect(e){
-        setInput({
-          ...input,
-          categories:[...input.categories,e.target.value]
-        })
+        if(input.categories.length < 5){
+            setInput({
+              ...input,
+              categories:[...input.categories,e.target.value]
+            })
     
-        setError(validate({
-          ...input,
-          categories:[...input.categories,e.target.value]
+            setError(validate({
+              ...input,
+            categories:[...input.categories,e.target.value]
           
-        }))
+          }))
+        }
+        
+
+        //category = category.filter(e => e != e.targer.value)
       }
     
-    // function handleDelete(e) {
-    //   let nombre = e.target.innerText;
-    //   setInput({
-    //     ...input,
-    //     categories:input.categories.filter(e => e !== nombre)
-    //   })
-    // }
+    function handleDelete(e) {
+      let nombre = e.target.innerText;
+      setInput({
+        ...input,
+        categories:input.categories.filter(e => e !== nombre)
+      })
+    }
 
     function handleSubmit(e){ // crea el nuevo articulo, faltaria agregarle en el dispatch la accion que lo crea
         e.preventDefault(e);
 
-        //dispatch(newProducts(input));
+        dispatch(newProducts(input));
         alert("articulo creado");
         setInput({
             name:"",
@@ -151,7 +157,7 @@ function CreateProduct() {
             score:"",
             brand:""
         });
-        history.push("/home");
+        history.push("/");
     }
 
     function handleReset(e){ // borra todos los inputs, setea los errores en vacio y vuelve a dehabilitar el boton de crear
@@ -217,13 +223,16 @@ function CreateProduct() {
           </div>
           <div className="formSecondDiv">
             <label>Categoria:</label>
+
+            
+
             <select name={input.categories} onChange={e => handleSelect(e)}>
             {category && category.map(el =>
                 <option value={el.name}>{el.name}</option>
 
             )}
             </select>
-            {/* <div className="formCategories">{input.categories? input.categories.map(el => <div className="inputCategories"><p onClick={e => handleDelete(e)}>{el}</p></div>):""}</div> */}
+            <div className="formCategories">{input.categories? input.categories.map(el => <div className="inputCategories"><p onClick={e => handleDelete(e)}>{el}</p></div>):""}</div>
             <p className={error.categories?"danger":"normal"}>{error.categories}</p>
             <label>Stock:</label>
             <input
@@ -254,7 +263,7 @@ function CreateProduct() {
           </div>
         </div> 
           <div >
-            <button className="button"><Link to="/" >Volver</Link></button>
+            <button className="button buttonLink"><Link to="/" className="buttonLink">Volver</Link></button>
             {button.complete === false ? <button disabled="disabled" className="button disable">Crear</button> : <button type="submit" className="button">Crear</button>}
             <button type="submit" onClick={e => handleReset(e)} className="button">Limpiar</button>
           </div>
