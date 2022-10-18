@@ -3,6 +3,9 @@
     padding: 15px 35px;
 }
 
+.detailLeft{
+    text-align: left;
+}
 .detailContainerArticles{
     display: flex;
     justify-content: center;
@@ -28,6 +31,14 @@
     font-size: 45px;
 }
 
+.detailScore{
+    margin: 0px 0px 10px 0px;
+    padding-left: 25px ;
+    text-align: left;
+    font-weight: 400;
+    font-size: 20px;
+}
+
 .detailDescription{
     text-align: left;
     padding-left: 25px;
@@ -39,11 +50,13 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    height: 400px;
+    width: 50%;
 }
 
 .detailImagen img{
     border-radius: 5px;
-    width: 95%;
+    width: 70%;
 }
 
 .detailButton{
@@ -52,7 +65,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    width: 45%;
+    width: 60%;
 }
 
 .detailMargin{
