@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
     try{
         const {name, price, description, image,stock, score, categories, brand} = req.body
         let created = await createProduct(name, price, description, image,stock, score, categories, brand)
-        created ? res.status(200).send('El producto fue creado con exito!') : res.status(400).send('El producto no pudo ser creado');
+        created ? res.status(200).json('El producto fue creado con exito!') : res.status(400).json('El producto no pudo ser creado');
     }catch(e){
         console.log(e)
     }

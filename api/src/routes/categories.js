@@ -17,7 +17,7 @@ router.post('/', async (req,res) => {
     try{
         const { name, image } = req.body;
         let categoryCreated = await createCategory(name, image);
-        categoryCreated ? res.status(200).send('La categoria fue creada con exito!') : res.status(400).send('La categoria no puedo ser creada');
+        categoryCreated ? res.status(200).json('La categoria fue creada con exito!') : res.status(400).json('La categoria no puedo ser creada');
     }catch(e){
         console.log(e)
     }
