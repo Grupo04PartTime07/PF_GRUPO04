@@ -63,20 +63,22 @@ export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const dispatch = useDispatch()
-  const [name, setName] = React.useState(null);
+  const [name, setName] = React.useState('');
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
 
   function handleInputChange(e){
     e.preventDefault()
     setName(e.target.value)
   };
 
-  function handleSubmit (e){
-    //e.preventDefault()
+  function handleSubmit (){
     dispatch(getNameProduct(name))
-    setName("")
+    setName('')
+    
+    
   };
 
   const handleProfileMenuOpen = (event) => {
@@ -180,7 +182,7 @@ export default function PrimarySearchAppBar() {
           <IconButton> 
           <TemporaryDrawer/>
           </IconButton>
-         
+        
           <Typography
             variant="h6"
             noWrap
@@ -190,11 +192,12 @@ export default function PrimarySearchAppBar() {
             <Link to='/'><img src='https://assets.soyhenry.com/logos/ISOLOGO_HENRY_BLACK.png' alt='HenryLogo' width={70}/></Link>
             
           </Typography>
-          <Search>
+          <Search >
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
+              value= {name}
               sx={{ minWidth: 300 }}
               placeholder="Busca un producto…"
               inputProps={{ 'aria-label': 'search' }}
