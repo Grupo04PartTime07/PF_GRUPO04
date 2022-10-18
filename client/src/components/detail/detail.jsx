@@ -20,23 +20,6 @@ function Detail(props) {
 
    const detail = useSelector((state) => state.productdetail)
    
-   const opiniones = [
-    {
-        name: "Maria Marta",
-        description:"ahora puedo ponerme al sol sin sufrir las consecuencias",
-        rating: 3,
-    },{
-        name: "emanuel ortega",
-        description:"la pagina esta bien",
-        rating: 5, 
-    },{
-        name: "sanfilipo",
-        description:"el producto me llego dañado",
-        rating: 1,
-    }
-      ,
-  ];
-
   let stars = [];
   for (let i = 0; i < Math.ceil(detail.score); i++) {
     stars.push(<StarRoundedIcon />)
@@ -60,9 +43,9 @@ function Detail(props) {
             <div className="detailContainerOpinion detailMargin">
             <h1 className="opinionTitle">Opiniones</h1>
             <div className="opinionContainer">
-            {opiniones && opiniones.map((e) => {
+            {detail.opiniones && detail.opiniones.map((e) => {
                 let starsOpinion = [];
-                for (let i = 0; i < Math.ceil(e.rating); i++) {
+                for (let i = 0; i < Math.ceil(e.score); i++) {
                     starsOpinion.push(<StarRoundedIcon />)
                     
                   }
@@ -70,7 +53,7 @@ function Detail(props) {
                 <div >
                     
                     <span>{starsOpinion}</span>
-                    <p className="detailDescription">{e.description}</p>
+                    <p className="detailDescription">{e.coment}</p>
                 </div>)
             })}
             </div>  

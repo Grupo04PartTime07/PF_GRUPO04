@@ -1,6 +1,7 @@
-const { Router } = require('express');
+const { Router, response } = require('express');
+const { where } = require('sequelize');
 const router = Router();
-const {Products, Categories, Brand, Promotion} = require('../db');
+const {Products, Categories, Brand, Promotion, Score} = require('../db');
 
 
 router.get('/categories', async (req, res)=>{
@@ -58,12 +59,12 @@ router.get('/brand', async (req, res)=>{
         { name: 'Morixe', image:"https://media-exp2.licdn.com/dms/image/C4D0BAQGPTvsuC7oHog/company-logo_200_200/0/1579879290840?e=2147483647&v=beta&t=QiuRGw8qEnMu7vEcovhB1w9wKAn6YJMg88jHT-Tnon0"},
         { name: 'Playadito', image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0BJRJEe0AVljneq10C10VPNBSGHBAG6X1DJZ8ZxTiQZFCuLcbO_Wj1GvHuIrN0u5KilY&usqp=CAU"},
         { name: 'Alicante', image:"http://1.bp.blogspot.com/-KE4W1YXDH0I/UyoyDWd95LI/AAAAAAAAA1k/FjH_xtXtd8o/s280/Alicante+logo.jpg"},
-        { name: 'Ferrero Rocher', image:"https://toppng.com/uploads/preview/ferrero-rocher-logo-vector-free-11574118921diaoadbmww.png"},
+        { name: 'Ferrero Rocher', image:"https://res.cloudinary.com/dnxvoi5ro/image/upload/c_scale,h_100,w_210/v1666035020/ferrero_wczuhn.png"},
         { name: 'Arcor', image:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Arcor_logo.svg/1200px-Arcor_logo.svg.png"},
         { name: 'Granix', image:"https://mayoristasoto.com/img/m/26.jpg"},
         { name: 'Pleny', image: "https://http2.mlstatic.com/D_NQ_NP_902437-MLA44058564251_112020-O.webp" },
         { name: 'Águila', image: "https://seeklogo.com/images/C/cerveza-aguila-logo-F449B95D01-seeklogo.com.jpg" },
-        { name: 'Coca-cola', image: "https://w7.pngwing.com/pngs/797/25/png-transparent-coca-cola-logo-coca-cola-fizzy-drinks-diet-coke-logo-cocacola-cdr-text-cola.png" },
+        { name: 'Coca-cola', image: "https://tentulogo.com/wp-content/uploads/HistoriadellogodeCocaCola.jpg" },
         { name: 'Branca', image: "https://i.pinimg.com/originals/af/9b/bd/af9bbd2bed400b5c05d9dc0cfbd7a3bf.png" },
         { name: 'Odol', image: "https://www.sprchacek.cz/files/manufacturer_images/4828505318431391744_1.png" },
         { name: 'Just for Men', image: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/logo-justformen-1550229554.png?resize=*:100" },
@@ -417,7 +418,7 @@ const data =  [
     },
     {
     "name": "Nueces Mariposa Extra Light Pleny Doypack X 200 G ",
-    "price": 2990,
+    "price": 990,
     "image": ["https://http2.mlstatic.com/D_NQ_NP_780550-MLA46771462214_072021-O.webp", "https://http2.mlstatic.com/D_NQ_NP_819025-MLA42736530385_072020-O.webp"],
     "description": "Nueces Mariposa Naturales",
     "id": "35",
@@ -617,5 +618,183 @@ const data =  [
         ],})
         res.send(products)
     });
+
+    const scores = [
+        {id: 13, score: 2, coment: "No siento que vale lo que cuesta"},
+        {id: 13, score: 5, coment: "Limpia la ropa y cuida el ambiente y mi bolsillo, me encata"},
+        {id: 13, score: 3, coment: "Rinde mucho pero el aroma no perdura"},
+        {id:1, score:5, coment:"Muy ricos, muy buena textura"},
+        {id:1, score:3, coment:"Normal, safan"},
+        {id:1, score:4, coment:"Muy buenos, siempre compro esta marca"},
+        {id:2, score:1, coment:"No me gusto, no tiene gusto a nada"},
+        {id:2, score:5, coment:"Rica y saludable"},
+        {id:2, score:4, coment:"Deliciosa, la uso siempre"},
+        {id:3, score:2, coment:"No me agrado mucho"},
+        {id:3,score:5, coment:"Me encanto, muy suave"},
+        {id:3, score:5, coment:"Saludable y sabroso"},
+        {id:4, score:1, coment:"Baja calidad"},
+        {id:4, score:3, coment:"Normal, recibis lo que pagas"},
+        {id:4, score:2, coment:"Llenadores pero mucha grasa"},
+        {id:5, score:5, coment:"Siempre compro esta marca, excelente calidad"},
+        {id:5, score:5, coment:"Excelente relacion precio-calidad"},
+        {id:5, score:4, coment:"Muy bueno pero medio caro"},
+        {id:6, score:3, coment:"Normal pero no para cabellos grasos"},
+        {id:6, score:5, coment:"Me encanta como me deja el pelo"},
+        {id:6, score:5, coment:"Mas suavidad imposible"},
+        {id:7, score:2, coment:"No es premium"},
+        {id:7, score:1, coment:"Mala calidad"},
+        {id:7, score:3, coment:"Lo justo y necesario"},
+        {id:8, score:5, coment:"Muy buena felacion precio-calidad"},
+        {id:8, score:4, coment:"Muy buena"},
+        {id:8, score:4, coment:"La compro siempre"},
+        {id:9, score:3, coment:"Safa, pero nada como la Cindor"},
+        {id:9, score:4, coment:"Muy rica"},
+        {id:9, score:2, coment:"No tiene mucho gusto"},
+        {id:10, score:5, coment:"Mi marca favorita de te"},
+        {id:10, score:2, coment:"Muy caros, hay nacionales mejores"},
+        {id:10, score:5, coment:"Savor exquisito"},
+        {id:11, score:5, coment:"A mi perro le encanta"},
+        {id:11, score:3, coment:"Medio caro"},
+        {id:11, score:5, coment:"Muy buena calidad"},
+        {id:12, score:5, coment:"Me perro se queda contento"},
+        {id:12, score:1, coment:"Malisimo"},
+        {id:12, score:5, coment:"Indispensable para tu mascota"},
+        {id:14, score:3, coment:"Duran lo necesario"},
+        {id:14, score:5, coment:"Mis favoritos"},
+        {id:14, score:5, coment:"Son lo mas"},
+        {id:15, score:5, coment:"La mejor del mercado"},
+        {id:15, score:2, coment:"Hay mejores"},
+        {id:15, score:4, coment:"Buena y saludable"},
+        {id:16, score:5, coment:"Excelente textura y sabor"},
+        {id:16, score:2, coment:"Sobrevalorado"},
+        {id:16, score:5, coment:"Cumplio ampliamente mis expectattivas"},
+        {id:17, score:5, coment:"Mi marca favorita"},
+        {id:17, score:5, coment:"Todo lo que esta bien"},
+        {id:17, score:3, coment:"Normal, nada wow"},
+        {id:18, score:5, coment:"Hace la diferencia esta linea"},
+        {id:18, score:4, coment:"Nunca falta en mis desayunos"},
+        {id:18, score:5, coment:"Muy buen aroma y sabor"},
+        {id:19, score:3, coment:"Pasable"},
+        {id:19, score:5, coment:"La amo, mi compa de aventuras"},
+        {id:19, score:5, coment:"La mejor del mercado"},
+        {id:20, score:3, coment:"Ni fu ni fa"},
+        {id:20, score:5, coment:"Es lo mas"},
+        {id:20, score:5, coment:"Muy buen precio-calidad"},
+        {id:21, score:5, coment:"Ricas, mis hijos siempre la piden"},
+        {id:21, score:4, coment:"Sabrosas, especial para el te"},
+        {id:21, score:5, coment:"Muy buenas"},
+        {id:22, score:5, coment:"Mis masticables favoritos"},
+        {id:22, score:1, coment:"Mucha azucar"},
+        {id:22, score:4, coment:"Siempre se los llevo de regalo a mis sobrinos"},
+        {id:23, score:1, coment:"Muy acido"},
+        {id:23, score:3, coment:"Cumple con su funcion"},
+        {id:23, score:2, coment:"No es para recomendar pero safa"},
+        {id:24, score:5, coment:"Calidad suprema"},
+        {id:24, score:5, coment:"Solo compro esta marca"},
+        {id:24, score:4, coment:"Nunca falla"},
+        {id:25, score:3, coment:"Bueno"},
+        {id:25, score:5, coment:"Muy sabroso"},
+        {id:25, score:5, coment:"Real gusto a tomate"},
+        {id:26, score:1, coment:"Mala calidad"},
+        {id:26, score:5, coment:"La recomiendo para hacer pizza"},
+        {id:26, score:3, coment:"Me gusta la textura de la masa final"},
+        {id:27, score:5, coment:"La mas suave y rica"},
+        {id:27, score:5, coment:"No me da acidez como otras"},
+        {id:27, score:3, coment:"Esta buena pero hay mejores"},
+        {id:28, score:4, coment:"Sabor a manzana dulce, mi preferido"},
+        {id:28, score:2, coment:"Gusto artificial"},
+        {id:28, score:5, coment:"Siempre compro esta marca, nunca falla"},
+        {id:29, score:5, coment:"Limpia como nadie"},
+        {id:29, score:1, coment:"Raya las superficies"},
+        {id:29, score:5, coment:"Limpia profundamente"},
+        {id:30, score:3, coment:"Medio picante"},
+        {id:30, score:5, coment:"Mis comidas siempre quedan bien sabrosas"},
+        {id:30, score:4, coment:"Muy bueno"},
+        {id:31, score:5, coment:"Me encantan, sabor delicioso"},
+        {id:31, score:5, coment:"Siempre los compro para regalar"},
+        {id:31, score:4, coment:"Excelente calidad"},
+        {id:32, score:2, coment:"No me gustaron"},
+        {id:32, score:5, coment:"Me encantan"},
+        {id:32, score:4, coment:"Delicioso"},
+        {id:33, score:5, coment:"Saludable y rico"},
+        {id:33, score:5, coment:"Los mejores ingredientes"},
+        {id:33, score:5, coment:"Siempre compro esta marca"},
+        {id:34, score:1, coment:"Muy caras"},
+        {id:34, score:5, coment:"Siempre compro esta marca"},
+        {id:34, score:4, coment:"Ricas y saludable"},
+        {id:35, score:3, coment:"Mas o menos la calidad"},
+        {id:35, score:5, coment:"Las usos siempre en empanadas"},
+        {id:35, score:2, coment:"No me gustaron"},
+        {id:36, score:3, coment:"Rico sabor a puro chocolate"},
+        {id:36, score:1, coment:"Muy amargo"},
+        {id:36, score:4, coment:"Lo compro siempre"},
+        {id:37, score:5, coment:"Lo mejor de este mundo"},
+        {id:37, score:3, coment:"Me gusta pero mucha azucar"},
+        {id:37, score:3, coment:"Prefiero la version light"},
+        {id:38, score:5, coment:"Muy refrescante"},
+        {id:38, score:5, coment:"Nunca falta en mi mesa"},
+        {id:38, score:5, coment:"Lo mejor del verano a 40 grados"},
+        {id:39, score:5, coment:"Mi preferido"},
+        {id:39, score:2, coment:"Solo porque me agarre una mala borrachera"},
+        {id:39, score:5, coment:"El mejor"},
+        {id:40, score:2, coment:"Prefiero Colgate"},
+        {id:40, score:5, coment:"Mis hijos siempre me la piden"},
+        {id:40, score:3, coment:"Muy buena"},
+        {id:41, score:2, coment:"Mala calidad"},
+        {id:41, score:5, coment:"La mejor que encontre"},
+        {id:41, score:2, coment:"No deja buen color"},
+        {id:42, score:5, coment:"Excelente"},
+        {id:42, score:5, coment:"Muy buena"},
+        {id:42, score:3, coment:"Precio elevado"},
+        {id:43, score:5, coment:"El mejor regalo dia del padre"},
+        {id:43, score:3, coment:"Esta bueno pero medio caro"},
+        {id:43, score:4, coment:"Durable"},
+        {id:44, score:5, coment:"El preferido de mi tio"},
+        {id:44, score:5, coment:"Muy buen perfume"},
+        {id:44, score:2, coment:"Caro"},
+        {id:45, score:5, coment:"Funciono"},
+        {id:45, score:2, coment:"No me dio resultado dijo el pelado"},
+        {id:45, score:3, coment:"Parece bueno, veremos que pasa"},
+        {id:46, score:5, coment:"Me dio resultado"},
+        {id:46, score:3, coment:"No me convence"},
+        {id:46, score:5, coment:"Son lo mas"},
+        {id:47, score:5, coment:"Mi hijo muy contento"},
+        {id:47, score:2, coment:"Puro marketing"},
+        {id:47, score:5, coment:"Muy lindo"},
+        {id:48, score:2, coment:"No es sbuena"},
+        {id:48, score:5, coment:"La mejor del mercado"},
+        {id:48, score:5, coment:"La super recomiendo"},
+        {id:49, score:1, coment:"Malisima"},
+        {id:49, score:5, coment:"Me funciono"},
+        {id:49, score:4, coment:"Son lo mas"},
+        {id:50, score:5, coment:"Ricas y nutritivas"},
+        {id:50, score:5, coment:"Especial para el mate"},
+        {id:50, score:3, coment:"No son tan buenas"},
+        {id:51, score:5, coment:"Siempre me sacan e apuro"},
+        {id:51, score:5, coment:"Rico sabor"},
+        {id:51, score:3, coment:"Muy buena"}
+    ];
+
+    router.get('/comments', async (req, res) => {
+        for(let c of scores){
+            let comment = await Score.create({coment: c.coment, score: c.score});
+            let product = await Products.findByPk(c.id)
+            product.addScore(comment.id)
+
+            let scores = await Score.findAll({
+                where: { productId: c.id}
+            })
+            const qtty = scores.length
+            let total = scores.reduce(function ( acc, va){
+                return (acc + va.score)
+              },0);
+            let prom = Math.ceil(total/qtty)
+            product.update({score_promedio: prom})
+
+        }
+
+        let response = await Score.findAll()
+        res.send(response)
+    })
 
 module.exports = router

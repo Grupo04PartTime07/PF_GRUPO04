@@ -1,5 +1,5 @@
 const axios = require('axios');
-const {Products, Categories, Brand, Promotion} = require('../db');
+const {Products, Categories, Brand, Promotion, Score} = require('../db');
 
 
 const getProductsDb = async () => {
@@ -116,10 +116,54 @@ const createCategory = async (name, image) => {
         console.log(e)
     }
 }
+
+const getProductDetail = async (id) => {
+    try{
+        let product = await Products.findByPk(id, {
+            include: [
+                {
+                model: Categories,
+                attributes: ["name"],
+                through:{
+                    attributes: [],
+                },
+               
+            },
+
+            {
+                model: Brand,
+                attributes: ["name"],              
+            },
+
+            {
+                model: Promotion,
+                attributes: ["option"],              
+          
+            },
+            {
+                model: Score,
+                attributes: ["score", "coment", "id"],
+            }
+        
+        ],
+
+        })
+       
+            let categories = product.categories.map(e => e.name)
+            let response = {id: product.id, name: product.name, price: product.price, description: product.description, image: product.image, categories, stock: product.stock, score: product.score_promedio, brand: product.brand.name, opiniones: product.scores }
+    
+        return response;
+        
+    }catch(e){
+        console.log(e)
+    }
+};
+
 module.exports = {
     getProductsDb,
     getCategoriesDb,
     getBrandsDb,
     createProduct,
-    createCategory
+    createCategory,
+    getProductDetail
 }

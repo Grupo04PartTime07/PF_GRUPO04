@@ -1,7 +1,7 @@
 const {Router} = require('express')
 const router = Router()
 
-const { getProductsDb, createProduct} = require('./controllers')
+const { getProductsDb, createProduct, getProductDetail} = require('./controllers')
 
 
 
@@ -30,13 +30,10 @@ router.get('/', async function(req, res){
 
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
-    const allProducts = await getProductsDb();
     try{
-        if(id){
-            const productId = allProducts.filter((e) => e.id == id);
-            const obj = productId[0]
-            productId ? res.status(200).send(obj) : res.status(400).send('El producto no fue encontrado')
-        }
+        let nid = parseInt(id)
+        const detail = await getProductDetail(nid);
+        detail ? res.status(200).send(detail) : res.status(400).send('El producto no fue encontrado')
         console.log(id);
     }catch(e){
         console.log(e)
