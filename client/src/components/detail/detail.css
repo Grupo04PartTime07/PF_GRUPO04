@@ -63,13 +63,19 @@
     padding-left: 25px;
     margin-top: 25px;
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
-    width: 60%;
+    width: 80%;
 }
 
 .detailMargin{
     margin-top: 50px;
+}
+
+.buttonMargin{
+    margin: 0px;
+    padding: 0px;
+    margin-right: 10px;
 }
 
 .detailContainerOpinion{

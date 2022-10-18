@@ -34,7 +34,7 @@ function Detail(props) {
                         <h2 className="detailPrice"> $ {detail.price}</h2>
                         <p className="detailDescription">{detail.description}</p>
                     <div className="detailButton">
-                        <Button variant="contained">Comprar</Button>
+                        <span className="buttonMargin"><Button variant="contained" >Comprar</Button></span>
                         <Button variant="contained">Agregar al Carrito</Button>
                     </div>
             </div>
