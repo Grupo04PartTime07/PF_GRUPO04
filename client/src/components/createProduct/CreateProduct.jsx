@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector} from "react-redux";
 import { useState, useEffect} from "react";
 import  {getCategories}  from "../../redux/actions/get_categories";
+import {getBrands} from "../../redux/actions/get_brands"
 import { newProducts } from '../../redux/actions/new_products';
 import { Link, useHistory} from "react-router-dom";
 import "./createProduct.css"
@@ -10,9 +11,11 @@ function CreateProduct() {
     const dispatch = useDispatch();
     const history = useHistory();
     let category = useSelector((state) => state.categories)
+    let brands = useSelector((state) => state.brand)
 
     useEffect(() => {
-        dispatch(getCategories())
+        dispatch(getCategories());
+        dispatch(getBrands());
     },[])
 
     const[input,setInput] = useState({
@@ -129,9 +132,12 @@ function CreateProduct() {
           
           }))
         }
-        
-
-        //category = category.filter(e => e != e.targer.value)
+      }
+      function handleBrand(e){
+        if(!input.brand){
+          setInput({...input, brand: e.target.value});
+          setError(validate({...input,brand: e.target.value}));
+        }
       }
     
     function handleDelete(e) {
@@ -139,6 +145,13 @@ function CreateProduct() {
       setInput({
         ...input,
         categories:input.categories.filter(e => e !== nombre)
+      })
+    }
+
+    function handleDeleteBrand(e) {
+      setInput({
+        ...input,
+        brand: ""
       })
     }
 
@@ -223,9 +236,6 @@ function CreateProduct() {
           </div>
           <div className="formSecondDiv">
             <label>Categoria:</label>
-
-            
-
             <select name={input.categories} onChange={e => handleSelect(e)}>
             {category && category.map(el =>
                 <option value={el.name}>{el.name}</option>
@@ -253,12 +263,13 @@ function CreateProduct() {
             <p className={error.score?"danger":"normal"}>{error.score}</p>
 
             <label>Marca:</label>
-            <input
-              type="text"
-              value={input.brand}
-              name="brand"
-              onChange={(e) => handleChange(e)}
-            />
+            <select name={input.brand} onChange={e => handleBrand(e)}>
+            {brands && brands.map(el =>
+                <option value={el.name}>{el.name}</option>
+
+            )}
+            </select>
+            <div className="formCategories">{input.brand? <div className="inputCategories"><p onClick={e => handleDeleteBrand(e)}>{input.brand}</p></div>:""}</div>
             <p className={error.brand?"danger":"normal"}>{error.brand}</p>
           </div>
         </div> 
