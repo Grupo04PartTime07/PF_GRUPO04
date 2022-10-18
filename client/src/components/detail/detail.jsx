@@ -3,8 +3,9 @@ import './detail.css';
 import { Button } from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
-import {getProductDetails} from '../../redux/actions/get_product_details'
-import {cleanProductState} from '../../redux/actions/clean_product_state'
+import {getProductDetails} from '../../redux/actions/get_product_details';
+import {cleanProductState} from '../../redux/actions/clean_product_state';
+import StarRoundedIcon from '@mui/icons-material/StarRounded';
 
 function Detail(props) {
   const {id} = props.match.params;
@@ -18,7 +19,7 @@ function Detail(props) {
    }, [dispatch, id])
 
    const detail = useSelector((state) => state.productdetail)
-
+   
    const opiniones = [
     {
         name: "Maria Marta",
@@ -36,27 +37,39 @@ function Detail(props) {
       ,
   ];
 
+  let stars = [];
+  for (let i = 0; i < Math.ceil(detail.score); i++) {
+    stars.push(<StarRoundedIcon />)
+    
+  }
+
   return (<div className="detailContainer"> 
             <div className="detailContainerArticles">
-                    <div>
+                    <div className="detailLeft">
                         <h1 className="detailTitle">{detail.name}</h1>
-                        <span>{detail.rating}</span>
+                        <span className="detailScore">{stars}</span>
                         <h2 className="detailPrice"> $ {detail.price}</h2>
                         <p className="detailDescription">{detail.description}</p>
                     <div className="detailButton">
                         <Button variant="contained">Comprar</Button>
                         <Button variant="contained">Agregar al Carrito</Button>
                     </div>
-                </div>
-                <div className="detailImagen"><img src={detail.image} alt="productos" /></div>
+            </div>
+                    <div className="detailImagen"><img src={detail.image} alt="productos" /></div>
             </div>
             <div className="detailContainerOpinion detailMargin">
             <h1 className="opinionTitle">Opiniones</h1>
             <div className="opinionContainer">
             {opiniones && opiniones.map((e) => {
+                let starsOpinion = [];
+                for (let i = 0; i < Math.ceil(e.rating); i++) {
+                    starsOpinion.push(<StarRoundedIcon />)
+                    
+                  }
                 return (
                 <div >
-                    <span>{e.rating}</span>
+                    
+                    <span>{starsOpinion}</span>
                     <p className="detailDescription">{e.description}</p>
                 </div>)
             })}
