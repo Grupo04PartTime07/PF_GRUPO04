@@ -6,13 +6,16 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { CardMedia } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import {cleanProducts} from '../../redux/actions/clean_products'
 import './categoriesList.css'
 
 function BasicCard(props) {
   
   const history = useHistory()
+  const dispatch = useDispatch()
 
   function handleClick() {
+    dispatch(cleanProducts({}));
     history.push(`/products?category=${props.name}`, props.name);
     
   }

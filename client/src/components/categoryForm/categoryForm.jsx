@@ -15,7 +15,7 @@ export default function CategoryForm() {
     const [errorImage, setErrorImage] = useState("");
 
     function validateName(value) {
-        if(!/^[a-z]+$/.test(value)) { // solo caracteres a-z minusculas y al menos uno
+        if(!/^[a-zA-Z]+$/.test(value)) { // solo caracteres a-z minusculas y al menos uno
         setErrorName('Solo caracteres de la "a-z" minusculas y al menos uno');
         } else {
         setErrorName('');
