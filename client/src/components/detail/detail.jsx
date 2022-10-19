@@ -7,6 +7,7 @@ import {getProductDetails} from '../../redux/actions/get_product_details';
 import {cleanProductState} from '../../redux/actions/clean_product_state';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import RelatedProducts from "./relatedProducts";
+import Loading from "../loading/loading";
 
 function Detail(props) {
     const {id} = props.match.params;
@@ -25,9 +26,9 @@ function Detail(props) {
     for (let i = 0; i < Math.ceil(detail.score); i++) {
         stars.push(<StarRoundedIcon />)
     }
-    detail.categories && console.log(detail.categories[0])
+
     return (
-            <div className="detailContainer"> 
+            typeof detail.id === 'number' ? <div className="detailContainer"> 
                 <div className="detailContainerArticles">
                         <div className="detailLeft">
                             <h1 className="detailTitle">{detail.name}</h1>
@@ -64,7 +65,7 @@ function Detail(props) {
                 <div>
                     <RelatedProducts id={detail.id} categorie={detail.categories ? detail.categories[0] : null}/>
                 </div>
-            </div>
+            </div> : <Loading/>
     )
 }
 
