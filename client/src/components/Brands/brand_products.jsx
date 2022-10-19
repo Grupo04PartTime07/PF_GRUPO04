@@ -19,7 +19,7 @@ export default function Brand(props){
         productsaux[0] && productsaux[0].price ? <div>
             <h2 className="categorieTitle">{props.history.location.state}</h2>
             <div className="homeTable">
-                { productsaux.map(a => a.stock === 0 ? null : <Card id={a.id} name={a.name} image={a.image} price={a.price}/>) }
+                { productsaux.map(a => a.stock === 0 ? null : <Card id={a.id} name={a.name} image={a.image} price={a.price} score={a.score}/>) }
             </div>
         </div> : <Loading/>
     )
