@@ -11,7 +11,7 @@ export default function Brand(props){
     const productsaux = useSelector( state => state.productsaux)
 
     useEffect(() => {  // Didmount and DidUpdate controlled
-        
+        window.scrollTo(0, 0)
         dispatch(filterByBrand(props.history.location.state));
     },[dispatch]) 
 

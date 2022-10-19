@@ -66,6 +66,7 @@ export default function Home(props){
     const products = useSelector( state => state.products)
     
     useEffect(() => {  // Didmount and DidUpdate controlled
+        window.scrollTo(0, 0)
         dispatch(getAllProducts());
     },[dispatch]) 
 
