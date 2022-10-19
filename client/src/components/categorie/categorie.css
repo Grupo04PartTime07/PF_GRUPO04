@@ -16,10 +16,18 @@
 }
 
 .linkToBack{
+    display: flex;
     text-decoration: none;
     color:rgb(0, 122, 170);
-    font-weight: 350;
-    margin-bottom: 15%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border: none;
+    background: none;
+}
+
+.linkToBack:hover{
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 .productsByCategorie{
