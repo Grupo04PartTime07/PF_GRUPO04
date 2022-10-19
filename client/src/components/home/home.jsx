@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import Fab from '@mui/material/Fab';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Toolbar from '@mui/material/Toolbar';
+import { cleanProducts } from "../../redux/actions/clean_products";
 
 function ScrollTop(props) {
     const { children, window } = props;
@@ -66,7 +67,11 @@ export default function Home(props){
     const products = useSelector( state => state.products)
     
     useEffect(() => {  // Didmount and DidUpdate controlled
+        window.scrollTo(0, 0)
         dispatch(getAllProducts());
+        return(() => {
+          dispatch(cleanProducts({}))
+        })
     },[dispatch]) 
 
     return(

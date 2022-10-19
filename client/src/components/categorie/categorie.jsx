@@ -16,6 +16,7 @@ export default function Categorie(props){
     const [ order, setOrder ] = useState('')
 
     useEffect(() => {  // Didmount and DidUpdate controlled
+        window.scrollTo(0, 0)
         dispatch(filterByCategory(props.history.location.state)); 
         return(() => {
             dispatch(cleanProducts({}))

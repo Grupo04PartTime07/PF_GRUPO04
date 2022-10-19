@@ -47,15 +47,16 @@ export default function CategoriesList(){
   const dispatch = useDispatch()
   console.log(categoriesList)
   React.useEffect(() => {
+      window.scrollTo(0, 0)
       dispatch(getCategories())
     }, [dispatch]
   )
 
-    return(
-        categoriesList.length > 0 ? <div>
-          <div className='table'>
-            {categoriesList.map(cat => <BasicCard image={cat.image} name={cat.name}/>)}
-          </div>
-        </div> : <Loading/>
-    )
+  return(
+      categoriesList.length > 0 ? <div>
+        <div className='table'>
+          {categoriesList.map(cat => <BasicCard image={cat.image} name={cat.name}/>)}
+        </div>
+      </div> : <Loading/>
+  )
 }

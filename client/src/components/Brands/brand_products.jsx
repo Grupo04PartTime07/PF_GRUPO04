@@ -2,6 +2,7 @@ import React,{useEffect} from "react";
 import Card from '../card/card'
 import { useDispatch, useSelector } from 'react-redux';
 import { filterByBrand } from "../../redux/actions/filter_by_brand";
+import { cleanProducts } from "../../redux/actions/clean_products";
 import Loading from "../loading/loading";
 import './brand_products.css'
 
@@ -11,8 +12,11 @@ export default function Brand(props){
     const productsaux = useSelector( state => state.productsaux)
 
     useEffect(() => {  // Didmount and DidUpdate controlled
-        
+        window.scrollTo(0, 0)
         dispatch(filterByBrand(props.history.location.state));
+        return(() => {
+            dispatch(cleanProducts({}))
+        })
     },[dispatch]) 
 
     return(
