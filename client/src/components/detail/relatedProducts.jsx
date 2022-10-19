@@ -16,7 +16,7 @@ export default function RelatedProducts(props){
     const relatedProducts = products.filter(e => e.categories.includes(props.categorie)).filter(e => e.id !== props.id).slice(0,4)
 
     return(
-        relatedProducts.length > 1 && <div className="categorieTable">
+        relatedProducts.length > 0 && <div className="categorieTable">
             <div className="productsByCategorie">
                 <h2 className="categorieTitle">Tambien te puede interesar</h2>
                 <div className="homeTable">
