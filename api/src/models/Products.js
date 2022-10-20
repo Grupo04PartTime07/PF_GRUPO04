@@ -38,10 +38,25 @@ module.exports = (sequelize) => {
         
         score_promedio: {
             type: DataTypes.FLOAT,
-            }
+            },
 
-        },
+            isDeleted:{
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+                defaultValue: false
+          
+              },
 
+              createdAt: {
+                type: "TIMESTAMP",
+                defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
+                allowNull: true,
+              },
+        
+    
+         
+    
+            },
     {timestamps: false}),
     cache
 }
