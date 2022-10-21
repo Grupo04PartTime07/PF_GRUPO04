@@ -72,7 +72,6 @@ const createProduct = async (name, price, description, image,stock, score, categ
                 description: description,
                 image: [image],
                 stock: stock,
-                score_promedio: score,
         });
 
         const brands = await Brand.findOne({
@@ -80,12 +79,6 @@ const createProduct = async (name, price, description, image,stock, score, categ
                 name: brand,
             }
         });
-
-        if(!brands){
-            await Brand.create({
-                name: brand
-            })
-        };
 
         categories.map((e) => {
             let category = Categories.findOne({
