@@ -44,7 +44,7 @@ export default function Categorie(props){
                 <div>
                     Filtrar por:
                 
-                    <div>
+                    <div className="categorieOptions">
                         <div className="priceFilter">
                             Precio
                         </div>

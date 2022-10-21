@@ -38,3 +38,9 @@
     100% { margin-left: -200%}
 
 }
+
+@media screen and (max-width: 600px){
+    .slider{
+        display: none;
+    }
+}

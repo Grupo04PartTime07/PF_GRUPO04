@@ -4,7 +4,6 @@
 }
 
 .card:hover{ 
-    
     transition: .2s;
     transform: translate(-1%, -1%)
 }
@@ -25,4 +24,11 @@
 .productName{
     display: flex;
     text-align: left;
+}
+
+@media screen and (max-width: 600px){
+    .productImg{
+        position: relative;
+        left: 0%;
+    }
 }

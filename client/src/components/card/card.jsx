@@ -52,7 +52,7 @@ export default function ImgMediaCard(props) {
           {props.name}
         </Typography>
         </Typography>
-        <Typography className="productStars" variant="subtitle2" color="text.secondary">
+        <Typography className="productStars" sx={{ display: 'flex'}} color="text.secondary">
           {stars}
         </Typography>
       </CardContent>
