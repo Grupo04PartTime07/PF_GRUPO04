@@ -108,7 +108,7 @@ const createCategory = async (name, image) => {
     }catch(e){
         console.log(e)
     }
-}
+};
 
 const getProductDetail = async (id) => {
     try{
