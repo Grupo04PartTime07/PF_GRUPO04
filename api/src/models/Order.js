@@ -30,8 +30,24 @@ module.exports = (sequelize) => {
         status:{
             type: DataTypes.STRING,
             allowNull: false
-        }
+        },
         
+        isDeleted:{
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+      
+          },
+
+          createdAt: {
+            type: "TIMESTAMP",
+            defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
+            allowNull: true,
+          },
+    
+
+     
+
         },
 
     {timestamps: false})
