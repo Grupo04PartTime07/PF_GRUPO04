@@ -19,8 +19,26 @@ module.exports = (sequelize) => {
     image: {
       type: DataTypes.STRING,
       allowNull: true, //para probar de forma local 
-    }
-  },
+    },
+
+
+   isDeleted:{
+    type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+      
+          },
+
+          createdAt: {
+            type: "TIMESTAMP",
+            defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
+            allowNull: true,
+          },
+    
+
+     
+
+        },
   {timestamps: false}
   );
 };

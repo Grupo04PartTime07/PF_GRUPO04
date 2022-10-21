@@ -8,6 +8,10 @@
     transform: translate(-1%, -1%)
 }
 
+.cardLink:hover{
+    cursor: pointer;
+}
+
 .productImg{
     position: relative;
     left: 11%;
@@ -20,4 +24,11 @@
 .productName{
     display: flex;
     text-align: left;
+}
+
+@media screen and (max-width: 600px){
+    .productImg{
+        position: relative;
+        left: 0%;
+    }
 }

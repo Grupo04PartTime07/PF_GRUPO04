@@ -80,15 +80,21 @@ const createProduct = async (name, price, description, image,stock, score, categ
             }
         });
 
-        categories.map((e) => {
-            let category = Categories.findOne({
+        if(!brands){
+            await Brand.create({
+                name: brand
+            })
+        };
+
+        for(c of categories){
+            category = await Categories.findOne({
                 where: {
-                    name: e
+                    name: c
                 }
             })
             newProduct.addCategories(category.id);
-        })
-
+        }
+        
         newProduct.setBrand(brands);
 
         return newProduct

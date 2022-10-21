@@ -126,17 +126,17 @@ const reducer = (state = initialState, action) => {
         }
         case ORDER_BY_RATE: {
             let ordered = [];
-            if (action.payload === "good") {
+            if (action.payload === "bad") {
                 ordered = state.productsaux.sort(function (a, b) {
-                    if (a.rate > b.rate) return 1
-                    else if (b.rate > a.rate) return -1
+                    if (a.score > b.score) return 1
+                    else if (b.score > a.score) return -1
                     else return 0
                 })
                 return { ...state, productsaux: ordered }
-            } else if (action.payload === "bad") {
+            } else if (action.payload === "good") {
                 ordered = state.productsaux.sort(function (a, b) {
-                    if (a.rate > b.rate) return -1
-                    else if (b.rate > a.rate) return 1
+                    if (a.score > b.score) return -1
+                    else if (b.score > a.score) return 1
                     else return 0
                 })
                 return { ...state, productsaux: ordered }

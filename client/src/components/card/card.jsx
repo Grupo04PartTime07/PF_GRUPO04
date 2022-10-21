@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import AddShoppingCartTwoToneIcon from '@mui/icons-material/AddShoppingCartTwoTone';
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToFavorite } from '../../redux/actions/add_to_favorite';
 import { addToCart } from '../../redux/actions/add_to_cart';
@@ -21,14 +22,19 @@ export default function ImgMediaCard(props) {
   const favorites = useSelector(state => state.favorites)
 
   let itemFound = favorites.find(e => e.name === props.name)
-  
+
+  let stars = []
+
+  for(let i = 1; i <= props.score; i++){
+    stars.push(<StarRoundedIcon fontSize='small'/>)
+  }
 
   return (
     <Card 
       className='card' 
       sx={{ maxWidth: 245 }}       
     >
-      <Link to={`/products/${props.id}`} style={{textDecoration:"none", color: "black"}} >
+      <Link className='cardLink' to={`/products/${props.id}`} style={{textDecoration:"none", color: "black"}} >
       <CardMedia
         className='productImg'
         component="img"
@@ -37,12 +43,17 @@ export default function ImgMediaCard(props) {
         height="170"
         image={props.image}
       />
-      <CardContent>
-        <Typography className="productPrice" gutterBottom variant="h5" component="div">
+      <CardContent sx={{ height: 70 }} >
+        <Typography sx={{ fontSize: 20 }} className="productPrice" gutterBottom variant="h5" component="div">
           ${props.price}
         </Typography>
-        <Typography className="productName" variant="body2" color="text.secondary">
+        <Typography sx={{height: 36, overflow: 'hidden' }}>
+        <Typography sx={{ fontSize: 12}} className="productName" variant="body2" color="text.secondary">
           {props.name}
+        </Typography>
+        </Typography>
+        <Typography className="productStars" sx={{ display: 'flex'}} color="text.secondary">
+          {stars}
         </Typography>
       </CardContent>
       </Link>

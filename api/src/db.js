@@ -71,7 +71,8 @@ Order.belongsTo(Client);
 Order.hasOne(Invoice);
 Invoice.belongsTo(Order);
 
-
+UserRegisted.belongsToMany(Products, {through: 'user_favorites'});
+Products.belongsToMany(UserRegisted, {through: 'user_favorites'});
 
 // **Agregar las relaciones aqui**
 
