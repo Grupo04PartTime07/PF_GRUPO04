@@ -18,6 +18,7 @@ import TemporaryDrawer from './menu';
 import { Link } from 'react-router-dom';
 import {useDispatch} from "react-redux";
 import { getNameProduct } from "../../redux/actions/search_name";
+import ShoppingBar from '../ShoppingCartBar/ShoppingBar';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -65,7 +66,7 @@ export default function PrimarySearchAppBar() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const dispatch = useDispatch()
   const [name, setName] = React.useState('');
-
+  
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -81,6 +82,7 @@ export default function PrimarySearchAppBar() {
     
     
   };
+
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -177,7 +179,7 @@ export default function PrimarySearchAppBar() {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, position: 'sticky', top: 0, zIndex: 10 }}>
       <AppBar position="static">
         <Toolbar>
           <IconButton> 
@@ -250,6 +252,7 @@ export default function PrimarySearchAppBar() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
+      <ShoppingBar/>
     </Box>
   );
 }

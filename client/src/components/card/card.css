@@ -4,8 +4,13 @@
 }
 
 .card:hover{ 
+    
     transition: .2s;
     transform: translate(-1%, -1%)
+}
+
+.cardLink:hover{
+    cursor: pointer;
 }
 
 .productImg{

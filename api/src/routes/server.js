@@ -133,7 +133,7 @@ const data =  [
     "description": "Disfrutá sin preocupaciones del verano, protegiendo la piel de quienes más querés de los rayos ultravioletas del sol.",
     "id": "6",
     "brand":"Dermaglós",
-    "categories": ["Perfumeria", "Cuidado Personal"],
+    "categories": ["Cuidado Personal", "Perfumeria"],
     "stock": 24,
     },
     {
@@ -143,7 +143,7 @@ const data =  [
     "description": "Un cabello fresco, más vital y manejable en pocos pasos, de la mano de Elvive.",
     "id": "7",
     "brand":"L'oréal",
-    "categories": ["Perfumeria", "Cuidado Personal"],
+    "categories": ["Cuidado Personal", "Perfumeria"],
     "stock": 50,
     },
     {
@@ -163,7 +163,7 @@ const data =  [
     "description": "Leche Entera Larga Vida Homogenizada Libre de Gluten - Sin T.A.C.C.",
     "id": "9",
     "brand":"Veronica",
-    "categories": ["Almacén", "Lácteos"],
+    "categories": ["Lácteos", "Almacén"],
     "stock": 48,
     },
     {
@@ -173,7 +173,7 @@ const data =  [
     "description": "Leche con cacao Fortificada con vitaminas A y D",
     "id": "10",
     "brand":"Las Tres Niñas",
-    "categories": ["Almacén", "Lácteos", "Desayuno y Merienda"],
+    "categories": ["Desayuno y Merienda", "Almacén", "Lácteos" ],
     "stock": 56,
     },
     {
@@ -183,7 +183,7 @@ const data =  [
     "description": "Contiene aromatizantes identicos al natural",
     "id": "11",
     "brand":"Twinings",
-    "categories": ["Almacén", "Desayuno y Merienda"],
+    "categories": ["Desayuno y Merienda", "Almacén"],
     "stock": 36,
     },
     {
@@ -213,7 +213,7 @@ const data =  [
     "description": "Hasta 20% de Ahorro, Rinde 3 Litros, Con enzimas de origen natural",
     "id": "14",
     "brand":"Skip",
-    "categories": ["Almacén", "Limpieza"],
+    "categories": ["Limpieza", "Almacén"],
     "stock": 18,
     },
     {
@@ -223,7 +223,7 @@ const data =  [
     "description": "Interior Afelpado, más resistentes",
     "id": "15",
     "brand":"Make",
-    "categories": ["Almacén", "Limpieza"],
+    "categories": ["Limpieza", "Almacén"],
     "stock": 48,
     },
     {
@@ -233,7 +233,7 @@ const data =  [
     "description": "Agua mineral baja en Sodio",
     "id": "16",
     "brand":"Glaciar",
-    "categories": ["Agua", "Bebidas"],
+    "categories": ["Bebidas", "Agua"],
     "stock": 80,
     },
     {
@@ -263,7 +263,7 @@ const data =  [
     "description": "Elaborado Artesanalmente con Granos Arabicos",
     "id": "19",
     "brand":"Twinings",
-    "categories": ["Bebidas", "Desayuno y Merienda"],
+    "categories": ["Desayuno y Merienda", "Bebidas"],
     "stock": 36,
     },
     {
@@ -293,7 +293,7 @@ const data =  [
     "description": "Comparte Dulces Momentos, buscá recetas en nuestra Web",
     "id": "22",
     "brand":"Pozo",
-    "categories": ["Almacén", "Desayuno y Merienda"],
+    "categories": ["Desayuno y Merienda", "Almacén"],
     "stock": 56,
     },
     {
@@ -303,7 +303,7 @@ const data =  [
     "description": "Sabores: Tutti Frutti, Anana, Uva y Limon",
     "id": "23",
     "brand":"Flynn Paff",
-    "categories": ["Almacén", "Golosinas"],
+    "categories": ["Golosinas", "Almacén"],
     "stock": 26,
     },
     {
@@ -313,7 +313,7 @@ const data =  [
     "description": "Libre de gluten, Sin T.A.C.C.",
     "id": "24",
     "brand":"Menoyo",
-    "categories": ["Almacén", "Aceites y Vinagres"],
+    "categories": ["Aceites y Vinagres", "Almacén"],
     "stock": 40,
     },
     {
@@ -323,7 +323,7 @@ const data =  [
     "description": "Azúcar Rubia, Sin T.A.C.C.",
     "id": "25",
     "brand":"Ledesma",
-    "categories": ["Almacén", "Desayuno y Merienda", "Reposteria"],
+    "categories": ["Reposteria", "Almacén", "Desayuno y Merienda"],
     "stock": 46,
     },
     {

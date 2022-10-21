@@ -1,0 +1,51 @@
+.cartcontainer{
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+    justify-items: start;
+    align-items:center;
+    justify-content: center;
+    margin-bottom: 10px;
+    background-color:  rgb(225, 225, 225);
+    border-bottom: 1px solid rgb(71, 70, 70);
+
+}
+.itemcontainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 70px;
+    width: 120px;
+}
+.img{
+    border-radius: 5px;
+    margin: 3px;
+}
+.btn{
+    border-radius: 5px;
+    margin: 3px;
+    background-color: rgba(50, 104, 203, 0.632);
+    border: none;
+}
+.numbox{
+    border-radius: 5px;
+    margin: 3px;
+}
+.erase{
+    align-self: baseline;
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(253, 62, 62);
+    color: whitesmoke
+}
+.totalcontainer{
+    padding-left: 10px;
+    text-align: baseline;
+}
+.qtty{
+    margin: 4px;
+
+}
+.check{
+    margin: 4px;
+}

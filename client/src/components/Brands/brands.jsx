@@ -12,6 +12,7 @@ export default function Marcas(){
     const products = useSelector( state => state.brand)
     
     useEffect(() => {  // Didmount and DidUpdate controlled
+        window.scrollTo(0, 0)
         dispatch(getBrands());
     },[dispatch]) 
 
