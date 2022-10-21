@@ -19,6 +19,7 @@ import { Link } from 'react-router-dom';
 import {useDispatch} from "react-redux";
 import { getNameProduct } from "../../redux/actions/search_name";
 
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative', 
   borderRadius: theme.shape.borderRadius,

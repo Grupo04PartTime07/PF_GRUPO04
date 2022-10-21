@@ -8,3 +8,5 @@ export const updateProduct = (id,payload) => dispatch => {
     .then(res => dispatch({type: UPDATE_PRODUCT, payload: res.data}) )
     .catch(err => console.log(err))
     }
+
+  
