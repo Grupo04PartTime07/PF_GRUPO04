@@ -1,0 +1,138 @@
+.footerContainer{
+    background-color: rgb(24, 23, 23);
+    height: fit-content;
+    padding: 20px;
+    width: 100wh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    color: antiquewhite;
+}
+
+.container_text{
+    display: inline-grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.footerContainer h3{
+    text-align: center;
+}
+
+.footerList{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+.footerList li{
+    padding-bottom: 8px;
+}
+
+.footerContact p{
+    margin: 0px;
+    padding: 0px;
+    padding-bottom: 8px;
+}
+
+.footerSocial{
+    margin: 0px;
+    padding: 0px;
+    
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.footerSocialIcon ul{
+    margin: 0px;
+    padding: 0px;
+    display: inline-grid;
+    grid-template-columns: repeat(4, 1fr);
+
+   
+}
+
+.footerSocialIcon ul li{
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    justify-content: space-evenly;
+    align-content: space-between;
+    margin-left: 10px;
+}
+
+.footerLinkedin{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: space-evenly;
+    flex-direction: row;
+}
+
+.footerLinkedinTitle{
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+
+.footerLinkedinItem{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.footerLinkedinItem ul{
+    text-decoration: none;
+    list-style: none;
+}
+.footerLinkedinItem ul li{
+    margin: 0px;
+    padding: 0px;
+    display: inline-grid;
+    grid-template-columns: repeat(2, 1fr);
+    
+}
+.footerLinkedinItem ul li h6{
+    margin: 0px;
+    margin-left: 8px;
+    padding: 0px;
+}
+
+h6{
+    display: flex;
+    justify-content: start;
+    width: 100px;
+    position: relative;
+    top: 5px
+}
+
+.footerLinkedinItem ul li a{
+    text-decoration: none;
+    color: antiquewhite;
+   
+}
+
+@media screen and (max-width: 600px){
+    .footerContainer{
+        width: 100%;
+    }
+    .container_text{
+        display: inline-grid;
+        grid-template-columns: repeat(1, 1fr);
+        position: relative;
+        left: 0%;
+        right: 5%;
+    }
+    .footerLinkedin{
+        display: block;
+        position: relative;
+        left: 20px
+    }
+    h6{
+        position: relative;
+        right: 80px;
+    }
+
+}

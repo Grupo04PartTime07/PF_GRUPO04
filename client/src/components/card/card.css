@@ -1,0 +1,28 @@
+.card{
+    display: grid;
+    margin: 5%;
+}
+
+.card:hover{ 
+    
+    transition: .2s;
+    transform: translate(-1%, -1%)
+}
+
+.cardLink:hover{
+    cursor: pointer;
+}
+
+.productImg{
+    position: relative;
+    left: 11%;
+}
+
+.productPrice{
+    display: flex;
+}
+
+.productName{
+    display: flex;
+    text-align: left;
+}
