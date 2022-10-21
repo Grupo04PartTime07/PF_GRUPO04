@@ -3,3 +3,11 @@
     grid-template-columns: repeat(4, 1fr);
     margin: 2%;
 }
+
+@media screen and (max-width: 600px){
+    .homeTable{
+        display: inline-grid;
+        grid-template-columns: repeat(2, 1fr);
+        padding: 3%;
+    }
+}

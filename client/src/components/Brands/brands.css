@@ -6,9 +6,16 @@
 
 .brandTitle{
     display: flex;
-
     margin-left: 5%;
     margin-bottom: 0%;
     font-weight: 350;
     color: rgb(82, 82, 82);
+}
+
+@media screen and (max-width: 600px){
+    .brandTable{
+        display: inline-grid;
+        grid-template-columns: repeat(1, 1fr);
+        margin: 3%;
+    }
 }
