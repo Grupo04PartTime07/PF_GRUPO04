@@ -20,6 +20,7 @@ import {useDispatch} from "react-redux";
 import { getNameProduct } from "../../redux/actions/search_name";
 import ShoppingBar from '../ShoppingCartBar/ShoppingBar';
 
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative', 
   borderRadius: theme.shape.borderRadius,

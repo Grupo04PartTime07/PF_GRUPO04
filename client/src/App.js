@@ -12,6 +12,7 @@ import CreateAccount from './components/account/account';
 import CategoryForm from './components/categoryForm/categoryForm';
 import CreateProduct from './components/createProduct/CreateProduct';
 import Brand from './components/Brands/brand_products';
+import ShoppingCartBig from './components/shoppingCartBig/shoppingCart';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
             <Route exact path="/Marcas" component={Marcas} />
             <Route exact path='/createCategory' component={CategoryForm}/>
             <Route exact path='/brands' component={Brand}/>
+            <Route exact path='/shoppingCart' component={ShoppingCartBig}/>
             <Route path="/" component={Footer} />
           </div>
       </React.Fragment>

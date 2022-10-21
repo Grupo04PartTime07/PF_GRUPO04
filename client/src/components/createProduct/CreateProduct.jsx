@@ -3,7 +3,7 @@ import { useDispatch, useSelector} from "react-redux";
 import { useState, useEffect} from "react";
 import  {getCategories}  from "../../redux/actions/get_categories";
 import {getBrands} from "../../redux/actions/get_brands"
-import { newProducts } from '../../redux/actions/new_products';
+import { createNewProducts } from '../../redux/actions/create_new_products';
 import { Link, useHistory} from "react-router-dom";
 import "./createProduct.css"
 
@@ -158,7 +158,7 @@ function CreateProduct() {
     function handleSubmit(e){ // crea el nuevo articulo, faltaria agregarle en el dispatch la accion que lo crea
         e.preventDefault(e);
 
-        dispatch(newProducts(input));
+        dispatch(createNewProducts(input));
         alert("articulo creado");
         setInput({
             name:"",
