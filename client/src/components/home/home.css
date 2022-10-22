@@ -1,7 +1,17 @@
+.homeTitle{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    margin-right: 850px;
+    margin-bottom: 0%;
+    font-weight: 350;
+    color: rgb(82, 82, 82);
+}
+
 .homeTable{
     display: inline-grid;
     grid-template-columns: repeat(4, 1fr);
-    margin: 2%;
+    margin: 5%;
+    margin-top: 2%;
 }
 
 @media screen and (max-width: 600px){
