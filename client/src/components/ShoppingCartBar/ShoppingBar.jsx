@@ -36,9 +36,9 @@ export default function ShoppingBar(props){
         <div className="cartcontainer">
             {cart && cart.length > 0 ? 
                 <div className="totalcontainer">
-                <p className="qtty">Cant: {cart.reduce(function ( acc, va){return (acc + va.quantity)},0)}</p>
-                <p className="qtty">Tot: {cart.reduce(function ( acc, va){return (acc + (va.quantity*va.price))},0)} </p>
-                <button className="check" onClick={()=> goToBig()}>Expandir</button>
+                    <p className="qtty">Cant: {cart.reduce(function ( acc, va){return (acc + va.quantity)},0)}</p>
+                    <p className="qtty">Tot: {cart.reduce(function ( acc, va){return (acc + (va.quantity*va.price))},0)} </p>
+                    <button className="check" onClick={()=> goToBig()}>Pagar</button>
                 </div>: null}
             {cart && cart.length - itemsPerPage > 0 ? 
                 <div className="totalcontainer">
@@ -55,8 +55,8 @@ export default function ShoppingBar(props){
                 <button className="btn" onClick={() => handleLess(a.id)}>-</button>
                 <p className="numbox">{a.quantity}</p>
                 <button className="btn" onClick={() => handleMore(a.id)}>+</button>
-                <button value={a.id} className="erase" onClick={() => handleErase(a.id)}>X</button>
-            </div>)}): <p>El Carrito esta Vacio</p>}
+                <button value={a.id} className="erase" onClick={() => handleErase(a.id)}>x</button>
+            </div>)}): <p>No hay nada aún</p>}
         </div>
     )
 }
