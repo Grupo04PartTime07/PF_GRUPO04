@@ -16,9 +16,10 @@ import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import TemporaryDrawer from './menu';
 import { Link } from 'react-router-dom';
-import {useDispatch} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getNameProduct } from "../../redux/actions/search_name";
 import ShoppingBar from '../ShoppingCartBar/ShoppingBar';
+import { fulfillCart } from "../../redux/actions/fulfill_cart";
 import './navbar.css'
 
 
@@ -68,6 +69,21 @@ export default function PrimarySearchAppBar() {
   const dispatch = useDispatch()
   const [name, setName] = React.useState('');
   const [viewcart, setCart] = React.useState(false);
+  const cart = useSelector((state) => state.cart);
+  let currentUser = "Guest"
+
+  let dhacart = JSON.parse(window.localStorage.getItem(currentUser))
+    React.useEffect(()=>{
+        if(dhacart && dhacart.length) dispatch(fulfillCart(dhacart))
+    }, [])
+    React.useEffect(() => {
+        updateStorage(currentUser, cart)
+    }, [cart])
+  
+  function updateStorage(user, cart){
+      let updatedCart = JSON.stringify(cart);
+      window.localStorage.setItem(user, updatedCart)
+  }
   
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
