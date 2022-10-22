@@ -1,0 +1,127 @@
+.divShoppingCart {
+    color: black
+   
+}
+
+.title {
+    color: black
+}
+
+.hr{
+    background-color: black;
+}
+
+.divHeader {
+    color: black;
+    display: flex;
+    justify-content: space-between;
+}
+
+.span {
+    font-weight: bold;
+}
+
+.spanProducto {
+    margin-left: 300px;
+    font-weight: bold;
+}
+
+.spanPrecio {
+    margin-left: 70px;
+    font-weight: bold;
+}
+
+.spanCantidad {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+
+.bttnDelete{
+    cursor:pointer;
+    margin-right: 20px;
+    border-radius: 5px;
+    background-color: rgb(253, 62, 62);
+    color: whitesmoke;
+    box-sizing: border-box;
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+}
+.bttnDelete:hover {
+    background-color:  rgb(137, 134, 134);
+    }
+
+.notFoundMessage {
+    color:black
+}
+
+.divShipping {
+    display:flex;
+    justify-content: flex-start;
+}
+.shipping {
+    color:black;
+    margin-left: 10px;
+    font-weight: bold;
+    margin-bottom: 0px;
+    margin-top: 25px; 
+}
+.shippingPrice {
+    margin-left: 10px;
+    font-size: 14px;
+    margin-top: 27px; 
+}
+
+.divCantProductos {
+    display:flex;
+    justify-content: flex-start;
+}
+
+.pCantProductos {
+    color:black;
+    margin-left: 10px;
+    font-weight: bold;
+    margin-bottom: 0px;
+    margin-top: 15px;
+}
+
+.spanCantProductos {
+    margin-left: 10px;
+    font-size: 14px;
+    margin-top: 17px; 
+}
+.cartPrice {
+    margin-top: 12px;
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+.divTotal {
+    display:flex;
+    justify-content: flex-start;
+}
+.total{
+    color:black;
+    margin-top: 10px;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.bttnPagar {
+    cursor:pointer;
+    margin-left: 20px;
+    margin-bottom: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+    background-color: #1976d2;
+    box-sizing: border-box;
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+}
+.bttnPagar:hover {
+    background-color:  rgb(137, 134, 134);
+    }
+
+    .divBttnPagar {
+        display: flex;
+        justify-content: flex-start;
+    }

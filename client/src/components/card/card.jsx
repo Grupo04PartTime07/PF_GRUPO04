@@ -69,7 +69,7 @@ export default function ImgMediaCard(props) {
         </IconButton>
 
         <IconButton size="large" aria-label="show 4 new mails" color="inherit"
-        onClick={()=> dispatch(addToCart({name: props.name, image: props.image, price: props.price, quantity: 1})) }>
+        onClick={()=> dispatch(addToCart({id: props.id, name: props.name, image: props.image, price: props.price, quantity: 1})) }>
             <AddShoppingCartTwoToneIcon />
         </IconButton>
       </CardActions>
