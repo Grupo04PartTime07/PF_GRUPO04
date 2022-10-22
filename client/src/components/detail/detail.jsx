@@ -32,7 +32,7 @@ function Detail(props) {
     return (
             typeof detail.id === 'number' ? <div className="detailContainer"> 
                 <div className="detailContainerArticles">
-                        <div className="detailLeft">
+                        <div className="detailLeft"> {/*Agregar una estiqueta de producto no disponible condicionada al stock*/}
                             <h1 className="detailTitle">{detail.name}</h1>
                             <span className="detailScore">{stars}</span>
                             <h2 className="detailPrice"> $ {detail.price}</h2>
@@ -43,7 +43,6 @@ function Detail(props) {
                             </Link>
                             <Button onClick={()=> dispatch(addToCart({id: detail.id, name: detail.name, image: detail.image, price: detail.price, quantity: 1})) } variant="contained">Agregar al Carrito</Button>
                         </div>
-                    </div>
                     <div className="detailImagen">
                         <img src={detail.image} alt="productos" />
                     </div>

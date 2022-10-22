@@ -18,6 +18,7 @@ const cartItems = useSelector(state => state.cart)
 
 
 useEffect(() => {  // Didmount and DidUpdate controlled
+    window.scrollTo(0, 0)
     dispatch(getCart());
 },[dispatch])
 
