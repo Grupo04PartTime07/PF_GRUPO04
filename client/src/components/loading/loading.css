@@ -1,9 +1,15 @@
 .loadingImg{
     height: 300px;
     margin-top: 100px;
+    margin-bottom: 100px;
 }
 
-.loadingText{
+.errorImg{
+    height: 300px;
+    margin-top: 100px;
+}
+
+.errorText{
     font-weight: 400;
     margin-bottom: 100px;
 }

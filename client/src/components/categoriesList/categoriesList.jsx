@@ -8,6 +8,7 @@ import { CardMedia } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import {cleanProducts} from '../../redux/actions/clean_products'
 import './categoriesList.css'
+import Loading from '../loading/loading';
 
 function BasicCard(props) {
   
@@ -46,13 +47,16 @@ export default function CategoriesList(){
   const dispatch = useDispatch()
   console.log(categoriesList)
   React.useEffect(() => {
+      window.scrollTo(0, 0)
       dispatch(getCategories())
     }, [dispatch]
   )
 
-    return(
+  return(
+      categoriesList.length > 0 ? <div>
         <div className='table'>
           {categoriesList.map(cat => <BasicCard image={cat.image} name={cat.name}/>)}
         </div>
-    )
+      </div> : <Loading/>
+  )
 }

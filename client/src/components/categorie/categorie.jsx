@@ -16,6 +16,7 @@ export default function Categorie(props){
     const [ order, setOrder ] = useState('')
 
     useEffect(() => {  // Didmount and DidUpdate controlled
+        window.scrollTo(0, 0)
         dispatch(filterByCategory(props.history.location.state)); 
         return(() => {
             dispatch(cleanProducts({}))
@@ -36,14 +37,14 @@ export default function Categorie(props){
         productsaux[0] && productsaux[0].price ? <div className="categorieTable">
             <div className="categorieFilters">
                 <Link className="linkToBack" to='/Categorias'>
-                    <h3 className="linkToBack">
+                    <button className="linkToBack">
                         Volver
-                    </h3>
+                    </button>
                 </Link>
                 <div>
                     Filtrar por:
                 
-                    <div>
+                    <div className="categorieOptions">
                         <div className="priceFilter">
                             Precio
                         </div>
@@ -64,7 +65,7 @@ export default function Categorie(props){
             <div className="productsByCategorie">
                 <h2 className="categorieTitle">{props.history.location.state}</h2>
                 <div className="homeTable">
-                    { productsaux.map(a => a.stock === 0 ? null : <Card id={a.id} name={a.name} image={a.image} price={a.price}/>) }
+                    { productsaux.map(a => a.stock === 0 ? null : <Card id={a.id} name={a.name} image={a.image} price={a.price} score={a.score}/>) }
                 </div>
             </div>
         </div> : <Loading/>

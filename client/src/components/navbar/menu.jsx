@@ -74,7 +74,7 @@ export default function TemporaryDrawer() {
       {['left'].map((anchor) => (
         <React.Fragment key={anchor}>
             
-          <MenuIcon onClick={toggleDrawer(anchor, true)}/>
+          <MenuIcon className='menuIcon' sx={{ width: 30, position: 'relative', top: '2px'}} onClick={toggleDrawer(anchor, true)}/>
           <Drawer
             anchor={anchor}
             open={state[anchor]}

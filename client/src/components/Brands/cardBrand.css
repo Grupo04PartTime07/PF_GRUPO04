@@ -24,3 +24,22 @@
     top: 20px;
     font-weight: 500;
 }
+
+@media screen and (max-width: 600px){
+    .brandCard{
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        max-width: 250px;
+        min-height: 250px;
+    }
+    .brandImg{
+        position: relative;
+        min-height: 50%;
+    }
+    .brandName{
+        display: flex;
+        position: relative;
+        top: 0px;
+        font-weight: 500;
+    }
+}

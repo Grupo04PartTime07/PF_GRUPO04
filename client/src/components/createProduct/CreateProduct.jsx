@@ -253,7 +253,7 @@ function CreateProduct() {
             />
             <p className={error.stock?"danger":"normal"}>{error.stock}</p>
 
-            <label>Valoracion:</label>
+            <label>Valoracion:</label> {/*quitar*/}
             <input
               type="number"
               value={input.score}

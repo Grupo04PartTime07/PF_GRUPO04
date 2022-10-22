@@ -72,7 +72,6 @@ const createProduct = async (name, price, description, image,stock, score, categ
                 description: description,
                 image: [image],
                 stock: stock,
-                score_promedio: score,
         });
 
         const brands = await Brand.findOne({
@@ -115,7 +114,7 @@ const createCategory = async (name, image) => {
     }catch(e){
         console.log(e)
     }
-}
+};
 
 const getProductDetail = async (id) => {
     try{
@@ -159,11 +158,34 @@ const getProductDetail = async (id) => {
     }
 };
 
+const updateProduct = async (id, props) => {
+
+    try {
+        await Products.update(
+            {
+             name: props.name,
+             price: props.price,
+             description: props.description,
+             image: [...props.image]
+            }, {
+                where: {
+                    id: id
+                }
+            })
+
+        let productModified = await Products.findByPk(id)
+        return productModified
+    } catch(e) {
+        console.log(e)
+    }
+};
+
 module.exports = {
     getProductsDb,
     getCategoriesDb,
     getBrandsDb,
     createProduct,
     createCategory,
-    getProductDetail
+    getProductDetail,
+    updateProduct
 }
