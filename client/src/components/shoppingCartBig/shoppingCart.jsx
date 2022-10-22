@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import CartItem from "./cartItem.jsx"
 import { addOneToCart } from '../../redux/actions/add_one_to_cart';
@@ -15,9 +15,12 @@ export default function ShoppingCartBig(props){
 const dispatch = useDispatch()
 const cartItems = useSelector(state => state.cart)
 
+
 useEffect(() => {  // Didmount and DidUpdate controlled
     dispatch(getCart());
 },[dispatch])
+
+const [shipping, setShipping] = useState("")
 
     return(
         <div className={styles.divShoppingCart}>
@@ -50,8 +53,15 @@ useEffect(() => {  // Didmount and DidUpdate controlled
             }
             <div className={styles.purchaseContainer}>
                 <div className={styles.divShipping}>
-                    <p className={styles.shipping}>Gastos de envio:</p>  
-                    <span className={styles.shippingPrice}>$399 (zona de cobertura: CABA)</span> 
+                    <label className={styles.shipping} htmlFor="shipping-costs">Costo de envio: </label>
+                    <select className={styles.shippingPrice} name="shipping-costs"id="shipping-costs" defaultValue=""
+                    onChange={(e) => setShipping(e.target.value) }
+                    >
+                    <option disabled value="" >Elije una franja horaria</option>
+                    <option value="299">$299 (8hs a 21hs - CABA)</option>
+                    <option value="349">$349 (12hs a 16hs - CABA)</option>
+                    <option value="399">$399 (18hs a 21hs - CABA)</option>
+                    </select>
                 </div>
                 <div className={styles.divCantProductos}>
                     <p className={styles.pCantProductos}>Cantidad de productos: </p>  
@@ -59,7 +69,7 @@ useEffect(() => {  // Didmount and DidUpdate controlled
                 </div>
                 <div className={styles.divTotal}>
                     <p className={styles.total}>Precio final: </p>
-                    <span className={styles.cartPrice}>${cartItems.reduce(function ( acc, va){return (acc + (va.quantity*va.price))},0)+399}</span> 
+                    <span className={styles.cartPrice}>${cartItems.reduce(function ( acc, va){return (acc + (va.quantity*va.price))},0)+Number(shipping)}</span> 
                 </div>
                 <div className={styles.divBttnPagar} >
                     <button className={styles.bttnPagar} onClick={()=> dispatch(checkOutCart(cartItems.map(e => {return {title:e.name, unit_price:e.price, quantity:e.quantity}})))}>Finalizar compra</button>
