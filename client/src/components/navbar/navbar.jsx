@@ -231,7 +231,7 @@ export default function PrimarySearchAppBar() {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton onClick={handleDisplayCart} size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={0} color="error">
+              <Badge badgeContent={cart.reduce(function ( acc, va){return (acc + va.quantity)},0)} color="error">
                 <ShoppingCartTwoToneIcon />
               </Badge>
             </IconButton>
@@ -240,9 +240,9 @@ export default function PrimarySearchAppBar() {
               aria-label="show 17 new notifications"
               color="inherit"
             >
-              {/* <Badge badgeContent={0} color="error"> */}
+              <Badge badgeContent={0} color="error">
                 <FavoriteTwoToneIcon />
-              {/* </Badge> */}
+              </Badge>
             </IconButton>
             <IconButton
               size="large"
