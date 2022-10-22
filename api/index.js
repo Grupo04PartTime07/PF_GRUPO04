@@ -9,4 +9,4 @@ conn.sync({ alter:true }).then(() => {
   server.listen(PORT, () => {
     console.log(`Listening at ${PORT}`);
   });
-});
+}); 
