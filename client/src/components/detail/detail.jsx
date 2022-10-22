@@ -30,16 +30,16 @@ function Detail(props) {
     return (
             typeof detail.id === 'number' ? <div className="detailContainer"> 
                 <div className="detailContainerArticles">
-                        <div className="detailLeft">
+                        <div className="detailLeft"> {/*Agregar una estiqueta de producto no disponible condicionada al stock*/}
                             <h1 className="detailTitle">{detail.name}</h1>
                             <span className="detailScore">{stars}</span>
                             <h2 className="detailPrice"> $ {detail.price}</h2>
                             <p className="detailDescription">{detail.description}</p>
-                        <div className="detailButton">
-                            <span className="buttonMargin"><Button variant="contained" >Comprar</Button></span>
-                            <Button variant="contained">Agregar al Carrito</Button>
+                            <div className="detailButton">
+                                <span className="buttonMargin"><Button variant="contained" >Comprar</Button></span>
+                                <Button variant="contained">Agregar al Carrito</Button>
+                            </div>
                         </div>
-                    </div>
                     <div className="detailImagen">
                         <img src={detail.image} alt="productos" />
                     </div>

@@ -2,7 +2,6 @@ import React,{useEffect} from "react";
 import Card from '../card/card'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProducts } from "../../redux/actions/get_products";
-import Detail from "./detail";
 
 export default function RelatedProducts(props){
     console.log(props.categorie)
@@ -18,7 +17,7 @@ export default function RelatedProducts(props){
     return(
         relatedProducts.length > 0 && <div className="categorieTable">
             <div className="productsByCategorie">
-                <h2 className="categorieTitle">Tambien te puede interesar</h2>
+                <h2 className="relatedTitle">Tambien te puede interesar</h2>
                 <div className="homeTable">
                     { relatedProducts.map(a => a.stock === 0 ? null : <Card id={a.id} name={a.name} image={a.image} price={a.price} score={a.score}/>) }
                 </div>
