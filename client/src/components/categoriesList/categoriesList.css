@@ -35,8 +35,7 @@
     .categorie_card{
         width: 270px;
         position: relative;
-        left: 5%;
-        right: 5%;
+        right: 2%;
     }
     .categoryIcon{
         position: relative;

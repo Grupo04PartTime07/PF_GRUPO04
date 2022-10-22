@@ -72,7 +72,6 @@ const createProduct = async (name, price, description, image,stock, score, categ
                 description: description,
                 image: [image],
                 stock: stock,
-                score_promedio: score,
         });
 
         const brands = await Brand.findOne({
@@ -115,7 +114,7 @@ const createCategory = async (name, image) => {
     }catch(e){
         console.log(e)
     }
-}
+};
 
 const getProductDetail = async (id) => {
     try{

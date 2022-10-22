@@ -19,6 +19,7 @@ import { Link } from 'react-router-dom';
 import {useDispatch} from "react-redux";
 import { getNameProduct } from "../../redux/actions/search_name";
 import ShoppingBar from '../ShoppingCartBar/ShoppingBar';
+import './navbar.css'
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -179,7 +180,7 @@ export default function PrimarySearchAppBar() {
   );
 
   return (
-    <Box sx={{ flexGrow: 1, position: 'sticky', top: 0, zIndex: 10 }}>
+    <Box className='navBarBox' sx={{ flexGrow: 1, position: 'sticky', top: 0, zIndex: 10 }}>
       <AppBar position="static">
         <Toolbar>
           <IconButton> 
@@ -195,13 +196,13 @@ export default function PrimarySearchAppBar() {
             <Link to='/'><img src='https://assets.soyhenry.com/logos/ISOLOGO_HENRY_BLACK.png' alt='HenryLogo' width={70}/></Link>
             
           </Typography>
-          <Search >
+          <Search className='input' sx={{ minWidth: '30%' }}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
               value= {name}
-              sx={{ minWidth: 300 }}
+              sx={{ display: 'flex'}}
               placeholder="Busca un producto…"
               inputProps={{ 'aria-label': 'search' }}
               onChange={(e) => handleInputChange(e)}

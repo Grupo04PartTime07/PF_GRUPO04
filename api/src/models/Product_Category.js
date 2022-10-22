@@ -11,6 +11,23 @@ module.exports = (sequelize) => {
             primaryKey: true
             },
 
+            isDeleted:{
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+                defaultValue: false
+          
+              },
 
-        },{timestamps: false})
+              createdAt: {
+                type: "TIMESTAMP",
+                defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
+                allowNull: true,
+              },
+        
+    
+         
+    
+            },
+
+        {timestamps: false})
 }

@@ -79,3 +79,30 @@
     color: whitesmoke;
 }
 
+@media screen and (max-width: 600px){
+    .categorieTable{
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+    .linkToBack{
+        position: relative;
+        left: 18%;
+    }
+    .categorieFilters{
+        width: 80%;
+        height: 100%;
+        color:rgb(82, 82, 82);
+        margin-left: 15%;
+        padding-bottom: 5%;
+        border: none;
+        border-bottom: 1.4px solid rgb(154, 154, 154);
+    }
+    .categorieOptions{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .buttonsTable{
+        margin-top: 15px;
+    }
+}
