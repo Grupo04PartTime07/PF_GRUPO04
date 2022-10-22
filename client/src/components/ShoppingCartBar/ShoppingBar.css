@@ -24,8 +24,14 @@
 .btn{
     border-radius: 5px;
     margin: 3px;
-    background-color: rgba(50, 104, 203, 0.632);
+    background-color:#1976d2;
     border: none;
+    color: whitesmoke
+}
+.btn:hover{
+    background-color:rgb(137, 134, 134);
+    cursor: pointer;
+    color: rgb(21, 21, 21);
 }
 .numbox{
     border-radius: 5px;
@@ -38,6 +44,11 @@
     background-color: rgb(253, 62, 62);
     color: whitesmoke
 }
+.erase:hover {
+    background-color:   rgb(137, 134, 134);
+    color:rgb(21, 21, 21);
+    cursor: pointer;
+    }
 .totalcontainer{
     padding-left: 10px;
     text-align: baseline;
@@ -48,4 +59,18 @@
 }
 .check{
     margin: 4px;
+    margin-bottom: 6px;
+    border-radius: 5px;
+    border: none;
+    background-color:#1976d2;
+    color: whitesmoke;
+    padding: 3px;
+}
+.check:hover{
+    background-color:rgb(137, 134, 134);
+    cursor: pointer;
+    color: rgb(21, 21, 21);
+}
+.check:disabled{
+    cursor: not-allowed;
 }
