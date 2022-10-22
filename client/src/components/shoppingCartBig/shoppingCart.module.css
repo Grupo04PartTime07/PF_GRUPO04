@@ -144,6 +144,10 @@
 .bttnPagar:hover {
     background-color:  rgb(137, 134, 134);
     }
+    .bttnPagar[disabled] {
+        background-color: #aaa2a2;
+        cursor: no-drop;
+        } 
 
     .divBttnPagar {
         display: flex;

@@ -8,6 +8,8 @@ import {cleanProductState} from '../../redux/actions/clean_product_state';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import RelatedProducts from "./relatedProducts";
 import Loading from "../loading/loading";
+import { addToCart } from '../../redux/actions/add_to_cart';
+import {Link} from "react-router-dom"
 
 function Detail(props) {
     const {id} = props.match.params;
@@ -35,10 +37,11 @@ function Detail(props) {
                             <span className="detailScore">{stars}</span>
                             <h2 className="detailPrice"> $ {detail.price}</h2>
                             <p className="detailDescription">{detail.description}</p>
-                            <div className="detailButton">
-                                <span className="buttonMargin"><Button variant="contained" >Comprar</Button></span>
-                                <Button variant="contained">Agregar al Carrito</Button>
-                            </div>
+                        <div className="detailButton">
+                            <Link to="/shoppingCart" style={{textDecoration:"none"}}>
+                            <span className="buttonMargin"><Button onClick={()=> dispatch(addToCart({id: detail.id, name: detail.name, image: detail.image, price: detail.price, quantity: 1})) } variant="contained" >Comprar</Button></span>
+                            </Link>
+                            <Button onClick={()=> dispatch(addToCart({id: detail.id, name: detail.name, image: detail.image, price: detail.price, quantity: 1})) } variant="contained">Agregar al Carrito</Button>
                         </div>
                     <div className="detailImagen">
                         <img src={detail.image} alt="productos" />
