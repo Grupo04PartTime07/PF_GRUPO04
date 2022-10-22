@@ -9,7 +9,7 @@ export default function CartItem(props) {
         <div className={styles.divCartItem}>
             <img className={styles.img}  src={props.image} alt="productImg"/>
             <div className={styles.divName}>
-            <Link to={`/products/${props.id}`} >
+            <Link to={`/products/${props.id}`} style={{textDecoration:"none"}} >
             <span className={styles.name}>{props.name}</span>
             </Link>
             </div>
@@ -17,10 +17,11 @@ export default function CartItem(props) {
             <span className={styles.price}>${props.price}</span>
             </div>
             <div className={styles.divQuantity}>
-            <button className={styles.bttnAdd} onClick={()=> props.addOneToCart(props.id)}>+</button>
-            <span className={styles.quantity}>{props.quantity}</span>
             <button className={styles.bttnRemove} onClick={()=> props.removeOneFromCart(props.id)}>-</button>
+            <span className={styles.quantity}>{props.quantity}</span>
+            <button className={styles.bttnAdd} onClick={()=> props.addOneToCart(props.id)}>+</button>
             </div>
+
             <div className={styles.divTotalPrice}>
             <span className={styles.totalPrice}>{props.price * props.quantity}</span>
             </div>

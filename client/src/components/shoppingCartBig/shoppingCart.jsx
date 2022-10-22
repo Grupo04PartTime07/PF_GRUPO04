@@ -5,6 +5,7 @@ import { addOneToCart } from '../../redux/actions/add_one_to_cart';
 import { removeOneFromCart } from '../../redux/actions/remove_one_from_cart';
 import { removeProductFromCart } from '../../redux/actions/remove_product_from_cart';
 import { deleteCart } from '../../redux/actions/delete_cart';
+import { checkOutCart } from '../../redux/actions/check_out_cart';
 import styles from "./shoppingCart.module.css";
 import { getCart } from '../../redux/actions/get_cart';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
@@ -48,29 +49,17 @@ useEffect(() => {  // Didmount and DidUpdate controlled
             <p className={styles.shipping}>Gastos de envio:</p>  
             <span className={styles.shippingPrice}>$399 (zona de cobertura: CABA)</span> 
             </div>
+            <div className={styles.divCantProductos}>
+            <p className={styles.pCantProductos}>Cantidad de productos: </p>  
+            <span className={styles.spanCantProductos}>{cartItems.reduce(function ( acc, va){return (acc + va.quantity)},0)}</span> 
+            </div>
             <div className={styles.divTotal}>
-            <p className={styles.total}>Total carrito:  </p>
-            <span className={styles.cartPrice}>$1000</span> 
+            <p className={styles.total}>Total carrito: </p>
+            <span className={styles.cartPrice}>${cartItems.reduce(function ( acc, va){return (acc + (va.quantity*va.price))},0)+399}</span> 
             </div>
             <div className={styles.divBttnPagar} >
-            <button className={styles.bttnPagar}>Pagar carrito</button>
+            <button className={styles.bttnPagar} onClick={()=> dispatch(checkOutCart(cartItems.map(e => {return {title:e.name, unit_price:e.price, quantity:e.quantity}})))}>Pagar carrito</button>
             </div>
 
-
-
-
-
-
-
-        </div>
-
-
-
-
-
-
-
-
-
-    )
-}
+       </div>
+    )}
