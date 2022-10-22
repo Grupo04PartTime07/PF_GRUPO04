@@ -4,12 +4,12 @@ const fs = require('fs');
 const path = require('path');
 
 const {
-  DB_USER, DB_PASSWORD, DB_HOST,
+  DB_USER, DB_PASSWORD, DB_HOST, DB_NAME
 } = process.env;
 
 //const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/market`, {
 
-const sequelize = new Sequelize(`postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/railway`, {
+const sequelize = new Sequelize(`postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`, {
   logging: false,
   native: false,
 });
