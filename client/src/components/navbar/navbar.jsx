@@ -67,6 +67,7 @@ export default function PrimarySearchAppBar() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const dispatch = useDispatch()
   const [name, setName] = React.useState('');
+  const [viewcart, setCart] = React.useState(false);
   
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -79,10 +80,12 @@ export default function PrimarySearchAppBar() {
 
   function handleSubmit (){
     dispatch(getNameProduct(name))
-    setName('')
-    
-    
+    setName('')   
   };
+
+  function handleDisplayCart(){
+    setCart(!viewcart)
+  }
 
 
   const handleProfileMenuOpen = (event) => {
@@ -211,7 +214,7 @@ export default function PrimarySearchAppBar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+            <IconButton onClick={handleDisplayCart} size="large" aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={0} color="error">
                 <ShoppingCartTwoToneIcon />
               </Badge>
@@ -253,7 +256,7 @@ export default function PrimarySearchAppBar() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-      <ShoppingBar/>
+      {viewcart && <ShoppingBar handleDisplayCart={handleDisplayCart}/>}
     </Box>
   );
 }

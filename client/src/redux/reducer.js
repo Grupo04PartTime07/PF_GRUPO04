@@ -99,6 +99,7 @@ const reducer = (state = initialState, action) => {
         case REMOVE_PRODUCT_FROM_CART:
                 let cartCopyTwoo = state.cart;
                 let cartFiltered = cartCopyTwoo.filter(e => e.id !== action.payload)
+                console.log(action.payload, cartFiltered)
                 return {
                     ...state,
                     cart: [...cartFiltered]
