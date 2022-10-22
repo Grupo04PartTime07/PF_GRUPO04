@@ -89,7 +89,7 @@
     }
     .linkToBack{
         position: relative;
-        left: 18%;
+        left: 0%;
     }
     .categorieFilters{
         width: 80%;
@@ -106,5 +106,9 @@
     }
     .buttonsTable{
         margin-top: 15px;
+    }
+    .productsByCategorie{
+        margin-left: 10px;
+        width: 400px;
     }
 }

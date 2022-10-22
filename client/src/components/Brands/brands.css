@@ -18,5 +18,15 @@
         display: inline-grid;
         grid-template-columns: repeat(1, 1fr);
         margin: 3%;
+        position: relative;
+        left: 0%;
+    }
+    .brandTitle{
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        margin-right: 0px;
+        margin-bottom: 0%;
+        font-weight: 350;
+        color: rgb(82, 82, 82);
     }
 }
