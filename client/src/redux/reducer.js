@@ -19,6 +19,7 @@ import { ADD_ONE_TO_CART} from "./actions/add_one_to_cart";
 import { REMOVE_ONE_FROM_CART} from "./actions/remove_one_from_cart";
 import { DELETE_CART} from "./actions/delete_cart";
 import { GET_CART} from "./actions/get_cart";
+import { FULFILL_CART } from "./actions/fulfill_cart";
 
 
 const initialState = {
@@ -80,6 +81,12 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 message: action.payload
                 }
+        case FULFILL_CART:{
+            return{
+                ...state,
+                cart: action.payload
+            }
+        }
         case ADD_TO_CART:
             let cartCopy = state.cart;
             let itemFound = cartCopy.find(item => item.id === action.payload.id)
