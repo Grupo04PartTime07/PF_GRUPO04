@@ -13,10 +13,8 @@ mercadopago.configure({
 router.post('/', async (req, res) => {
     // Crea un objeto de preferencia
     let preference = {
-        back_url:{
-            success: 'https://4d53-190-16-66-223.sa.ngrok.io/success',
-        },
-        notification_url: 'https://4d53-190-16-66-223.sa.ngrok.io/checkout/notificar',
+       
+        // notification_url: 'https://478d-190-16-66-223.sa.ngrok.io/checkout/notificar',
         items: [
           {
             title: "Mi producto",
@@ -24,11 +22,16 @@ router.post('/', async (req, res) => {
             quantity: 3,
           },
         ],
+        back_urls:{
+          success: 'http://localhost:3000',
+          // failure: 'https://478d-190-16-66-223.sa.ngrok.io/checkout/feedback',
+          // pending: 'https://478d-190-16-66-223.sa.ngrok.io/checkout/feedback',
+      }
       };
       
       mercadopago.preferences.create(preference)
         .then(function (response) {
-        res.send(response.body);
+        res.redirect(response.body.init_point);
         })
         .catch(function (error) {
           console.log(error);
@@ -76,6 +79,7 @@ router.post('/notificar', async (req, res) => {
       arrayDatos.push(status)
     };
     console.log('Esto es DATOS', arrayDatos)
+    console.log('Estoy imprimiendo porque la ruta es esta.')
     // console.log('Esto es ID', id);
     // console.log('Esto es status', status);
     res.status(200).send();
@@ -84,5 +88,18 @@ router.post('/notificar', async (req, res) => {
   }
 
 });
+
+router.get('/feedback', function (req, res) {
+  console.log(req.query.payment_id)
+  console.log(req.query.status)
+  console.log(req.query.merchant_order_id)
+
+	res.json({
+		Payment: req.query.payment_id,
+		Status: req.query.status,
+		MerchantOrder: req.query.merchant_order_id
+	});
+});
+
 
 module.exports = router;
