@@ -153,7 +153,7 @@ export default function PrimarySearchAppBar() {
             <ShoppingCartTwoToneIcon />
           </Badge>
         </IconButton>
-        <p>Carrito</p>
+        <Link className='chartLink' to='/shoppingCart'><p>Carrito</p></Link>
       </MenuItem>
       <MenuItem>
         <IconButton

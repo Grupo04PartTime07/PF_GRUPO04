@@ -21,45 +21,50 @@ useEffect(() => {  // Didmount and DidUpdate controlled
 
     return(
         <div className={styles.divShoppingCart}>
-            <h1 className={styles.title}>CARRITO DE COMPRA</h1>
+            <h1 className={styles.title}>Carrito de compras</h1>
             <hr></hr>
             <hr></hr>
             <div className={styles.divHeader}>
-            <span className={styles.spanProducto} >Producto</span>
-            <span className={styles.spanPrecio}>Precio</span>
-            <span className={styles.spanCantidad}>Cantidad</span>
-            <span className={styles.span}>Total</span>
-            <button className={styles.bttnDelete} onClick={()=> dispatch(deleteCart())}><DeleteForeverOutlinedIcon/></button>
+                <span className={styles.spanProducto} >Producto</span>
+                <span className={styles.spanPrecio}>Precio</span>
+                <span className={styles.spanCantidad}>Cantidad</span>
+                <span className={styles.span}>Total</span>
+                <button className={styles.bttnDelete} onClick={()=> dispatch(deleteCart())}><DeleteForeverOutlinedIcon/></button>
             </div>
             <hr className={styles.hr}></hr>
             <hr></hr>
-            {cartItems.length >= 1?cartItems.map(item => <CartItem 
-            key={item.id}
-            id={item.id}
-            image={item.image}
-            name={item.name.slice(0,20)+"..."}
-            price={item.price}
-            addOneToCart={()=> dispatch(addOneToCart(item.id))}
-            quantity={item.quantity}
-            removeOneFromCart={()=> dispatch(removeOneFromCart(item.id))}
-            removeProductFromCart={()=> dispatch(removeProductFromCart(item.id))}
+            {cartItems.length >= 1?cartItems.map(item => 
+                <CartItem 
+                key={item.id}
+                id={item.id}
+                image={item.image}
+                name={item.name.slice(0,20)+"..."}
+                price={item.price}
+                addOneToCart={()=> dispatch(addOneToCart(item.id))}
+                quantity={item.quantity}
+                removeOneFromCart={()=> dispatch(removeOneFromCart(item.id))}
+                removeProductFromCart={()=> dispatch(removeProductFromCart(item.id))}
 
-            />): <h2 className={styles.notFoundMessage}>EL CARRITO SE ENCUENTRA VACIO</h2> }
-            <div className={styles.divShipping}>
-            <p className={styles.shipping}>Gastos de envio:</p>  
-            <span className={styles.shippingPrice}>$399 (zona de cobertura: CABA)</span> 
+                />): 
+                <h2 className={styles.notFoundMessage}>No hay nada aún...</h2> 
+            }
+            <div className={styles.purchaseContainer}>
+                <div className={styles.divShipping}>
+                    <p className={styles.shipping}>Gastos de envio:</p>  
+                    <span className={styles.shippingPrice}>$399 (zona de cobertura: CABA)</span> 
+                </div>
+                <div className={styles.divCantProductos}>
+                    <p className={styles.pCantProductos}>Cantidad de productos: </p>  
+                    <span className={styles.spanCantProductos}>{cartItems.reduce(function ( acc, va){return (acc + va.quantity)},0)}</span> 
+                </div>
+                <div className={styles.divTotal}>
+                    <p className={styles.total}>Precio final: </p>
+                    <span className={styles.cartPrice}>${cartItems.reduce(function ( acc, va){return (acc + (va.quantity*va.price))},0)+399}</span> 
+                </div>
+                <div className={styles.divBttnPagar} >
+                    <button className={styles.bttnPagar} onClick={()=> dispatch(checkOutCart(cartItems.map(e => {return {title:e.name, unit_price:e.price, quantity:e.quantity}})))}>Finalizar compra</button>
+                </div>
             </div>
-            <div className={styles.divCantProductos}>
-            <p className={styles.pCantProductos}>Cantidad de productos: </p>  
-            <span className={styles.spanCantProductos}>{cartItems.reduce(function ( acc, va){return (acc + va.quantity)},0)}</span> 
-            </div>
-            <div className={styles.divTotal}>
-            <p className={styles.total}>Total carrito: </p>
-            <span className={styles.cartPrice}>${cartItems.reduce(function ( acc, va){return (acc + (va.quantity*va.price))},0)+399}</span> 
-            </div>
-            <div className={styles.divBttnPagar} >
-            <button className={styles.bttnPagar} onClick={()=> dispatch(checkOutCart(cartItems.map(e => {return {title:e.name, unit_price:e.price, quantity:e.quantity}})))}>Pagar carrito</button>
-            </div>
-
-       </div>
-    )}
+        </div>
+    )
+}
