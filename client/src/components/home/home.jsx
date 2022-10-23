@@ -78,15 +78,17 @@ export default function Home(props){
         products[0] && products[0].price ? <div>
             <Toolbar id="back-to-top-anchor" />
             <div><Banner/></div>
-            <h2 className="categorieTitle">Todos los productos</h2>
-            <div className="homeTable"> {/*#AgregameUnaEstrella*/}
-                { products.map(a => a.stock === 0 ? null : <Card id={a.id} name={a.name} image={a.image} price={a.price} score={a.score}/>) }
+            <div>
+              <h2 className="homeTitle">Todos los productos</h2>
+              <div className="homeTable"> {/*#AgregameUnaEstrella*/}
+                  { products.map(a => a.stock === 0 ? null : <Card id={a.id} name={a.name} image={a.image} price={a.price} score={a.score}/>) }
+              </div>
+              <ScrollTop {...props}>
+                  <Fab size="small" aria-label="scroll back to top">
+                      <KeyboardArrowUpIcon />
+                  </Fab>
+              </ScrollTop>
             </div>
-            <ScrollTop {...props}>
-                <Fab size="small" aria-label="scroll back to top">
-                    <KeyboardArrowUpIcon />
-                </Fab>
-            </ScrollTop>
         </div> : <Loading/>
     )
 }
