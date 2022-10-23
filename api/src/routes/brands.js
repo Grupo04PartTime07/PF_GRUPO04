@@ -3,7 +3,7 @@ const router = Router();
 
 const { getBrandsDb } = require('./controllers');
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res) => { 
     try{
         const brands = await getBrandsDb();
         res.status(200).send(brands);
