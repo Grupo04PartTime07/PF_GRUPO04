@@ -1,81 +1,54 @@
-
-
-.formContainerCat{
-    
-    margin: 30px 20px 40px 150px;
-    width: 80%;
+.formContainer{
+    margin: 50px auto;
+    width: fit-content;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
-    border: none;
+    border: 2px gray solid;
+    border-radius: 5px;
     padding: 30px;
 }
 
-.formDataCat{
+.formData{
     display: flex;
     justify-content: center;
     align-items: space-between;
-    flex-direction: column;
+
 }
 
-.formFirstDivCat{
-    width: 600px;
+.formFirstDiv, .formSecondDiv{
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
     text-align: left;
     margin: 10px 50px;
-    padding: 30px;
-    border-radius: 10px;
-    -webkit-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
-    -moz-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
-    box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
 }
 
-.formFirstDivCat label{
+.formFirstDiv label,.formSecondDiv label{
     margin-bottom: 8px;
     padding-right: 8px;
     font-weight: 600;
-    font-size: 18px;
-    color: rgb(82, 82, 82);
 }
 
-.formFirstDivCat input{
-    width: 90%;
-    height: 30px;
+.formFirstDiv input, .formSecondDiv input{
+    
     padding-left: 8px;
     margin-right: 8px;
-    margin-bottom: 20px;
     border-radius: 5px;
     border:none;
     border-bottom: 1px gray solid;
-    color: rgb(118, 118, 118);
+
 }
 
-
-.formImageCat{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.formImageCat input{
-    width: 450px;
-}
 
 .button{
-
-    width: fit-content;
-    
-
-    cursor: pointer;
-
+    cursor:pointer;
     border-radius: 5px;
     border:none;
-    margin: 15px auto ;
-    
+    margin-top: 8px;
+    margin-left: 12px;
     padding: 8px 25px;
     background-color: #1976d2;
     color: white;
@@ -87,10 +60,9 @@
     box-sizing: border-box;
     box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
 }
-
-
-.disable{
-    background-color: gray;
+.button[disabled] {
+    background-color:gray;
+    cursor: no-drop;
 }
 
 .normal{
@@ -105,21 +77,8 @@
     font-weight: 600;
 }
 
-.formContainerPreview{
-    height: 120px;
-    
-}
-.formImagenPreview{
-    width: 150px;
-    height: 150px;
-    margin: 5px;
-    border: 2px salmon solid;
-}
-.previewContainer{
+.label{
     display: flex;
-    
-}
-.previewCenter{
-    margin: auto;   
-    text-align: center;
+    align-items: flex-start;
+
 }
