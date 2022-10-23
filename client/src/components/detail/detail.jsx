@@ -81,7 +81,7 @@ function Detail(props) {
                       </div>
                           {displayForm && <ScoreForm id={id} formDisplay={formDisplay} />}
                     </div>
-                      {isAuthenticated && <Button variant="contained">Dar tu Opinion</Button>}
+                      {isAuthenticated && <Button variant="contained" onClick={() =>formDisplay()}>Dar tu Opinion</Button>}
                </div>
                <div>
                     <RelatedProducts id={detail.id} categorie={detail.categories ? detail.categories[0] : null}/>
