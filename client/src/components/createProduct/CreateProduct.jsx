@@ -481,7 +481,6 @@ function CreateProduct() {
             Limpiar
           </button>
         </div>
-      </form>
 
         </form> : <label >upss parece que no tienes sopermi</label> }
 

@@ -55,7 +55,6 @@ function Detail(props) {
                             </Link>
                             <Button onClick={()=> dispatch(addToCart({id: detail.id, name: detail.name, image: detail.image, price: detail.price, quantity: 1})) } variant="contained">Agregar al Carrito</Button>
                         </div>
-                        </div>
                     <div className="detailImagen">
                         <img src={detail.image} alt="productos" />
                     </div>
@@ -79,7 +78,7 @@ function Detail(props) {
                       </div>
                           {displayForm && <ScoreForm id={id} formDisplay={formDisplay} />}
                     </div>
-                      {isAuthenticated && <Button variant="contained">Dar tu Opinion</Button>}
+                      {isAuthenticated && <Button variant="contained" onClick={() =>formDisplay()}>Dar tu Opinion</Button>}
                </div>
                <div>
                     <RelatedProducts id={detail.id} categorie={detail.categories ? detail.categories[0] : null}/>
