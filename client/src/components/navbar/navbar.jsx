@@ -20,8 +20,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { getNameProduct } from "../../redux/actions/search_name";
 import ShoppingBar from '../ShoppingCartBar/ShoppingBar';
 import { fulfillCart } from "../../redux/actions/fulfill_cart";
+import { fulfillWishList } from "../../redux/actions/fulfill_wish_list";
 import './navbar.css'
-
+import {useAuth0} from '@auth0/auth0-react';
+import Avatar from '@mui/material/Avatar';
+import axios from 'axios';
+import {useEffect} from 'react';
+import { useState } from 'react';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative', 
@@ -64,27 +69,40 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
+  
+  const { loginWithPopup, loginWithRedirect, logout, user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const dispatch = useDispatch()
   const [name, setName] = React.useState('');
   const [viewcart, setCart] = React.useState(false);
   const cart = useSelector((state) => state.cart);
+  const favorites = useSelector(state => state.favorites)
   let currentUser = "Guest"
 
-  let dhacart = JSON.parse(window.localStorage.getItem(currentUser))
+  let dhacart = JSON.parse(window.localStorage.getItem(`c${currentUser}`))
+  let dhafav = JSON.parse(window.localStorage.getItem(`f${currentUser}`))
     React.useEffect(()=>{
         if(dhacart && dhacart.length) dispatch(fulfillCart(dhacart))
+        if(dhafav && dhafav.length) dispatch(fulfillWishList(dhafav))
     }, [])
     React.useEffect(() => {
-        updateStorage(currentUser, cart)
+        updateStorage(`c${currentUser}`, cart)
     }, [cart])
   
+    React.useEffect(() => {
+      updateWishList(`f${currentUser}`, favorites)
+  }, [favorites])
+
   function updateStorage(user, cart){
       let updatedCart = JSON.stringify(cart);
       window.localStorage.setItem(user, updatedCart)
   }
-  
+  function updateWishList(user, fav){
+    let updatedWishList = JSON.stringify(favorites);
+    window.localStorage.setItem(user, updatedWishList)
+}
+
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -130,6 +148,7 @@ export default function PrimarySearchAppBar() {
         horizontal: 'right',
       }}
       id={menuId}
+      title={isAuthenticated?user.email:""}
       keepMounted
       transformOrigin={{
         vertical: 'top',
@@ -138,10 +157,22 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
+      {isAuthenticated && <MenuItem style={{ pointerEvents: 'none' }}><Avatar alt={user.name} src={user.picture} /></MenuItem>}
+      
+      {isAuthenticated && <MenuItem style={{ pointerEvents: 'none' }}>{user.email}</MenuItem>}
+
+      {isAuthenticated &&
       <MenuItem onClick={handleMenuClose}>
-      <Link className='link' to='/createAccount' >Registrarse</Link>
+      <Link className='link' to='/createAccount' >Mis Datos</Link>
       </MenuItem>
-      <MenuItem onClick={handleMenuClose}>Log in</MenuItem>
+      }
+      {/*  { Ver diseño, corresponde a cambios auth0}
+      <MenuItem onClick={handleMenuClose}>Log in</MenuItem> 
+      { Ver diseño, corresponde a cambios auth0} */}
+      
+ 
+      {/* Aca se hace el login */}
+      {!isAuthenticated?<MenuItem id="1" onClick={loginWithPopup }>Log in</MenuItem>:<MenuItem onClick={logout}>Log out</MenuItem>}
       
     </Menu>
   );
@@ -151,14 +182,14 @@ export default function PrimarySearchAppBar() {
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={mobileMenuId}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
@@ -169,34 +200,94 @@ export default function PrimarySearchAppBar() {
             <ShoppingCartTwoToneIcon />
           </Badge>
         </IconButton>
-        <Link className='chartLink' to='/shoppingCart'><p>Carrito</p></Link>
+        <Link className="chartLink" to="/shoppingCart">
+          <p>Carrito</p>
+        </Link>
       </MenuItem>
       <MenuItem>
+      
         <IconButton
           size="large"
           aria-label="show 17 new notifications"
           color="inherit"
         >
-          {/* <Badge badgeContent={17} color="error"> */}
+
+          <Badge badgeContent={17} color="error"> 
             <FavoriteTwoToneIcon />
-          {/* </Badge> */}
+            </Badge>  
+
         </IconButton>
-        <p>Favoritos</p>
+       <p>Favoritos</p> 
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircleTwoToneIcon />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+
+      {!isAuthenticated && (
+        <MenuItem onClick={handleProfileMenuOpen}>
+          <IconButton
+            size="large"
+            aria-label="account of current user"
+            aria-controls="primary-search-account-menu"
+            aria-haspopup="true"
+            color="inherit"
+          >
+            <AccountCircleTwoToneIcon />
+          </IconButton>
+
+          {/* <p>Log In</p> */}
+        </MenuItem>
+      )}
+
+      {isAuthenticated && (
+        <MenuItem>
+          {" "}
+          <img
+            src={user.picture}
+            alt="Profile"
+            className="nav-user-profile rounded-circle"
+            width="50"
+          />
+        </MenuItem>
+      )}
     </Menu>
   );
+
+
+  async function callProtectedApiToken2() {
+    try {
+      const token = await getAccessTokenSilently();
+      const response = await axios.post(
+        "http://localhost:3001/users",
+        {
+          name: user.name || " ",
+          email: user.email,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      user.isAdmin = response.data.userRegisted.isAdmin;
+      user.isBanned = response.data.userRegisted.isAdmin;
+
+      //console.log(response.userRegisted);
+      //console.log(response.message);
+      console.log(response.data);
+      console.log(user);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      return () => {
+        const usuario = callProtectedApiToken2();
+        console.log(usuario);
+      };
+    }
+  });
+  
+
 
   return (
     <Box className='navBarBox' sx={{ flexGrow: 1, position: 'sticky', top: 0, zIndex: 10 }}>
@@ -240,8 +331,10 @@ export default function PrimarySearchAppBar() {
               aria-label="show 17 new notifications"
               color="inherit"
             >
-              <Badge badgeContent={0} color="error">
+              <Badge badgeContent={favorites.reduce(function ( acc, va){return (acc + va.quantity)},0)} color="error">
+                <Link to="/wishList" style={{textDecoration:"none", color: "whitesmoke"} }>
                 <FavoriteTwoToneIcon />
+                </Link>
               </Badge>
             </IconButton>
             <IconButton
@@ -253,7 +346,8 @@ export default function PrimarySearchAppBar() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircleTwoToneIcon />
+             {isAuthenticated?<Avatar alt={user.name} src={user.picture} />:<AccountCircleTwoToneIcon />}
+              
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

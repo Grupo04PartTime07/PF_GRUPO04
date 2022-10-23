@@ -20,6 +20,11 @@ import { REMOVE_ONE_FROM_CART} from "./actions/remove_one_from_cart";
 import { DELETE_CART} from "./actions/delete_cart";
 import { GET_CART} from "./actions/get_cart";
 import { FULFILL_CART } from "./actions/fulfill_cart";
+import { GET_FAVORITES } from "./actions/get_favorites";
+import { DELETE_WISH_LIST } from "./actions/delete_wish_list";
+import { REMOVE_PRODUCT_FROM_WISH_LIST} from "./actions/remove_product_from_wish_list";
+import { ADD_TO_CART_FROM_WL} from "./actions/add_to_cart_from_wl";
+import { FULFILL_WISH_LIST } from "./actions/fulfill_wish_list";
 
 
 const initialState = {
@@ -87,6 +92,12 @@ const reducer = (state = initialState, action) => {
                 cart: action.payload
             }
         }
+        case FULFILL_WISH_LIST:{
+            return{
+                ...state,
+                favorites: action.payload
+            }
+        }
         case ADD_TO_CART:
             let cartCopy = state.cart;
             let itemFound = cartCopy.find(item => item.id === action.payload.id)
@@ -98,11 +109,29 @@ const reducer = (state = initialState, action) => {
             ...state,
             cart:[...state.cart, action.payload]
              }
+             case ADD_TO_CART_FROM_WL:
+                let cartCopyFive = state.cart;
+                let artFound = cartCopyFive.find(item => item.id === action.payload.id)
+                return artFound?
+                {
+                 ...state,
+                 cart: cartCopyFive.map(item => item.id === action.payload.id?{...item, quantity: item.quantity + 1} : item),
+                 favorites: state.favorites.filter(e => e.id !== action.payload.id )
+                }:{
+                ...state,
+                cart:[...state.cart, action.payload],
+                favorites: state.favorites.filter(e => e.id !== action.payload.id )
+                 }     
         case GET_CART:
                 return {
                     ...state,
                     cart: [...state.cart]
-                    }    
+                    }
+        case GET_FAVORITES:
+                return {
+                    ...state,
+                    favorites: [...state.favorites]
+                    }        
         case REMOVE_PRODUCT_FROM_CART:
                 let cartCopyTwoo = state.cart;
                 let cartFiltered = cartCopyTwoo.filter(e => e.id !== action.payload)
@@ -110,6 +139,14 @@ const reducer = (state = initialState, action) => {
                 return {
                     ...state,
                     cart: [...cartFiltered]
+                    }
+        case REMOVE_PRODUCT_FROM_WISH_LIST:
+                let favCopy = state.favorites;
+                let favFiltered = favCopy.filter(e => e.id !== action.payload)
+                console.log(action.payload, favFiltered)
+                return {
+                    ...state,
+                    favorites: [...favFiltered]
                     }
         case ADD_ONE_TO_CART:
             let cartCopyThree = state.cart;
@@ -139,7 +176,12 @@ const reducer = (state = initialState, action) => {
                 return {
                     ...state,
                     cart: []
-                    }           
+                    }
+                    case DELETE_WISH_LIST:
+                        return {
+                            ...state,
+                            favorites: []
+                            }                    
         case ADD_TO_FAVORITE:
             let favoritesCopy = state.favorites;
             let itemExist = favoritesCopy.filter(e => e.name === action.payload.name)

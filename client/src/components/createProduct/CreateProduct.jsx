@@ -1,37 +1,75 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
-import { getCategories } from "../../redux/actions/get_categories";
-import { getBrands } from "../../redux/actions/get_brands";
-import { createNewProducts } from "../../redux/actions/create_new_products";
-import { Link, useHistory } from "react-router-dom";
-import axios from "axios";
+import React from 'react';
+import { useDispatch, useSelector} from "react-redux";
+import { useState, useEffect} from "react";
+import  {getCategories}  from "../../redux/actions/get_categories";
+import {getBrands} from "../../redux/actions/get_brands"
+import { createNewProducts } from '../../redux/actions/create_new_products';
+import { Link, useHistory} from "react-router-dom";
+import "./createProduct.css"
+import {useAuth0} from '@auth0/auth0-react';
+import axios from 'axios';
 import { Image } from "cloudinary-react";
-import "./createProduct.css";
+    
 
 function CreateProduct() {
-  const dispatch = useDispatch();
-  const history = useHistory();
-  let category = useSelector((state) => state.categories);
-  let brands = useSelector((state) => state.brand);
+  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+    const dispatch = useDispatch();
+    const history = useHistory();
+    let category = useSelector((state) => state.categories)
+    let brands = useSelector((state) => state.brand)
 
-  useEffect(() => {
-    dispatch(getCategories());
-    dispatch(getBrands());
-  }, []);
+    useEffect(() => {
+        dispatch(getCategories());
+        dispatch(getBrands());
+    },[])
 
-  const [input, setInput] = useState({
-    name: "",
-    price: "",
-    description: "",
-    image: [],
-    categories: [],
-    stock: "",
-    brand: "",
-    brandimage:""
-  });
+    async function callProtectedApiToken2() {
+      try {
+        const token = await getAccessTokenSilently();
+        const response = await axios.post(
+          "http://localhost:3001/users",
+          {
+            name: user.name || " ",
+            email: user.email,
+          },
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        user.isAdmin = response.data.userRegisted.isAdmin;
+        user.isBanned = response.data.userRegisted.isAdmin;
+        console.log(response.data);
+        console.log(user);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  
+    useEffect(() => {
+      if (isAuthenticated) {
+        return () => {
+          const usuario = callProtectedApiToken2();
+          console.log(usuario);
+        };
+      }
+    });
 
-  const [imagen, setImagen] = useState(""); //este estado va a subir los datos a cloudinary
+    const[input,setInput] = useState({
+        name:"",
+        price:"",
+        description:"",
+        image:[],
+        categories:[],
+        stock:"",
+        brand:"",
+        //brandimage:""
+    })
+
+    
+    
+    const [imagen, setImagen] = useState(""); //este estado va a subir los datos a cloudinary
   const [imageData, setimageData] = useState({
     // este estado guardara las direcciones de cloudinary para pisar el input
     imageReel: [],
@@ -40,6 +78,58 @@ function CreateProduct() {
   const [button, setButton] = useState({
     complete: false,
   });
+
+    function handleChange(e){
+          setInput({...input, [e.target.name]: e.target.value});
+          setError(validate({...input,[e.target.name]: e.target.value}));
+      }
+
+    
+    
+    function validate(input){
+        let errors = {};
+        if(!input.name){
+            errors.name = "El campo no debe quedar vacio";
+            }
+        if(!input.price){
+                errors.price = "El campo no debe quedar vacio";
+            }else if(input.price <= 0){
+                errors.price = "El precio no puede ser menor a 0";
+            }
+        if(!input.description){
+                errors.description = "El campo no debe quedar vacio";
+            }else if(input.description.length > 500){
+                errors.description = "La descripcion no puede tener mas de 500 caracteres"
+            }
+        if(!input.image){
+                errors.image = "Debes subir al menos 1 imagen";
+            }else if(input.image.length > 5){
+                errors.image = "No puedes subir mas de 5 imagenes"
+            }
+        if(!input.categories.length < 0){
+                errors.categories = "Debes elegir al menos 1 categoria";
+            }
+        if(!input.stock){
+                errors.stock = "El campo no puede quedar vacio";
+            }else if(input.stock < 1){
+                errors.stock = "Debes tener al menos 1 articulo";
+            }
+        if(!input.brand){
+                errors.brand = "El campo no puede quedar vacio"
+            }
+        if(errors.name || errors.price || errors.description || errors.image || errors.categories || errors.stock || errors.brand ){
+            setButton({
+              complete:false
+            })
+          }else{
+            setButton({
+              complete:true
+            })
+          }
+        
+        return errors;  
+    }
+
 
   function handleChange(e) {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -237,11 +327,15 @@ function CreateProduct() {
   }
 
   return (
+    
     <div>
-      <h1>Ingresa un Producto</h1>
-      <form className="formContainer" onSubmit={(e) => handleSubmit(e)}>
-        <div className="formData">
-          <div className="formFirstDiv">
+
+        
+        <h1>Ingresa un Producto</h1>
+        {isAuthenticated && user.isAdmin ?  <form className="formContainer" onSubmit={e => handleSubmit(e)}>
+        <div className='formData'>
+          <div className='formFirstDiv'>  
+
             <label>Nombre:</label>
             <input
               type="text"
@@ -362,6 +456,7 @@ function CreateProduct() {
             </div>
             <p className={error.brand ? "danger" : "normal"}>{error.brand}</p>
           </div>
+
         </div>
         <div>
           <button className="button buttonLink">
@@ -387,6 +482,9 @@ function CreateProduct() {
           </button>
         </div>
       </form>
+
+        </form> : <label >upss parece que no tienes sopermi</label> }
+
     </div>
   );
 }
