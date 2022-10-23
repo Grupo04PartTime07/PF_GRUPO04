@@ -50,7 +50,8 @@ export default function Profile(){
     return(
         <div className="profile">
             <div className="profileMenu">
-                <h2 className="menuTitle">Mi perfil</h2>
+                <h2 className="menuTitle">Bienvenido</h2>
+                <h3 className="menuTitle">{isAuthenticated && user.name}</h3>
                 <div className="list">
                     <label>
                         <input className="radioButton" value='datos' type="radio" checked={checked === 'datos'} onChange={(e) => handleCheck(e)}/>
