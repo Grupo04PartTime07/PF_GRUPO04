@@ -13,7 +13,7 @@ import CategoryForm from './components/categoryForm/categoryForm';
 import CreateProduct from './components/createProduct/CreateProduct';
 import Brand from './components/Brands/brand_products';
 import ShoppingCartBig from './components/shoppingCartBig/shoppingCart';
-
+import WishList from './components/wishList/wishList';
 
 function App() {
   return (
@@ -32,6 +32,7 @@ function App() {
             <Route exact path='/createCategory' component={CategoryForm}/>
             <Route exact path='/brands' component={Brand}/>
             <Route exact path='/shoppingCart' component={ShoppingCartBig}/>
+            <Route exact path='/wishList' component={WishList}/>
             <Route path="/" component={Footer} />
           </div>
       </React.Fragment>

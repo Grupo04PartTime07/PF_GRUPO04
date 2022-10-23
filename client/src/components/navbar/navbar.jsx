@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getNameProduct } from "../../redux/actions/search_name";
 import ShoppingBar from '../ShoppingCartBar/ShoppingBar';
 import { fulfillCart } from "../../redux/actions/fulfill_cart";
+import { fulfillWishList } from "../../redux/actions/fulfill_wish_list";
 import './navbar.css'
 
 
@@ -70,21 +71,32 @@ export default function PrimarySearchAppBar() {
   const [name, setName] = React.useState('');
   const [viewcart, setCart] = React.useState(false);
   const cart = useSelector((state) => state.cart);
+  const favorites = useSelector(state => state.favorites)
   let currentUser = "Guest"
 
-  let dhacart = JSON.parse(window.localStorage.getItem(currentUser))
+  let dhacart = JSON.parse(window.localStorage.getItem(`c${currentUser}`))
+  let dhafav = JSON.parse(window.localStorage.getItem(`f${currentUser}`))
     React.useEffect(()=>{
         if(dhacart && dhacart.length) dispatch(fulfillCart(dhacart))
+        if(dhafav && dhafav.length) dispatch(fulfillWishList(dhafav))
     }, [])
     React.useEffect(() => {
-        updateStorage(currentUser, cart)
+        updateStorage(`c${currentUser}`, cart)
     }, [cart])
   
+    React.useEffect(() => {
+      updateWishList(`f${currentUser}`, favorites)
+  }, [favorites])
+
   function updateStorage(user, cart){
       let updatedCart = JSON.stringify(cart);
       window.localStorage.setItem(user, updatedCart)
   }
-  
+  function updateWishList(user, fav){
+    let updatedWishList = JSON.stringify(favorites);
+    window.localStorage.setItem(user, updatedWishList)
+}
+
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -172,16 +184,17 @@ export default function PrimarySearchAppBar() {
         <Link className='chartLink' to='/shoppingCart'><p>Carrito</p></Link>
       </MenuItem>
       <MenuItem>
+      
         <IconButton
           size="large"
           aria-label="show 17 new notifications"
           color="inherit"
         >
-          {/* <Badge badgeContent={17} color="error"> */}
+          <Badge badgeContent={17} color="error"> 
             <FavoriteTwoToneIcon />
-          {/* </Badge> */}
+            </Badge>  
         </IconButton>
-        <p>Favoritos</p>
+       <p>Favoritos</p> 
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -240,8 +253,10 @@ export default function PrimarySearchAppBar() {
               aria-label="show 17 new notifications"
               color="inherit"
             >
-              <Badge badgeContent={0} color="error">
+              <Badge badgeContent={favorites.reduce(function ( acc, va){return (acc + va.quantity)},0)} color="error">
+                <Link to="/wishList" style={{textDecoration:"none", color: "whitesmoke"} }>
                 <FavoriteTwoToneIcon />
+                </Link>
               </Badge>
             </IconButton>
             <IconButton

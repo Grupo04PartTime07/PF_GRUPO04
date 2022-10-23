@@ -63,7 +63,7 @@ export default function ImgMediaCard(props) {
             size="large"
             aria-label="show 17 new notifications"
             color="inherit"
-            onClick={()=> dispatch(addToFavorite({name: props.name, image: props.image, price: props.price})) }
+            onClick={()=> dispatch(addToFavorite({id: props.id, name: props.name, image: props.image, price: props.price, quantity:1})) }
         >
         { itemFound? <FavoriteTwoToneIcon /> : <FavoriteBorderOutlinedIcon/> }
         </IconButton>
