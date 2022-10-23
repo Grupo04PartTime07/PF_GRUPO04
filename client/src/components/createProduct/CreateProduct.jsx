@@ -25,8 +25,8 @@ function CreateProduct() {
         image:[],
         categories:[],
         stock:"",
-        score:"",
-        brand:""
+        brand:"",
+        //brandimage:""
     })
 
     
@@ -72,15 +72,10 @@ function CreateProduct() {
             }else if(input.stock < 1){
                 errors.stock = "Debes tener al menos 1 articulo";
             }
-        if(!input.score){
-                errors.score = "El campo no puede quedar vacio"
-            }else if(input.score < 0 || input.score > 5){
-                errors.score = "El rating debe estar entre 0 y 5"
-            }
         if(!input.brand){
                 errors.brand = "El campo no puede quedar vacio"
             }
-        if(errors.name || errors.price || errors.description || errors.image || errors.categories || errors.stock || errors.score || errors.brand ){
+        if(errors.name || errors.price || errors.description || errors.image || errors.categories || errors.stock || errors.brand ){
             setButton({
               complete:false
             })
@@ -136,6 +131,8 @@ function CreateProduct() {
       function handleBrand(e){
         if(!input.brand){
           setInput({...input, brand: e.target.value});
+          //let selectedbrand = brands.filter(b => b.name === e.target.value)
+          //setInput({...input, brandimage: selectedbrand[0].image})
           setError(validate({...input,brand: e.target.value}));
         }
       }
@@ -159,7 +156,7 @@ function CreateProduct() {
         e.preventDefault(e);
 
         dispatch(createNewProducts(input));
-        alert("articulo creado");
+        alert("Articulo Creado");
         setInput({
             name:"",
             price:"",
@@ -167,7 +164,6 @@ function CreateProduct() {
             image:[],
             categories:[],
             stock:"",
-            score:"",
             brand:""
         });
         history.push("/");
@@ -182,7 +178,6 @@ function CreateProduct() {
             image:[],
             categories:[],
             stock:"",
-            score:"",
             brand:""
         });
         setError("")
@@ -236,7 +231,8 @@ function CreateProduct() {
           </div>
           <div className="formSecondDiv">
             <label>Categoria:</label>
-            <select name={input.categories} onChange={e => handleSelect(e)}>
+            <select name={input.categories} onChange={e => handleSelect(e)} defaultValue="">
+            <option disabled value="">Seleccione una Categoria</option>
             {category && category.map(el =>
                 <option value={el.name}>{el.name}</option>
 
@@ -253,22 +249,14 @@ function CreateProduct() {
             />
             <p className={error.stock?"danger":"normal"}>{error.stock}</p>
 
-            <label>Valoracion:</label> {/*quitar*/}
-            <input
-              type="number"
-              value={input.score}
-              name="score"
-              onChange={(e) => handleChange(e)}
-            />
-            <p className={error.score?"danger":"normal"}>{error.score}</p>
-
             <label>Marca:</label>
-            <select name={input.brand} onChange={e => handleBrand(e)}>
+            <select name={input.brand} onChange={e => handleBrand(e)} defaultValue="">
+              <option disabled value="">Seleccione una Marca</option>
             {brands && brands.map(el =>
                 <option value={el.name}>{el.name}</option>
-
             )}
             </select>
+            {/*input.brandimage && <img src={input.brandimage}></img>*/}
             <div className="formCategories">{input.brand? <div className="inputCategories"><p onClick={e => handleDeleteBrand(e)}>{input.brand}</p></div>:""}</div>
             <p className={error.brand?"danger":"normal"}>{error.brand}</p>
           </div>
