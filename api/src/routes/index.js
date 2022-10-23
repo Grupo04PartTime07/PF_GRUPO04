@@ -3,9 +3,10 @@ const { Router } = require('express');
 const mwcategories = require('./categories')
 const mwproducts = require('./products')
 const mwbrands = require('./brands') 
-//const mwcart = require('./Cart')
+//const mwcart = require('./cart')
 const mwinventory = require('./inventory')
-const mwcheckout = require('./checkout') 
+const mwcheckout = require('./checkout')
+const mwreview = require('./reviews') 
 const mwusers = require('./users') 
 //const mwserver = require('./server') 
 
@@ -17,6 +18,7 @@ router.use('/brands', mwbrands);
 //router.use('/cart', mwcart)
 router.use('/inventory', mwinventory)
 router.use('/checkout', mwcheckout);
+router.use('/reviews', mwreview)
 router.use('/users', mwusers);
 //router.use('/server', mwserver);
 

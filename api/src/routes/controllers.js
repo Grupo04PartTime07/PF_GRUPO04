@@ -180,6 +180,27 @@ const updateProduct = async (id, props) => {
     }
 };
 
+const createScore = async (id, score, coment) => {
+    try {
+        let comment = await Score.create({coment: coment, score: score})
+        let product = await Products.findByPk(id)
+        product.addScore(comment.id)
+
+        let scores = await Score.findAll({
+            where: { productId: c.id}
+        })
+        const qtty = scores.length
+        let total = scores.reduce(function ( acc, va){
+            return (acc + va.score)
+          },0);
+        let prom = Math.ceil(total/qtty)
+        product.update({score_promedio: prom})
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
     getProductsDb,
     getCategoriesDb,
@@ -187,5 +208,6 @@ module.exports = {
     createProduct,
     createCategory,
     getProductDetail,
-    updateProduct
+    updateProduct,
+    createScore,
 }
