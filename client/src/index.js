@@ -3,14 +3,24 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import { Auth0Provider } from '@auth0/auth0-react';
 import { Provider } from "react-redux";
 import store from "./redux/store";
 
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
+    <Auth0Provider  
+          domain='dev-bjfya7kf.us.auth0.com'
+          clientId='Gq3nKZpFfCuXe7t2kARI6jAgdT0BgEBg'
+          redirectUri={window.location.origin}
+          audience='PF'
+          scope='openid profile email'
+      >  {/*  Provider de auth0 */}
+      
       <App />
+      
+      </Auth0Provider> {/*  Provider de auth0 */}
     </React.StrictMode>
   </Provider>,
   document.getElementById('root')

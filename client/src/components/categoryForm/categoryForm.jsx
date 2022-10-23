@@ -3,8 +3,15 @@ import styles from "./categoryFormDos.module.css";
 import { useState } from 'react';
 import { useDispatch } from 'react-redux'
 import { createCategory } from '../../redux/actions/create_category';
+import {useAuth0} from '@auth0/auth0-react';
+import axios from 'axios';
+import { useEffect} from "react";
+    
+
+
 
 export default function CategoryForm() {
+    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
 
     const dispatch = useDispatch();
 
@@ -41,10 +48,46 @@ export default function CategoryForm() {
             setImage("");
             }
 
+    async function callProtectedApiToken2() {
+        try {
+        const token = await getAccessTokenSilently();
+        const response = await axios.post(
+            "http://localhost:3001/users",
+            {
+            name: user.name || " ",
+            email: user.email,
+            },
+            {
+            headers: {
+                authorization: `Bearer ${token}`,
+            },
+            }
+        );
+        user.isAdmin = response.data.userRegisted.isAdmin;
+        user.isBanned = response.data.userRegisted.isAdmin;
+        console.log(response.data);
+        console.log(user);
+        } catch (error) {
+        console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        if (isAuthenticated) {
+        return () => {
+            const usuario = callProtectedApiToken2();
+            console.log(usuario);
+        };
+        }
+    });
+          
+
 return (
         <div>
+              
             <h1>Ingresa una Categoria</h1>
-            <form type="POST"  className={styles.formContainer} onSubmit={onSubmit}>
+            
+            {isAuthenticated && user.isAdmin ? <form type="POST"  className={styles.formContainer} onSubmit={onSubmit}>
             
             <label className={styles.label}>Name: </label>
              <input className={errorName? styles.invalido : styles.valido} 
@@ -60,7 +103,7 @@ return (
 
              <button name="submit"className={styles.button} type="submit"  disabled={ !image || errorImage  || !name || errorName ? true : false} >Crear Categoria</button> 
 
-            </form>
+            </form> : <label>upss parece que no tienes permisos</label>}
         </div>
         
     )

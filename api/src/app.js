@@ -5,11 +5,32 @@ const morgan = require('morgan');
 const routes = require('./routes/index.js');
 const { FRONT_URL = 'http://localhost:3000' } = process.env
 
+const { getCategoriesDb, createCategory } = require('./routes/controllers');
+const cors = require('cors');
+const jwks = require('jwks-rsa');
+const axios = require('axios');
+const {expressjwt: expressJwt} = require('express-jwt');
+
 require('./db.js'); 
 
 const server = express();
 
+const verifyJwt = expressJwt({
+  secret: jwks.expressJwtSecret({
+      cache: true,
+      rateLimit: true,
+      jwksRequestsPerMinute: 5,
+      jwksUri: 'https://dev-bjfya7kf.us.auth0.com/.well-known/jwks.json'
+}),
+audience: 'PF',
+issuer: 'https://dev-bjfya7kf.us.auth0.com/',
+algorithms: ['RS256']
+}).unless({path:[ '/', '/products', { url: /^\/products\/[0-9]/, methods: ['GET'] }, '/recibeUser']});
+
+
 server.name = 'API';
+server.use(cors()); 
+//server.use(verifyJwt);
 
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 server.use(bodyParser.json({ limit: '50mb' }));
@@ -31,6 +52,58 @@ server.use((err, req, res, next) => {
   console.error(err);
   res.status(status).send(message);
 });
+
+
+
+server.post("/protectedUser", async function (req, res) {
+  console.log(req);
+  const accesToken = req.headers.authorization.split(" ")[1];
+  const response = await axios.get(
+    "https://dev-bjfya7kf.us.auth0.com/userInfo",
+    {
+      headers: {
+        authorization: `Bearer ${accesToken}`,
+      },
+    }
+  );
+  const userInfo = response;
+  console.log(userInfo);
+  res.send(userInfo);
+});
+
+
+server.get("/protectedUser", async function (req, res) {
+  try {
+    const accesToken = req.headers.authorization.split(" ")[1];
+    const response = await axios.get(
+      "https://dev-bjfya7kf.us.auth0.com/userInfo/",
+      {
+        headers: {
+          authorization: `Bearer ${accesToken}`,
+        },
+      }
+    );
+    const userInfo = response.data;
+    console.log(userInfo);
+    res.send(userInfo);
+  } catch (error) {
+    res.send(error.message);
+  }
+});
+
+
+// server.post("/categories", async (req, res) => {
+//   console.log(req);
+//   try {
+//     const { name, image } = req.body;
+//     let categoryCreated = await createCategory(name, image);
+//     categoryCreated
+//       ? res.status(200).json("La categoria fue creada con exito!")
+//       : res.status(400).json("La categoria no puedo ser creada");
+//   } catch (e) {
+//     console.log(e);
+//   }
+// });
 
 
 

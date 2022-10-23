@@ -10,8 +10,11 @@ import RelatedProducts from "./relatedProducts";
 import Loading from "../loading/loading";
 import { addToCart } from '../../redux/actions/add_to_cart';
 import {Link} from "react-router-dom"
+import {useAuth0} from '@auth0/auth0-react';
 
 function Detail(props) {
+    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  
     const {id} = props.match.params;
     const dispatch = useDispatch();
     
@@ -30,7 +33,7 @@ function Detail(props) {
     }
 
     return (
-            typeof detail.id === 'number' ? <div className="detailContainer"> 
+            typeof detail.id === 'number' ? <div className="detailContainer">
                 <div className="detailContainerArticles">
                         <div className="detailLeft"> {/*Agregar una estiqueta de producto no disponible condicionada al stock*/}
                             <h1 className="detailTitle">{detail.name}</h1>
@@ -42,6 +45,7 @@ function Detail(props) {
                             <span className="buttonMargin"><Button onClick={()=> dispatch(addToCart({id: detail.id, name: detail.name, image: detail.image, price: detail.price, quantity: 1})) } variant="contained" >Comprar</Button></span>
                             </Link>
                             <Button onClick={()=> dispatch(addToCart({id: detail.id, name: detail.name, image: detail.image, price: detail.price, quantity: 1})) } variant="contained">Agregar al Carrito</Button>
+                        </div>
                         </div>
                     <div className="detailImagen">
                         <img src={detail.image} alt="productos" />
@@ -63,7 +67,7 @@ function Detail(props) {
                             )
                         })}
                     </div>  
-                    <Button variant="contained">Dar tu Opinion</Button>
+                   {isAuthenticated && <Button variant="contained">Dar tu Opinion</Button>}
                 </div>
                 <div>
                     <RelatedProducts id={detail.id} categorie={detail.categories ? detail.categories[0] : null}/>
