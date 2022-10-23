@@ -33,6 +33,7 @@ export default function Profile(){
     }
       
     useEffect(() => {
+        window.scrollTo(0, 0)
         if (isAuthenticated){
             return () => {
                 const usuario = callProtectedApiToken2();

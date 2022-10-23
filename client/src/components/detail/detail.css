@@ -120,7 +120,8 @@
 .relatedTitle{
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    margin-right: 550px;
+    margin-top: 50px;
+    margin-right: 650px;
     margin-bottom: 0%;
     font-weight: 350;
     color: rgb(82, 82, 82);

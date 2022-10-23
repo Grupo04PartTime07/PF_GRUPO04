@@ -1,8 +1,16 @@
 .categorieTitle{
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    margin-right: 850px;
+    position: relative;
+    right: 440px;
+    margin-left: 30px;
     margin-bottom: 0%;
     font-weight: 350;
     color: rgb(82, 82, 82);
+}
+
+@media screen and (max-width: 600px){
+    .categorieTitle{
+        right: 0px
+    }
 }
