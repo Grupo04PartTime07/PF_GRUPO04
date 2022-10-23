@@ -15,7 +15,7 @@
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     height: 0;
-    color: rgb(82, 82, 82);
+    color: rgb(118, 118, 118);
     margin-top: 20%;
 }
 

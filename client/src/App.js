@@ -22,7 +22,7 @@ function App() {
           <div className="App">
             <Route path='/' component={Navbar}/>
             <Route exact path='/' component={Home}/>
-            <Route path='/Categorias' component={CategoriesList}/>
+            <Route path='/Categorías' component={CategoriesList}/>
             <Route exact path='/products' component={Categorie}/>
             <Route exact path="/products/:id" component={Detail} />
             {/* modificar la ruta segun convenga */}

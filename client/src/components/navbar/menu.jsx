@@ -42,7 +42,7 @@ export default function TemporaryDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['Inicio', 'Categorias', 'Promociones', 'Marcas'].map((text, index) => (
+        {['Inicio', 'Categorías', 'Promociones', 'Marcas'].map((text, index) => (
             <Link className='link' to={index !== 0 ? '/' + text : '/'}> 
                 <ListItemButton>
                     <ListItem key={text} disablePadding>

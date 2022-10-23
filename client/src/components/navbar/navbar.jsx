@@ -162,7 +162,7 @@ export default function PrimarySearchAppBar() {
 
       {isAuthenticated &&
       <MenuItem onClick={handleMenuClose}>
-      <Link className='link' to='/myProfile' >Mi perfil</Link>
+      <Link className='link' to='/myProfile'>Mi perfil</Link>
       </MenuItem>
       }
       {/*  { Ver diseño, corresponde a cambios auth0}
@@ -171,7 +171,7 @@ export default function PrimarySearchAppBar() {
       
  
       {/* Aca se hace el login */}
-      {!isAuthenticated?<MenuItem id="1" onClick={loginWithPopup }>Log in</MenuItem>:<MenuItem onClick={logout}>Log out</MenuItem>}
+      {!isAuthenticated?<MenuItem id="1" onClick={loginWithPopup }><label className='link'>Iniciar sesión</label></MenuItem>:<MenuItem onClick={logout}><label className='link'>Cerrar sesión</label></MenuItem>}
       
     </Menu>
   );
@@ -200,7 +200,7 @@ export default function PrimarySearchAppBar() {
           </Badge>
         </IconButton>
         <Link className="chartLink" to="/shoppingCart">
-          <p>Carrito</p>
+          <p className='link'>Carrito</p>
         </Link>
       </MenuItem>
       <MenuItem>
@@ -216,7 +216,7 @@ export default function PrimarySearchAppBar() {
             </Badge>  
 
         </IconButton>
-       <p>Favoritos</p> 
+       <p className='link'>Favoritos</p> 
       </MenuItem>
 
       {!isAuthenticated && (
@@ -230,20 +230,20 @@ export default function PrimarySearchAppBar() {
           >
             <AccountCircleTwoToneIcon />
           </IconButton>
-
-          {/* <p>Log In</p> */}
+          <p className='link'>Iniciar sesión</p>
         </MenuItem>
       )}
 
       {isAuthenticated && (
         <MenuItem>
-          {" "}
-          <img
-            src={user.picture}
-            alt="Profile"
-            className="nav-user-profile rounded-circle"
-            width="50"
-          />
+          <MenuItem onClick={handleMenuClose}>
+            <Link className='link' to='/myProfile'><p className='link'>Mi perfil</p></Link>
+          </MenuItem>
+          {!isAuthenticated ? 
+            <MenuItem id="1" onClick={loginWithPopup }><p className='link'>Iniciar sesión</p></MenuItem>
+            :
+            <MenuItem onClick={logout}><p className='link'>Cerrar sesión</p></MenuItem>
+          }
         </MenuItem>
       )}
     </Menu>
