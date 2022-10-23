@@ -30,13 +30,15 @@ function Detail(props) {
     }
 
     return (
-            typeof detail.id === 'number' ? <div className="detailContainer"> 
+            typeof detail.id === 'number' ? 
+            <div className="detailContainer"> 
                 <div className="detailContainerArticles">
                         <div className="detailLeft"> {/*Agregar una estiqueta de producto no disponible condicionada al stock*/}
                             <h1 className="detailTitle">{detail.name}</h1>
                             <span className="detailScore">{stars}</span>
                             <h2 className="detailPrice"> $ {detail.price}</h2>
                             <p className="detailDescription">{detail.description}</p>
+                        </div>    
                         <div className="detailButton">
                             <Link to="/shoppingCart" style={{textDecoration:"none"}}>
                             <span className="buttonMargin"><Button onClick={()=> dispatch(addToCart({id: detail.id, name: detail.name, image: detail.image, price: detail.price, quantity: 1})) } variant="contained" >Comprar</Button></span>
