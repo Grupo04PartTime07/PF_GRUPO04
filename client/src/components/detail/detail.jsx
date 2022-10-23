@@ -7,11 +7,13 @@ import {getProductDetails} from '../../redux/actions/get_product_details';
 import {cleanProductState} from '../../redux/actions/clean_product_state';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import RelatedProducts from "./relatedProducts";
+import ScoreForm from "./scoreForms";
 import Loading from "../loading/loading";
 
 function Detail(props) {
     const {id} = props.match.params;
     const dispatch = useDispatch();
+    const [displayForm, setDisplay] = React.useState(false);
     
     useEffect(()=> {
         window.scrollTo(0, 0)
@@ -20,6 +22,10 @@ function Detail(props) {
             dispatch(cleanProductState({}))
         })
     }, [dispatch, id])
+
+    function formDisplay(){
+        setDisplay(!displayForm)
+    }
 
     const detail = useSelector((state) => state.productdetail)
     let stars = [];
@@ -46,6 +52,7 @@ function Detail(props) {
                 </div>
                 <div className="detailContainerOpinion detailMargin">
                     <h1 className="opinionTitle">Opiniones</h1>
+                    <div className="opinionCard">
                     <div className="opinionContainer">
                         {detail.opiniones && detail.opiniones.map((e) => {
                             let starsOpinion = [];
@@ -59,10 +66,13 @@ function Detail(props) {
                                 </div>
                             )
                         })}
-                    </div>  
-                    <Button variant="contained">Dar tu Opinion</Button>
-                </div>
-                <div>
+                        </div>
+                        {displayForm && <ScoreForm id={id} formDisplay={formDisplay} />}                
+                        <div>
+                    </div>
+                </div>  
+                    <Button variant="contained" onClick={formDisplay} >Dar tu Opinion</Button>
+                
                     <RelatedProducts id={detail.id} categorie={detail.categories ? detail.categories[0] : null}/>
                 </div>
             </div> : <Loading/>
