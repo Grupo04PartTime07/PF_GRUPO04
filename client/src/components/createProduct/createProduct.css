@@ -105,3 +105,13 @@
 .inputCategories p{
     margin:0px;
 }
+.formImagenPreview{
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    border: 2px salmon solid;
+}
+.previewContainer{
+    display: flex;
+    
+}
