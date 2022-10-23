@@ -6,8 +6,13 @@ import {getBrands} from "../../redux/actions/get_brands"
 import { createNewProducts } from '../../redux/actions/create_new_products';
 import { Link, useHistory} from "react-router-dom";
 import "./createProduct.css"
+import {useAuth0} from '@auth0/auth0-react';
+import axios from 'axios';
+
+    
 
 function CreateProduct() {
+  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
     const dispatch = useDispatch();
     const history = useHistory();
     let category = useSelector((state) => state.categories)
@@ -17,6 +22,39 @@ function CreateProduct() {
         dispatch(getCategories());
         dispatch(getBrands());
     },[])
+
+    async function callProtectedApiToken2() {
+      try {
+        const token = await getAccessTokenSilently();
+        const response = await axios.post(
+          "http://localhost:3001/users",
+          {
+            name: user.name || " ",
+            email: user.email,
+          },
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        user.isAdmin = response.data.userRegisted.isAdmin;
+        user.isBanned = response.data.userRegisted.isAdmin;
+        console.log(response.data);
+        console.log(user);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  
+    useEffect(() => {
+      if (isAuthenticated) {
+        return () => {
+          const usuario = callProtectedApiToken2();
+          console.log(usuario);
+        };
+      }
+    });
 
     const[input,setInput] = useState({
         name:"",
@@ -187,9 +225,11 @@ function CreateProduct() {
     }
 
   return (
+    
     <div>
+        
         <h1>Ingresa un Producto</h1>
-        <form className="formContainer" onSubmit={e => handleSubmit(e)}>
+        {isAuthenticated && user.isAdmin ?  <form className="formContainer" onSubmit={e => handleSubmit(e)}>
         <div className='formData'>
           <div className='formFirstDiv'>  
             <label>Nombre:</label>
@@ -266,7 +306,7 @@ function CreateProduct() {
             {button.complete === false ? <button disabled="disabled" className="button disable">Crear</button> : <button type="submit" className="button">Crear</button>}
             <button type="submit" onClick={e => handleReset(e)} className="button">Limpiar</button>
           </div>
-        </form>
+        </form> : <label >upss parece que no tienes sopermi</label> }
     </div>
   )
 }
