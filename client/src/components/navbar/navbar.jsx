@@ -26,7 +26,6 @@ import {useAuth0} from '@auth0/auth0-react';
 import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
 import {useEffect} from 'react';
-import { useState } from 'react';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative', 
@@ -163,7 +162,7 @@ export default function PrimarySearchAppBar() {
 
       {isAuthenticated &&
       <MenuItem onClick={handleMenuClose}>
-      <Link className='link' to='/createAccount' >Mis Datos</Link>
+      <Link className='link' to='/myProfile' >Mi perfil</Link>
       </MenuItem>
       }
       {/*  { Ver diseño, corresponde a cambios auth0}

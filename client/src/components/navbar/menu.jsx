@@ -10,8 +10,8 @@ import ListItemText from '@mui/material/ListItemText';
 import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
 import PaidTwoToneIcon from '@mui/icons-material/PaidTwoTone';
 import CategoryTwoToneIcon from '@mui/icons-material/CategoryTwoTone';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import InventoryIcon from '@mui/icons-material/Inventory';
+// import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+// import InventoryIcon from '@mui/icons-material/Inventory';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 import './menu.css'
@@ -57,7 +57,7 @@ export default function TemporaryDrawer() {
       </List>
       <Divider />
 
-      {isAuthenticated && user.isAdmin && <List>
+      {/* {isAuthenticated && user.isAdmin && <List>
       
         {["Crear Articulo","Crear Categoria"].map((text, index) => ( //corregir la ruta de destino
           <Link className='link' to={index === 0 ? `/createProduct` : '/createCategory'}>
@@ -72,7 +72,7 @@ export default function TemporaryDrawer() {
           </ListItemButton>
           </Link>
         ))}
-      </List>}
+      </List>} */}
     </Box>
   );
 
