@@ -3,7 +3,7 @@ const { BACK_URL } = process.env
 
 export const createBrand = (payload) => dispatch => {
     console.log("Payload:",payload)
-    return fetch(`${BACK_URL}/brands`,{method: "POST", headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload)})
+    return fetch(`https://pfproduction-production.up.railway.app/brands`,{method: "POST", headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload)})
     .then(res => res.json())
     .then(res => dispatch({type:CREATE_BRAND, payload: res}) )
     .catch(err => console.log(err))
