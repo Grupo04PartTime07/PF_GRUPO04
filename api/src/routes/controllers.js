@@ -149,7 +149,8 @@ const getProductDetail = async (id) => {
         })
        
             let categories = product.categories.map(e => e.name)
-            let response = {id: product.id, name: product.name, price: product.price, description: product.description, image: product.image, categories, stock: product.stock, score: product.score_promedio, brand: product.brand.name, opiniones: product.scores }
+            let opiniones = product.scores.slice(0, 3)
+            let response = {id: product.id, name: product.name, price: product.price, description: product.description, image: product.image, categories, stock: product.stock, score: product.score_promedio, brand: product.brand.name, opiniones: opiniones }
     
         return response;
         
@@ -201,6 +202,25 @@ const createScore = async (id, score, coment) => {
     }
 }
 
+const getScores = async (id) =>{
+    try {
+        let product = await Products.findByPk(id, {
+            include: [
+            {
+                model: Score,
+                attributes: ["score", "coment", "id"],
+            }
+        
+        ]
+        });
+        let response={id: product.id, name: product.name, price: product.price, image:product.image, stock: product.stock, score: product.score_promedio, opiniones: product.scores}
+        
+        return response;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
     getProductsDb,
     getCategoriesDb,
@@ -210,4 +230,5 @@ module.exports = {
     getProductDetail,
     updateProduct,
     createScore,
+    getScores,
 }

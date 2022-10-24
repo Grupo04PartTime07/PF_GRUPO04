@@ -196,7 +196,7 @@ export default function PrimarySearchAppBar() {
     >
       <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={0} color="error">
+          <Badge badgeContent={cart.reduce(function ( acc, va){return (acc + va.quantity)},0)} color="error">
             <ShoppingCartTwoToneIcon />
           </Badge>
         </IconButton>
@@ -212,7 +212,7 @@ export default function PrimarySearchAppBar() {
           color="inherit"
         >
 
-          <Badge badgeContent={17} color="error"> 
+          <Badge badgeContent={favorites.reduce(function ( acc, va){return (acc + va.quantity)},0)} color="error"> 
             <FavoriteTwoToneIcon />
             </Badge>  
 

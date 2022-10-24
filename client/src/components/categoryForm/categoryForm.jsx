@@ -22,8 +22,8 @@ export default function CategoryForm() {
 
   function validateName(value) {
     if (!/^[a-zA-Z]+$/.test(value)) {
-      // solo caracteres a-z minusculas y al menos uno
-      setErrorName('Solo caracteres de la "a-z" minusculas y al menos uno');
+      // solo caracteres a-z y al menos uno
+      setErrorName('Solo caracteres de la "a-z" y al menos uno');
     } else {
       setErrorName("");
     }
@@ -43,9 +43,11 @@ export default function CategoryForm() {
     setImagen(e.target.files[0]);
   };
 
+
   function handleButton(e) {
     // pisa el input con los datos que hay en imagenes
     e.preventDefault();
+
 
     setImage(imageData);
   }

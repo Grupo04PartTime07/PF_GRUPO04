@@ -3,29 +3,20 @@ const router = Router()
 
 const {Products} = require('../db')
 
-router.put('/', async function(req, res){
-    const {name, newStock} = req.body
+router.put('/:id', async function(req, res){
+    const {id} = req.params
+    const {newStock} = req.body
     try {
-        const Prod = await Products.findOne({
-            where:{
-                name: name
-            }
-        })
+        const Prod = await Products.findByPk(id)
     
-        const idProd = Prod.id 
-        const updatedProd = await Products.update({
-            stock: newStock
-        }, {
-            where: {
-                id: idProd
-            }
-        })
-        let msg
+        await Prod.update({stock: newStock})
+
+        /*let msg
         if(updatedProd[0] === 1){
             msg = 'Stock updated correctly'
         }
        /*  const updatedProd = await Products.findByPk(idProd) */
-        res.status(200).send(msg)
+        res.status(200).json("Inventario Actualizado correctamente")
 
     } catch (error) {
         console.log(error)
