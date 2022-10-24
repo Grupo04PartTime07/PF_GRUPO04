@@ -1,5 +1,5 @@
 const CHECK_OUT = "CHECK_OUT"
-const { BACK_URL = 'http://localhost:3001' } = process.env
+const { BACK_URL } = process.env
 
 export const checkOutCart = (payload) => dispatch => {
     console.log("Payload:",payload)

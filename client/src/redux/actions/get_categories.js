@@ -1,5 +1,5 @@
 export const GET_CATEGORIES = "GET_CATEGORIES";
-const { BACK_URL = 'http://localhost:3001' } = process.env
+const { BACK_URL } = process.env
 
 export const getCategories = () => dispatch => {;
     return fetch(`${BACK_URL}/categories`) 

@@ -1,5 +1,5 @@
 export const CREATE_BRAND = "CREATE_BRAND";
-const { BACK_URL = 'http://localhost:3001' } = process.env
+const { BACK_URL } = process.env
 
 export const createBrand = (payload) => dispatch => {
     console.log("Payload:",payload)

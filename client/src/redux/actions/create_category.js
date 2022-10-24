@@ -1,6 +1,6 @@
 
 export const CREATE_CATEGORY = "CREATE_CATEGORY";
-const { BACK_URL = 'http://localhost:3001' } = process.env
+const { BACK_URL } = process.env
 
 export const createCategory = (payload) => dispatch => {
     console.log("Paypoad:",payload)

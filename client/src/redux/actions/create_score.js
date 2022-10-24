@@ -1,7 +1,7 @@
 
 export const CREATE_SCORE = "CREATE_SCORE";
 
-const { BACK_URL = 'http://localhost:3001' } = process.env
+const { BACK_URL } = process.env
 
 export const createScore = (payload) => dispatch => {
     console.log("Paypoad:",payload)

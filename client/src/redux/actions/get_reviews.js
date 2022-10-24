@@ -1,5 +1,5 @@
 export const GET_REVIEWS = "GET_REVIEWS";
-const { BACK_URL = 'http://localhost:3001' } = process.env
+const { BACK_URL } = process.env
 
 
 export const getReviews = (id) => dispatch => {
