@@ -5,7 +5,7 @@ import { getNameProduct } from '../../redux/actions/search_name';
 import { updateInventory } from "../../redux/actions/update_inventory";
 import { cleanProductState } from "../../redux/actions/clean_product_state";
 import { getProductDetails } from "../../redux/actions/get_product_details";
-import { cleanProducts } from "../../redux/actions/clean_products";
+import { cleanOtherProducts } from "../../redux/actions/clean_other_products";
 
 export default function UpdateInventory(){
     const dispatch = useDispatch();
@@ -36,7 +36,7 @@ export default function UpdateInventory(){
 
     function handleSubmitInventory(){
         dispatch(updateInventory(input.id, {newStock: input.stock}))
-        dispatch(cleanProducts())
+        dispatch(cleanOtherProducts())
         alert("Producto actualizado con exito")
         dispatch(getProductDetails(input.id))
         setInventory({id: "", stock: ""})
