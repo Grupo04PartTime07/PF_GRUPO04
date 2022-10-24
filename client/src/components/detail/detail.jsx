@@ -82,7 +82,7 @@ function Detail(props) {
                           {displayForm && <ScoreForm id={id} formDisplay={formDisplay} />}
                     </div>
                        <div classname="divBttnsOpinions">
-                       <Link to={`/reviews/${id}`}>
+                       <Link to={`/reviews/${id}`} style={{textDecoration:"none"}}>
                        <Button variant="contained" >Mas  opiniones </Button>
                        </Link>
                       {isAuthenticated && <Button  variant="contained" onClick={() =>formDisplay()}>Dar tu Opinion</Button>}

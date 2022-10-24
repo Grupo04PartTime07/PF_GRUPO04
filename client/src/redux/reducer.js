@@ -33,19 +33,7 @@ const initialState = {
     products: [],
     productsaux: [],
     brand: [],
-    productdetail: {   name: "Galletita Molinos sin T.A.C.C. 150g",
-    price: 190,
-    image: ["https://http2.mlstatic.com/D_NQ_NP_657424-MLA43815565507_102020-O.webp", "https://http2.mlstatic.com/D_NQ_NP_886782-MLA49863261854_052022-O.webp"],
-    description: "Elaboradas con ingredientes de primera calidad, nuestras tostadas de arroz se destacan por ser livianas, naturales y crocantes, lo cual las convierte en un imprescindible de tus comidas diarias.",
-    id: "51",
-    brand:"Cariló",
-    categories: ["Almacén", "Desayuno y Merienda"],
-    stock: 50,
-    score:4,
-    opiniones:[{id: 13, score: 2, coment: "No siento que vale lo que cuesta"},
-    {id: 13, score: 5, coment: "Limpia la ropa y cuida el ambiente y mi bolsillo, me encata"},
-    {id: 13, score: 3, coment: "Rinde mucho pero el aroma no perdura"}]
-    },
+    productdetail: {},
     favorites: [],
     cart: [],
     account:[],
@@ -74,7 +62,6 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 productsaux: {},
-                products: {}
             }
         case GUEST_CREATE_ACCOUNT:
             alert(action.payload)
