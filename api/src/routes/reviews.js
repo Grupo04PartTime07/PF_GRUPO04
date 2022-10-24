@@ -1,11 +1,13 @@
 const {Router} = require('express');
 const router = Router();
 
-const { createScore } = require('./controllers');
+const { createScore, getScores } = require('./controllers');
 
-router.get('/', async (req, res) =>{
+router.get('/:id', async (req, res) =>{
+    const {id} = req.params;
     try {
-        
+        let product = await getScores(id);
+        res.status(200).json(product)
     } catch (error) {
         res.status(400).send(error)
     }
