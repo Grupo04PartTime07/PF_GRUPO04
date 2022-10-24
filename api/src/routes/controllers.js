@@ -149,7 +149,8 @@ const getProductDetail = async (id) => {
         })
        
             let categories = product.categories.map(e => e.name)
-            let response = {id: product.id, name: product.name, price: product.price, description: product.description, image: product.image, categories, stock: product.stock, score: product.score_promedio, brand: product.brand.name, opiniones: product.scores }
+            let opiniones = product.scores.slice(0, 3)
+            let response = {id: product.id, name: product.name, price: product.price, description: product.description, image: product.image, categories, stock: product.stock, score: product.score_promedio, brand: product.brand.name, opiniones: opiniones }
     
         return response;
         
@@ -180,6 +181,46 @@ const updateProduct = async (id, props) => {
     }
 };
 
+const createScore = async (id, score, coment) => {
+    try {
+        let comment = await Score.create({coment: coment, score: score})
+        let product = await Products.findByPk(id)
+        product.addScore(comment.id)
+
+        let scores = await Score.findAll({
+            where: { productId: c.id}
+        })
+        const qtty = scores.length
+        let total = scores.reduce(function ( acc, va){
+            return (acc + va.score)
+          },0);
+        let prom = Math.ceil(total/qtty)
+        product.update({score_promedio: prom})
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const getScores = async (id) =>{
+    try {
+        let product = await Products.findByPk(id, {
+            include: [
+            {
+                model: Score,
+                attributes: ["score", "coment", "id"],
+            }
+        
+        ]
+        });
+        let response={id: product.id, name: product.name, price: product.price, image:product.image, stock: product.stock, score: product.score_promedio, opiniones: product.scores}
+        
+        return response;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
     getProductsDb,
     getCategoriesDb,
@@ -187,5 +228,7 @@ module.exports = {
     createProduct,
     createCategory,
     getProductDetail,
-    updateProduct
+    updateProduct,
+    createScore,
+    getScores,
 }

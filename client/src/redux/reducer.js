@@ -9,6 +9,7 @@ import { GET_CATEGORIES } from './actions/get_categories'
 import { ADD_TO_FAVORITE } from "./actions/add_to_favorite";
 import { ADD_TO_CART } from "./actions/add_to_cart";
 import { CREATE_CATEGORY } from "./actions/create_category";
+import { CREATE_BRAND } from "./actions/create_brand";
 import { CREATE_NEW_PRODUCTS } from "./actions/create_new_products";
 import { GET_BRANDS } from './actions/get_brands'
 import { FILTER_BY_BRAND } from "./actions/filter_by_brand";
@@ -20,7 +21,14 @@ import { REMOVE_ONE_FROM_CART} from "./actions/remove_one_from_cart";
 import { DELETE_CART} from "./actions/delete_cart";
 import { GET_CART} from "./actions/get_cart";
 import { FULFILL_CART } from "./actions/fulfill_cart";
-
+import { GET_FAVORITES } from "./actions/get_favorites";
+import { DELETE_WISH_LIST } from "./actions/delete_wish_list";
+import { REMOVE_PRODUCT_FROM_WISH_LIST} from "./actions/remove_product_from_wish_list";
+import { ADD_TO_CART_FROM_WL} from "./actions/add_to_cart_from_wl";
+import { FULFILL_WISH_LIST } from "./actions/fulfill_wish_list";
+import { GET_REVIEWS} from "./actions/get_reviews";
+import { CLEAN_OTHER_PRODUCTS } from "./actions/clean_other_products";
+import { CREATE_SCORE } from "./actions/create_score";
 
 const initialState = {
     categories: [],
@@ -55,8 +63,13 @@ const reducer = (state = initialState, action) => {
         case CLEAN_PRODUCTS:
             return {
                 ...state,
-                productsaux: {}
+                productsaux: [],
             }
+        case CLEAN_OTHER_PRODUCTS:
+            return {
+                ...state,
+                products: [],
+            }            
         case GUEST_CREATE_ACCOUNT:
             alert(action.payload)
             return {
@@ -68,13 +81,26 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 message: action.payload
-                } 
+                }
+        case CREATE_BRAND:
+            alert(action.payload)
+            return {
+                ...state,
+                message: action.payload
+                }  
         case CREATE_NEW_PRODUCTS:
             //alert(action.payload)
             return {
                 ...state,
                 message: action.payload
                 }
+        case CREATE_SCORE:{
+            alert(action.payload)
+            return{
+                ...state,
+                message: action.payload
+                }
+        }
         case UPDATE_PRODUCT:
             alert(action.payload)
             return {
@@ -85,6 +111,12 @@ const reducer = (state = initialState, action) => {
             return{
                 ...state,
                 cart: action.payload
+            }
+        }
+        case FULFILL_WISH_LIST:{
+            return{
+                ...state,
+                favorites: action.payload
             }
         }
         case ADD_TO_CART:
@@ -98,11 +130,34 @@ const reducer = (state = initialState, action) => {
             ...state,
             cart:[...state.cart, action.payload]
              }
+             case ADD_TO_CART_FROM_WL:
+                let cartCopyFive = state.cart;
+                let artFound = cartCopyFive.find(item => item.id === action.payload.id)
+                return artFound?
+                {
+                 ...state,
+                 cart: cartCopyFive.map(item => item.id === action.payload.id?{...item, quantity: item.quantity + 1} : item),
+                 favorites: state.favorites.filter(e => e.id !== action.payload.id )
+                }:{
+                ...state,
+                cart:[...state.cart, action.payload],
+                favorites: state.favorites.filter(e => e.id !== action.payload.id )
+                 }     
         case GET_CART:
                 return {
                     ...state,
                     cart: [...state.cart]
-                    }    
+                    }
+        case GET_REVIEWS:
+                return {
+                    ...state,
+                    productdetail: action.payload
+                    }
+        case GET_FAVORITES:
+                return {
+                    ...state,
+                    favorites: [...state.favorites]
+                    }        
         case REMOVE_PRODUCT_FROM_CART:
                 let cartCopyTwoo = state.cart;
                 let cartFiltered = cartCopyTwoo.filter(e => e.id !== action.payload)
@@ -110,6 +165,14 @@ const reducer = (state = initialState, action) => {
                 return {
                     ...state,
                     cart: [...cartFiltered]
+                    }
+        case REMOVE_PRODUCT_FROM_WISH_LIST:
+                let favCopy = state.favorites;
+                let favFiltered = favCopy.filter(e => e.id !== action.payload)
+                console.log(action.payload, favFiltered)
+                return {
+                    ...state,
+                    favorites: [...favFiltered]
                     }
         case ADD_ONE_TO_CART:
             let cartCopyThree = state.cart;
@@ -139,7 +202,12 @@ const reducer = (state = initialState, action) => {
                 return {
                     ...state,
                     cart: []
-                    }           
+                    }
+                    case DELETE_WISH_LIST:
+                        return {
+                            ...state,
+                            favorites: []
+                            }                    
         case ADD_TO_FAVORITE:
             let favoritesCopy = state.favorites;
             let itemExist = favoritesCopy.filter(e => e.name === action.payload.name)

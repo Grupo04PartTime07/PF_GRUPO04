@@ -12,15 +12,27 @@ import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined
 
 export default function ShoppingCartBig(props){
 
+
 const dispatch = useDispatch()
 const cartItems = useSelector(state => state.cart)
 
 
 useEffect(() => {  // Didmount and DidUpdate controlled
+    window.scrollTo(0, 0)
     dispatch(getCart());
 },[dispatch])
 
 const [shipping, setShipping] = useState("")
+
+function handleDisabled(){
+    return (
+        !shipping || 
+      cartItems.length === 0);
+}
+
+
+
+
 
     return(
         <div className={styles.divShoppingCart}>
@@ -57,10 +69,11 @@ const [shipping, setShipping] = useState("")
                     <select className={styles.shippingPrice} name="shipping-costs"id="shipping-costs" defaultValue=""
                     onChange={(e) => setShipping(e.target.value) }
                     >
-                    <option disabled value="" >Elije una franja horaria</option>
-                    <option value="299">$299 (8hs a 21hs - CABA)</option>
-                    <option value="349">$349 (12hs a 16hs - CABA)</option>
-                    <option value="399">$399 (18hs a 21hs - CABA)</option>
+                    <option disabled value="" >Elije una opcion de entrega:</option>
+                    <option value="0">$0 (Retiro en Tienda: 10hs a 20hs - Av. Cordoba 1940, CABA)</option>
+                    <option value="299">$299 (Envio a domicilio: 8hs a 21hs - CABA)</option>
+                    <option value="349">$349 (Envio a domicilio: 12hs a 16hs - CABA)</option>
+                    <option value="399">$399 (Envio a domicilio: 18hs a 21hs - CABA)</option>
                     </select>
                 </div>
                 <div className={styles.divCantProductos}>
@@ -72,7 +85,7 @@ const [shipping, setShipping] = useState("")
                     <span className={styles.cartPrice}>${cartItems.reduce(function ( acc, va){return (acc + (va.quantity*va.price))},0)+Number(shipping)}</span> 
                 </div>
                 <div className={styles.divBttnPagar} >
-                    <button className={styles.bttnPagar} onClick={()=> dispatch(checkOutCart(cartItems.map(e => {return {title:e.name, unit_price:e.price, quantity:e.quantity}})))}>Finalizar compra</button>
+                    <button className={styles.bttnPagar} disabled={handleDisabled()} onClick={()=> dispatch(checkOutCart(cartItems.map(e => {return {id:e.id,title:e.name, unit_price:e.price, quantity:e.quantity}}).concat({id: 0, title:"Costo de Envio", unit_price:Number(shipping), quantity: 1})  ))}>Finalizar compra</button>
                 </div>
             </div>
         </div>

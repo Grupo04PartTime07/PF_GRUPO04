@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import Fab from '@mui/material/Fab';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Toolbar from '@mui/material/Toolbar';
-import { cleanProducts } from "../../redux/actions/clean_products";
+import { cleanOtherProducts } from '../../redux/actions/clean_other_products'
 
 function ScrollTop(props) {
     const { children, window } = props;
@@ -70,23 +70,25 @@ export default function Home(props){
         window.scrollTo(0, 0)
         dispatch(getAllProducts());
         return(() => {
-          dispatch(cleanProducts({}))
-        })
-    },[dispatch]) 
+          dispatch(cleanOtherProducts())
+      })
+    },[dispatch])
 
     return(
         products[0] && products[0].price ? <div>
             <Toolbar id="back-to-top-anchor" />
             <div><Banner/></div>
-            <h2 className="categorieTitle">Todos los productos</h2>
-            <div className="homeTable"> {/*#AgregameUnaEstrella*/}
-                { products.map(a => a.stock === 0 ? null : <Card id={a.id} name={a.name} image={a.image} price={a.price} score={a.score}/>) }
+            <div>
+              <h2 className="homeTitle">Todos los productos</h2>
+              <div className="homeTable"> {/*#AgregameUnaEstrella*/}
+                  { products.map(a => a.stock === 0 ? null : <Card id={a.id} name={a.name} image={a.image} price={a.price} score={a.score}/>) }
+              </div>
+              <ScrollTop {...props}>
+                  <Fab size="small" aria-label="scroll back to top">
+                      <KeyboardArrowUpIcon />
+                  </Fab>
+              </ScrollTop>
             </div>
-            <ScrollTop {...props}>
-                <Fab size="small" aria-label="scroll back to top">
-                    <KeyboardArrowUpIcon />
-                </Fab>
-            </ScrollTop>
         </div> : <Loading/>
     )
 }

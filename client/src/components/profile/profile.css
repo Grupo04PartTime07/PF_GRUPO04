@@ -1,0 +1,45 @@
+.profile{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 300px 600px;
+}
+.menuTitle{
+    color: rgb(82, 82, 82);
+}
+
+.profileMenu{
+    background-color: whitesmoke;
+}
+
+.list{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    height: 0;
+    color: rgb(118, 118, 118);
+    margin-top: 20%;
+}
+
+.menuText{
+    height: 50px;
+    margin: 0%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menuText:hover{
+    cursor: pointer;
+    background-color: rgb(225, 225, 225);
+}
+
+.radioButton:checked + .menuText{
+    background-color: rgb(225, 225, 225);
+}
+
+.radioButton{
+    display: none;
+}
+
+.component{
+    margin-left: 20%;
+}

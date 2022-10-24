@@ -5,7 +5,7 @@
 }
 
 .categorieFilters{
-    width: 80%;
+    width: 200px;
     height: 93%;
     position: relative;
     top: 3%;
@@ -31,12 +31,16 @@
 }
 
 .productsByCategorie{
-    width: 400%;
+    margin-left: 30px;
+    width: 1000px;
 }
 
 .categorieTitle{
-    display: flex;
-    margin-left: 50px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    position: relative;
+    right: 440px;
+    margin-left: 30px;
     margin-bottom: 0%;
     font-weight: 350;
     color: rgb(82, 82, 82);
@@ -87,7 +91,7 @@
     }
     .linkToBack{
         position: relative;
-        left: 18%;
+        left: 0%;
     }
     .categorieFilters{
         width: 80%;
@@ -104,5 +108,9 @@
     }
     .buttonsTable{
         margin-top: 15px;
+    }
+    .productsByCategorie{
+        margin-left: 10px;
+        width: 400px;
     }
 }
