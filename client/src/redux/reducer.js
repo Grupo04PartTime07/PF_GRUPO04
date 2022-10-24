@@ -63,14 +63,13 @@ const reducer = (state = initialState, action) => {
         case CLEAN_PRODUCTS:
             return {
                 ...state,
-                productsaux: {},
+                productsaux: [],
             }
-        case CLEAN_OTHER_PRODUCTS:{
+        case CLEAN_OTHER_PRODUCTS:
             return {
                 ...state,
-                products: {},
+                products: [],
             }            
-        }
         case GUEST_CREATE_ACCOUNT:
             alert(action.payload)
             return {

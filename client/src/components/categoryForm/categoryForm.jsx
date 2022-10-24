@@ -23,7 +23,7 @@ export default function CategoryForm() {
 
     function validateName(value) {
         if(!/^[a-zA-Z]+$/.test(value)) { // solo caracteres a-z minusculas y al menos uno
-        setErrorName('Solo caracteres de la "a-z" minusculas y al menos uno');
+        setErrorName('Solo caracteres de la "a-z" y al menos uno');
         } else {
         setErrorName('');
         }

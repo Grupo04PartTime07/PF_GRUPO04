@@ -3,10 +3,12 @@ import CreateAccount from "../account/account";
 import CategoryForm from "../categoryForm/categoryForm";
 import CreateProduct from "../createProduct/CreateProduct";
 import UpdateInventory from "../stock/inventory";
+import BrandForm from "../brandForm/brandForm";
 import './profile.css'
 import {useAuth0} from '@auth0/auth0-react';
 import axios from 'axios';
 import {useEffect} from 'react';
+
 
 export default function Profile(){
     
@@ -63,6 +65,10 @@ export default function Profile(){
                         <p className="menuText">Crear categoría</p>
                     </label>}
                     {isAuthenticated && user.isAdmin && <label>
+                        <input className="radioButton" value='createBrand' type="radio" checked={checked === 'createBrand'} onChange={(e) => handleCheck(e)}/>
+                        <p className="menuText">Crear Marca</p>
+                    </label>}
+                    {isAuthenticated && user.isAdmin && <label>
                         <input className="radioButton" value='createProduct' type="radio" checked={checked === 'createProduct'} onChange={(e) => handleCheck(e)}/>
                         <p className="menuText">Crear producto</p>
                     </label>}
@@ -73,7 +79,7 @@ export default function Profile(){
                 </div>
             </div>
             <div className="component">
-                {checked === 'datos' ? <CreateAccount/> : checked === 'createProduct' ? <CreateProduct/> : checked === 'createCategorie' ? <CategoryForm/> : checked === 'updateInventory' ? <UpdateInventory/> : <CreateAccount/>}
+                {checked === 'datos' ? <CreateAccount/> : checked === 'createProduct' ? <CreateProduct/> : checked === 'createCategorie' ? <CategoryForm/> : checked === 'updateInventory' ? <UpdateInventory/> : checked === 'createBrand' ? <BrandForm/> : <CreateAccount/>}
             </div>
         </div>
     )
