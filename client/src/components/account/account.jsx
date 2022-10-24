@@ -116,7 +116,7 @@ const regexEmail =/\S+@\S+\.\S+/
 
     return (
         <div>
-            <h1>Registro de Usuario</h1>
+            
             <form className="formContainer" onSubmit={e => handleSubmit(e)}>
                 <div className='formData'>
                     <div className='formFirstDiv'>
@@ -146,8 +146,8 @@ const regexEmail =/\S+@\S+\.\S+/
                             onChange={(e) => handleChange(e)}
                         />
                         <p className={error.mail ? "danger" : "normal"}>{error.mail}</p>
-                    </div>
-                    <div className="formSecondDiv">
+                    
+                    
                     <label>Domicilio:</label>
                         <input
                             type="text"
