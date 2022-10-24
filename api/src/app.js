@@ -54,7 +54,6 @@ server.use((err, req, res, next) => {
 });
 
 
-
 server.post("/protectedUser", async function (req, res) {
   console.log(req);
   const accesToken = req.headers.authorization.split(" ")[1];
