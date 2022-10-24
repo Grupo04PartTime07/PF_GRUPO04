@@ -201,6 +201,25 @@ const createScore = async (id, score, coment) => {
     }
 }
 
+const getScores = async (id) =>{
+    try {
+        let product = await Products.findByPk(id, {
+            include: [
+            {
+                model: Score,
+                attributes: ["score", "coment", "id"],
+            }
+        
+        ]
+        });
+        let response={id: product.id, name: product.name, price: product.price, image:product.image, stock: product.stock, score: product.score_promedio, opiniones: product.scores}
+        
+        return response;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
     getProductsDb,
     getCategoriesDb,
@@ -210,4 +229,5 @@ module.exports = {
     getProductDetail,
     updateProduct,
     createScore,
+    getScores,
 }

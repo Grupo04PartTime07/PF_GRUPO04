@@ -60,7 +60,8 @@ const reducer = (state = initialState, action) => {
         case CLEAN_PRODUCTS:
             return {
                 ...state,
-                productsaux: {}
+                productsaux: {},
+                products: {}
             }
         case GUEST_CREATE_ACCOUNT:
             alert(action.payload)
