@@ -69,7 +69,7 @@ function CreateProduct() {
 
     
     
-    const [imagen, setImagen] = useState(""); //este estado va a subir los datos a cloudinary
+  const [imagen, setImagen] = useState(""); //este estado va a subir los datos a cloudinary
   const [imageData, setimageData] = useState({
     // este estado guardara las direcciones de cloudinary para pisar el input
     imageReel: [],
@@ -331,10 +331,10 @@ function CreateProduct() {
     <div>
 
         
-        <h1>Ingresa un Producto</h1>
-        {isAuthenticated && user.isAdmin ?  <form className="formContainer" onSubmit={e => handleSubmit(e)}>
-        <div className='formData'>
-          <div className='formFirstDiv'>  
+        
+        {isAuthenticated && user.isAdmin ?  <form className="formContainerProd" onSubmit={e => handleSubmit(e)}>
+        <div className='formDataProd'>
+          <div className='formFirstDivProd'>  
 
             <label>Nombre:</label>
             <input
@@ -345,17 +345,6 @@ function CreateProduct() {
             />
             <p className={error.name ? "danger" : "normal"}>{error.name}</p>
 
-            <label>Descripcion:</label>
-            <textarea
-              type="text"
-              value={input.description}
-              name="description"
-              onChange={(e) => handleChange(e)}
-            />
-
-            <p className={error.description ? "danger" : "normal"}>
-              {error.description}
-            </p>
             <label>Precio:</label>
             <input
               type="number"
@@ -365,38 +354,15 @@ function CreateProduct() {
             />
             <p className={error.price ? "danger" : "normal"}>{error.price}</p>
 
-            <label>Imagen (Min 1 - Max 5):</label>
-            <input type="file" onChange={(e) => updateImage(e)} className="formInput" />
-            {/* <input
-              id="imagen"
-              type="file"
-              value={imagen}
-              name="image"
-              onChange={(e) => updateImage(e)}
-            /> */}
-            <button className="button" onClick={uploadImage}>
-              Agregar
-            </button>
-            
-            {/* crea la tira de imagenes pequeñas */}
-            <div className="formContainerPreview"> 
-              {imageData.imageReel &&
-                imageData.imageReel.map((e) => (
-                  <Image
-                    className="formImagenPreview"
-                    cloudName="de2od3piw"
-                    publicID={e}
-                    onClick={(e) => handleDeleteImage(e)}
-                  />
-                ))}
-            </div>
-            <button className="button" onClick={handleButton}>
-              Aceptar
-            </button>
-            <p className={error.image ? "danger" : "normal"}>{error.image}</p>
-          </div>
+            <label>Stock:</label>
+            <input
+              type="number"
+              value={input.stock}
+              name="stock"
+              onChange={(e) => handleChange(e)}
+            />
+            <p className={error.stock ? "danger" : "normal"}>{error.stock}</p>
 
-          <div className="formSecondDiv">
             <label>Categoria (Min 1 - Max 5):</label>
             <select
               name={input.categories}
@@ -423,14 +389,6 @@ function CreateProduct() {
             <p className={error.categories ? "danger" : "normal"}>
               {error.categories}
             </p>
-            <label>Stock:</label>
-            <input
-              type="number"
-              value={input.stock}
-              name="stock"
-              onChange={(e) => handleChange(e)}
-            />
-            <p className={error.stock ? "danger" : "normal"}>{error.stock}</p>
 
             <label>Marca:</label>
             <select
@@ -456,6 +414,49 @@ function CreateProduct() {
             </div>
             <p className={error.brand ? "danger" : "normal"}>{error.brand}</p>
           </div>
+          <div className="formSecondDivProd">        
+            <label>Descripcion:</label>
+            <textarea
+              type="text"
+              value={input.description}
+              name="description"
+              onChange={(e) => handleChange(e)}
+            />
+
+            <p className={error.description ? "danger" : "normal"}>
+              {error.description}
+            </p>
+          </div>
+          <div className="formThirdDivProd">
+          
+            <label>Imagen (Min 1 - Max 5):</label>
+            <div className='formImageProd'>
+              <input type="file" onChange={(e) => updateImage(e)} className="formInput" />
+              <button className="button" onClick={uploadImage}>
+                Agregar
+              </button>
+            </div>
+            <h5>Vista Previa</h5>
+            {/* crea la tira de imagenes pequeñas */}
+            <div className="formContainerPreview"> 
+              {imageData.imageReel &&
+                imageData.imageReel.map((e) => (
+                  <Image
+                    className="formImagenPreview"
+                    cloudName="de2od3piw"
+                    publicID={e}
+                    onClick={(e) => handleDeleteImage(e)}
+                  />
+                ))}
+            </div>
+            
+            <button className="button" onClick={handleButton}>
+              Aceptar
+            </button>
+            <p className={error.image ? "danger" : "normal"}>{error.image}</p>
+          </div>
+
+
 
         </div>
         <div>
