@@ -27,6 +27,8 @@ import { REMOVE_PRODUCT_FROM_WISH_LIST} from "./actions/remove_product_from_wish
 import { ADD_TO_CART_FROM_WL} from "./actions/add_to_cart_from_wl";
 import { FULFILL_WISH_LIST } from "./actions/fulfill_wish_list";
 import { GET_REVIEWS} from "./actions/get_reviews";
+import { CLEAN_OTHER_PRODUCTS } from "./actions/clean_other_products";
+import { CREATE_SCORE } from "./actions/create_score";
 
 const initialState = {
     categories: [],
@@ -63,6 +65,12 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 productsaux: {},
             }
+        case CLEAN_OTHER_PRODUCTS:{
+            return {
+                ...state,
+                products: {},
+            }            
+        }
         case GUEST_CREATE_ACCOUNT:
             alert(action.payload)
             return {
@@ -87,6 +95,13 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 message: action.payload
                 }
+        case CREATE_SCORE:{
+            alert(action.payload)
+            return{
+                ...state,
+                message: action.payload
+                }
+        }
         case UPDATE_PRODUCT:
             alert(action.payload)
             return {
