@@ -26,14 +26,26 @@ import { DELETE_WISH_LIST } from "./actions/delete_wish_list";
 import { REMOVE_PRODUCT_FROM_WISH_LIST} from "./actions/remove_product_from_wish_list";
 import { ADD_TO_CART_FROM_WL} from "./actions/add_to_cart_from_wl";
 import { FULFILL_WISH_LIST } from "./actions/fulfill_wish_list";
-
+import { GET_REVIEWS} from "./actions/get_reviews";
 
 const initialState = {
     categories: [],
     products: [],
     productsaux: [],
     brand: [],
-    productdetail: {},
+    productdetail: {   name: "Galletita Molinos sin T.A.C.C. 150g",
+    price: 190,
+    image: ["https://http2.mlstatic.com/D_NQ_NP_657424-MLA43815565507_102020-O.webp", "https://http2.mlstatic.com/D_NQ_NP_886782-MLA49863261854_052022-O.webp"],
+    description: "Elaboradas con ingredientes de primera calidad, nuestras tostadas de arroz se destacan por ser livianas, naturales y crocantes, lo cual las convierte en un imprescindible de tus comidas diarias.",
+    id: "51",
+    brand:"Cariló",
+    categories: ["Almacén", "Desayuno y Merienda"],
+    stock: 50,
+    score:4,
+    opiniones:[{id: 13, score: 2, coment: "No siento que vale lo que cuesta"},
+    {id: 13, score: 5, coment: "Limpia la ropa y cuida el ambiente y mi bolsillo, me encata"},
+    {id: 13, score: 3, coment: "Rinde mucho pero el aroma no perdura"}]
+    },
     favorites: [],
     cart: [],
     account:[],
@@ -133,6 +145,11 @@ const reducer = (state = initialState, action) => {
                 return {
                     ...state,
                     cart: [...state.cart]
+                    }
+        case GET_REVIEWS:
+                return {
+                    ...state,
+                    productdetail: action.payload
                     }
         case GET_FAVORITES:
                 return {
