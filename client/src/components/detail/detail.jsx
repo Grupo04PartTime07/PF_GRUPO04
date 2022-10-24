@@ -3,6 +3,7 @@ import "./detail.css";
 import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+
 import { getProductDetails } from "../../redux/actions/get_product_details";
 import { cleanProductState } from "../../redux/actions/clean_product_state";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
@@ -19,6 +20,7 @@ function Detail(props) {
   const { id } = props.match.params;
   const dispatch = useDispatch();
   const [displayForm, setDisplay] = React.useState(false);
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -132,6 +134,7 @@ function Detail(props) {
   ) : (
     <Loading />
   );
+
 }
 
 export default Detail;
