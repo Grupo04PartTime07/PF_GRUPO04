@@ -13,6 +13,7 @@ import { addToCart } from '../../redux/actions/add_to_cart';
 import {Link} from "react-router-dom"
 import {useAuth0} from '@auth0/auth0-react';
 
+
 function Detail(props) {
     const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   
@@ -55,8 +56,7 @@ function Detail(props) {
                             <span className="buttonMargin"><Button onClick={()=> dispatch(addToCart({id: detail.id, name: detail.name, image: detail.image, price: detail.price, quantity: 1})) } variant="contained" >Comprar</Button></span>
                             </Link>
                             <Button onClick={()=> dispatch(addToCart({id: detail.id, name: detail.name, image: detail.image, price: detail.price, quantity: 1})) } variant="contained">Agregar al Carrito</Button>
-                        </div>
-                   
+                        </div>                      
                     <div className="detailImagen">
                         <img src={detail.image} alt="productos" />
                     </div>
@@ -81,7 +81,12 @@ function Detail(props) {
                       </div>
                           {displayForm && <ScoreForm id={id} formDisplay={formDisplay} />}
                     </div>
-                      {isAuthenticated && <Button variant="contained" onClick={() =>formDisplay()}>Dar tu Opinion</Button>}
+                       <div classname="divBttnsOpinions">
+                       <Link to={`/reviews/${id}`}>
+                       <Button variant="contained" >Mas  opiniones </Button>
+                       </Link>
+                      {isAuthenticated && <Button  variant="contained" onClick={() =>formDisplay()}>Dar tu Opinion</Button>}
+                      </div>
                </div>
                <div>
                     <RelatedProducts id={detail.id} categorie={detail.categories ? detail.categories[0] : null}/>
