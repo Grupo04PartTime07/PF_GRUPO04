@@ -38,7 +38,7 @@ return(
                 <WishedProduct 
                 key={item.id}
                 id={item.id}
-                image={item.image}
+                image={item.image[0]}
                 name={item.name.slice(0,20)+"..."}
                 price={item.price}
                 addToCartFromWL={()=> dispatch(addToCartFromWL({id: item.id, name: item.name, image: item.image, price: item.price, quantity: 1}))}

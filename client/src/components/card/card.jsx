@@ -41,7 +41,7 @@ export default function ImgMediaCard(props) {
         alt={props.name}
         sx={{ maxWidth: 170 }}
         height="170"
-        image={props.image}
+        image={props.image[0]}
       />
       <CardContent sx={{ height: 70 }} >
         <Typography sx={{ fontSize: 20 }} className="productPrice" gutterBottom variant="h5" component="div">

@@ -3,6 +3,17 @@
     color: black;
 }
 
+.avatar{
+    position: relative;
+    top: 12px
+}
+
+.greetingsUser{
+    font-size: 9px;
+    font-weight: 500;
+    color: rgb(225, 225, 225);
+}
+
 @media screen and (max-width: 600px){
     .navBarBox{
         width: 100%;

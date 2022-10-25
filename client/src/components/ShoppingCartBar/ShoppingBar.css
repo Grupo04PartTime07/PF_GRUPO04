@@ -27,6 +27,7 @@
     margin: 3px;
 }
 .btn{
+    cursor: pointer;
     width: 20px;
     height: 20px;
     border-radius: 5px;
@@ -36,9 +37,7 @@
     color: whitesmoke
 }
 .btn:hover{
-    background-color:rgb(137, 134, 134);
-    cursor: pointer;
-    color: rgb(21, 21, 21);
+    background-color:#1861ab;
 }
 .numbox{
     color: rgb(82, 82, 82);
@@ -66,6 +65,7 @@
     color: rgb(82, 82, 82);
 }
 .check{
+    cursor: pointer;
     margin: 4px;
     margin-bottom: 6px;
     border-radius: 5px;
@@ -75,9 +75,8 @@
     padding: 3px;
 }
 .check:hover{
-    background-color:rgb(137, 134, 134);
+    background-color:#1861ab;
     cursor: pointer;
-    color: rgb(21, 21, 21);
 }
 .check:disabled{
     cursor: not-allowed;
