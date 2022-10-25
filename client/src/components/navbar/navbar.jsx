@@ -26,6 +26,7 @@ import {useAuth0} from '@auth0/auth0-react';
 import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
 import {useEffect} from 'react';
+import { width } from '@mui/system';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative', 
@@ -320,7 +321,7 @@ export default function PrimarySearchAppBar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton onClick={handleDisplayCart} size="large" aria-label="show 4 new mails" color="inherit">
+            <IconButton sx={{width: '40%'}} onClick={handleDisplayCart} size="large" aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={cart.reduce(function ( acc, va){return (acc + va.quantity)},0)} color="error">
                 <ShoppingCartTwoToneIcon />
               </Badge>
@@ -330,13 +331,14 @@ export default function PrimarySearchAppBar() {
               aria-label="show 17 new notifications"
               color="inherit"
             >
-              <Badge badgeContent={favorites.reduce(function ( acc, va){return (acc + va.quantity)},0)} color="error">
+              <Badge sx={{height: '80%'}} badgeContent={favorites.reduce(function ( acc, va){return (acc + va.quantity)},0)} color="error">
                 <Link to="/wishList" style={{textDecoration:"none", color: "whitesmoke"} }>
                 <FavoriteTwoToneIcon />
                 </Link>
               </Badge>
             </IconButton>
             <IconButton
+              sx={{width: '40%'}}
               size="large"
               edge="end"
               aria-label="account of current user"

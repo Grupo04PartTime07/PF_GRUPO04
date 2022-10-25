@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllProducts } from "../../redux/actions/get_products";
 
 export default function RelatedProducts(props){
-    console.log(props.categorie)
+    //console.log(props.categorie)
     const dispatch = useDispatch();
     const products = useSelector( state => state.products)
 
