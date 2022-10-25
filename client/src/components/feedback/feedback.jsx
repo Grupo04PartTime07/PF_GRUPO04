@@ -17,10 +17,13 @@ export default function Feedback(){
         <div className="feedbackContainer">
             <div className="feedbackContent">
                 <img src='https://assets.soyhenry.com/henry-landing/assets/Henry/logo.png' alt='Henry Logo'></img>
-                <div className="feedbackMessage">
+                {info.status === 'approved' ? <div className="feedbackMessage">
                     ¡Gracias por tu compra!
                     <p>Tu código de seguimiento es <b>{info.merchant_order_id}</b></p>
-                </div>
+                </div> : <div className="feedbackMessage">
+                    ¡Algo salió mal!
+                    <p>Te invitamos a probar nuevamente</p>
+                </div>}
                 <div>
                     <Link to='/' className="feedbackButton"><Button variant="contained">Volver a Henry Market</Button></Link>
                 </div>
