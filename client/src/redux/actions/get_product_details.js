@@ -7,5 +7,5 @@ export const getProductDetails = (id) => dispatch => {
     .then(res => res.json())
     .then(obj => dispatch({type: GET_PRODUCT_DETAILS, payload: obj}))
     .catch(err => console.log(err))
-    }
+    } 
     
