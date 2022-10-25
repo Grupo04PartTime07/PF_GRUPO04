@@ -13,6 +13,7 @@ import { addToCart } from "../../redux/actions/add_to_cart";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import ModalReviews from "../modalReviews/modalReviews";
+import ModalImg from "./modalImg";
 
 function Detail(props) {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
@@ -89,9 +90,9 @@ function Detail(props) {
             </div>
             </div>
             <div className="detailImagen">
-                <img src={detail.image[indice]} alt="productos" />
+                <ModalImg img={detail.image[indice]}/>
                 <div>
-                  {detail.image?.map((e,index) =>  {return(<img classname="imgMiniatura" src={e}  onClick={()=> setIndice(index)} alt="img"></img>)})} 
+                  {detail.image?.map((e,index) =>  {return(<img className="imgMiniatura" src={e}  onClick={()=> setIndice(index)} alt="img"></img>)})} 
                 </div>
             </div>
         </div>
