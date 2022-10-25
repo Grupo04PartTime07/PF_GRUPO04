@@ -56,10 +56,9 @@ export default function Profile(){
         <div className="profile">
             <div className="profileMenu">
                 <div className="profileImg">
-                    {isAuthenticated && <Avatar alt={user.name} src={user.picture} />}
+                    {isAuthenticated && <Avatar sx={{ width: 100, height: 100 }} alt={user.name} src={user.picture} />}
                 </div>
-                <h2 className="menuTitle">Bienvenido</h2>
-                {isAuthenticated && user.isAdmin ? <h3 className="menuTitle">Administrador</h3> : <h3 className="menuTitle">{isAuthenticated && user.given_name}</h3>}
+                {isAuthenticated && user.isAdmin ? <h3 className="menuTitle">Bienvenido Administrador</h3> : <h3 className="menuTitle">Bienvenido {isAuthenticated && user.given_name}</h3>}
                 <div className="list">
                     <label>
                         <input className="radioButton" value='datos' type="radio" checked={checked === 'datos'} onChange={(e) => handleCheck(e)}/>

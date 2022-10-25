@@ -59,15 +59,20 @@
 
 .detailImagen img{
     border-radius: 5px;
-    width: 70%;
+    width: 95%;
     justify-self: center;
+}
 
+img:hover{
+    cursor: pointer;
 }
 
 .imgMiniatura{
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
+    margin-left: -10px;
+}
+
+.imgMiniatura:hover{
+    border: 2px solid rgb(45, 143, 255);
 }
 
 .detailButton{
