@@ -159,7 +159,7 @@ export default function PrimarySearchAppBar() {
     >
       {isAuthenticated && <MenuItem style={{ pointerEvents: 'none' }}><Avatar alt={user.name} src={user.picture} /></MenuItem>}
       
-      {isAuthenticated && <MenuItem style={{ pointerEvents: 'none' }}>{user.email}</MenuItem>}
+      {isAuthenticated && <MenuItem style={{ pointerEvents: 'none' }}>¡Hola {user.given_name}!</MenuItem>}
 
       {isAuthenticated &&
       <MenuItem onClick={handleMenuClose}>
@@ -347,8 +347,13 @@ export default function PrimarySearchAppBar() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-             {isAuthenticated?<Avatar alt={user.name} src={user.picture} />:<AccountCircleTwoToneIcon />}
-              
+              {isAuthenticated ? <div className='avatar'>
+                {isAuthenticated?<Avatar alt={user.name} src={user.picture} />:<AccountCircleTwoToneIcon />}
+                {isAuthenticated && user.isAdmin ? <p className='greetingsUser'>Admin</p> : <p className='greetingsUser'>{user.given_name}</p>}
+              </div> : 
+              <div>
+                {<AccountCircleTwoToneIcon />}
+              </div>}
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

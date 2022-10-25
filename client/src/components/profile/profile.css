@@ -15,12 +15,18 @@
     box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
 }
 
+.profileImg{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
 .list{
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     height: 0;
     color: rgb(118, 118, 118);
-    margin-top: 20%;
+    margin-top: 10%;
 }
 
 .menuText{
