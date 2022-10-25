@@ -48,7 +48,8 @@
 
 .detailImagen{
     border-radius: 5px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 90% 10%;
     justify-content: center;
     align-items: center;
     overflow: hidden;
@@ -59,6 +60,14 @@
 .detailImagen img{
     border-radius: 5px;
     width: 70%;
+    justify-self: center;
+
+}
+
+.imgMiniatura{
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
 }
 
 .detailButton{

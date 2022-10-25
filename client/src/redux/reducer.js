@@ -29,13 +29,17 @@ import { FULFILL_WISH_LIST } from "./actions/fulfill_wish_list";
 import { GET_REVIEWS} from "./actions/get_reviews";
 import { CLEAN_OTHER_PRODUCTS } from "./actions/clean_other_products";
 import { CREATE_SCORE } from "./actions/create_score";
+import { SEARCH_FOR_INVENTORY } from '../redux/actions/search_4_inventory'
+import { CLEAN_INV_PRODUCTS } from "./actions/clean_inv_products";
 
 const initialState = {
     categories: [],
     products: [],
     productsaux: [],
+    productsinv:[],
     brand: [],
     productdetail: {},
+    reviews:{},
     favorites: [],
     cart: [],
     account:[],
@@ -151,7 +155,7 @@ const reducer = (state = initialState, action) => {
         case GET_REVIEWS:
                 return {
                     ...state,
-                    productdetail: action.payload
+                    reviews: action.payload
                     }
         case GET_FAVORITES:
                 return {
@@ -290,6 +294,16 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 products: action.payload
             }
+        case SEARCH_FOR_INVENTORY:
+            return{
+                ...state,
+                productsinv: action.payload
+            }
+        case CLEAN_INV_PRODUCTS:
+                return {
+                    ...state,
+                    productsinv: [],
+                }
         default: return state;
     }
 }

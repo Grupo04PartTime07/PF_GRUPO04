@@ -45,7 +45,7 @@ export default function ModalReviews({id}) {
       })
   },[dispatch])
 
-  const productDetails = useSelector((state) => state.productdetail)
+  const productDetails = useSelector((state) => state.reviews)
   let stars = [];
   for (let i = 0; i < Math.ceil(productDetails.score); i++) {
       stars.push(<StarRoundedIcon />)
