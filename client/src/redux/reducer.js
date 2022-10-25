@@ -36,6 +36,7 @@ const initialState = {
     productsaux: [],
     brand: [],
     productdetail: {},
+    reviews:{},
     favorites: [],
     cart: [],
     account:[],
@@ -151,7 +152,7 @@ const reducer = (state = initialState, action) => {
         case GET_REVIEWS:
                 return {
                     ...state,
-                    productdetail: action.payload
+                    reviews: action.payload
                     }
         case GET_FAVORITES:
                 return {
