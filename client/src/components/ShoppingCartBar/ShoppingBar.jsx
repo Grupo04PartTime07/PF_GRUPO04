@@ -51,7 +51,7 @@ export default function ShoppingBar(props){
             {currentCart && currentCart.length > 0 ? currentCart.map(a => {
                 return(
             <div className="itemcontainer"> 
-                <img src={a.image} width={"30px"} height={"35px"} className="img"/>
+                <img src={a.image[0]} width={"30px"} height={"35px"} className="img"/>
                 <button className="btn" onClick={() => handleLess(a.id)}>-</button>
                 <p className="numbox">{a.quantity}</p>
                 <button className="btn" onClick={() => handleMore(a.id)}>+</button>

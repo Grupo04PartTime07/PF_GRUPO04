@@ -52,7 +52,7 @@ function handleDisabled(){
                 <CartItem 
                 key={item.id}
                 id={item.id}
-                image={item.image}
+                image={item.image[0]}
                 name={item.name.slice(0,20)+"..."}
                 price={item.price}
                 addOneToCart={()=> dispatch(addOneToCart(item.id))}
