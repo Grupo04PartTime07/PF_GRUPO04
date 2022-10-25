@@ -1,19 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import './inventory.css'
-import { getNameProduct } from '../../redux/actions/search_name';
+import { searchForInventory } from '../../redux/actions/search_4_inventory'
 import { updateInventory } from "../../redux/actions/update_inventory";
 import { cleanProductState } from "../../redux/actions/clean_product_state";
 import { getProductDetails } from "../../redux/actions/get_product_details";
-import { cleanOtherProducts } from "../../redux/actions/clean_other_products";
+import { cleanInvProducts } from "../../redux/actions/clean_inv_products";
 
 export default function UpdateInventory(){
     const dispatch = useDispatch();
-    const products = useSelector((state) => state.products);
+    const products = useSelector((state) => state.productsinv);
     const productdetail = useSelector((state) => state.productdetail)
     const [search, setSearch] = useState("")
     const [input, setInventory] = useState({id: "", stock: ""})
     const [display, setDisplay] = useState("")
+
+    useEffect(() => {
+        return () => {
+          dispatch(cleanProductState({}));
+          dispatch(cleanInvProducts())
+        };
+      }, [dispatch]);
 
     function handleSearchChange(e){
         setSearch(e.target.value)
@@ -26,7 +33,7 @@ export default function UpdateInventory(){
     function searchSubmit(e){
         e.preventDefault()
         dispatch(cleanProductState())
-        dispatch(getNameProduct(search))
+        dispatch(searchForInventory(search))
         setSearch("")
     }
 
@@ -36,7 +43,7 @@ export default function UpdateInventory(){
 
     function handleSubmitInventory(){
         dispatch(updateInventory(input.id, {newStock: input.stock}))
-        dispatch(cleanOtherProducts())
+        dispatch(cleanInvProducts())
         alert("Producto actualizado con exito")
         dispatch(getProductDetails(input.id))
         setInventory({id: "", stock: ""})
@@ -46,18 +53,27 @@ export default function UpdateInventory(){
     return(
         <div className="container">
             <form className="search" onSubmit={(e) => searchSubmit(e)}>
-                <p className="searchlabel">Busqueda de Producto:</p>
+                <p className="searchlabel">Busca un producto para modificar su Inventario:</p>
                 <input type="text" className="searchinput" value={search} onChange={(e) => handleSearchChange(e)}/>
                 <input type="submit" className="searchbtn" value="&#8594;"/>
             </form>
             <div className="resultcontainer">
                 { products && products.length ?
+                    <div className="itemscontainer">
+                    <label className="labelheader">  </label>
+                    <label className="labelheader">Producto  </label>
+                    <label className="labelheader">Cant.  </label>
+                    <label>  </label>
+                    <label>  </label>
+                    <label>  </label>
+                </div> : null}
+                { products && products.length ?
                     products.map(p => {
                         return(
                             <div className="itemscontainer">
                                 <img src={p.image} width={"30px"} height={"35px"} />
-                                <label>{p.name}</label>
-                                <label>{p.stock}</label>
+                                <label className="itemlabel">{p.name}</label>
+                                <label className="itemlabel">{p.stock}</label>
                                 <button name={p.id} className="searchbtn" onClick={(e) => displayInventoryForm(e)}>&#8594;</button>
                                 {display && display == p.id ? <input type="number" className="stockinput" min="0" max="1000" value={input.stock} name={p.id} onChange={(e)=>handleInputChange(e)}/> : null }
                                 {display && display == p.id ? <button className="searchbtn" onClick={handleSubmitInventory}>Guardar</button>: null }

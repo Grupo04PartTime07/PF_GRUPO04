@@ -1,7 +1,6 @@
 .container{
     margin: 50px auto;
     width: fit-content;
-    height: 50vh;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -9,6 +8,10 @@
     border: 2px gray solid;
     border-radius: 5px;
     padding: 30px;
+    border-radius: 10px;
+    -webkit-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
+    box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
 }
 .search{
     max-height: max-content;
@@ -18,8 +21,11 @@
     margin-bottom: 15px;
     padding-right: 8px;
     font-weight: 600;
+    color: rgb(82, 82, 82);
+    font-size: larger;
 }
 .searchinput{
+    width: 60%;
     padding-left: 8px;
     height: 25px;
     margin-right: 8px;
@@ -46,9 +52,10 @@
 }
 .itemscontainer{
     display: inline-grid;
-    grid-template-columns: 30px 300px 40px 30px 50px 70px;
+    grid-template-columns: 30px 350px 50px 30px 80px 70px;
     margin: 15px;
     align-items: center;
+    border-bottom: 1px solid rgb(82, 82, 82);
 }
 .stockinput{
     margin-inline-start: 5px;
@@ -58,4 +65,19 @@
     border-radius: 5px;
     border:none;
     border-bottom: 1px gray solid;
+}
+.labelheader{
+    margin-bottom: 8px;
+    padding-inline: 8px;
+    font-weight: 500;
+    color: rgb(82, 82, 82);
+    font-size: large;
+    justify-self: baseline;
+}
+.itemlabel{
+    font-weight: 400;
+    color: rgb(82, 82, 82);
+    font-size: medium;
+    justify-self: baseline;
+    padding-inline: 10px;
 }
