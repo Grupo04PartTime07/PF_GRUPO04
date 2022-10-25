@@ -14,7 +14,6 @@ import CreateProduct from './components/createProduct/CreateProduct';
 import Brand from './components/Brands/brand_products';
 import ShoppingCartBig from './components/shoppingCartBig/shoppingCart';
 import WishList from './components/wishList/wishList';
-import Reviews from './components/reviews/reviews';
 import Profile from './components/profile/profile';
 
 function App() {
@@ -36,7 +35,6 @@ function App() {
             <Route exact path='/brands' component={Brand}/>
             <Route exact path='/shoppingCart' component={ShoppingCartBig}/>
             <Route exact path='/wishList' component={WishList}/>
-            <Route exact path='/reviews/:id' component={Reviews}/>
             <Route path="/" component={Footer} />
           </div>
       </React.Fragment>
