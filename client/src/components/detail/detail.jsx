@@ -116,13 +116,11 @@ function Detail(props) {
           </div>
           {displayForm && <ScoreForm id={id} formDisplay={formDisplay} />}
         </div>
-        <div classname="divBttnsOpinions ">
-          
+        <div classname="divBttnsOpinions">
           <ModalReviews id={id}></ModalReviews><br/>
-    
           {isAuthenticated && (
             <Button variant="contained" onClick={() => formDisplay()}>
-              Dar tu Opinion
+              Dar tu Opinión
             </Button>
           )}
         </div>

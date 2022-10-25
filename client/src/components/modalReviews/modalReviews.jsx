@@ -53,7 +53,7 @@ export default function ModalReviews({id}) {
 
   return (
     <div>
-        <p className='linkToBack' onClick={handleOpen} variant="contained">Más opiniones</p>
+        <p className='linkToBack' onClick={handleOpen} variant="contained">Ver más opiniones</p>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
