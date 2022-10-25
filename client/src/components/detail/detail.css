@@ -72,7 +72,7 @@
 
 .detailButton{
     padding-left: 25px;
-    margin-top: 25px;
+    margin-top: 80px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -136,7 +136,5 @@
     color: rgb(82, 82, 82);
 }
 .divBttnsOpinions{
-    display:flex;
-    align-items: space-between;
-    
+    border: 2px solid black
 }
