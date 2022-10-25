@@ -15,6 +15,7 @@ import Brand from './components/Brands/brand_products';
 import ShoppingCartBig from './components/shoppingCartBig/shoppingCart';
 import WishList from './components/wishList/wishList';
 import Profile from './components/profile/profile';
+import Feedback from './components/feedback/feedback';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route exact path='/brands' component={Brand}/>
             <Route exact path='/shoppingCart' component={ShoppingCartBig}/>
             <Route exact path='/wishList' component={WishList}/>
+            <Route exact path='/feedback' component={Feedback}/>
             <Route path="/" component={Footer} />
           </div>
       </React.Fragment>

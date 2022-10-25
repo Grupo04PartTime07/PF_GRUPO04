@@ -1,0 +1,20 @@
+.feedbackContainer{
+    min-height: 100vh;
+}
+
+.feedbackContent{
+    position: relative;
+    top: 80px;
+    left: 0px;
+}
+
+.feedbackMessage{
+    margin: 80px;
+    color: rgb(82, 82, 82);
+}
+
+.feedbackButton{
+    margin: 0px;
+    text-decoration: none;
+    color: white;
+}
