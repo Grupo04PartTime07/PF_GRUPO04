@@ -2,7 +2,7 @@ import React from "react";
 import "./detail.css";
 import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getProductDetails } from "../../redux/actions/get_product_details";
 import { cleanProductState } from "../../redux/actions/clean_product_state";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
@@ -33,6 +33,7 @@ function Detail(props) {
   function formDisplay() {
     setDisplay(!displayForm);
   }
+  const[indice, setIndice] = useState(0)
 
   const detail = useSelector((state) => state.productdetail);
   let stars = [];
@@ -88,7 +89,10 @@ function Detail(props) {
             </div>
             </div>
             <div className="detailImagen">
-                <img src={detail.image} alt="productos" />
+                <img src={detail.image[indice]} alt="productos" />
+                <div>
+                  {detail.image?.map((e,index) =>  {return(<img classname="imgMiniatura" src={e}  onClick={()=> setIndice(index)} alt="img"></img>)})} 
+                </div>
             </div>
         </div>
     

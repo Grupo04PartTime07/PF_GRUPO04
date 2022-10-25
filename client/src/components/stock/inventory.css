@@ -34,6 +34,7 @@
     border-bottom: 1px gray solid;
 }
 .searchbtn{
+    cursor: pointer;
     border-radius: 5px;
     border:none;
     background-color: #1976d2;
