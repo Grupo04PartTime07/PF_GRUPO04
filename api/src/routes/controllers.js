@@ -55,6 +55,20 @@ const getCategoriesDb = async () => {
     }
 };
 
+const createBrand = async function(name, image){
+    try{
+        let newBrand = await Brand.create({
+            name: name,
+            image: image
+        })
+        return newBrand
+    }
+    catch (error){
+        console.log(error)
+    }
+}
+
+
 const getBrandsDb = async () => {
     try{
         let brands = await Brand.findAll();
@@ -231,4 +245,5 @@ module.exports = {
     updateProduct,
     createScore,
     getScores,
+    createBrand
 }
