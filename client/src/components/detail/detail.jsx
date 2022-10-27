@@ -73,6 +73,7 @@ function Detail(props) {
                     </Button>
                 </span>
             </Link>
+            <span className="buttonMargin">
             <Button
                 onClick={() =>
                     dispatch(
@@ -85,7 +86,22 @@ function Detail(props) {
                         })
                     )}
                         variant="contained">
-                        Agregar al Carrito
+                        ➕ Carrito
+            </Button>
+            </span>
+            <Button
+                onClick={() =>
+                    dispatch(
+                        addToCart({
+                        id: detail.id,
+                        name: detail.name,
+                        image: detail.image,
+                        price: detail.price,
+                        quantity: 1,
+                        })
+                    )}
+                        variant="contained">
+                        ➕ Favoritos
             </Button>
             </div>
             </div>
