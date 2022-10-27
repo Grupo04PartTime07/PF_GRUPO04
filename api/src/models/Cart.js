@@ -13,13 +13,13 @@ module.exports = (sequelize) => {
 
         dataSession: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
             },
 
         
         subtotal: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
             },
 
         
@@ -41,7 +41,22 @@ module.exports = (sequelize) => {
             //     defaultValue: sequelize.literal("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"),
             //     allowNull: true,
             //   },
-         
+            
+            //  shippingId:{
+            //     type:DataTypes.INTEGER,
+            //     allowNull: true,
+            //     //autoIncrement: true,
+            //     //primaryKey: true
+            //     default:0
+            //  },
+
+            //  stateCarritoId:{
+            //     type:DataTypes.INTEGER,
+            //     allowNull: true,
+            //     //autoIncrement: true,
+            //     //primaryKey: true
+            //     //default:0
+            //  }
     
             },
 
