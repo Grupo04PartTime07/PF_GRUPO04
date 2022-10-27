@@ -11,13 +11,16 @@ module.exports = (sequelize) => {
             primaryKey: true
             },
 
-        amount: {
+        precio: {
             type: DataTypes.INTEGER,
             allowNull: false
             },
 
         
-        
+        cantidad:{
+          type: DataTypes.INTEGER,
+            allowNull: false
+        },
 
         
             isDeleted:{

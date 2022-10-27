@@ -93,6 +93,7 @@ function Detail(props) {
             <Button
                 onClick={() =>
                     dispatch(
+
                       addToFavorite({
                         id: detail.id,
                         name: detail.name,

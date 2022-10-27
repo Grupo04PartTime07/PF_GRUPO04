@@ -19,6 +19,11 @@ module.exports = (sequelize) => {
     },
 
 
+    total:{
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+
     isDeleted:{
       type: DataTypes.BOOLEAN,
       allowNull: false,
