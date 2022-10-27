@@ -71,7 +71,7 @@ export default function UpdateInventory(){
                     products.map(p => {
                         return(
                             <div className="itemscontainer">
-                                <img src={p.image} width={"30px"} height={"35px"} />
+                                <img src={p.image[0]} width={"30px"} height={"35px"} />
                                 <label className="itemlabel">{p.name}</label>
                                 <label className="itemlabel">{p.stock}</label>
                                 <button name={p.id} className="searchbtn" onClick={(e) => displayInventoryForm(e)}>&#8594;</button>
@@ -83,7 +83,7 @@ export default function UpdateInventory(){
                 }
                 { productdetail && productdetail.name ? 
                 <div>
-                    <img src={productdetail.image} width={"30px"} height={"35px"} />
+                    <img src={productdetail.image[0]} width={"30px"} height={"35px"} />
                     <label>{productdetail.name}</label>
                     <label>{productdetail.stock}</label>
                 </div>

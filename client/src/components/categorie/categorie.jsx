@@ -36,7 +36,7 @@ export default function Categorie(props){
     return(
         productsaux[0] && productsaux[0].price ? <div className="categorieTable">
             <div className="categorieFilters">
-                <Link className="linkToBack" to='/Categorias'>
+                <Link className="linkToBack" to='/Categorías'>
                     <button className="linkToBack">
                         Volver
                     </button>

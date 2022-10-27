@@ -50,8 +50,8 @@ function Detail(props) {
           
                 {/*Agregar una estiqueta de producto no disponible condicionada al stock*/}
                 <h1 className="detailTitle">{detail.name}</h1>
-                <span className="detailScore">{stars}</span>
-                <h2 className="detailPrice"> $ {detail.price}</h2>
+                <span className="detailScore">{stars}</span>   
+                <h2 className="detailPrice"> $ {detail.price} {detail.stock<10 ? <label className="pocostock" >{`(${detail.stock} unidades disponibles!!!)`}</label> : detail.stock !== 0 ?<label className="stoocks" >{`(${detail.stock} unidades disponibles)`} </label> : <label className="waarning" >(Producto no disponible)</label>}</h2>
                 <p className="detailDescription">{detail.description}</p>
             </div>
             <div className="detailButton">

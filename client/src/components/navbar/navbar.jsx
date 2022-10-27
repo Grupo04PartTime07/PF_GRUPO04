@@ -15,7 +15,7 @@ import ShoppingCartTwoToneIcon from '@mui/icons-material/ShoppingCartTwoTone';
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import TemporaryDrawer from './menu';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { getNameProduct } from "../../redux/actions/search_name";
 import ShoppingBar from '../ShoppingCartBar/ShoppingBar';
@@ -74,6 +74,7 @@ export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const dispatch = useDispatch()
+  const history = useHistory()
   const [name, setName] = React.useState('');
   const [viewcart, setCart] = React.useState(false);
   const cart = useSelector((state) => state.cart);
@@ -114,7 +115,8 @@ export default function PrimarySearchAppBar() {
 
   function handleSubmit (){
     dispatch(getNameProduct(name))
-    setName('')   
+    setName('')
+    history.push('/busqueda')
   };
 
   function handleDisplayCart(){

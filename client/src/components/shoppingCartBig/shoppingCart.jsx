@@ -30,7 +30,15 @@ function handleDisabled(){
       cartItems.length === 0);
 }
 
-
+function handlecheckout(){
+    let total = cartItems.map(e => {
+        return {id:e.id,title:e.name, unit_price:e.price, quantity:e.quantity}
+    }).concat({id: 0, title:"Costo de Envio", 
+                unit_price:Number(shipping), quantity: 1
+            })
+    dispatch(checkOutCart(total))
+    dispatch(deleteCart())
+}
 
 
 
@@ -85,7 +93,7 @@ function handleDisabled(){
                     <span className={styles.cartPrice}>${cartItems.reduce(function ( acc, va){return (acc + (va.quantity*va.price))},0)+Number(shipping)}</span> 
                 </div>
                 <div className={styles.divBttnPagar} >
-                    <button className={styles.bttnPagar} disabled={handleDisabled()} onClick={()=> dispatch(checkOutCart(cartItems.map(e => {return {id:e.id,title:e.name, unit_price:e.price, quantity:e.quantity}}).concat({id: 0, title:"Costo de Envio", unit_price:Number(shipping), quantity: 1})  ))}>Finalizar compra</button>
+                    <button className={styles.bttnPagar} disabled={handleDisabled()} onClick={()=> handlecheckout()}>Finalizar compra</button>
                 </div>
             </div>
         </div>
