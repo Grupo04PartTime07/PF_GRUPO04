@@ -10,6 +10,7 @@ import RelatedProducts from "./relatedProducts";
 import ScoreForm from "./scoreForms";
 import Loading from "../loading/loading";
 import { addToCart } from "../../redux/actions/add_to_cart";
+import { addToFavorite } from '../../redux/actions/add_to_favorite';
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import ModalReviews from "../modalReviews/modalReviews";
