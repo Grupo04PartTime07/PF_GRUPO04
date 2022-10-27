@@ -10,6 +10,7 @@ import RelatedProducts from "./relatedProducts";
 import ScoreForm from "./scoreForms";
 import Loading from "../loading/loading";
 import { addToCart } from "../../redux/actions/add_to_cart";
+import { addToFavorite } from '../../redux/actions/add_to_favorite';
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import ModalReviews from "../modalReviews/modalReviews";
@@ -50,8 +51,8 @@ function Detail(props) {
           
                 {/*Agregar una estiqueta de producto no disponible condicionada al stock*/}
                 <h1 className="detailTitle">{detail.name}</h1>
-                <span className="detailScore">{stars}</span>
-                <h2 className="detailPrice"> $ {detail.price}</h2>
+                <span className="detailScore">{stars}</span>   
+                <h2 className="detailPrice"> $ {detail.price} {detail.stock<10 ? <label className="pocostock" >{`(${detail.stock} unidades disponibles!!!)`}</label> : detail.stock !== 0 ?<label className="stoocks" >{`(${detail.stock} unidades disponibles)`} </label> : <label className="waarning" >(Producto no disponible)</label>}</h2>
                 <p className="detailDescription">{detail.description}</p>
             </div>
             <div className="detailButton">
@@ -73,6 +74,7 @@ function Detail(props) {
                     </Button>
                 </span>
             </Link>
+            <span className="buttonMargin">
             <Button
                 onClick={() =>
                     dispatch(
@@ -85,7 +87,22 @@ function Detail(props) {
                         })
                     )}
                         variant="contained">
-                        Agregar al Carrito
+                        ➕ Carrito
+            </Button>
+            </span>
+            <Button
+                onClick={() =>
+                    dispatch(
+                        addToFavorite({
+                        id: detail.id,
+                        name: detail.name,
+                        image: detail.image,
+                        price: detail.price,
+                        quantity: 1,
+                        })
+                    )}
+                        variant="contained">
+                        ➕ Favoritos
             </Button>
             </div>
             </div>

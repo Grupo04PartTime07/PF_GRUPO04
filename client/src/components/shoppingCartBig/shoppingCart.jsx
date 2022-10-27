@@ -9,6 +9,7 @@ import { checkOutCart } from '../../redux/actions/check_out_cart';
 import styles from "./shoppingCart.module.css";
 import { getCart } from '../../redux/actions/get_cart';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import { Link } from "react-router-dom";
 
 export default function ShoppingCartBig(props){
 
@@ -30,11 +31,21 @@ function handleDisabled(){
       cartItems.length === 0);
 }
 
-
+function handlecheckout(){
+    let total = cartItems.map(e => {
+        return {id:e.id,title:e.name, unit_price:e.price, quantity:e.quantity}
+    }).concat({id: 0, title:"Costo de Envio", 
+                unit_price:Number(shipping), quantity: 1
+            })
+    dispatch(checkOutCart(total))
+    dispatch(deleteCart())
+}
 
 
 
     return(
+        <div>
+        <Link to='/'><div className={styles.volver}>Volver</div></Link>
         <div className={styles.divShoppingCart}>
             <h1 className={styles.title}>Carrito de compras</h1>
             <hr></hr>
@@ -85,9 +96,10 @@ function handleDisabled(){
                     <span className={styles.cartPrice}>${cartItems.reduce(function ( acc, va){return (acc + (va.quantity*va.price))},0)+Number(shipping)}</span> 
                 </div>
                 <div className={styles.divBttnPagar} >
-                    <button className={styles.bttnPagar} disabled={handleDisabled()} onClick={()=> dispatch(checkOutCart(cartItems.map(e => {return {id:e.id,title:e.name, unit_price:e.price, quantity:e.quantity}}).concat({id: 0, title:"Costo de Envio", unit_price:Number(shipping), quantity: 1})  ))}>Finalizar compra</button>
+                    <button className={styles.bttnPagar} disabled={handleDisabled()} onClick={()=> handlecheckout()}>Finalizar compra</button>
                 </div>
             </div>
+        </div>
         </div>
     )
 }

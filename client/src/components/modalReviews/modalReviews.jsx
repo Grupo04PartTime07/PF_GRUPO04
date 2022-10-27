@@ -3,7 +3,7 @@ import styles from './modalReviews.module.css';
 import { useDispatch, useSelector } from "react-redux";
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import { getReviews } from '../../redux/actions/get_reviews';
-import { cleanProductState } from '../../redux/actions/clean_product_state';
+import { cleanReviews } from "../../redux/actions/clean_reviews";
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
@@ -27,8 +27,14 @@ const style = {
 
 export default function ModalReviews({id}) {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => {
+    dispatch(getReviews(id));
+    setOpen(true);
+  }
+  const handleClose = () => {
+    setOpen(false);
+    dispatch(cleanReviews({}))
+  }
 
   const dispatch = useDispatch()
 
@@ -36,7 +42,7 @@ export default function ModalReviews({id}) {
       //window.scrollTo(0, 0)
       dispatch(getReviews(id));
       return(() => {
-          dispatch(cleanProductState({}))
+          dispatch(cleanReviews({}))
       })
   },[dispatch])
 

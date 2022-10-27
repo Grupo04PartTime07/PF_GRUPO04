@@ -31,6 +31,7 @@ import { CLEAN_OTHER_PRODUCTS } from "./actions/clean_other_products";
 import { CREATE_SCORE } from "./actions/create_score";
 import { SEARCH_FOR_INVENTORY } from '../redux/actions/search_4_inventory'
 import { CLEAN_INV_PRODUCTS } from "./actions/clean_inv_products";
+import { CLEAN_REVIEWS } from "./actions/clean_reviews";
 
 const initialState = {
     categories: [],
@@ -64,6 +65,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 productdetail: {}
             }
+        case CLEAN_REVIEWS:
+                return {
+                    ...state,
+                    reviews: {}
+                }
         case CLEAN_PRODUCTS:
             return {
                 ...state,
