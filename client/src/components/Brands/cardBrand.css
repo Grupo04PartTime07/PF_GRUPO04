@@ -15,7 +15,9 @@
 .brandImg{
     position: relative;
     left: 0%;
-    bottom: 10%
+    bottom: 0%;
+    height: 100px;
+    width: 250px;
 }
 
 .brandName{

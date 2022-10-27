@@ -354,7 +354,7 @@ function CreateProduct() {
             />
             <p className={error.price ? "danger" : "normal"}>{error.price}</p>
 
-            <label>Stock:</label>
+            <label>Inventario:</label>
             <input
               type="number"
               value={input.stock}
@@ -415,7 +415,7 @@ function CreateProduct() {
             <p className={error.brand ? "danger" : "normal"}>{error.brand}</p>
           </div>
           <div className="formSecondDivProd">        
-            <label>Descripcion:</label>
+            <label>Descripción:</label>
             <textarea
               type="text"
               value={input.description}

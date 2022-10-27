@@ -125,7 +125,7 @@ export default function BrandForm() {
         onSubmit={onSubmit}
       >
         <div className={styles.formFirstDivBrand}>
-        <label className={styles.label}>Name: </label>
+        <label className={styles.label}>Nombre: </label>
         <input
           className={errorName ? styles.invalido : styles.valido}
           key="name"

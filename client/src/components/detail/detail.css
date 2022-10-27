@@ -143,3 +143,18 @@ img:hover{
 .divBttnsOpinions{
     border: 2px solid black
 }
+.stoocks{
+    font-size: medium;
+    font-weight: 500;
+    color: rgb(4, 140, 29);
+}
+.waarning{
+    font-size: medium;
+    color: rgb(227, 31, 31);
+    font-weight: 500;
+}
+.pocostock{
+    font-size: medium;
+    color: rgb(240, 96, 24);
+    font-weight: 500;
+}
