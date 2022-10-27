@@ -7,6 +7,7 @@ import { deleteWishList } from '../../redux/actions/delete_wish_list';
 import styles from "./wishList.module.css";
 import { getFavorites } from '../../redux/actions/get_favorites';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import { Link } from "react-router-dom";
 
 
 export default function WishList(props){
@@ -23,6 +24,8 @@ useEffect(() => {  // Didmount and DidUpdate controlled
 
 
 return(
+        <div>
+            <Link to='/'><div className={styles.volver}>Volver</div></Link>
         <div className={styles.divShoppingCart}>
             <h1 className={styles.title}>Mis productos favoritos</h1>
             <hr></hr>
@@ -38,7 +41,7 @@ return(
                 <WishedProduct 
                 key={item.id}
                 id={item.id}
-                image={item.image}
+                image={item.image[0]}
                 name={item.name.slice(0,20)+"..."}
                 price={item.price}
                 addToCartFromWL={()=> dispatch(addToCartFromWL({id: item.id, name: item.name, image: item.image, price: item.price, quantity: 1}))}
@@ -48,6 +51,7 @@ return(
             }
             <hr></hr>
             
+        </div>
         </div>
     )
 }

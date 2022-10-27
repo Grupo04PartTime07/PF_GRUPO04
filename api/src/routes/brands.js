@@ -12,13 +12,15 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', async function(req, res){
-    try {
-        const { name, image } = req.body
-        let brandCreated = await createBrand(name, image)
-        brandCreated ? res.status(200).json('Brand succesfully created!') : res.status(400).json('Brand cant be created');
-    } catch (error) {
-        console.log(error)
+router.post('/', async (req, res) => {
+    try{
+        const { name, image } = req.body;
+        let brandCreated = await createBrand(name, image);
+        brandCreated ? res.status(200).send('La marca fue creada con éxito!') : res.status(400).send('La marca no pudo ser creada');
+    }catch(e){
+        console.log(e);
     }
 })
+
 module.exports = router;
+

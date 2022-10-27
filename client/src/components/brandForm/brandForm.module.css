@@ -1,39 +1,41 @@
-.formContainer{
-    margin: 50px auto;
-    width: fit-content;
+.formContainerBrand{
+    margin-left: 150px;
+    width: 80%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
-    border: 2px gray solid;
-    border-radius: 5px;
+    border: none;
     padding: 30px;
 }
 
-.formData{
-    display: flex;
-    justify-content: center;
-    align-items: space-between;
-
-}
-
-.formFirstDiv, .formSecondDiv{
+.formFirstDivBrand{
+    width: 700px;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
     text-align: left;
     margin: 10px 50px;
+    padding: 30px;
+    border-radius: 10px;
+    -webkit-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
+    box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
 }
 
-.formFirstDiv label,.formSecondDiv label{
+.formFirstDivBrand label{
+    margin-top: 20px;
     margin-bottom: 8px;
     padding-right: 8px;
     font-weight: 600;
+    font-size: 18px;
+    color: rgb(82, 82, 82);
 }
 
-.formFirstDiv input, .formSecondDiv input{
-    
+.formFirstDivBrand input{
+    width: 90%;
+    height: 30px;
     padding-left: 8px;
     margin-right: 8px;
     border-radius: 5px;
@@ -60,6 +62,9 @@
     box-sizing: border-box;
     box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
 }
+.button:hover {
+    box-shadow: 0 0 11px rgba(9, 9, 9, 0.2); 
+  }
 .button[disabled] {
     background-color:gray;
     cursor: no-drop;
@@ -81,4 +86,33 @@
     display: flex;
     align-items: flex-start;
 
+}
+
+.formImageBrand{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.formImageBrand input{
+    width: 510px;
+}
+
+.formContainerPreview{
+    height: 120px;
+    
+}
+.formImagenPreview{
+    width: 150px;
+    height: 150px;
+    margin: 5px;
+    border: 2px salmon solid;
+}
+.previewContainer{
+    display: flex;
+    
+}
+.previewCenter{
+    margin: auto;   
+    text-align: center;
 }

@@ -15,7 +15,7 @@ import ShoppingCartTwoToneIcon from '@mui/icons-material/ShoppingCartTwoTone';
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import TemporaryDrawer from './menu';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { getNameProduct } from "../../redux/actions/search_name";
 import ShoppingBar from '../ShoppingCartBar/ShoppingBar';
@@ -74,18 +74,29 @@ export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const dispatch = useDispatch()
+  const history = useHistory()
   const [name, setName] = React.useState('');
   const [viewcart, setCart] = React.useState(false);
   const cart = useSelector((state) => state.cart);
   const favorites = useSelector(state => state.favorites)
   let currentUser = "Guest"
-
+  if(user && user.email) currentUser = user.email
   let dhacart = JSON.parse(window.localStorage.getItem(`c${currentUser}`))
   let dhafav = JSON.parse(window.localStorage.getItem(`f${currentUser}`))
+  console.log(currentUser)
+  console.log(dhacart)
+  console.log(dhafav)
     React.useEffect(()=>{
-        if(dhacart && dhacart.length) dispatch(fulfillCart(dhacart))
-        if(dhafav && dhafav.length) dispatch(fulfillWishList(dhafav))
-    }, [])
+        if(dhacart && dhacart.length){
+          dispatch(fulfillCart([]))
+          dispatch(fulfillCart(dhacart))
+        } 
+        if(dhafav && dhafav.length) {
+          dispatch(fulfillWishList([]))
+          dispatch(fulfillWishList(dhafav))
+        }
+    }, [dispatch])
+
     React.useEffect(() => {
         updateStorage(`c${currentUser}`, cart)
     }, [cart])
@@ -114,7 +125,8 @@ export default function PrimarySearchAppBar() {
 
   function handleSubmit (){
     dispatch(getNameProduct(name))
-    setName('')   
+    setName('')
+    history.push('/busqueda')
   };
 
   function handleDisplayCart(){
@@ -139,6 +151,11 @@ export default function PrimarySearchAppBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleLogout = () => {
+    window.localStorage.removeItem(`p${currentUser}`)
+    logout()
+  }
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -159,7 +176,7 @@ export default function PrimarySearchAppBar() {
     >
       {isAuthenticated && <MenuItem style={{ pointerEvents: 'none' }}><Avatar alt={user.name} src={user.picture} /></MenuItem>}
       
-      {isAuthenticated && <MenuItem style={{ pointerEvents: 'none' }}>{user.email}</MenuItem>}
+      {isAuthenticated && <MenuItem style={{ pointerEvents: 'none' }}>¡Hola {user.given_name}!</MenuItem>}
 
       {isAuthenticated &&
       <MenuItem onClick={handleMenuClose}>
@@ -172,7 +189,7 @@ export default function PrimarySearchAppBar() {
       
  
       {/* Aca se hace el login */}
-      {!isAuthenticated?<MenuItem id="1" onClick={loginWithPopup }><label className='link'>Iniciar sesión</label></MenuItem>:<MenuItem onClick={logout}><label className='link'>Cerrar sesión</label></MenuItem>}
+      {!isAuthenticated?<label className='link'><MenuItem id="1" onClick={loginWithPopup }>Iniciar sesión</MenuItem></label>:<label className='link'><MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem></label>}
       
     </Menu>
   );
@@ -271,8 +288,8 @@ export default function PrimarySearchAppBar() {
 
       //console.log(response.userRegisted);
       //console.log(response.message);
-      console.log(response.data);
-      console.log(user);
+      //console.log(response.data);
+      //console.log(user);
     } catch (error) {
       console.log(error);
     }
@@ -282,7 +299,7 @@ export default function PrimarySearchAppBar() {
     if (isAuthenticated) {
       return () => {
         const usuario = callProtectedApiToken2();
-        console.log(usuario);
+        //console.log(usuario);
       };
     }
   });
@@ -331,7 +348,7 @@ export default function PrimarySearchAppBar() {
               aria-label="show 17 new notifications"
               color="inherit"
             >
-              <Badge sx={{height: '80%'}} badgeContent={favorites.reduce(function ( acc, va){return (acc + va.quantity)},0)} color="error">
+              <Badge sx={{width: '27px', height: '27px'}} badgeContent={favorites.reduce(function ( acc, va){return (acc + va.quantity)},0)} color="error">
                 <Link to="/wishList" style={{textDecoration:"none", color: "whitesmoke"} }>
                 <FavoriteTwoToneIcon />
                 </Link>
@@ -347,8 +364,13 @@ export default function PrimarySearchAppBar() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-             {isAuthenticated?<Avatar alt={user.name} src={user.picture} />:<AccountCircleTwoToneIcon />}
-              
+              {isAuthenticated ? <div className='avatar'>
+                {isAuthenticated?<Avatar alt={user.name} src={user.picture} />:<AccountCircleTwoToneIcon />}
+                {isAuthenticated && user.isAdmin ? <p className='greetingsUser'>Admin</p> : <p className='greetingsUser'>{user.given_name}</p>}
+              </div> : 
+              <div>
+                {<AccountCircleTwoToneIcon />}
+              </div>}
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

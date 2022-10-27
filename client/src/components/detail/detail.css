@@ -48,7 +48,8 @@
 
 .detailImagen{
     border-radius: 5px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 90% 10%;
     justify-content: center;
     align-items: center;
     overflow: hidden;
@@ -58,12 +59,25 @@
 
 .detailImagen img{
     border-radius: 5px;
-    width: 70%;
+    width: 95%;
+    justify-self: center;
+}
+
+img:hover{
+    cursor: pointer;
+}
+
+.imgMiniatura{
+    margin-left: -10px;
+}
+
+.imgMiniatura:hover{
+    border: 2px solid rgb(45, 143, 255);
 }
 
 .detailButton{
     padding-left: 25px;
-    margin-top: 25px;
+    margin-top: 80px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -127,7 +141,20 @@
     color: rgb(82, 82, 82);
 }
 .divBttnsOpinions{
-    display:flex;
-    align-items: space-between;
-    
+    border: 2px solid black
+}
+.stoocks{
+    font-size: medium;
+    font-weight: 500;
+    color: rgb(4, 140, 29);
+}
+.waarning{
+    font-size: medium;
+    color: rgb(227, 31, 31);
+    font-weight: 500;
+}
+.pocostock{
+    font-size: medium;
+    color: rgb(240, 96, 24);
+    font-weight: 500;
 }

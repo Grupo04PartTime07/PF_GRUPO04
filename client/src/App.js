@@ -14,8 +14,8 @@ import CreateProduct from './components/createProduct/CreateProduct';
 import Brand from './components/Brands/brand_products';
 import ShoppingCartBig from './components/shoppingCartBig/shoppingCart';
 import WishList from './components/wishList/wishList';
-import Reviews from './components/reviews/reviews';
 import Profile from './components/profile/profile';
+import Feedback from './components/feedback/feedback';
 
 function App() {
   return (
@@ -24,6 +24,7 @@ function App() {
           <div className="App">
             <Route path='/' component={Navbar}/>
             <Route exact path='/' component={Home}/>
+            <Route exact path='/busqueda' component={Home}/>
             <Route path='/Categorías' component={CategoriesList}/>
             <Route exact path='/products' component={Categorie}/>
             <Route exact path="/products/:id" component={Detail} />
@@ -36,7 +37,7 @@ function App() {
             <Route exact path='/brands' component={Brand}/>
             <Route exact path='/shoppingCart' component={ShoppingCartBig}/>
             <Route exact path='/wishList' component={WishList}/>
-            <Route exact path='/reviews/:id' component={Reviews}/>
+            <Route exact path='/feedback' component={Feedback}/>
             <Route path="/" component={Footer} />
           </div>
       </React.Fragment>

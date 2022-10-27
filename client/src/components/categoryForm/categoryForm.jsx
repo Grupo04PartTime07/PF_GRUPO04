@@ -120,7 +120,7 @@ export default function CategoryForm() {
       {isAuthenticated && user.isAdmin ? (
         <form type="POST" className={styles.formDataCat} onSubmit={onSubmit}>
           <div className={styles.formFirstDivCat}>
-            <label className={styles.label}>Name: </label>
+            <label className={styles.label}>Nombre: </label>
             <input
               className={errorName ? styles.invalido : styles.valido}
               key="name"
@@ -140,7 +140,7 @@ export default function CategoryForm() {
               <input
                 type="file"
                 onChange={(e) => updateImage(e)}
-                className="formInput"
+                className={styles.formInput}
               />
               <button className={styles.button} onClick={uploadImage}>
                 Agregar
