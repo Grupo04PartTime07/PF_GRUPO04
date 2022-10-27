@@ -116,6 +116,19 @@ const createCategory = async (name, image) => {
     }
 };
 
+const createBrand = async (name, image) => {
+    try{
+        var newBrand = await Brand.create({
+            name: name,
+            image: image,
+        });
+
+        return newBrand
+    }catch(e){
+        console.log(e)
+    }
+};
+
 const getProductDetail = async (id) => {
     try{
         let product = await Products.findByPk(id, {
@@ -227,6 +240,7 @@ module.exports = {
     getBrandsDb,
     createProduct,
     createCategory,
+    createBrand,
     getProductDetail,
     updateProduct,
     createScore,

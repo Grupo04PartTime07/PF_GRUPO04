@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 
-const { getBrandsDb } = require('./controllers');
+const { getBrandsDb, createBrand } = require('./controllers');
 
 router.get('/', async (req, res) => { 
     try{
@@ -11,5 +11,15 @@ router.get('/', async (req, res) => {
         console.log(e)
     }
 });
+
+router.post('/', async (req, res) => {
+    try{
+        const { name, image } = req.body;
+        let brandCreated = await createBrand(name, image);
+        brandCreated ? res.status(200).send('La marca fue creada con éxito!') : res.status(400).send('La marca no pudo ser creada');
+    }catch(e){
+        console.log(e);
+    }
+})
 
 module.exports = router;
