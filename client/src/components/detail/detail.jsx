@@ -92,7 +92,7 @@ function Detail(props) {
             <Button
                 onClick={() =>
                     dispatch(
-                        addToCart({
+                        addToFavorite({
                         id: detail.id,
                         name: detail.name,
                         image: detail.image,
