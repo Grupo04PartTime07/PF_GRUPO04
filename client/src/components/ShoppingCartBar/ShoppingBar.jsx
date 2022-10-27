@@ -18,6 +18,8 @@ export default function ShoppingBar(props){
     let sliceCart = itemsPerPage*currentPage;
     let firstItem = sliceCart-itemsPerPage;
     let currentCart = cart.slice(firstItem,sliceCart);
+
+    useEffect()
     
     function handleErase(id){
         dispatch(removeProductFromCart(id))

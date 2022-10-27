@@ -9,6 +9,7 @@ import { checkOutCart } from '../../redux/actions/check_out_cart';
 import styles from "./shoppingCart.module.css";
 import { getCart } from '../../redux/actions/get_cart';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import { Link } from "react-router-dom";
 
 export default function ShoppingCartBig(props){
 
@@ -43,6 +44,8 @@ function handlecheckout(){
 
 
     return(
+        <div>
+        <Link to='/'><div className={styles.volver}>Volver</div></Link>
         <div className={styles.divShoppingCart}>
             <h1 className={styles.title}>Carrito de compras</h1>
             <hr></hr>
@@ -96,6 +99,7 @@ function handlecheckout(){
                     <button className={styles.bttnPagar} disabled={handleDisabled()} onClick={()=> handlecheckout()}>Finalizar compra</button>
                 </div>
             </div>
+        </div>
         </div>
     )
 }

@@ -14,6 +14,10 @@ import {useEffect} from 'react';
 export default function Profile(){
     
     const { loginWithPopup, loginWithRedirect, logout, user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+    let currentUser = "Guest"
+    if(user && user.email) currentUser = user.email
+    let profile = JSON.parse(window.localStorage.getItem(`p${currentUser}`))
+    console.log(profile)
 
     async function callProtectedApiToken2(){
         try{
@@ -26,11 +30,12 @@ export default function Profile(){
           }});
           user.isAdmin = response.data.userRegisted.isAdmin;
           user.isBanned = response.data.userRegisted.isAdmin;
+          window.localStorage.setItem(`p${user.email}`, user.isAdmin)
           
-          console.log(response.userRegisted);
-          console.log(response.message);
-          console.log(response.data);
-          console.log(user)
+          //console.log(response.userRegisted);
+          //console.log(response.message);
+          //console.log(response.data);
+          //console.log(user)
         }catch(error) {
           console.log(error);
         }
@@ -58,28 +63,28 @@ export default function Profile(){
                 <div className="profileImg">
                     {isAuthenticated && <Avatar sx={{ width: 100, height: 100 }} alt={user.name} src={user.picture} />}
                 </div>
-                {isAuthenticated && user.isAdmin ? <h3 className="menuTitle">Bienvenido Administrador</h3> : <h3 className="menuTitle">Bienvenido {isAuthenticated && user.given_name}</h3>}
+                {profile || (isAuthenticated && user.isAdmin) ? <h3 className="menuTitle">Bienvenido Administrador</h3> : <h3 className="menuTitle">Bienvenido {isAuthenticated && user.given_name}</h3>}
                 <div className="list">
                     <label>
                         <input className="radioButton" value='datos' type="radio" checked={checked === 'datos'} onChange={(e) => handleCheck(e)}/>
                         <p className="menuText">Mis datos</p>
                     </label>
-                    {isAuthenticated && user.isAdmin && <label>
+                    {profile || (isAuthenticated && user.isAdmin) ?<label>
                         <input className="radioButton" value='createCategorie' type="radio" checked={checked === 'createCategorie'} onChange={(e) => handleCheck(e)}/>
                         <p className="menuText">Crear categoría</p>
-                    </label>}
-                    {isAuthenticated && user.isAdmin && <label>
+                    </label>:null}
+                    {profile || (isAuthenticated && user.isAdmin) ? <label>
                         <input className="radioButton" value='createBrand' type="radio" checked={checked === 'createBrand'} onChange={(e) => handleCheck(e)}/>
                         <p className="menuText">Crear Marca</p>
-                    </label>}
-                    {isAuthenticated && user.isAdmin && <label>
+                    </label>:null}
+                    {profile || (isAuthenticated && user.isAdmin) ? <label>
                         <input className="radioButton" value='createProduct' type="radio" checked={checked === 'createProduct'} onChange={(e) => handleCheck(e)}/>
                         <p className="menuText">Crear producto</p>
-                    </label>}
-                    {isAuthenticated && user.isAdmin && <label>
+                    </label>:null}
+                    {profile || (isAuthenticated && user.isAdmin) ? <label>
                         <input className="radioButton" value='updateInventory' type="radio" checked={checked === 'updateInventory'} onChange={(e) => handleCheck(e)}/>
                         <p className="menuText">Actualizar Inventario</p>
-                    </label>}
+                    </label>:null}
                 </div>
             </div>
             <div className="component">

@@ -86,9 +86,9 @@ export default function Home(props){
               <div className="homeTable"> {/*#AgregameUnaEstrella*/}
                   { products.map(a => a.stock === 0 ? null : <Card id={a.id} name={a.name} image={a.image} price={a.price} score={a.score}/>) }
               </div>
-              <ScrollTop {...props}>
-                  <Fab size="small" aria-label="scroll back to top">
-                      <KeyboardArrowUpIcon />
+              <ScrollTop sx={{ zIndex: 10}} {...props}>
+                  <Fab  size="small" aria-label="scroll back to top">
+                      <KeyboardArrowUpIcon  />
                   </Fab>
               </ScrollTop>
             </div>

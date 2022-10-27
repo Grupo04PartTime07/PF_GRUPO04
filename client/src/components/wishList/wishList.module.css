@@ -1,3 +1,17 @@
+.volver{
+    display: flex;
+    text-decoration: none;
+    color:rgb(0, 122, 170);
+    margin-top: 10px;
+    margin-left:30px;
+    border: none;
+    background: none;
+}
+
+.volver:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
 .divShoppingCart {
     color: black;
     margin-left: 10%;

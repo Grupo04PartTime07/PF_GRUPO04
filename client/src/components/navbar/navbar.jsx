@@ -80,13 +80,23 @@ export default function PrimarySearchAppBar() {
   const cart = useSelector((state) => state.cart);
   const favorites = useSelector(state => state.favorites)
   let currentUser = "Guest"
-
+  if(user && user.email) currentUser = user.email
   let dhacart = JSON.parse(window.localStorage.getItem(`c${currentUser}`))
   let dhafav = JSON.parse(window.localStorage.getItem(`f${currentUser}`))
+  console.log(currentUser)
+  console.log(dhacart)
+  console.log(dhafav)
     React.useEffect(()=>{
-        if(dhacart && dhacart.length) dispatch(fulfillCart(dhacart))
-        if(dhafav && dhafav.length) dispatch(fulfillWishList(dhafav))
-    }, [])
+        if(dhacart && dhacart.length){
+          dispatch(fulfillCart([]))
+          dispatch(fulfillCart(dhacart))
+        } 
+        if(dhafav && dhafav.length) {
+          dispatch(fulfillWishList([]))
+          dispatch(fulfillWishList(dhafav))
+        }
+    }, [dispatch])
+
     React.useEffect(() => {
         updateStorage(`c${currentUser}`, cart)
     }, [cart])
@@ -141,6 +151,11 @@ export default function PrimarySearchAppBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleLogout = () => {
+    window.localStorage.removeItem(`p${currentUser}`)
+    logout()
+  }
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -174,7 +189,7 @@ export default function PrimarySearchAppBar() {
       
  
       {/* Aca se hace el login */}
-      {!isAuthenticated?<label className='link'><MenuItem id="1" onClick={loginWithPopup }>Iniciar sesión</MenuItem></label>:<label className='link'><MenuItem onClick={logout}>Cerrar sesión</MenuItem></label>}
+      {!isAuthenticated?<label className='link'><MenuItem id="1" onClick={loginWithPopup }>Iniciar sesión</MenuItem></label>:<label className='link'><MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem></label>}
       
     </Menu>
   );
@@ -273,8 +288,8 @@ export default function PrimarySearchAppBar() {
 
       //console.log(response.userRegisted);
       //console.log(response.message);
-      console.log(response.data);
-      console.log(user);
+      //console.log(response.data);
+      //console.log(user);
     } catch (error) {
       console.log(error);
     }
@@ -284,7 +299,7 @@ export default function PrimarySearchAppBar() {
     if (isAuthenticated) {
       return () => {
         const usuario = callProtectedApiToken2();
-        console.log(usuario);
+        //console.log(usuario);
       };
     }
   });
