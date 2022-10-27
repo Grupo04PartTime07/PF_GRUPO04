@@ -281,8 +281,9 @@ export default function PrimarySearchAppBar() {
   useEffect(() => {
     if (isAuthenticated) {
       return () => {
-        const usuario = callProtectedApiToken2();
-        console.log(usuario);
+        callProtectedApiToken2();
+        //console.log(usuario);
+        
       };
     }
   });
