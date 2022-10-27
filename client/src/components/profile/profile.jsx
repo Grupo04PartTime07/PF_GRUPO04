@@ -17,7 +17,6 @@ export default function Profile(){
     let currentUser = "Guest"
     if(user && user.email) currentUser = user.email
     let profile = JSON.parse(window.localStorage.getItem(`p${currentUser}`))
-    console.log(profile)
 
     async function callProtectedApiToken2(){
         try{
