@@ -7,9 +7,14 @@
     text-align: left;
 }
 .detailContainerArticles{
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: flex-start; */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 6px;
+    grid-row-gap: 0px;
     background-color: whitesmoke;
     border-radius: 5px;
     padding: 25px;
@@ -51,10 +56,11 @@
     display: grid;
     grid-template-columns: 90% 10%;
     justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    height: 400px;
-    width: 50%;
+    /* align-items: center; */
+    /* overflow: hidden; */
+    /* height: 400px; */
+    /* width: 50%; */
+    width: 90%;
 }
 
 .detailImagen img{
@@ -69,6 +75,13 @@ img:hover{
 
 .imgMiniatura{
     margin-left: -10px;
+    height: 70px;
+    /* width: 70px; */
+}
+.ContainerMiniaturas{
+    /* margin-left: -10px; */
+    /* height: 70px; */
+    width: 80px;
 }
 
 .imgMiniatura:hover{
@@ -128,8 +141,9 @@ img:hover{
 .opinionCard{
     display: grid;
     grid-auto-flow: row;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 40% 60%;
     width: 100%;
+    align-items: center;
 }
 .relatedTitle{
     display: grid;
