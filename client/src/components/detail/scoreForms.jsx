@@ -1,8 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-
+import { Button } from "@mui/material";
 import { createScore } from "../../redux/actions/create_score";
 import { getProductDetails } from "../../redux/actions/get_product_details";
+import "./scoreForms.css";
 
 export default function ScoreForm ({id, formDisplay}){
     const dispatch = useDispatch();
@@ -47,18 +48,26 @@ export default function ScoreForm ({id, formDisplay}){
 
     return(
         <div>
-            <h1>¿Como te parece este Producto?</h1>
+            <h1>¿Que te parecio este producto?</h1>
             <form onSubmit={e => handleSubmit(e)}>
-                <div>
-                    <p>Valoración:</p>
-                    <input name="score" type="range" min="0" max="5" value={input.score} onChange={(e)=>handleChange(e)}/>
+                <div className="commentContainer">
+                    {/* <p>Valoración:</p> */}
+                    <input name="score" type="range"  min="0" max="5" value={input.score} onChange={(e)=>handleChange(e)}/>
                     <label>{input.score}</label>
-
-                    <p>Comentario:</p>
-                    <textarea name="coment" type="text" maxlength="150" value={input.coment} onChange={(e)=>handleChange(e)}/>
+                    
+                    <h3 className="CommentTitle">Agrega un comentario</h3>
+                    <textarea name="coment" type="text" maxlength="150" className="commentTextarea" value={input.coment} onChange={(e)=>handleChange(e)}/>
+                    <p className="commentLength">{input.coment.length}/150</p>
                     {error.coment && (<p >{error.coment}</p>)}
                 </div>
-                <input type="submit" value="Guardar" disabled={ensabledSubmit()}/>
+                {/* <input type="submit" value="Guardar" className="commentButton" disabled={ensabledSubmit()}/> */}
+                <Button
+                type="submit"
+                value="Guardar"
+                disabled={ensabledSubmit()}
+                variant="contained">
+                Guardar
+              </Button>
             </form>
         </div>
     )

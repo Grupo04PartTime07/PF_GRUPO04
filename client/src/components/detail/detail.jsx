@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import ModalReviews from "../modalReviews/modalReviews";
 import ModalImg from "./modalImg";
+import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
 
 function Detail(props) {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
@@ -35,7 +36,7 @@ function Detail(props) {
   function formDisplay() {
     setDisplay(!displayForm);
   }
-  const[indice, setIndice] = useState(0)
+  const [indice, setIndice] = useState(0)
 
   const detail = useSelector((state) => state.productdetail);
   let stars = [];
@@ -45,78 +46,78 @@ function Detail(props) {
 
   return typeof detail.id === "number" ? (
     <div className="detailContainer">
-        <div className="detailContainerArticles">
-            <div>
-            <div className="detailLeft">
-          
-                {/*Agregar una estiqueta de producto no disponible condicionada al stock*/}
-                <h1 className="detailTitle">{detail.name}</h1>
-                <span className="detailScore">{stars}</span>   
-                <h2 className="detailPrice"> $ {detail.price} {detail.stock<10 ? <label className="pocostock" >{`(${detail.stock} unidades disponibles!!!)`}</label> : detail.stock !== 0 ?<label className="stoocks" >{`(${detail.stock} unidades disponibles)`} </label> : <label className="waarning" >(Producto no disponible)</label>}</h2>
-                <p className="detailDescription">{detail.description}</p>
-            </div>
-            <div className="detailButton">
+      <div className="detailContainerArticles">
+        <div>
+          <div className="detailLeft">
+
+            {/*Agregar una estiqueta de producto no disponible condicionada al stock*/}
+            <h1 className="detailTitle">{detail.name}</h1>
+            <span className="detailScore">{stars}</span>
+            <h2 className="detailPrice"> $ {detail.price} {detail.stock < 10 ? <label className="pocostock" >{`(${detail.stock} unidades disponibles!!!)`}</label> : detail.stock !== 0 ? <label className="stoocks" >{`(${detail.stock} unidades disponibles)`} </label> : <label className="waarning" >(Producto no disponible)</label>}</h2>
+            <p className="detailDescription">{detail.description}</p>
+          </div>
+          <div className="detailButton">
             <Link to="/shoppingCart" style={{ textDecoration: "none" }}>
-                <span className="buttonMargin">
-                    <Button
-                        onClick={() =>
-                        dispatch(
-                        addToCart({
+              <span className="buttonMargin">
+                <Button
+                  onClick={() =>
+                    dispatch(
+                      addToCart({
                         id: detail.id,
                         name: detail.name,
                         image: detail.image,
                         price: detail.price,
                         quantity: 1,
-                        })
+                      })
                     )}
-                        variant="contained">
-                        Comprar
-                    </Button>
-                </span>
+                  variant="contained">
+                  Comprar
+                </Button>
+              </span>
             </Link>
             <span className="buttonMargin">
-            <Button
+              <Button
                 onClick={() =>
-                    dispatch(
-                        addToCart({
-                        id: detail.id,
-                        name: detail.name,
-                        image: detail.image,
-                        price: detail.price,
-                        quantity: 1,
-                        })
-                    )}
-                        variant="contained">
-                        ➕ Carrito
-            </Button>
+                  dispatch(
+                    addToCart({
+                      id: detail.id,
+                      name: detail.name,
+                      image: detail.image,
+                      price: detail.price,
+                      quantity: 1,
+                    })
+                  )}
+                variant="contained">
+                <AddTwoToneIcon /> Carrito
+              </Button>
             </span>
             <Button
-                onClick={() =>
-                    dispatch(
+              onClick={() =>
+                dispatch(
 
-                      addToFavorite({
-                        id: detail.id,
-                        name: detail.name,
-                        image: detail.image,
-                        price: detail.price,
-                        quantity: 1,
-                        })
-                    )}
-                        variant="contained">
-                        ➕ Favoritos
+                  addToFavorite({
+                    id: detail.id,
+                    name: detail.name,
+                    image: detail.image,
+                    price: detail.price,
+                    quantity: 1,
+                  })
+                )}
+              variant="contained">
+              <AddTwoToneIcon /> Favoritos
             </Button>
-            </div>
-            </div>
-            <div className="detailImagen">
-                <ModalImg img={detail.image[indice]}/>
-                <div>
-                  {detail.image?.map((e,index) =>  {return(<img className="imgMiniatura" src={e}  onClick={()=> setIndice(index)} alt="img"></img>)})} 
-                </div>
-            </div>
+          </div>
         </div>
-    
-        <div className="detailContainerOpinion detailMargin">
-            <h1 className="opinionTitle">Opiniones</h1>
+        <div className="detailImagen">
+          <ModalImg img={detail.image[indice]} />
+          <div className="ContainerMiniaturas">
+            {detail.image?.map((e, index) => { return (<img className="imgMiniatura" src={e} onClick={() => setIndice(index)} alt="img"></img>) })}
+          </div>
+        </div>
+      </div>
+
+      <div className="detailContainerOpinion detailMargin">
+        <h1 className="opinionTitle">Opiniones</h1>
         <div className="opinionCard">
           <div className="opinionContainer">
             {detail.opiniones &&
@@ -136,7 +137,7 @@ function Detail(props) {
           {displayForm && <ScoreForm id={id} formDisplay={formDisplay} />}
         </div>
         <div classname="divBttnsOpinions">
-          <ModalReviews id={id}></ModalReviews><br/>
+          <ModalReviews id={id}></ModalReviews><br />
           {isAuthenticated && (
             <Button variant="contained" onClick={() => formDisplay()}>
               Dar tu Opinión
