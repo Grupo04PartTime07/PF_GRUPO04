@@ -17,6 +17,9 @@ function CreateProduct() {
     const history = useHistory();
     let category = useSelector((state) => state.categories)
     let brands = useSelector((state) => state.brand)
+    let currentUser = "Guest"
+    if(user && user.email) currentUser = user.email
+    let profile = JSON.parse(window.localStorage.getItem(`p${currentUser}`))
 
     useEffect(() => {
         dispatch(getCategories());
@@ -332,7 +335,7 @@ function CreateProduct() {
 
         
         
-        {isAuthenticated && user.isAdmin ?  <form className="formContainerProd" onSubmit={e => handleSubmit(e)}>
+        {profile || (isAuthenticated && user.isAdmin) ?  <form className="formContainerProd" onSubmit={e => handleSubmit(e)}>
         <div className='formDataProd'>
           <div className='formFirstDivProd'>  
 
@@ -392,9 +395,9 @@ function CreateProduct() {
 
             <label>Marca:</label>
             <select
-              name={input.brand}
+              name='brand'
+              value={input.brand}
               onChange={(e) => handleBrand(e)}
-              defaultValue=""
             >
               <option disabled value="">
                 Seleccione una Marca

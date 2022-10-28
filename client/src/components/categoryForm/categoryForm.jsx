@@ -19,6 +19,9 @@ export default function CategoryForm() {
   const [imageData, setimageData] = useState(""); // este estado guardara las direcciones de cloudinary para pisar el input
   const [errorName, setErrorName] = useState("");
   const [errorImage, setErrorImage] = useState("");
+  let currentUser = "Guest"
+    if(user && user.email) currentUser = user.email
+    let profile = JSON.parse(window.localStorage.getItem(`p${currentUser}`))
 
   function validateName(value) {
     if (!/^[a-zA-Z]+$/.test(value)) {
@@ -28,15 +31,6 @@ export default function CategoryForm() {
       setErrorName("");
     }
     setName(value);
-  }
-
-  function validateImage(value) {
-    if (!/^(http[s]?)/.test(value)) {
-      setErrorImage("La Url de la imagen debe comenzar con http");
-    } else {
-      setErrorImage("");
-    }
-    setImage(value);
   }
 
   const updateImage = (e) => {
@@ -117,7 +111,7 @@ export default function CategoryForm() {
 
   return (
     <div className={styles.formContainerCat}>
-      {isAuthenticated && user.isAdmin ? (
+      {profile || (isAuthenticated && user.isAdmin) ? (
         <form type="POST" className={styles.formDataCat} onSubmit={onSubmit}>
           <div className={styles.formFirstDivCat}>
             <label className={styles.label}>Nombre: </label>
