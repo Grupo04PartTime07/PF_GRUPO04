@@ -16,6 +16,10 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Button } from "@mui/material";
 import './adminOrders.css'
 
+import SearchIcon from '@mui/icons-material/Search';
+import InputBase from '@mui/material/InputBase';
+import { styled, alpha } from '@mui/material/styles';
+
 function createData(orderNum, client, status) {
   return {
     orderNum,
@@ -146,9 +150,59 @@ Row.propTypes = {
 
 
 
+const Search = styled('div')(({ theme }) => ({
+    position: 'relative', 
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(3),
+      width: 'auto',
+    },
+  }));
+  
+  const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }));
+  
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create('width'),
+      width: '100%',
+      [theme.breakpoints.up('md')]: {
+        width: '20ch',
+      },
+    },
+  }));
+
 export default function AdminOrders() {
 
     const [filter, setFilter] = React.useState(0)
+
+    const [name, setName] = React.useState('')
+    function handleInputChange(e){
+        e.preventDefault()
+        setName(e.target.value)
+      };
+    
+      function handleSubmit (){
+        setFilter(5)
+      }
 
     function filterStatus(){
         switch(filter){
@@ -164,18 +218,35 @@ export default function AdminOrders() {
             case 4:
                 const cancelled = rows.filter(row => row.status === 'Cancelada')
             return cancelled
+            case 5:
+                const searched = rows.filter(row => row.client.includes(name))
+            return searched
             default: return rows
         }
     }
+
 
   return (
     <TableContainer sx={{width: '800px', marginTop: '40px'}} component={Paper}>
       <Typography sx={{marginLeft: '20px', marginTop: '10px'}} align="left" gutterBottom variant="h5" component="div">
         Herramienta de gestión de ventas
       </Typography>
+      <Search className='input' sx={{ position: 'relative', left: '-10px', maxWidth: '30%', border: '1.5px solid rgb(225, 225, 225)' }}>
+            <SearchIconWrapper>
+              <SearchIcon sx={{color: 'rgb(225, 225, 225)'}}/>
+            </SearchIconWrapper>
+            <StyledInputBase
+              value= {name}
+              sx={{ display: 'flex'}}
+              placeholder="Busca un e-mail…"
+              inputProps={{ 'aria-label': 'search' }}
+              onChange={(e) => handleInputChange(e)}
+              onKeyDown={(e) =>{if(e.key === 'Enter'){handleSubmit()}}}
+            />
+          </Search>
       <Box sx={{marginLeft: '20px', marginTop: '10px'}} align="left">
         <Box>
-        <>Filtrar por: </>       
+        <>Filtrar por: </>
         <select id='filterStatus' defaultValue='Todas' onClick={e => setFilter(document.getElementById('filterStatus').selectedIndex)}>       
             <option value='Todas'>Todas</option>
             <option value='Aprobada'>Aprobada</option>
