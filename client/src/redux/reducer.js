@@ -32,6 +32,8 @@ import { CREATE_SCORE } from "./actions/create_score";
 import { SEARCH_FOR_INVENTORY } from '../redux/actions/search_4_inventory'
 import { CLEAN_INV_PRODUCTS } from "./actions/clean_inv_products";
 import { CLEAN_REVIEWS } from "./actions/clean_reviews";
+import swal from 'sweetalert';
+
 
 const initialState = {
     categories: [],
@@ -81,38 +83,62 @@ const reducer = (state = initialState, action) => {
                 products: [],
             }            
         case GUEST_CREATE_ACCOUNT:
-            alert(action.payload)
+            swal({
+                title: action.payload,
+                icon: "success",
+              });
+            //alert(action.payload)
             return {
                 ...state,
                 message: action.payload
             }
         case CREATE_CATEGORY:
-            alert(action.payload)
+            swal({
+                title: action.payload,
+                icon: "success",
+              });
+            //alert(action.payload)
             return {
                 ...state,
                 message: action.payload
                 }
         case CREATE_BRAND:
-            alert(action.payload)
+            swal({
+                title: action.payload,
+                icon: "success",
+              });
+            //alert(action.payload)
             return {
                 ...state,
                 message: action.payload
                 }  
         case CREATE_NEW_PRODUCTS:
+            swal({
+                title: action.payload,
+                icon: "success",
+              });
             //alert(action.payload)
             return {
                 ...state,
                 message: action.payload
                 }
         case CREATE_SCORE:{
-            alert(action.payload)
+            swal({
+                title: action.payload,
+                icon: "success",
+              });
+            //alert(action.payload)
             return{
                 ...state,
                 message: action.payload
                 }
         }
         case UPDATE_PRODUCT:
-            alert(action.payload)
+            swal({
+                title: action.payload,
+                icon: "success",
+              });
+           // alert(action.payload)
             return {
                 ...state,
                 message: action.payload
