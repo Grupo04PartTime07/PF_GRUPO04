@@ -14,6 +14,7 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Button } from "@mui/material";
+import './adminOrders.css'
 
 function createData(orderNum, client, status) {
   return {
@@ -62,8 +63,8 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-        <TableCell>
+      <TableRow className='orderRow' sx={{ '& > *': { borderBottom: 'unset' } }}>
+        <TableCell >
           <IconButton
             aria-label="expand row"
             size="small"
@@ -196,7 +197,7 @@ export default function AdminOrders() {
     
         <TableBody>
           {filterStatus().map((row) => (
-            <Row key={row.orderNum} row={row} />
+            <Row  key={row.orderNum} row={row} />
           ))}
         </TableBody>
 
