@@ -70,7 +70,7 @@ const createProduct = async (name, price, description, image,stock, score, categ
                 name: name,
                 price: price, 
                 description: description,
-                image: [image],
+                image: image,
                 stock: stock,
         });
 
@@ -180,7 +180,8 @@ const updateProduct = async (id, props) => {
              name: props.name,
              price: props.price,
              description: props.description,
-             image: [...props.image]
+             image: [...props.image],
+             stock: props.stock
             }, {
                 where: {
                     id: id

@@ -85,6 +85,10 @@ function CreateProduct() {
     function handleChange(e){
           setInput({...input, [e.target.name]: e.target.value});
           setError(validate({...input,[e.target.name]: e.target.value}));
+          /*if(e.target.name === "brand"){
+            let selectedbrand = brands.filter(b => b.name === e.target.value)
+            setInput({...input, brandimage: selectedbrand[0].image})
+          }*/
       }
 
     
@@ -132,68 +136,6 @@ function CreateProduct() {
         
         return errors;  
     }
-
-
-  function handleChange(e) {
-    setInput({ ...input, [e.target.name]: e.target.value });
-    setError(validate({ ...input, [e.target.name]: e.target.value }));
-  }
-
-  function validate(input) {
-    let errors = {};
-    if (!input.name) {
-      errors.name = "El campo no debe quedar vacio";
-    }
-    if (!input.price) {
-      errors.price = "El campo no debe quedar vacio";
-    } else if (input.price <= 0) {
-      errors.price = "El precio no puede ser menor a 0";
-    }
-    if (!input.description) {
-      errors.description = "El campo no debe quedar vacio";
-    } else if (input.description.length > 500) {
-      errors.description =
-        "La descripcion no puede tener mas de 500 caracteres";
-    }
-    if (input.image.length <= 0) {
-      errors.image = "Debes subir al menos 1 imagen";
-    } else if (input.image.length > 5) {
-      errors.image = "No puedes subir mas de 5 imagenes";
-    }
-    if (input.categories.length <= 0) {
-      errors.categories = "Debes elegir al menos 1 categoria";
-    } else if(input.categories.length > 5){
-      errors.categories = "Puedes elegir hasta 5 categorias";
-    }
-
-    if (!input.stock) {
-      errors.stock = "El campo no puede quedar vacio";
-    } else if (input.stock < 1) {
-      errors.stock = "Debes tener al menos 1 articulo";
-    }
-    if (!input.brand) {
-      errors.brand = "El campo no puede quedar vacio";
-    }
-    if (
-      errors.name ||
-      errors.price ||
-      errors.description ||
-      errors.image ||
-      errors.categories ||
-      errors.stock ||
-      errors.brand
-    ) {
-      setButton({
-        complete: false,
-      });
-    } else {
-      setButton({
-        complete: true,
-      });
-    }
-
-    return errors;
-  }
 
   const updateImage = (e) => {
     setImagen(e.target.files[0]);
@@ -262,12 +204,13 @@ function CreateProduct() {
     }
   }
   function handleBrand(e) {
-    if (!input.brand) {
-      setInput({ ...input, brand: e.target.value });
+      console.log(e.target.value)
+      setInput((prev) => ({...prev, brand: e.target.value}));
+      console.log(input)
       let selectedbrand = brands.filter(b => b.name === e.target.value)
       setInput({...input, brandimage: selectedbrand[0].image})
       setError(validate({ ...input, brand: e.target.value }));
-    }
+    
   }
 
   function handleDelete(e) {
@@ -296,7 +239,6 @@ function CreateProduct() {
   function handleSubmit(e) {
     // crea el nuevo articulo, faltaria agregarle en el dispatch la accion que lo crea
     e.preventDefault(e);
-
     dispatch(createNewProducts(input));
     alert("Articulo Creado");
     setInput({
@@ -331,9 +273,7 @@ function CreateProduct() {
 
   return (
     
-    <div>
-
-        
+    <div>        
         
         {profile || (isAuthenticated && user.isAdmin) ?  <form className="formContainerProd" onSubmit={e => handleSubmit(e)}>
         <div className='formDataProd'>
@@ -397,16 +337,15 @@ function CreateProduct() {
             <select
               name='brand'
               value={input.brand}
-              onChange={(e) => handleBrand(e)}
-            >
-              <option disabled value="">
-                Seleccione una Marca
-              </option>
+              onChange={(e) => handleChange(e)}
+            > 
+              <option disabled value="">Seleccione una Marca</option>
               {brands &&
                 brands.map((el) => <option value={el.name}>{el.name}</option>)}
             </select>
-            {input.brandimage && <img src={input.brandimage}></img>}
-            <div className="formCategories">
+            { input.brand !== "" ? <img src={brands.find(e =>  e.name === input.brand).image}></img>:null}
+            
+            {/*<div className="formCategories">
               {input.brand ? (
                 <div className="inputCategories">
                   <p onClick={(e) => handleDeleteBrand(e)}>{input.brand}</p>
@@ -414,7 +353,7 @@ function CreateProduct() {
               ) : (
                 ""
               )}
-            </div>
+            </div>*/}
             <p className={error.brand ? "danger" : "normal"}>{error.brand}</p>
           </div>
           <div className="formSecondDivProd">        
