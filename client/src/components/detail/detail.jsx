@@ -9,6 +9,7 @@ import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import RelatedProducts from "./relatedProducts";
 import ScoreForm from "./scoreForms";
 import Loading from "../loading/loading";
+
 import { addToCart } from "../../redux/actions/add_to_cart";
 import { addToFavorite } from "../../redux/actions/add_to_favorite";
 import { Link } from "react-router-dom";
@@ -31,6 +32,7 @@ function Detail(props) {
   useEffect(() => {
     window.scrollTo(0, 0);
     dispatch(getProductDetails(id));
+    
     return () => {
       dispatch(cleanProductState({}));
     };
@@ -41,12 +43,14 @@ function Detail(props) {
   }
   const [indice, setIndice] = useState(0);
 
+  const cart = useSelector((state) => state.cart)
   const detail = useSelector((state) => state.productdetail);
-  let stars = [];
-  for (let i = 0; i < Math.ceil(detail.score); i++) {
-    stars.push(<StarRoundedIcon />);
-  }
+  // let stars = [];
+  // for (let i = 0; i < Math.ceil(detail.score); i++) {
+  //   stars.push(<StarRoundedIcon />);
+  // }
 
+  console.log(cart,"soy el carrito")
   const StyledRating = styled(Rating)({
     "& .MuiRating-iconFilled": {
       color: "#1976d2",
@@ -64,14 +68,14 @@ function Detail(props) {
             {/*Agregar una estiqueta de producto no disponible condicionada al stock*/}
             <h1 className="detailTitle">{detail.name}</h1>
             {/* <span className="detailScore">{stars}</span> */}
-             <StyledRating
+            <StyledRating
               defaultValue={detail.score}
               precision={0.5}
               readOnly
               icon={<StarRoundedIcon fontSize="inherit" />}
               emptyIcon={<StarBorderRoundedIcon fontSize="inherit" />}
               sx={{ margin: "15px" }}
-            /> 
+            />
             <h2 className="detailPrice">
               {" "}
               $ {detail.price}{" "}
