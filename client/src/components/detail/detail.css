@@ -46,6 +46,7 @@
 }
 
 .detailDescription{
+    margin-top: 0px;
     text-align: left;
     padding-left: 25px;
     color: rgb(82, 82, 82);
@@ -128,7 +129,7 @@ img:hover{
     text-align: left;
 }
 
-.opinionContainer span{
+.opinionContainerSpan{
     margin-left: 25px;
 }
 
@@ -155,7 +156,7 @@ img:hover{
     color: rgb(82, 82, 82);
 }
 .divBttnsOpinions{
-    border: 2px solid black
+    margin-left: 15px;
 }
 .stoocks{
     font-size: medium;
@@ -171,4 +172,9 @@ img:hover{
     font-size: medium;
     color: rgb(240, 96, 24);
     font-weight: 500;
+}
+
+.opinionStars{
+    text-align: left;
+    
 }
