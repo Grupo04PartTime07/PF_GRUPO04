@@ -10,6 +10,7 @@ import styles from "./shoppingCart.module.css";
 import { getCart } from '../../redux/actions/get_cart';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { Link } from "react-router-dom";
+import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
 
 export default function ShoppingCartBig(props){
 
@@ -45,7 +46,7 @@ function handlecheckout(){
 
     return(
         <div>
-        <Link to='/'><div className={styles.volver}>Volver</div></Link>
+        <Link to='/' className={styles.volverLink}><div className={styles.volver}><ArrowLeftRoundedIcon /> Volver</div></Link>
         <div className={styles.divShoppingCart}>
             <h1 className={styles.title}>Carrito de compras</h1>
             <hr></hr>

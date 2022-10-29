@@ -1,17 +1,28 @@
 .volver{
     display: flex;
+    justify-content: left;
+    /* align-items: center; */
     text-decoration: none;
-    color:rgb(0, 122, 170);
-    margin-top: 10px;
-    margin-left:30px;
-    border: none;
-    background: none;
+    color:whitesmoke;
+    background-color: #1976d2;
+    margin-top: 35px;
+    margin-left:60px;
+    border-radius: 9999px;
+    padding: 6px 15px 6px 8px;
+    width: fit-content;
+    font-weight: 600;
+    
 }
 
 .volver:hover{
     cursor: pointer;
     text-decoration: underline;
 }
+
+.volverLink{
+    text-decoration: none; 
+ }
+
 .divShoppingCart {
     color: black;
     margin-left: 10%;
