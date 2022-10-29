@@ -1,13 +1,7 @@
 
 
 .formContainerCat{
-    
-    margin: 30px 20px 40px 150px;
-    width: 80%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-direction: column;
+    width: 90%;
     border: none;
     padding: 30px;
 }
@@ -20,7 +14,7 @@
 }
 
 .formFirstDivCat{
-    width: 600px;
+    width: 700px;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;

@@ -1,6 +1,6 @@
 .container{
     margin: 50px auto;
-    width: fit-content;
+    width: 700px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -13,6 +13,10 @@
     -moz-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
     box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
 }
+.buttoncont{
+    display: inline-flex;
+    justify-content: center;
+}
 .search{
     max-height: max-content;
     padding-inline: 50px;
@@ -24,8 +28,8 @@
     color: rgb(82, 82, 82);
     font-size: larger;
 }
-.searchinput{
-    width: 60%;
+.searchInput{
+    width: 300px;
     padding-left: 8px;
     height: 25px;
     margin-right: 8px;
@@ -34,6 +38,7 @@
     border-bottom: 1px gray solid;
 }
 .searchbtn{
+    margin-inline: 5px;
     cursor: pointer;
     border-radius: 5px;
     border:none;
@@ -80,4 +85,9 @@
     font-size: medium;
     justify-self: baseline;
     padding-inline: 10px;
+}
+.div4search{
+    display: inline-flex;
+    align-items: center;
+    width: 400px;
 }

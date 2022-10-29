@@ -1,10 +1,5 @@
 .formContainerProd{
-    margin-left: 150px;
     width: 80%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-direction: column;
     border: none;
     padding: 30px;
 }

@@ -110,6 +110,7 @@ export default function CategoryForm() {
   });
 
   return (
+    <div>
     <div className={styles.formContainerCat}>
       {profile || (isAuthenticated && user.isAdmin) ? (
         <form type="POST" className={styles.formDataCat} onSubmit={onSubmit}>
@@ -172,6 +173,7 @@ export default function CategoryForm() {
       ) : (
         <label>upss parece que no tienes permisos</label>
       )}
+    </div>
     </div>
   );
 }
