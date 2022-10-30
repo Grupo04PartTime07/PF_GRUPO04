@@ -193,16 +193,17 @@ const Search = styled('div')(({ theme }) => ({
 export default function AdminOrders() {
 
     const [filter, setFilter] = React.useState(0)
-
     const [name, setName] = React.useState('')
+    
     function handleInputChange(e){
         e.preventDefault()
         setName(e.target.value)
-      };
-    
-      function handleSubmit (){
         setFilter(5)
-      }
+    };
+    
+    function handleSubmit(){
+        setName('')
+    }
 
     function filterStatus(){
         switch(filter){
@@ -219,6 +220,7 @@ export default function AdminOrders() {
                 const cancelled = rows.filter(row => row.status === 'Cancelada')
             return cancelled
             case 5:
+                document.getElementById('filterStatus').selectedIndex = 0
                 const searched = rows.filter(row => row.client.includes(name))
             return searched
             default: return rows
