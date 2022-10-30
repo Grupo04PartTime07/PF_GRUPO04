@@ -37,7 +37,8 @@ function handlecheckout(){
     }).concat({id: 0, title:"Costo de Envio", 
                 unit_price:Number(shipping), quantity: 1
             })
-    dispatch(checkOutCart(total))
+    let objTotal = {subtotal: cartItems.reduce(function ( acc, va){return (acc + (va.quantity*va.price))},0)+Number(shipping), cart: total}
+    dispatch(checkOutCart(objTotal))
     dispatch(deleteCart())
 }
 
