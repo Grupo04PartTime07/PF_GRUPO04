@@ -123,10 +123,10 @@ const reducer = (state = initialState, action) => {
                 message: action.payload
                 }
         case CREATE_SCORE:{
-            swal({
-                title: action.payload,
-                icon: "success",
-              });
+            // swal({
+            //     title: action.payload,
+            //     icon: "success",
+            //   });
             //alert(action.payload)
             return{
                 ...state,
