@@ -27,6 +27,8 @@ function Detail(props) {
   const { id } = props.match.params;
   const dispatch = useDispatch();
   const [displayForm, setDisplay] = React.useState(false);
+  const detail = useSelector((state) => state.productdetail);
+  const [refresh, setRefresh] = React.useState("")
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -41,7 +43,6 @@ function Detail(props) {
   }
   const [indice, setIndice] = useState(0);
 
-  const detail = useSelector((state) => state.productdetail);
   let stars = [];
   for (let i = 0; i < Math.ceil(detail.score); i++) {
     stars.push(<StarRoundedIcon />);
@@ -186,7 +187,7 @@ function Detail(props) {
                 );
               })}
           </div>
-          {displayForm && <ScoreForm id={id} formDisplay={formDisplay} />}
+          {displayForm && <ScoreForm id={id} formDisplay={formDisplay} setRefresh={setRefresh} />}
         </div>
         <div className="divBttnsOpinions">
           <ModalReviews id={id}></ModalReviews>
