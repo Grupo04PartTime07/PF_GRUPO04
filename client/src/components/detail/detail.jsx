@@ -46,7 +46,6 @@ function Detail(props) {
   const [indice, setIndice] = useState(0);
 
   const cart = useSelector((state) => state.cart)
-  const detail = useSelector((state) => state.productdetail);
   // let stars = [];
   // for (let i = 0; i < Math.ceil(detail.score); i++) {
   //   stars.push(<StarRoundedIcon />);
