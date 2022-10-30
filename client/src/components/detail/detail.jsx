@@ -28,6 +28,8 @@ function Detail(props) {
   const { id } = props.match.params;
   const dispatch = useDispatch();
   const [displayForm, setDisplay] = React.useState(false);
+  const detail = useSelector((state) => state.productdetail);
+  const [refresh, setRefresh] = React.useState("")
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -49,6 +51,7 @@ function Detail(props) {
   // for (let i = 0; i < Math.ceil(detail.score); i++) {
   //   stars.push(<StarRoundedIcon />);
   // }
+
 
   console.log(cart,"soy el carrito")
   const StyledRating = styled(Rating)({
@@ -190,7 +193,7 @@ function Detail(props) {
                 );
               })}
           </div>
-          {displayForm && <ScoreForm id={id} formDisplay={formDisplay} />}
+          {displayForm && <ScoreForm id={id} formDisplay={formDisplay} setRefresh={setRefresh} />}
         </div>
         <div className="divBttnsOpinions">
           <ModalReviews id={id}></ModalReviews>

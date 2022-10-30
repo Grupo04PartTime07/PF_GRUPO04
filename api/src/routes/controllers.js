@@ -202,12 +202,14 @@ const createScore = async (id, score, coment) => {
         product.addScore(comment.id)
 
         let scores = await Score.findAll({
-            where: { productId: c.id}
+            where: { productId: id}
         })
         const qtty = scores.length
         let total = scores.reduce(function ( acc, va){
             return (acc + va.score)
           },0);
+          console.log(scores)
+          console.log(total)
         let prom = Math.ceil(total/qtty)
         product.update({score_promedio: prom})
 

@@ -10,7 +10,7 @@ import StarBorderRoundedIcon from '@mui/icons-material/StarBorderRounded';
 import { styled } from '@mui/material/styles';
 import "./scoreForms.css";
 
-export default function ScoreForm({ id, formDisplay }) {
+export default function ScoreForm({ id, formDisplay, setRefresh }) {
   const dispatch = useDispatch();
   const [input, setInput] = React.useState({
     score: 0,
@@ -44,7 +44,8 @@ export default function ScoreForm({ id, formDisplay }) {
     deleteForm();
     setError({});
     formDisplay();
-    getProductDetails(id);
+    dispatch(getProductDetails(id));
+    setRefresh(input.coment.length)
   }
 
   function ensabledSubmit() {
