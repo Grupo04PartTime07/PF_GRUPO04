@@ -29,7 +29,7 @@ function Detail(props) {
   const dispatch = useDispatch();
   const [displayForm, setDisplay] = React.useState(false);
   const detail = useSelector((state) => state.productdetail);
-  const [refresh, setRefresh] = React.useState("")
+  const scoreProm = useSelector((state) => state.score_prom);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -38,7 +38,7 @@ function Detail(props) {
     return () => {
       dispatch(cleanProductState({}));
     };
-  }, [dispatch, id]);
+  }, [dispatch, id, scoreProm]);
 
   function formDisplay() {
     setDisplay(!displayForm);
@@ -192,7 +192,7 @@ function Detail(props) {
                 );
               })}
           </div>
-          {displayForm && <ScoreForm id={id} formDisplay={formDisplay} setRefresh={setRefresh} />}
+          {displayForm && <ScoreForm id={id} formDisplay={formDisplay}/>}
         </div>
         <div className="divBttnsOpinions">
           <ModalReviews id={id}></ModalReviews>

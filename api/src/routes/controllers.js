@@ -201,18 +201,6 @@ const createScore = async (id, score, coment) => {
         let product = await Products.findByPk(id)
         product.addScore(comment.id)
 
-        let scores = await Score.findAll({
-            where: { productId: id}
-        })
-        const qtty = scores.length
-        let total = scores.reduce(function ( acc, va){
-            return (acc + va.score)
-          },0);
-          console.log(scores)
-          console.log(total)
-        let prom = Math.ceil(total/qtty)
-        product.update({score_promedio: prom})
-
     } catch (error) {
         console.log(error)
     }
@@ -237,6 +225,25 @@ const getScores = async (id) =>{
     }
 }
 
+const updateScoreProm = async(id)=>{
+    try {
+        let scores = await Score.findAll({
+            where: { productId: id}
+        })
+        const qtty = scores.length
+        let total = scores.reduce(function ( acc, va){
+            return (acc + va.score)
+          },0);
+        let prom = (total/qtty)
+        let product = await Products.findByPk(id)
+        product.update({score_promedio: prom})
+        console.log(prom)
+        return prom
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
     getProductsDb,
     getCategoriesDb,
@@ -248,4 +255,5 @@ module.exports = {
     updateProduct,
     createScore,
     getScores,
+    updateScoreProm,
 }

@@ -45,8 +45,8 @@ export default function UpdateInventory(){
         setSearch("")
     }
 
-    function displayInventoryForm(e){
-        setDisplay(e.target.name)
+    function displayProductForm(e){
+        setDisplay(e.target.id)
     }
 
     function handleSubmitInventory(){
@@ -93,7 +93,7 @@ export default function UpdateInventory(){
                                         <img src={p.image[0]} width={"30px"} height={"35px"} />
                                         <label className="itemlabel">{p.name}</label>
                                         <label className="itemlabel">{p.stock}</label>
-                                        <button name={p.id} className="searchbtn" onClick={(e) => displayInventoryForm(e)}>&#8594;</button>
+                                        <button name={p.id} className="searchbtn" onClick={()=>{}}>&#8594;</button>
                                         {display && display == p.id ? <input type="number" className="stockinput" min="0" max="1000" value={input.stock} name={p.id} onChange={(e)=>handleInputChange(e)}/> : null }
                                         {display && display == p.id ? <button className="searchbtn" onClick={handleSubmitInventory}>Guardar</button>: null }
                                     </div>
@@ -108,7 +108,7 @@ export default function UpdateInventory(){
                         </div>
                         : null }
                     </div>
-                    {products && products.length? <EnhancedTable></EnhancedTable>:null}           
+                    {products && products.length? <EnhancedTable displayProductForm={displayProductForm}></EnhancedTable>:null}           
                 </div>
             </div>
         </div>

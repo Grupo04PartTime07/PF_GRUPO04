@@ -32,6 +32,7 @@ import { CREATE_SCORE } from "./actions/create_score";
 import { SEARCH_FOR_INVENTORY } from '../redux/actions/search_4_inventory'
 import { CLEAN_INV_PRODUCTS } from "./actions/clean_inv_products";
 import { CLEAN_REVIEWS } from "./actions/clean_reviews";
+import { UPDATE_SCORE_PROM } from './actions/update_score_prom'
 import swal from 'sweetalert';
 
 
@@ -46,7 +47,8 @@ const initialState = {
     favorites: [],
     cart: [],
     account:[],
-    message: ""
+    message: "",
+    score_prom: "",
 };
 
 const reducer = (state = initialState, action) => {
@@ -332,10 +334,15 @@ const reducer = (state = initialState, action) => {
                 productsinv: action.payload
             }
         case CLEAN_INV_PRODUCTS:
-                return {
-                    ...state,
-                    productsinv: [],
-                }
+            return {
+                ...state,
+                productsinv: [],
+            }
+        case UPDATE_SCORE_PROM:
+            return {
+                ...state,
+                score_prom: action.payload
+            }
         default: return state;
     }
 }

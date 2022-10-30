@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const router = Router();
 
-const { createScore, getScores } = require('./controllers');
+const { createScore, getScores, updateScoreProm } = require('./controllers');
 
 router.get('/:id', async (req, res) =>{
     const {id} = req.params;
@@ -16,8 +16,18 @@ router.get('/:id', async (req, res) =>{
 router.post('/', async (req, res) =>{
     const { id, coment, score} = req.body
     try {
-        createScore(id, score, coment);
+        await createScore(id, score, coment);     
         res.status(201).json('Gracias por su Opinion')
+    } catch (error) {
+        res.status(400).send(error)
+    }
+})
+
+router.put('/:id', async(req,res)=>{
+    const {id} = req.params;
+    try {
+        let response = await updateScoreProm(id)
+        res.status(201).json(response)
     } catch (error) {
         res.status(400).send(error)
     }
