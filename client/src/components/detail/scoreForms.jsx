@@ -8,6 +8,7 @@ import Rating from "@mui/material/Rating";
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import StarBorderRoundedIcon from '@mui/icons-material/StarBorderRounded';
 import { styled } from '@mui/material/styles';
+import swal from 'sweetalert';
 import "./scoreForms.css";
 
 export default function ScoreForm({ id, formDisplay, setRefresh }) {
@@ -44,8 +45,16 @@ export default function ScoreForm({ id, formDisplay, setRefresh }) {
     deleteForm();
     setError({});
     formDisplay();
+
+    swal({
+      title: "Muchas gracias por tu opinion!",
+      icon: "success",
+    });
+    getProductDetails(id);
+
     dispatch(getProductDetails(id));
     setRefresh(input.coment.length)
+
   }
 
   function ensabledSubmit() {
