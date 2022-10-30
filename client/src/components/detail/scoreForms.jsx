@@ -51,7 +51,7 @@ export default function ScoreForm({ id, formDisplay}) {
       title: "Muchas gracias por tu opinion!",
       icon: "success",
     });
-    dispatch(updateScoreProm(id))
+    setTimeout(function(){dispatch(updateScoreProm(id))},2000)
 
   }
 
