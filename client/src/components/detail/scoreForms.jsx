@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Button } from "@mui/material";
 import { createScore } from "../../redux/actions/create_score";
 import { getProductDetails } from "../../redux/actions/get_product_details";
+import { updateScoreProm } from "../../redux/actions/update_score_prom";
 import Rating from "@mui/material/Rating";
 //import Stack from "@mui/material/Stack";
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
@@ -11,7 +12,7 @@ import { styled } from '@mui/material/styles';
 import swal from 'sweetalert';
 import "./scoreForms.css";
 
-export default function ScoreForm({ id, formDisplay, setRefresh }) {
+export default function ScoreForm({ id, formDisplay}) {
   const dispatch = useDispatch();
   const [input, setInput] = React.useState({
     score: 0,
@@ -50,10 +51,7 @@ export default function ScoreForm({ id, formDisplay, setRefresh }) {
       title: "Muchas gracias por tu opinion!",
       icon: "success",
     });
-    getProductDetails(id);
-
-    dispatch(getProductDetails(id));
-    setRefresh(input.coment.length)
+    dispatch(updateScoreProm(id))
 
   }
 

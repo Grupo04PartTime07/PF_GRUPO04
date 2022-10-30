@@ -245,7 +245,7 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable() {
+export default function EnhancedTable({displayProductForm}) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
@@ -360,7 +360,7 @@ export default function EnhancedTable() {
                       <TableCell align="right">{row.stock}</TableCell>
                       <TableCell align="right">{row.price}</TableCell>
                       <TableCell align="right">
-                        <IconButton><EditTwoToneIcon></EditTwoToneIcon></IconButton>
+                        <IconButton id={row.id} onClick={(e)=>displayProductForm(e)}><EditTwoToneIcon></EditTwoToneIcon></IconButton>
                       </TableCell>
                     </TableRow>
                   );
