@@ -10,6 +10,7 @@ import Avatar from '@mui/material/Avatar';
 import {useAuth0} from '@auth0/auth0-react';
 import axios from 'axios';
 import {useEffect} from 'react';
+import AdminOrders from "../adminOrders/adminOrders";
 
 
 export default function Profile(){
@@ -88,7 +89,7 @@ export default function Profile(){
                 </div>
             </div>
             <div className="component">
-                {checked === 'datos' ? <CreateAccount/> : checked === 'compras' ? null : checked === 'adminProducts' ? <AdminProducts/> : checked === 'adminOrders' ? null : checked === 'adminUsers' ? null : <CreateAccount/>}
+                {checked === 'datos' ? <CreateAccount/> : checked === 'compras' ? null : checked === 'adminProducts' ? <AdminProducts/> : checked === 'adminOrders' ? <AdminOrders/> : checked === 'adminUsers' ? null : <CreateAccount/>}
             </div>
         </div>
     )

@@ -8,6 +8,8 @@ import styles from "./wishList.module.css";
 import { getFavorites } from '../../redux/actions/get_favorites';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { Link } from "react-router-dom";
+import NavigateBeforeRoundedIcon from '@mui/icons-material/NavigateBeforeRounded';
+import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
 
 
 export default function WishList(props){
@@ -25,7 +27,9 @@ useEffect(() => {  // Didmount and DidUpdate controlled
 
 return(
         <div>
-            <Link to='/'><div className={styles.volver}>Volver</div></Link>
+            
+            <Link to='/' className={styles.volverLink}><div className={styles.volver}><ArrowLeftRoundedIcon /> Volver</div></Link>
+            
         <div className={styles.divShoppingCart}>
             <h1 className={styles.title}>Mis productos favoritos</h1>
             <hr></hr>

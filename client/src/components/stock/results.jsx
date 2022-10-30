@@ -21,31 +21,61 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-
-function createData(name, calories, fat, carbs, protein) {
-  return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-  };
-}
+import Avatar from '@mui/material/Avatar';
+import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 
 const rows = [
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Donut', 452, 25.0, 51, 4.9),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Honeycomb', 408, 3.2, 87, 6.5),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Jelly Bean', 375, 0.0, 94, 0.0),
-  createData('KitKat', 518, 26.0, 65, 7.0),
-  createData('Lollipop', 392, 0.2, 98, 0.0),
-  createData('Marshmallow', 318, 0, 81, 2.0),
-  createData('Nougat', 360, 19.0, 9, 37.0),
-  createData('Oreo', 437, 18.0, 63, 4.0),
+    {
+        "id": 4,
+        "name": "Galletita Don Satur Bizcocho salado 200 g",
+        "price": 155,
+        "description": "Bizcocho salado sin conservantes y sin saborizantes",
+        "image": [
+            "https://res.cloudinary.com/dnxvoi5ro/image/upload/v1666711690/galletitas-don-satur_ztyiqv.jpg",
+            "https://res.cloudinary.com/dnxvoi5ro/image/upload/v1666711690/don_satur2_izc4e8.jpg"
+        ],
+        "categories": [
+            "Desayuno y Merienda",
+            "Almacén"
+        ],
+        "stock": 50,
+        "score": 2,
+        "brand": "Don Satur"
+    },
+    {
+        "id": 21,
+        "name": "Galletitas Vainillas Pozo X 160 G",
+        "price": 178,
+        "description": "Comparte Dulces Momentos, buscá recetas en nuestra Web",
+        "image": [
+            "https://res.cloudinary.com/dnxvoi5ro/image/upload/v1666723768/D_NQ_NP_983320-MLA45508690067_042021-O_n6emfl.jpg",
+            "https://res.cloudinary.com/dnxvoi5ro/image/upload/v1666723768/galletas_back_rwaj8u.png"
+        ],
+        "categories": [
+            "Desayuno y Merienda",
+            "Almacén"
+        ],
+        "stock": 56,
+        "score": 5,
+        "brand": "Pozo"
+    },
+    {
+        "id": 50,
+        "name": "Galletita Molinos sin T.A.C.C. 150g",
+        "price": 190,
+        "description": "Elaboradas con ingredientes de primera calidad, nuestras tostadas de arroz se destacan por ser livianas, naturales y crocantes, lo cual las convierte en un imprescindible de tus comidas diarias.",
+        "image": [
+            "https://res.cloudinary.com/dnxvoi5ro/image/upload/v1666733897/molino1_c4gfks.png",
+            "https://res.cloudinary.com/dnxvoi5ro/image/upload/v1666733897/Molinos_khlc5e.png"
+        ],
+        "categories": [
+            "Desayuno y Merienda",
+            "Almacén"
+        ],
+        "stock": 50,
+        "score": 5,
+        "brand": "Cariló"
+    }
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -80,34 +110,33 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
+    id: 'image',
+    numeric:false,
+    disablePadding: true,
+  },
+  {
     id: 'name',
     numeric: false,
     disablePadding: true,
-    label: 'Dessert (100g serving)',
+    label: 'Nombre del Producto',
   },
   {
-    id: 'calories',
+    id: 'stock',
     numeric: true,
     disablePadding: false,
-    label: 'Calories',
+    label: 'Cant.',
   },
   {
-    id: 'fat',
+    id: 'price',
     numeric: true,
     disablePadding: false,
-    label: 'Fat (g)',
+    label: 'Precio',
   },
   {
-    id: 'carbs',
-    numeric: true,
+    id: 'button',
+    numeric: false,
     disablePadding: false,
-    label: 'Carbs (g)',
-  },
-  {
-    id: 'protein',
-    numeric: true,
-    disablePadding: false,
-    label: 'Protein (g)',
+    label: '',
   },
 ];
 
@@ -188,7 +217,7 @@ function EnhancedTableToolbar(props) {
           variant="subtitle1"
           component="div"
         >
-          {numSelected} selected
+          {numSelected} seleccionados
         </Typography>
       ) : (
         <Typography
@@ -197,23 +226,17 @@ function EnhancedTableToolbar(props) {
           id="tableTitle"
           component="div"
         >
-          Nutrition
+          Productos
         </Typography>
       )}
 
       {numSelected > 0 ? (
-        <Tooltip title="Delete">
+        <Tooltip title="Eliminar Producto">
           <IconButton>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
+      ) : null}
     </Toolbar>
   );
 }
@@ -238,7 +261,7 @@ export default function EnhancedTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.name);
+      const newSelected = rows.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
@@ -261,7 +284,6 @@ export default function EnhancedTable() {
         selected.slice(selectedIndex + 1),
       );
     }
-
     setSelected(newSelected);
   };
 
@@ -272,10 +294,6 @@ export default function EnhancedTable() {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-  };
-
-  const handleChangeDense = (event) => {
-    setDense(event.target.checked);
   };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
@@ -308,17 +326,17 @@ export default function EnhancedTable() {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
+                      onClick={(event) => handleClick(event, row.id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.id}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -336,12 +354,14 @@ export default function EnhancedTable() {
                         scope="row"
                         padding="none"
                       >
-                        {row.name}
+                       <Avatar alt={row.name} src={row.image[0]} ></Avatar> 
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="left">{row.name}</TableCell>
+                      <TableCell align="right">{row.stock}</TableCell>
+                      <TableCell align="right">{row.price}</TableCell>
+                      <TableCell align="right">
+                        <IconButton><EditTwoToneIcon></EditTwoToneIcon></IconButton>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
@@ -367,10 +387,6 @@ export default function EnhancedTable() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
     </Box>
   );
 }

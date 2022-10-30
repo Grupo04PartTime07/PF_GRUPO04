@@ -8,7 +8,11 @@ import { getProductDetails } from "../../redux/actions/get_product_details";
 import { cleanInvProducts } from "../../redux/actions/clean_inv_products";
 import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
+
 import swal from 'sweetalert';
+
+import EnhancedTable from "./results";
+
 
 export default function UpdateInventory(){
     const dispatch = useDispatch();
@@ -104,7 +108,7 @@ export default function UpdateInventory(){
                         </div>
                         : null }
                     </div>
-           
+                    {products && products.length? <EnhancedTable></EnhancedTable>:null}           
                 </div>
             </div>
         </div>
