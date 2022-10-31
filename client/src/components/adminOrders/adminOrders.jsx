@@ -42,10 +42,12 @@ function createData(orderNum, client, status) {
 
 const rows = [
     createData('12345', 'cliente2@hotmail.com', 'Aprobada'),
-    createData('12346', 'admin@hotmail.com', 'En proceso'),
+    createData('12346', 'admin@hotmail.com', 'En camino'),
     createData('1234', 'cliente1@hotmail.com', 'Completada'),
     createData('1', 'cliente4@hotmail.com', 'Cancelada'),
     createData('147', 'cliente3@hotmail.com', 'Aprobada'),
+    createData('20548', 'cuchuflito@hotmail.com', 'Pendiente'),
+    createData('20445', 'cumpleañito@hotmail.com', 'Rechazada'),
   ];
   
 
@@ -83,10 +85,12 @@ function Row(props) {
         <TableCell align="left">{row.client}</TableCell>
         <TableCell align="left">
             <select id={row.orderNum} defaultValue={row.status} onClick={e => changeSelect(e)}>
-                <option>Aprobada</option>
-                <option>En proceso</option>
-                <option>Completada</option>
-                <option>Cancelada</option>
+                <option disabled={true}>Pendiente</option> {/* A la espera del pago */}
+                <option disabled={true}>Rechazada</option>
+                <option disabled={true}>Aprobada</option> {/* Pago realizado, a la espera de despachar */}
+                <option>En camino</option> {/* Despachado */}
+                <option disabled={true}>Completada</option> {/* Recibido y confirmado por el cliente */}
+                <option disabled={true}>Cancelada</option> {/* Cancelada por el cliente */}
             </select>
         </TableCell>
       </TableRow>
@@ -198,7 +202,7 @@ export default function AdminOrders() {
     function handleInputChange(e){
         e.preventDefault()
         setName(e.target.value)
-        setFilter(5)
+        setFilter(7)
     };
     
     function handleSubmit(){
@@ -208,18 +212,24 @@ export default function AdminOrders() {
     function filterStatus(){
         switch(filter){
             case 1:
+              const pending = rows.filter(row => row.status === 'Pendiente')
+            return pending
+            case 2:
+              const rejected = rows.filter(row => row.status === 'Rechazada')
+            return rejected
+            case 3:
                 const approved = rows.filter(row => row.status === 'Aprobada')
             return approved
-            case 2:
-                const processing = rows.filter(row => row.status === 'En proceso')
+            case 4:
+                const processing = rows.filter(row => row.status === 'En camino')
             return processing
-            case 3:
+            case 5:
                 const completed = rows.filter(row => row.status === 'Completada')
             return completed
-            case 4:
+            case 6:
                 const cancelled = rows.filter(row => row.status === 'Cancelada')
             return cancelled
-            case 5:
+            case 7:
                 document.getElementById('filterStatus').selectedIndex = 0
                 const searched = rows.filter(row => row.client.includes(name))
             return searched
@@ -229,7 +239,7 @@ export default function AdminOrders() {
 
 
   return (
-    <TableContainer sx={{width: '800px', marginTop: '40px'}} component={Paper}>
+    <TableContainer sx={{width: '800px', marginTop: '40px', marginBottom: '40px'}} component={Paper}>
       <Typography sx={{marginLeft: '20px', marginTop: '10px'}} align="left" gutterBottom variant="h5" component="div">
         Herramienta de gestión de ventas
       </Typography>
@@ -251,8 +261,10 @@ export default function AdminOrders() {
         <>Filtrar por: </>
         <select id='filterStatus' defaultValue='Todas' onClick={e => setFilter(document.getElementById('filterStatus').selectedIndex)}>       
             <option value='Todas'>Todas</option>
+            <option value='Pendiente'>Pendiente</option>
+            <option value='Rechazada'>Rechazada</option>
             <option value='Aprobada'>Aprobada</option>
-            <option value='En proceso'>En proceso</option>
+            <option value='En camino'>En camino</option>
             <option value='Completada'>Completada</option>
             <option value='Cancelada'>Cancelada</option>
         </select> 

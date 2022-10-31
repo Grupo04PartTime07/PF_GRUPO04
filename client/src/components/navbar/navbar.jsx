@@ -82,6 +82,8 @@ export default function PrimarySearchAppBar() {
   const favorites = useSelector(state => state.favorites)
   let currentUser = "Guest"
   if(user && user.email) currentUser = user.email
+  // let navbarUser = user && JSON.parse(window.localStorage.getItem(`userName`))
+  // let navbarEmail = user && JSON.parse(window.localStorage.getItem(`userEmail`))
   let dhacart = JSON.parse(window.localStorage.getItem(`c${currentUser}`))
   let dhafav = JSON.parse(window.localStorage.getItem(`f${currentUser}`))
   console.log(currentUser)
@@ -295,7 +297,8 @@ export default function PrimarySearchAppBar() {
       );
       user.isAdmin = response.data.userRegisted.isAdmin;
       user.isBanned = response.data.userRegisted.isAdmin;
-
+      window.localStorage.setItem(`userName`, user.name)
+      window.localStorage.setItem(`userEmail`, user.email)
       //console.log(response.userRegisted);
       //console.log(response.message);
       //console.log(response.data);
