@@ -51,7 +51,7 @@ export default function Feedback(){
           });
     }
 
-    useEffect(() => {
+    React.useEffect(() => {
         if(info.status === "approved"){
             mailerExitoso()
         }else{
