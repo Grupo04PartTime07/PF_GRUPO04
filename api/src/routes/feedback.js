@@ -4,7 +4,7 @@ const axios = require('axios')
 const {Products} = require('../db');
 
 router.get('/', async (req, res) => {
-const {payment_id, status, payment_type, merchant_order_id} =req.query
+const {payment_id, status, payment_type, merchant_order_id} = req.body
 try{
     if(status === 'approved'){
         const { data } = await axios.get(`https://api.mercadopago.com/merchant_orders/${merchant_order_id}?access_token=APP_USR-8763003876428984-102015-2626c522c3a666ad57ca4f935dabf886-1221748734`);

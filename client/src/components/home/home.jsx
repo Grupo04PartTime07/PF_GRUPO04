@@ -14,6 +14,8 @@ import Fab from '@mui/material/Fab';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Toolbar from '@mui/material/Toolbar';
 import { cleanOtherProducts } from '../../redux/actions/clean_other_products'
+import BestRatedProducts from "./AuxHome/bestRatedPRoducts";
+import YourFavorites from "./AuxHome/yourFavorites";
 
 function ScrollTop(props) {
     const { children, window } = props;
@@ -82,6 +84,8 @@ export default function Home(props){
             <Toolbar id="back-to-top-anchor" />
             {path === '/' ? <div><Banner/></div> : null}
             <div>
+              <YourFavorites></YourFavorites>
+              <BestRatedProducts></BestRatedProducts>
               {path === '/' ? <h2 className="homeTitle">Todos los productos</h2> : <h2 className="homeTitle">Resultados de la Busqueda</h2>}
               <div className="homeTable"> {/*#AgregameUnaEstrella*/}
                   { products.map(a => a.stock === 0 ? null : <Card id={a.id} name={a.name} image={a.image} price={a.price} score={a.score}/>) }
