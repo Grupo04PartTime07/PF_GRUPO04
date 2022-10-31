@@ -140,6 +140,7 @@ function Detail(props) {
                     name: detail.name,
                     image: detail.image,
                     price: detail.price,
+                    score: detail.score,
                     quantity: 1,
                   })
                 )

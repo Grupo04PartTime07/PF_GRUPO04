@@ -1,10 +1,5 @@
 import React from "react";
 import CreateAccount from "../account/account";
-import OrderList from "../userOrders/orderList";
-import CategoryForm from "../categoryForm/categoryForm";
-import CreateProduct from "../createProduct/CreateProduct";
-import UpdateInventory from "../stock/inventory";
-import BrandForm from "../brandForm/brandForm";
 import AdminProducts from "../adminProduct/adminProducts";
 import './profile.css'
 import Avatar from '@mui/material/Avatar';
@@ -16,7 +11,7 @@ import AdminOrders from "../adminOrders/adminOrders";
 
 export default function Profile(){
     
-    const { loginWithPopup, loginWithRedirect, logout, user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
     let currentUser = "Guest"
     if(user && user.email) currentUser = user.email
     let profile = JSON.parse(window.localStorage.getItem(`p${currentUser}`))
@@ -33,11 +28,6 @@ export default function Profile(){
           user.isAdmin = response.data.userRegisted.isAdmin;
           user.isBanned = response.data.userRegisted.isAdmin;
           window.localStorage.setItem(`p${user.email}`, user.isAdmin)
-          
-          //console.log(response.userRegisted);
-          //console.log(response.message);
-          //console.log(response.data);
-          //console.log(user)
         }catch(error) {
           console.log(error);
         }

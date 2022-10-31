@@ -1,22 +1,50 @@
 import React from "react";
+import { useDispatch } from 'react-redux';
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import emailjs from '@emailjs/browser';
 import './feedback.css'
+import axios from 'axios';
+import { verifyPurchase } from "../../redux/actions/verify_purchase";
+import {useAuth0} from '@auth0/auth0-react';
 
 export default function Feedback(){
     
+    //payment_id, status, payment_type, merchant_order_id
+    const url = window.location.search
+    const urlParams = new URLSearchParams(url)
+    const payment_id = urlParams.get('payment_id')
+    const status = urlParams.get('status')
+    const payment_type = urlParams.get('payment_type')
+    const merchant_order_id = urlParams.get('merchant_order_id')
+    const dispatch = useDispatch()
+    const { user, isAuthenticated, getAccessTokenSilently  } = useAuth0();
+    let currentUser = "Guest"
+    if(user && user.email) currentUser = user.email
+    // let navbarUser = JSON.parse(window.localStorage.getItem(`userName`))
+    //let navbarEmail = JSON.parse(window.localStorage.getItem(`userEmail`))
+    
     const comprador = {
-        name:"bernardo broscheit",
-        email:"bernardo.broscheit@gmail.com"
+        name:  user && user.name,
+        email: user && user.email,
+        merchant_order_id: merchant_order_id
     }
 
-    const info = {
-        payment_id:
-        50847220348,
-        status:"approved",
-        payment_type: "credit_card",
-        merchant_order_id:"6267534713"
+    async function callProtectedApiToken2(){
+        try{
+          const token = await getAccessTokenSilently();
+          const response = await axios.post('http://localhost:3001/users' , {
+                name: user.name || " " , 
+                email: user.email
+            },{headers:{
+            authorization:`Bearer ${token}`,
+          }});
+          user.isAdmin = response.data.userRegisted.isAdmin;
+          user.isBanned = response.data.userRegisted.isAdmin;
+          window.localStorage.setItem(`p${user.email}`, user.isAdmin)
+        }catch(error) {
+          console.log(error);
+        }
     }
 
     function mailerExitoso(){
@@ -51,22 +79,31 @@ export default function Feedback(){
           });
     }
 
+    
+
     React.useEffect(() => {
-        if(info.status === "approved"){
+        dispatch(verifyPurchase({payment_id, status, payment_type, merchant_order_id}))
+        if(status === "approved"){
             mailerExitoso()
         }else{
             mailerFailed()
         }
-        
-    }, []);
+        window.scrollTo(0, 0)
+        if (isAuthenticated){
+            return () => {
+                const usuario = callProtectedApiToken2();
+                console.log(usuario);
+            }
+        }
+    }, [dispatch]);
     
     return(
         <div className="feedbackContainer">
             <div className="feedbackContent">
                 <img src='https://assets.soyhenry.com/henry-landing/assets/Henry/logo.png' alt='Henry Logo'></img>
-                {info.status === 'approved' ? <div className="feedbackMessage">
-                    ¡Gracias por tu compra!
-                    <p>Tu código de seguimiento es <b>{info.merchant_order_id}</b></p>
+                {status === 'approved' ? <div className="feedbackMessage">
+                    ¡Gracias por tu compra {user.given_name}!
+                    <p>Tu código de seguimiento es <b>{merchant_order_id}</b></p>
                 </div> : <div className="feedbackMessage">
                     ¡Algo salió mal!
                     <p>Te invitamos a probar nuevamente</p>

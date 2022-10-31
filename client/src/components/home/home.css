@@ -10,9 +10,9 @@
 .homeTable{
     display: inline-grid;
     grid-template-columns: repeat(4, 1fr);
-    margin: 5%;
-    margin-top: 10px;
+    margin: 10px;
 }
+
 
 @media screen and (max-width: 600px){
     .homeTable{

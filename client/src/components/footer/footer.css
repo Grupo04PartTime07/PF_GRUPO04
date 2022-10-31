@@ -30,7 +30,17 @@
 .footerList li{
     padding-bottom: 8px;
 }
-
+.footerList li a{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    display: flex;
+    text-decoration: none;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    color: white;
+}
 .footerContact p{
     margin: 0px;
     padding: 0px;
@@ -59,6 +69,9 @@
     justify-content: space-evenly;
     align-content: space-between;
     margin-left: 10px;
+}
+.footerSocialIcon ul li a{
+    color:white;
 }
 
 .footerLinkedin{
