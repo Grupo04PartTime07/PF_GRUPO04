@@ -1,9 +1,31 @@
 const {Router} = require('express')
 const router = Router()
+const axios = require('axios')
+const {Products} = require('../db');
 
-router.get('/',(req, res) => {
+router.get('/', async (req, res) => {
 const {payment_id, status, payment_type, merchant_order_id} =req.query
-res.send({payment_id, status, payment_type, merchant_order_id})
+try{
+    if(status === 'approved'){
+        const { data } = await axios.get(`https://api.mercadopago.com/merchant_orders/${merchant_order_id}?access_token=APP_USR-8763003876428984-102015-2626c522c3a666ad57ca4f935dabf886-1221748734`);
+        const { items } = data;
+        const newItems = items.filter((e) => e.id !== '0');
+       
+        newItems.map(async (e) => {
+            let producto = await Products.findByPk(e.id)
+            await Products.update({
+                stock: (producto.dataValues.stock - e.quantity)
+            }, {
+                where: {
+                    id: e.id
+                }})
+            });
+        }
+    }catch(e){
+        console.log(e)
+    }
+
+res.status(200).send({payment_id, status, payment_type, merchant_order_id});
 })
 
 module.exports = router;

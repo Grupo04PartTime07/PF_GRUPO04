@@ -16,20 +16,21 @@ import { GET_BRANDS } from './actions/get_brands'
 import { FILTER_BY_BRAND } from "./actions/filter_by_brand";
 import { CLEAN_PRODUCTS } from "./actions/clean_products";
 import { UPDATE_PRODUCT } from "./actions/update_product";
-import { REMOVE_PRODUCT_FROM_CART} from "./actions/remove_product_from_cart";
-import { ADD_ONE_TO_CART} from "./actions/add_one_to_cart";
-import { REMOVE_ONE_FROM_CART} from "./actions/remove_one_from_cart";
-import { DELETE_CART} from "./actions/delete_cart";
-import { GET_CART} from "./actions/get_cart";
+import { REMOVE_PRODUCT_FROM_CART } from "./actions/remove_product_from_cart";
+import { ADD_ONE_TO_CART } from "./actions/add_one_to_cart";
+import { REMOVE_ONE_FROM_CART } from "./actions/remove_one_from_cart";
+import { DELETE_CART } from "./actions/delete_cart";
+import { GET_CART } from "./actions/get_cart";
 import { FULFILL_CART } from "./actions/fulfill_cart";
 import { GET_FAVORITES } from "./actions/get_favorites";
 import { DELETE_WISH_LIST } from "./actions/delete_wish_list";
-import { REMOVE_PRODUCT_FROM_WISH_LIST} from "./actions/remove_product_from_wish_list";
-import { ADD_TO_CART_FROM_WL} from "./actions/add_to_cart_from_wl";
+import { REMOVE_PRODUCT_FROM_WISH_LIST } from "./actions/remove_product_from_wish_list";
+import { ADD_TO_CART_FROM_WL } from "./actions/add_to_cart_from_wl";
 import { FULFILL_WISH_LIST } from "./actions/fulfill_wish_list";
-import { GET_REVIEWS} from "./actions/get_reviews";
+import { GET_REVIEWS } from "./actions/get_reviews";
 import { CLEAN_OTHER_PRODUCTS } from "./actions/clean_other_products";
 import { CREATE_SCORE } from "./actions/create_score";
+import { CREATE_SCORE_USER } from "./actions/create_score_user";
 import { SEARCH_FOR_INVENTORY } from '../redux/actions/search_4_inventory'
 import { CLEAN_INV_PRODUCTS } from "./actions/clean_inv_products";
 import { CLEAN_REVIEWS } from "./actions/clean_reviews";
@@ -46,18 +47,20 @@ const initialState = {
     categories: [],
     products: [],
     productsaux: [],
-    productsinv:[],
+    productsinv: [],
     brand: [],
     productdetail: {},
-    reviews:{},
+    reviews: {},
     favorites: [],
     cart: [],
-    account:[],
+    account: [],
     message: "",
     orders:[],
     sortedOrders:[],
     orderDetail:[],    
     score_prom: "",
+    scoreUser: "",
+
 };
 
 
@@ -81,10 +84,10 @@ const reducer = (state = initialState, action) => {
                 productdetail: {}
             }
         case CLEAN_REVIEWS:
-                return {
-                    ...state,
-                    reviews: {}
-                }
+            return {
+                ...state,
+                reviews: {}
+            }
         case CLEAN_PRODUCTS:
             return {
                 ...state,
@@ -104,7 +107,7 @@ const reducer = (state = initialState, action) => {
             swal({
                 title: action.payload,
                 icon: "success",
-              });
+            });
             //alert(action.payload)
             return {
                 ...state,
@@ -114,49 +117,55 @@ const reducer = (state = initialState, action) => {
             swal({
                 title: action.payload,
                 icon: "success",
-              });
+            });
             //alert(action.payload)
             return {
                 ...state,
                 message: action.payload
-                }
+            }
         case CREATE_BRAND:
             swal({
                 title: action.payload,
                 icon: "success",
-              });
+            });
             //alert(action.payload)
             return {
                 ...state,
                 message: action.payload
-                }  
+            }
         case CREATE_NEW_PRODUCTS:
             swal({
                 title: action.payload,
                 icon: "success",
-              });
+            });
             //alert(action.payload)
             return {
                 ...state,
                 message: action.payload
-                }
-        case CREATE_SCORE:{
+            }
+        case CREATE_SCORE: {
             // swal({
             //     title: action.payload,
             //     icon: "success",
             //   });
             //alert(action.payload)
-            return{
+            return {
                 ...state,
                 message: action.payload
-                }
+            }
+        }
+        case CREATE_SCORE_USER: {
+            return {
+                ...state,
+                scoreUser: action.payload
+            }
         }
         case UPDATE_PRODUCT:
             swal({
                 title: action.payload,
                 icon: "success",
-              });
-           // alert(action.payload)
+            });
+            // alert(action.payload)
             return {
                 ...state,
                 message: action.payload
@@ -167,14 +176,14 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 message: action.payload
                     }
-        case FULFILL_CART:{
-            return{
+        case FULFILL_CART: {
+            return {
                 ...state,
                 cart: action.payload
             }
         }
-        case FULFILL_WISH_LIST:{
-            return{
+        case FULFILL_WISH_LIST: {
+            return {
                 ...state,
                 favorites: action.payload
             }
@@ -224,7 +233,7 @@ const reducer = (state = initialState, action) => {
                 return {
                     ...state,
                     reviews: action.payload
-                    }
+                    }            
         case GET_ORDERS:
                 return {
                     ...state,
@@ -331,62 +340,63 @@ const reducer = (state = initialState, action) => {
                                              sortedOrders: [...cancelledOrders]
                                            }                     
                         }break;
-                        
         case GET_FAVORITES:
-                return {
-                    ...state,
-                    favorites: [...state.favorites]
-                    }        
+            return {
+                ...state,
+                favorites: [...state.favorites]
+             }                 
         case REMOVE_PRODUCT_FROM_CART:
-                let cartCopyTwoo = state.cart;
-                let cartFiltered = cartCopyTwoo.filter(e => e.id !== action.payload)
-                console.log(action.payload, cartFiltered)
-                return {
-                    ...state,
-                    cart: [...cartFiltered]
-                    }
+            let cartCopyTwoo = state.cart;
+            let cartFiltered = cartCopyTwoo.filter(e => e.id !== action.payload)
+            console.log(action.payload, cartFiltered)
+            return {
+                ...state,
+                cart: [...cartFiltered]
+            }
         case REMOVE_PRODUCT_FROM_WISH_LIST:
-                let favCopy = state.favorites;
-                let favFiltered = favCopy.filter(e => e.id !== action.payload)
-                console.log(action.payload, favFiltered)
-                return {
-                    ...state,
-                    favorites: [...favFiltered]
-                    }
+            let favCopy = state.favorites;
+            let favFiltered = favCopy.filter(e => e.id !== action.payload)
+            console.log(action.payload, favFiltered)
+            return {
+                ...state,
+                favorites: [...favFiltered]
+            }
         case ADD_ONE_TO_CART:
             let cartCopyThree = state.cart;
-            for(let i=0; i<cartCopyThree.length; i++){
-            if(cartCopyThree[i].id === action.payload ){
-                cartCopyThree[i].quantity = cartCopyThree[i].quantity + 1
-                }else{
-                cartCopyThree[i].quantity = cartCopyThree[i].quantity
-                } }
-                return {
-                    ...state,
-                    cart: [...cartCopyThree]
-                    }     
+            for (let i = 0; i < cartCopyThree.length; i++) {
+                if (cartCopyThree[i].id === action.payload) {
+                    cartCopyThree[i].quantity = cartCopyThree[i].quantity + 1
+                } else {
+                    cartCopyThree[i].quantity = cartCopyThree[i].quantity
+                }
+            }
+            return {
+                ...state,
+                cart: [...cartCopyThree]
+            }
         case REMOVE_ONE_FROM_CART:
-                let cartCopyFour = state.cart;
-                for(let i=0; i<cartCopyFour.length; i++){
-                if(cartCopyFour[i].id === action.payload && cartCopyFour[i].quantity > 1 ){
+            let cartCopyFour = state.cart;
+            for (let i = 0; i < cartCopyFour.length; i++) {
+                if (cartCopyFour[i].id === action.payload && cartCopyFour[i].quantity > 1) {
                     cartCopyFour[i].quantity = cartCopyFour[i].quantity - 1
-                }else{
+                } else {
                     cartCopyFour[i].quantity = cartCopyFour[i].quantity
-                }}
-                return {
-                    ...state,
-                    cart: [...cartCopyFour]
-                    }         
+                }
+            }
+            return {
+                ...state,
+                cart: [...cartCopyFour]
+            }
         case DELETE_CART:
-                return {
-                    ...state,
-                    cart: []
-                    }
-                    case DELETE_WISH_LIST:
-                        return {
-                            ...state,
-                            favorites: []
-                            }                    
+            return {
+                ...state,
+                cart: []
+            }
+        case DELETE_WISH_LIST:
+            return {
+                ...state,
+                favorites: []
+            }
         case ADD_TO_FAVORITE:
             let favoritesCopy = state.favorites;
             let itemExist = favoritesCopy.filter(e => e.name === action.payload.name)
@@ -395,13 +405,13 @@ const reducer = (state = initialState, action) => {
                 return {
                     ...state,
                     favorites: newfav
-                    }
+                }
             } else {
                 return {
                     ...state,
                     favorites: [...state.favorites, action.payload]
-                    }
                 }
+            }
         case ORDER_BY_PRICE: {
             let ordered = [];
             if (action.payload === "asc") {
@@ -470,7 +480,7 @@ const reducer = (state = initialState, action) => {
                 products: action.payload
             }
         case SEARCH_FOR_INVENTORY:
-            return{
+            return {
                 ...state,
                 productsinv: action.payload
             }

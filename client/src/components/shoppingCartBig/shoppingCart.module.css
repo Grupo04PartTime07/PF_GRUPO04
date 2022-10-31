@@ -122,14 +122,14 @@
     margin-left: 10px;
     font-weight: bold;
     margin-bottom: 0px;
-    margin-top: 15px;
+    margin-top: -5px;
     color: rgb(82, 82, 82);
 }
 
 .spanCantProductos {
     margin-left: 10px;
     font-size: 14px;
-    margin-top: 17px; 
+    margin-top: -2px; 
 }
 .cartPrice {
     color: rgb(82, 82, 82);
