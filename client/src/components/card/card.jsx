@@ -69,7 +69,7 @@ export default function ImgMediaCard(props) {
         </Typography>
         <Typography className="productStars" sx={{ display: 'flex'}} color="text.secondary">
           {/* {stars} */}
-          {props.score && <StyledRating
+          {<StyledRating
                       defaultValue={props.score}
                       readOnly
                       icon={<StarRoundedIcon fontSize="inherit" />}
@@ -85,7 +85,7 @@ export default function ImgMediaCard(props) {
             size="large"
             aria-label="show 17 new notifications"
             color="inherit"
-            onClick={()=> dispatch(addToFavorite({id: props.id, name: props.name, image: props.image, price: props.price, quantity:1})) }
+            onClick={()=> dispatch(addToFavorite({id: props.id, name: props.name, image: props.image, price: props.price, score: props.score, quantity:1 })) }
         >
         {/* { itemFound? <FavoriteTwoToneIcon /> : <FavoriteBorderOutlinedIcon/> } */}
         { itemFound? <FavoriteRoundedIcon sx={{ color: pink[500] }}/> : <FavoriteBorderOutlinedIcon /> }
