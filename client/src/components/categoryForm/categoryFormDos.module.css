@@ -1,7 +1,7 @@
 
 
 .formContainerCat{
-    width: 90%;
+    width: 80%;
     border: none;
     padding: 30px;
 }
@@ -14,18 +14,14 @@
 }
 
 .formFirstDivCat{
-    width: 700px;
+    width: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
     text-align: left;
-    margin: 10px 50px;
+    margin: 10px 0px;
     padding: 30px;
-    border-radius: 10px;
-    -webkit-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
-    -moz-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
-    box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
 }
 
 .formFirstDivCat label{
@@ -62,14 +58,10 @@
 .button{
     
     width: fit-content;
-    
-
     cursor: pointer;
-
     border-radius: 5px;
     border:none;
     margin: 15px auto ;
-    
     padding: 8px 25px;
     background-color: #1976d2;
     color: white;

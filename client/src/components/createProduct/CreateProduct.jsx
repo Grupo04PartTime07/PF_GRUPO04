@@ -11,20 +11,50 @@ import axios from 'axios';
 import { Image } from "cloudinary-react";
     
 
-function CreateProduct() {
+function CreateProduct({product}) {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
-    const dispatch = useDispatch();
-    const history = useHistory();
-    let category = useSelector((state) => state.categories)
-    let brands = useSelector((state) => state.brand)
-    let currentUser = "Guest"
-    if(user && user.email) currentUser = user.email
-    let profile = JSON.parse(window.localStorage.getItem(`p${currentUser}`))
+  const dispatch = useDispatch();
+  const history = useHistory();
+  let category = useSelector((state) => state.categories)
+  let brands = useSelector((state) => state.brand)
+  let currentUser = "Guest"
+  if(user && user.email) currentUser = user.email
+  let profile = JSON.parse(window.localStorage.getItem(`p${currentUser}`))
 
-    useEffect(() => {
-        dispatch(getCategories());
-        dispatch(getBrands());
-    },[])
+  const [imagen, setImagen] = useState(""); //este estado va a subir los datos a cloudinary
+  const [imageData, setimageData] = useState({imageReel: [], });
+    // este estado guardara las direcciones de cloudinary para pisar el input
+
+  const [error, setError] = useState("");
+  const [button, setButton] = useState({complete: false,});
+
+  const[input,setInput] = useState({
+    name:"",
+    price:"",
+    description:"",
+    image:[],
+    categories:[],
+    stock:"",
+    brand:"",
+    brandimage:""
+  })
+
+  useEffect(() => {
+    if(product){
+      setInput({
+        name: product.name,
+        price: product.price,
+        description: product.description,
+        image: product.image && product.image,
+        categories: product.categories,
+        stock: product.stock,
+        brand: product.brand,
+      })
+      setimageData({imageReel: product.image && product.image,})
+    }
+      dispatch(getCategories());
+      dispatch(getBrands());
+  },[])
 
     async function callProtectedApiToken2() {
       try {
@@ -59,40 +89,16 @@ function CreateProduct() {
       }
     });
 
-    const[input,setInput] = useState({
-        name:"",
-        price:"",
-        description:"",
-        image:[],
-        categories:[],
-        stock:"",
-        brand:"",
-        //brandimage:""
-    })
-
-    
-    
-  const [imagen, setImagen] = useState(""); //este estado va a subir los datos a cloudinary
-  const [imageData, setimageData] = useState({
-    // este estado guardara las direcciones de cloudinary para pisar el input
-    imageReel: [],
-  });
-  const [error, setError] = useState("");
-  const [button, setButton] = useState({
-    complete: false,
-  });
-
     function handleChange(e){
-          setInput({...input, [e.target.name]: e.target.value});
-          setError(validate({...input,[e.target.name]: e.target.value}));
-          /*if(e.target.name === "brand"){
-            let selectedbrand = brands.filter(b => b.name === e.target.value)
-            setInput({...input, brandimage: selectedbrand[0].image})
-          }*/
+      if(e.target.name === "brand"){
+        setInput({...input, [e.target.name]: e.target.value, brandimage: brands.find(b =>  b.name === e.target.value).image})
+        setError(validate({...input,[e.target.name]: e.target.value}));
+      }else{
+        setInput({...input, [e.target.name]: e.target.value});
+        setError(validate({...input,[e.target.name]: e.target.value}));
       }
+    }
 
-    
-    
     function validate(input){
         let errors = {};
         if(!input.name){
@@ -203,7 +209,7 @@ function CreateProduct() {
       );
     }
   }
-  function handleBrand(e) {
+  /*function handleBrand(e) {
       console.log(e.target.value)
       setInput((prev) => ({...prev, brand: e.target.value}));
       console.log(input)
@@ -211,7 +217,7 @@ function CreateProduct() {
       setInput({...input, brandimage: selectedbrand[0].image})
       setError(validate({ ...input, brand: e.target.value }));
     
-  }
+  }*/
 
   function handleDelete(e) {
     let nombre = e.target.innerText;
@@ -229,28 +235,32 @@ function CreateProduct() {
     });
   };
 
-  function handleDeleteBrand(e) {
+  /*function handleDeleteBrand(e) {
     setInput({
       ...input,
       brand: "",
     });
-  }
+  }*/
 
   function handleSubmit(e) {
     // crea el nuevo articulo, faltaria agregarle en el dispatch la accion que lo crea
     e.preventDefault(e);
-    dispatch(createNewProducts(input));
-    alert("Articulo Creado");
-    setInput({
-      name: "",
-      price: "",
-      description: "",
-      image: [],
-      categories: [],
-      stock: "",
-      brand: "",
-    });
-    history.push("/");
+    if(product){
+      //aqui va la ruta de modificar
+    }else{
+      dispatch(createNewProducts(input));
+      alert("Articulo Creado");
+      setInput({
+        name: "",
+        price: "",
+        description: "",
+        image: [],
+        categories: [],
+        stock: "",
+        brand: "",
+        brandimage: ""
+      });
+    }
   }
 
   function handleReset(e) {
@@ -264,6 +274,7 @@ function CreateProduct() {
       categories: [],
       stock: "",
       brand: "",
+      brandimage: ""
     });
     setError("");
     setButton({
@@ -343,7 +354,7 @@ function CreateProduct() {
               {brands &&
                 brands.map((el) => <option value={el.name}>{el.name}</option>)}
             </select>
-            { input.brand !== "" ? <img src={brands.find(e =>  e.name === input.brand).image}></img>:null}
+            { input.brandimage ? <img src={input.brandimage}></img>:null}
             
             {/*<div className="formCategories">
               {input.brand ? (
@@ -407,9 +418,17 @@ function CreateProduct() {
               Volver
             </Link>
           </button>
-          {button.complete === false ? (
+          {button.complete === false ? product ? (
+            <button disabled="disabled" className="button disable">
+              Modificar
+            </button>
+          ) : (
             <button disabled="disabled" className="button disable">
               Crear
+            </button>
+          ) : product ? (
+            <button type="submit" className="button">
+              Modificar
             </button>
           ) : (
             <button type="submit" className="button">

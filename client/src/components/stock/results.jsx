@@ -24,60 +24,6 @@ import { visuallyHidden } from '@mui/utils';
 import Avatar from '@mui/material/Avatar';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 
-const rows = [
-    {
-        "id": 4,
-        "name": "Galletita Don Satur Bizcocho salado 200 g",
-        "price": 155,
-        "description": "Bizcocho salado sin conservantes y sin saborizantes",
-        "image": [
-            "https://res.cloudinary.com/dnxvoi5ro/image/upload/v1666711690/galletitas-don-satur_ztyiqv.jpg",
-            "https://res.cloudinary.com/dnxvoi5ro/image/upload/v1666711690/don_satur2_izc4e8.jpg"
-        ],
-        "categories": [
-            "Desayuno y Merienda",
-            "Almacén"
-        ],
-        "stock": 50,
-        "score": 2,
-        "brand": "Don Satur"
-    },
-    {
-        "id": 21,
-        "name": "Galletitas Vainillas Pozo X 160 G",
-        "price": 178,
-        "description": "Comparte Dulces Momentos, buscá recetas en nuestra Web",
-        "image": [
-            "https://res.cloudinary.com/dnxvoi5ro/image/upload/v1666723768/D_NQ_NP_983320-MLA45508690067_042021-O_n6emfl.jpg",
-            "https://res.cloudinary.com/dnxvoi5ro/image/upload/v1666723768/galletas_back_rwaj8u.png"
-        ],
-        "categories": [
-            "Desayuno y Merienda",
-            "Almacén"
-        ],
-        "stock": 56,
-        "score": 5,
-        "brand": "Pozo"
-    },
-    {
-        "id": 50,
-        "name": "Galletita Molinos sin T.A.C.C. 150g",
-        "price": 190,
-        "description": "Elaboradas con ingredientes de primera calidad, nuestras tostadas de arroz se destacan por ser livianas, naturales y crocantes, lo cual las convierte en un imprescindible de tus comidas diarias.",
-        "image": [
-            "https://res.cloudinary.com/dnxvoi5ro/image/upload/v1666733897/molino1_c4gfks.png",
-            "https://res.cloudinary.com/dnxvoi5ro/image/upload/v1666733897/Molinos_khlc5e.png"
-        ],
-        "categories": [
-            "Desayuno y Merienda",
-            "Almacén"
-        ],
-        "stock": 50,
-        "score": 5,
-        "brand": "Cariló"
-    }
-];
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -245,7 +191,7 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable({displayProductForm}) {
+export default function EnhancedTable({displayProductForm, rows}) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
@@ -332,7 +278,7 @@ export default function EnhancedTable({displayProductForm}) {
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.id)}
+                      //onClick={(event) => handleClick(event, row.id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -341,6 +287,7 @@ export default function EnhancedTable({displayProductForm}) {
                     >
                       <TableCell padding="checkbox">
                         <Checkbox
+                          onClick={(event) => handleClick(event, row.id)}
                           color="primary"
                           checked={isItemSelected}
                           inputProps={{
@@ -360,7 +307,7 @@ export default function EnhancedTable({displayProductForm}) {
                       <TableCell align="right">{row.stock}</TableCell>
                       <TableCell align="right">{row.price}</TableCell>
                       <TableCell align="right">
-                        <IconButton id={row.id} onClick={(e)=>displayProductForm(e)}><EditTwoToneIcon></EditTwoToneIcon></IconButton>
+                        <IconButton id={row.id} onClick={(e)=>displayProductForm(e)} ><EditTwoToneIcon id={row.id} onClick={(e)=>displayProductForm(e)} ></EditTwoToneIcon></IconButton>
                       </TableCell>
                     </TableRow>
                   );
