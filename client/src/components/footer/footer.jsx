@@ -5,6 +5,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { Link } from "react-router-dom";
 
 function footer() {
   return (
@@ -13,9 +14,9 @@ function footer() {
       <div>
         <h3>Mi Cuenta</h3>
         <ul className="footerList">
-          <li>Perfil</li>
-          <li>Favoritos</li>
-          <li>Carrito</li>
+          <li><Link/><a href="http://localhost:3000/myProfile">Perfil</a></li>
+          <li><Link/><a href="http://localhost:3000/wishList">Favoritos</a></li>
+          <li><Link/><a href="http://localhost:3000/shoppingCart">Carrito</a></li>
         </ul>
       </div>
 
@@ -28,12 +29,12 @@ function footer() {
         <h3>Redes Sociales</h3>
         <div className="footerSocialIcon">
             <ul>
-                <li><TwitterIcon /></li>
-                <li><FacebookIcon /></li>
-                <li><YouTubeIcon /></li>
-                <li><InstagramIcon /></li>
+                <li><a href="https://twitter.com/soyhenry_ok?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><TwitterIcon/></a></li>
+                <li><a href="https://www.facebook.com/soyhenryok"><FacebookIcon/></a></li>
+                <li><a href="https://www.youtube.com/channel/UCyPi0AHwcuCP-QJxrxq-f2Q"><YouTubeIcon/></a></li>
+                <li><a href="https://www.instagram.com/soyhenry_ok/?hl=es"><InstagramIcon/></a></li>
             </ul>
-         
+        
         </div>
       </div>
       <div>

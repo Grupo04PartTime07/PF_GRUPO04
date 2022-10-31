@@ -21,12 +21,12 @@ export default function CartItem(props) {
             </div>
             <div className={styles.divQuantity}>
                 <button className={styles.bttnRemove} onClick={()=> props.removeOneFromCart(props.id)}>-</button>
-                <span className={styles.quantity}>{props.quantity}</span>
+                <span className={styles.quantity}>{props.quantity}u.</span>
                 <button className={styles.bttnAdd} onClick={()=> props.addOneToCart(props.id)}>+</button>
             </div>
 
             <div className={styles.divTotalPrice}>
-                <span className={styles.totalPrice}>{props.price * props.quantity}</span>
+                <span className={styles.totalPrice}>${props.price * props.quantity}</span>
             </div>
             <button className={styles.bttnDelete} onClick={()=> props.removeProductFromCart(props.id)}>x</button>
         </div>
