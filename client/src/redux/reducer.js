@@ -56,7 +56,7 @@ const initialState = {
     message: "",
     orders:[],
     sortedOrders:[],
-    orderDetail:[]    
+    orderDetail:[],    
     score_prom: "",
 };
 

@@ -1,5 +1,6 @@
 import React from "react";
 import CreateAccount from "../account/account";
+import OrderList from "../userOrders/orderList";
 import CategoryForm from "../categoryForm/categoryForm";
 import CreateProduct from "../createProduct/CreateProduct";
 import UpdateInventory from "../stock/inventory";
@@ -89,7 +90,7 @@ export default function Profile(){
                 </div>
             </div>
             <div className="component">
-                {checked === 'datos' ? <CreateAccount/> : checked === 'compras' ? null : checked === 'adminProducts' ? <AdminProducts/> : checked === 'adminOrders' ? <AdminOrders/> : checked === 'adminUsers' ? null : <CreateAccount/>}
+                {checked === 'datos' ? <CreateAccount/> : checked === 'compras' ? <OrderList/> : checked === 'adminProducts' ? <AdminProducts/> : checked === 'adminOrders' ? <AdminOrders/> : checked === 'adminUsers' ? null : <CreateAccount/>}
             </div>
         </div>
     )
