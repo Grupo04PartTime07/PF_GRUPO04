@@ -80,7 +80,7 @@ export default function Profile(){
                 </div>
             </div>
             <div className="component">
-                {checked === 'datos' ? <CreateAccount/> : checked === 'compras' ? null : checked === 'adminProducts' ? <AdminProducts/> : checked === 'adminOrders' ? <AdminOrders/> : checked === 'adminUsers' ? null : <CreateAccount/>}
+                {checked === 'datos' ? <CreateAccount/> : checked === 'compras' ? <OrderList/> : checked === 'adminProducts' ? <AdminProducts/> : checked === 'adminOrders' ? <AdminOrders/> : checked === 'adminUsers' ? null : <CreateAccount/>}
             </div>
         </div>
     )
