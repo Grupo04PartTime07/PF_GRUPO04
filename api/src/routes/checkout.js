@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
 
 try{
   if(!carrito){
-   const cartCreated = await Cart.create({
+  const cartCreated = await Cart.create({
       subtotal
     });
 
