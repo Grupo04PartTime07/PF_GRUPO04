@@ -9,5 +9,4 @@ export const getReviews = (id) => dispatch => {
     .catch(err => console.log(err))
     } 
 
-    // falta agregar en el back ruta get /reviews/:id
-    // La ruta get details debera mandar solo 3 coments
+    
