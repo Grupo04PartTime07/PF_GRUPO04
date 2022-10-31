@@ -14,6 +14,7 @@
     margin-top: 10px;
 }
 
+
 @media screen and (max-width: 600px){
     .homeTable{
         display: inline-grid;

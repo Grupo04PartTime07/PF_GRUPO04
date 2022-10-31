@@ -43,7 +43,7 @@ function ScrollTop(props) {
         <Box
           onClick={handleClick}
           role="presentation"
-          sx={{ position: 'fixed', bottom: 16, right: 16 }}
+          sx={{ position: 'fixed', bottom: 16, right: 16,  zIndex: 10 }}
         >
           {children}
         </Box>
@@ -88,7 +88,7 @@ export default function Home(props){
               </div>
               <ScrollTop sx={{ zIndex: 10}} {...props}>
                   <Fab  size="small" aria-label="scroll back to top">
-                      <KeyboardArrowUpIcon  />
+                      <KeyboardArrowUpIcon/>
                   </Fab>
               </ScrollTop>
             </div>
