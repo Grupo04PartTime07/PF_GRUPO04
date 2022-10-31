@@ -32,16 +32,17 @@ export default function ShoppingCartBig(props) {
             cartItems.length === 0);
     }
 
-    function handlecheckout() {
-        let total = cartItems.map(e => {
-            return { id: e.id, title: e.name, unit_price: e.price, quantity: e.quantity }
-        }).concat({
-            id: 0, title: "Costo de Envio",
-            unit_price: Number(shipping), quantity: 1
-        })
-        dispatch(checkOutCart(total))
-        dispatch(deleteCart())
-    }
+function handlecheckout(){
+    let total = cartItems.map(e => {
+        return {id:e.id,title:e.name, unit_price:e.price, quantity:e.quantity}
+    }).concat({id: 0, title:"Costo de Envio", 
+                unit_price:Number(shipping), quantity: 1
+            })
+    let objTotal = {subtotal: cartItems.reduce(function ( acc, va){return (acc + (va.quantity*va.price))},0)+Number(shipping), cart: total}
+    dispatch(checkOutCart(objTotal))
+    dispatch(deleteCart())
+}
+
 
 
 

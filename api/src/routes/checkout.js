@@ -17,7 +17,6 @@ router.post('/', async (req, res) => {
   const carrito = await Cart.findByPk(idCart);
 
 try{
-
   if(!carrito){
   const cartCreated = await Cart.create({
       subtotal
@@ -66,7 +65,7 @@ try{
       items: (cart),
       
         back_urls:{
-            success: 'http://localhost:3000/feedback',
+            success: 'http://localhost:3001/feedback',
             failure: 'http://localhost:3000/feedback',
         },
         // notification_url: 'https://4d53-190-16-66-223.sa.ngrok.io/checkout/notificar',
@@ -118,15 +117,18 @@ router.get('/success', (req, res) => {
 //   }
 // });
 
-router.get('/feedback', function (req, res) {
-  try{
-      res.json({
-        Payment: req.query.payment_id,
-        Status: req.query.status,
-        MerchantOrder: req.query.merchant_order_id
-      });
-  }catch(e){
-    console.log(e)
-  }
-});
+// router.get('/feedback', function (req, res) {
+
+//   const { payment_id, status, merchant_order_id } = req.query; 
+
+//   try{
+//       res.status(200).json({
+//         Payment: payment_id,
+//         Status: status,
+//         MerchantOrder: merchant_order_id
+//       });
+//   }catch(e){
+//     console.log(e)
+//   }
+// });
 module.exports = router;
