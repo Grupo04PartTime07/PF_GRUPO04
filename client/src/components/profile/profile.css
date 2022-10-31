@@ -1,6 +1,6 @@
 .profile{
     display: grid;
-    grid-template-columns: 300px max-content;
+    grid-template-columns: 300px 100%;
     min-height: 100vh;
 }
 .menuTitle{
@@ -51,8 +51,8 @@
 }
 
 .component{
-    margin-left: 50px;
+    margin-left: 70px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
 }
