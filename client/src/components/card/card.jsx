@@ -69,13 +69,13 @@ export default function ImgMediaCard(props) {
         </Typography>
         <Typography className="productStars" sx={{ display: 'flex'}} color="text.secondary">
           {/* {stars} */}
-          <StyledRating
+          {props.score && <StyledRating
                       defaultValue={props.score}
                       readOnly
                       icon={<StarRoundedIcon fontSize="inherit" />}
                       emptyIcon={<StarBorderRoundedIcon fontSize="inherit" />}
                       size="small"
-                    />
+                    />}
         </Typography>
       </CardContent>
       </Link>
