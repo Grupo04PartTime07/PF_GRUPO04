@@ -30,3 +30,11 @@
     width: 80%;
 }
 
+.commentStars{
+    margin: auto;
+}
+
+.commentError{
+    font-size: 12px;
+    color: red;
+}

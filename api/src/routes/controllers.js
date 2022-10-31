@@ -70,7 +70,7 @@ const createProduct = async (name, price, description, image,stock, score, categ
                 name: name,
                 price: price, 
                 description: description,
-                image: [image],
+                image: image,
                 stock: stock,
         });
 
@@ -180,7 +180,8 @@ const updateProduct = async (id, props) => {
              name: props.name,
              price: props.price,
              description: props.description,
-             image: [...props.image]
+             image: [...props.image],
+             stock: props.stock
             }, {
                 where: {
                     id: id
@@ -199,16 +200,6 @@ const createScore = async (id, score, coment) => {
         let comment = await Score.create({coment: coment, score: score})
         let product = await Products.findByPk(id)
         product.addScore(comment.id)
-
-        let scores = await Score.findAll({
-            where: { productId: c.id}
-        })
-        const qtty = scores.length
-        let total = scores.reduce(function ( acc, va){
-            return (acc + va.score)
-          },0);
-        let prom = Math.ceil(total/qtty)
-        product.update({score_promedio: prom})
 
     } catch (error) {
         console.log(error)
@@ -234,6 +225,25 @@ const getScores = async (id) =>{
     }
 }
 
+const updateScoreProm = async(id)=>{
+    try {
+        let scores = await Score.findAll({
+            where: { productId: id}
+        })
+        const qtty = scores.length
+        let total = scores.reduce(function ( acc, va){
+            return (acc + va.score)
+          },0);
+        let prom = (total/qtty)
+        let product = await Products.findByPk(id)
+        product.update({score_promedio: prom})
+        console.log(prom)
+        return prom
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 module.exports = {
     getProductsDb,
     getCategoriesDb,
@@ -245,4 +255,5 @@ module.exports = {
     updateProduct,
     createScore,
     getScores,
+    updateScoreProm,
 }

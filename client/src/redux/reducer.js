@@ -39,6 +39,8 @@ import { CLEAN_ORDER_DETAIL_STATE } from "./actions/clean_order_detail_state";
 import { ADD_ORDER_TO_CART} from "./actions/add_order_to_cart";
 import { UPDATE_ORDER_STATUS } from "./actions/update_order_status";
 import { SORTED_ORDERS} from "./actions/sorted_orders";
+import { UPDATE_SCORE_PROM } from './actions/update_score_prom'
+import swal from 'sweetalert';
 
 const initialState = {
     categories: [],
@@ -55,6 +57,7 @@ const initialState = {
     orders:[],
     sortedOrders:[],
     orderDetail:[]    
+    score_prom: "",
 };
 
 
@@ -98,38 +101,62 @@ const reducer = (state = initialState, action) => {
                 orderDetail: [],
                 }            
         case GUEST_CREATE_ACCOUNT:
-            alert(action.payload)
+            swal({
+                title: action.payload,
+                icon: "success",
+              });
+            //alert(action.payload)
             return {
                 ...state,
                 message: action.payload
             }
         case CREATE_CATEGORY:
-            alert(action.payload)
+            swal({
+                title: action.payload,
+                icon: "success",
+              });
+            //alert(action.payload)
             return {
                 ...state,
                 message: action.payload
                 }
         case CREATE_BRAND:
-            alert(action.payload)
+            swal({
+                title: action.payload,
+                icon: "success",
+              });
+            //alert(action.payload)
             return {
                 ...state,
                 message: action.payload
                 }  
         case CREATE_NEW_PRODUCTS:
+            swal({
+                title: action.payload,
+                icon: "success",
+              });
             //alert(action.payload)
             return {
                 ...state,
                 message: action.payload
                 }
         case CREATE_SCORE:{
-            alert(action.payload)
+            // swal({
+            //     title: action.payload,
+            //     icon: "success",
+            //   });
+            //alert(action.payload)
             return{
                 ...state,
                 message: action.payload
                 }
         }
         case UPDATE_PRODUCT:
-            alert(action.payload)
+            swal({
+                title: action.payload,
+                icon: "success",
+              });
+           // alert(action.payload)
             return {
                 ...state,
                 message: action.payload
@@ -448,10 +475,15 @@ const reducer = (state = initialState, action) => {
                 productsinv: action.payload
             }
         case CLEAN_INV_PRODUCTS:
-                return {
-                    ...state,
-                    productsinv: [],
-                }
+            return {
+                ...state,
+                productsinv: [],
+            }
+        case UPDATE_SCORE_PROM:
+            return {
+                ...state,
+                score_prom: action.payload
+            }
         default: return state;
     }
 }

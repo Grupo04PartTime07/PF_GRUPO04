@@ -4,11 +4,13 @@ import CategoryForm from "../categoryForm/categoryForm";
 import CreateProduct from "../createProduct/CreateProduct";
 import UpdateInventory from "../stock/inventory";
 import BrandForm from "../brandForm/brandForm";
+import AdminProducts from "../adminProduct/adminProducts";
 import './profile.css'
 import Avatar from '@mui/material/Avatar';
 import {useAuth0} from '@auth0/auth0-react';
 import axios from 'axios';
 import {useEffect} from 'react';
+import AdminOrders from "../adminOrders/adminOrders";
 
 
 export default function Profile(){
@@ -68,26 +70,26 @@ export default function Profile(){
                         <input className="radioButton" value='datos' type="radio" checked={checked === 'datos'} onChange={(e) => handleCheck(e)}/>
                         <p className="menuText">Mis datos</p>
                     </label>
-                    {profile || (isAuthenticated && user.isAdmin) ?<label>
-                        <input className="radioButton" value='createCategorie' type="radio" checked={checked === 'createCategorie'} onChange={(e) => handleCheck(e)}/>
-                        <p className="menuText">Crear categoría</p>
+                    <label>
+                        <input className="radioButton" value='compras' type="radio" checked={checked === 'compras'} onChange={(e) => handleCheck(e)}/>
+                        <p className="menuText">Mis Compras</p>
+                    </label>
+                    {profile || (isAuthenticated && user.isAdmin) ? <label>
+                        <input className="radioButton" value='adminProducts' type="radio" checked={checked === 'adminProducts'} onChange={(e) => handleCheck(e)}/>
+                        <p className="menuText">Gestión de Productos</p>
                     </label>:null}
                     {profile || (isAuthenticated && user.isAdmin) ? <label>
-                        <input className="radioButton" value='createBrand' type="radio" checked={checked === 'createBrand'} onChange={(e) => handleCheck(e)}/>
-                        <p className="menuText">Crear Marca</p>
+                        <input className="radioButton" value='adminOrders' type="radio" checked={checked === 'adminOrders'} onChange={(e) => handleCheck(e)}/>
+                        <p className="menuText">Gestión de Ventas</p>
                     </label>:null}
                     {profile || (isAuthenticated && user.isAdmin) ? <label>
-                        <input className="radioButton" value='createProduct' type="radio" checked={checked === 'createProduct'} onChange={(e) => handleCheck(e)}/>
-                        <p className="menuText">Crear producto</p>
-                    </label>:null}
-                    {profile || (isAuthenticated && user.isAdmin) ? <label>
-                        <input className="radioButton" value='updateInventory' type="radio" checked={checked === 'updateInventory'} onChange={(e) => handleCheck(e)}/>
-                        <p className="menuText">Actualizar Inventario</p>
+                        <input className="radioButton" value='adminUsers' type="radio" checked={checked === 'adminUsers'} onChange={(e) => handleCheck(e)}/>
+                        <p className="menuText">Gestión de Usuarios</p>
                     </label>:null}
                 </div>
             </div>
             <div className="component">
-                {checked === 'datos' ? <CreateAccount/> : checked === 'createProduct' ? <CreateProduct/> : checked === 'createCategorie' ? <CategoryForm/> : checked === 'updateInventory' ? <UpdateInventory/> : checked === 'createBrand' ? <BrandForm/> : <CreateAccount/>}
+                {checked === 'datos' ? <CreateAccount/> : checked === 'compras' ? null : checked === 'adminProducts' ? <AdminProducts/> : checked === 'adminOrders' ? <AdminOrders/> : checked === 'adminUsers' ? null : <CreateAccount/>}
             </div>
         </div>
     )
