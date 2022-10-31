@@ -101,7 +101,7 @@ function handlecheckout(){
                     </div>
                     <div className={styles.divCantProductos}>
                         <p className={styles.pCantProductos}>Cantidad de productos: </p>
-                        <span className={styles.spanCantProductos}>{cartItems.reduce(function (acc, va) { return (acc + va.quantity) }, 0)}</span>
+                        <span className={styles.spanCantProductos}>{cartItems.reduce(function (acc, va) { return (acc + va.quantity) }, 0)}u.</span>
                     </div>
                     <div className={styles.divTotal}>
                         <p className={styles.total}>Precio final: </p>
