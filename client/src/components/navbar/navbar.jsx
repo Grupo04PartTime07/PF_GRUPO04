@@ -10,6 +10,7 @@ import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import LocalActivityOutlinedIcon from '@mui/icons-material/LocalActivityOutlined';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import ShoppingCartTwoToneIcon from '@mui/icons-material/ShoppingCartTwoTone';
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
@@ -187,7 +188,6 @@ export default function PrimarySearchAppBar() {
       <MenuItem onClick={handleMenuClose}>Log in</MenuItem> 
       { Ver diseño, corresponde a cambios auth0} */}
       
- 
       {/* Aca se hace el login */}
       {!isAuthenticated?<label className='link'><MenuItem id="1" onClick={loginWithPopup }>Iniciar sesión</MenuItem></label>:<label className='link'><MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem></label>}
       
@@ -211,6 +211,16 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
+      {/* <MenuItem>
+        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+          <Badge badgeContent={cart.reduce(function ( acc, va){return (acc + va.quantity)},0)} color="error">
+            <LocalActivityOutlinedIcon />
+          </Badge>
+        </IconButton>
+        <Link className="chartLink" to="/shoppingCart">
+          <p className='link'>Carrito</p>
+        </Link>
+      </MenuItem> */}
       <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={cart.reduce(function ( acc, va){return (acc + va.quantity)},0)} color="error">
@@ -338,26 +348,34 @@ export default function PrimarySearchAppBar() {
               onKeyDown={(e) =>{if(e.key === 'Enter'){handleSubmit()}}}
             />
           </Search>
-          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{width: '35%'}} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton sx={{width: '40%'}} onClick={handleDisplayCart} size="large" aria-label="show 4 new mails" color="inherit">
+            <div></div>
+          <IconButton sx={{width: '40%', height: '50%'}} size="large" aria-label="show 4 new mails" color="inherit">
+              <Badge >
+                <LocalActivityOutlinedIcon />
+              </Badge>
+            </IconButton>
+            <IconButton sx={{width: '40%', height: '50%'}} onClick={handleDisplayCart} size="large" aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={cart.reduce(function ( acc, va){return (acc + va.quantity)},0)} color="error">
                 <ShoppingCartTwoToneIcon />
               </Badge>
             </IconButton>
-            <IconButton
+            <IconButton 
+              sx={{width: '40%', height: '50%'}}
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
             >
               <Badge sx={{width: '27px', height: '27px'}} badgeContent={favorites.reduce(function ( acc, va){return (acc + va.quantity)},0)} color="error">
-                <Link to="/wishList" style={{textDecoration:"none", color: "whitesmoke"} }>
+                <Link to="/wishList" style={{width: '30px', textDecoration:"none", color: "whitesmoke"} }>
                 <FavoriteTwoToneIcon />
                 </Link>
               </Badge>
             </IconButton>
+
             <IconButton
-              sx={{width: '40%'}}
+              sx={{width: '40%', height: '55px'}}
               size="large"
               edge="end"
               aria-label="account of current user"
@@ -366,8 +384,8 @@ export default function PrimarySearchAppBar() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              {isAuthenticated ? <div className='avatar'>
-                {isAuthenticated?<Avatar alt={user.name} src={user.picture} />:<AccountCircleTwoToneIcon />}
+              {isAuthenticated ? <div className='avatar' >
+                {isAuthenticated?<Avatar alt={user.name} src={user.picture} sx={{width: '30px', height: '30px'}}/>:<AccountCircleTwoToneIcon sx={{width: '30px', height: '30px'}} />}
                 {isAuthenticated && user.isAdmin ? <p className='greetingsUser'>Admin</p> : <p className='greetingsUser'>{user.given_name}</p>}
               </div> : 
               <div>

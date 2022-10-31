@@ -5,10 +5,11 @@
 
 .avatar{
     position: relative;
-    top: 12px
+    top: 11px
 }
 
 .greetingsUser{
+    height: 10px;
     font-size: 9px;
     font-weight: 500;
     color: rgb(225, 225, 225);
