@@ -6,6 +6,7 @@ import CreateProduct from "../createProduct/CreateProduct";
 import CategoryForm from "../categoryForm/categoryForm";
 import UpdateInventory from "../stock/inventory";
 import AllBrands from "./brands/brands"
+import AllCategories from './categories/categories'
 import './adminProducts.css'
 
 export default function AdminProducts(){
@@ -44,7 +45,7 @@ export default function AdminProducts(){
             </div>
             {componentview === "products" ? <UpdateInventory/> : null}
             {componentview === "brands" ? <AllBrands/>:null}
-            {componentview === "categories" ? null :null}
+            {componentview === "categories" ? <AllCategories/> :null}
             {componentview === "product" ? <CreateProduct/>:null}
             {componentview === "brand" ? <BrandForm/>:null}
             {componentview === "category" ? <CategoryForm/>:null}
