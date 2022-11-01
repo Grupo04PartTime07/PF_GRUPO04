@@ -1,3 +1,7 @@
+.centerdiv{
+    display:flex;
+    justify-content: center;
+}
 .formContainerBrand{
     width: 80%;
     border: none;
@@ -5,7 +9,6 @@
 }
 
 .formFirstDivBrand{
-    width: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -86,7 +89,7 @@
 }
 
 .formImageBrand input{
-    width: 510px;
+    width: 100%;
 }
 
 .formContainerPreview{
