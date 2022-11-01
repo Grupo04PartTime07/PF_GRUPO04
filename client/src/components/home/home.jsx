@@ -84,8 +84,8 @@ export default function Home(props){
             <Toolbar id="back-to-top-anchor" />
             {path === '/' ? <div><Banner/></div> : null}
             <div>
-              <YourFavorites></YourFavorites>
-              <BestRatedProducts></BestRatedProducts>
+            {path === '/' ? <YourFavorites/> : null}
+              {path === '/' ?<BestRatedProducts/> : null}
               {path === '/' ? <h2 className="homeTitle">Todos los productos</h2> : <h2 className="homeTitle">Resultados de la Busqueda</h2>}
               <div className="homeTable"> {/*#AgregameUnaEstrella*/}
                   { products.map(a => a.stock === 0 ? null : <Card id={a.id} name={a.name} image={a.image} price={a.price} score={a.score}/>) }

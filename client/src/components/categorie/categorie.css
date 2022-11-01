@@ -36,10 +36,7 @@
 }
 
 .categorieTitle{
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    position: relative;
-    right: 440px;
+    display: flex;
     margin-left: 30px;
     margin-bottom: 0%;
     font-weight: 350;
