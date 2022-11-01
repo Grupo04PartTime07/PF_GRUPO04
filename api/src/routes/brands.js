@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
         const brands = await getBrandsDb();
         res.status(200).send(brands);
     }catch(e){
-        console.log(e)
+        console.log(e) 
     }
 });
 
