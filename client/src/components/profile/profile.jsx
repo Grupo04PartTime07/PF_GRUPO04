@@ -1,6 +1,7 @@
 import React from "react";
 import CreateAccount from "../account/account";
 import AdminProducts from "../adminProduct/adminProducts";
+import OrderList from '../userOrders/orderList'
 import './profile.css'
 import Avatar from '@mui/material/Avatar';
 import {useAuth0} from '@auth0/auth0-react';

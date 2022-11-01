@@ -4,7 +4,7 @@ import { useState, useEffect} from "react";
 import  {getCategories}  from "../../redux/actions/get_categories";
 import {getBrands} from "../../redux/actions/get_brands"
 import { createNewProducts } from '../../redux/actions/create_new_products';
-import { Link, useHistory} from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./createProduct.css"
 import {useAuth0} from '@auth0/auth0-react';
 import axios from 'axios';
@@ -14,7 +14,6 @@ import { Image } from "cloudinary-react";
 function CreateProduct({product}) {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const dispatch = useDispatch();
-  const history = useHistory();
   let category = useSelector((state) => state.categories)
   let brands = useSelector((state) => state.brand)
   let currentUser = "Guest"

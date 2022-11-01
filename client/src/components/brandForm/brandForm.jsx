@@ -6,10 +6,11 @@ import { createBrand } from "../../redux/actions/create_brand";
 //import {useAuth0} from '@auth0/auth0-react';
 import axios from 'axios';
 import { Image } from "cloudinary-react";
-//import { useEffect} from "react";
+import { getBrands } from "../../redux/actions/get_brands";
+import { updateBrand } from "../../redux/actions/update_brand";
 
-export default function BrandForm() {
-  //const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+
+export default function BrandForm({brand, setDisplay}) {
 
   const dispatch = useDispatch();
 
@@ -18,7 +19,6 @@ export default function BrandForm() {
   const [imagen, setImagen] = useState(""); //este estado va a subir los datos a cloudinary
   const [imageData, setimageData] = useState(""); // este estado guardara las direcciones de cloudinary para pisar el input
   const [errorName, setErrorName] = useState("");
-  const [errorImage, setErrorImage] = useState("");
 
   const updateImage = (e) => {
     setImagen(e.target.files[0]);
@@ -27,8 +27,6 @@ export default function BrandForm() {
   function handleButton(e) {
     // pisa el input con los datos que hay en imagenes
     e.preventDefault();
-
-
     setImage(imageData);
   }
 
@@ -41,84 +39,52 @@ export default function BrandForm() {
 
     axios
       .post("https://api.cloudinary.com/v1_1/de2od3piw/image/upload", formData)
-
-      .then((res) => setimageData(res.data.url));
+        .then((res) => setimageData(res.data.url));
   };
 
+  React.useEffect(() =>{
+    if(brand){
+      setName(brand.name)
+      setImage(brand.image)
+      setimageData(brand.image)
+    }
+  },[])
+
   const handleDeleteImage = (e) => {
+    console.log("imagen", e)
     //borra una preview al hacer click sobre la misma
-    // setimageData({
-    //   imageReel: imageData.filter((e) => e !== imageSurce),
-    // });
     setimageData("")
   };
 
 
   function validateName(value) {
-    if (!/^[a-zA-Z]+$/.test(value)) {
-      // solo caracteres a-z minusculas y al menos uno
-      setErrorName('Solo caracteres de la "a-z" y al menos uno');
+    console.log("input", /^[a-zA-Z]+$/.test(value))
+    setName(value);
+    if (!name.length) {
+      setErrorName('El campo no puede quedar vacio');
     } else {
       setErrorName("");
     }
-    setName(value);
-  }
-
-  function validateImage(value) {
-    if (!/^(http[s]?)/.test(value)) {
-      setErrorImage("La Url de la imagen debe comenzar con http");
-    } else {
-      setErrorImage("");
-    }
-    setImage(value);
   }
 
   function onSubmit(e) {
     e.preventDefault();
-    const obj = { name: name, image: image };
-    //console.log(obj)
-    dispatch(createBrand(obj));
+    if(brand){
+      const obj = { name: name, image: image, id: brand.id};
+      dispatch(updateBrand(obj));
+      setDisplay("")
+    } else {
+      const obj = { name: name, image: image };
+      dispatch(createBrand(obj));
+      setTimeout(()=>{dispatch(getBrands())},2000)
+    }
     setName("");
     setImage("");
+    setimageData("")
   }
-
-  /*  async function callProtectedApiToken2() {
-        try {
-        const token = await getAccessTokenSilently();
-        const response = await axios.post(
-            "http://localhost:3001/users",
-            {
-            name: user.name || " ",
-            email: user.email,
-            },
-            {
-            headers: {
-                authorization: `Bearer ${token}`,
-            },
-            }
-        );
-        user.isAdmin = response.data.userRegisted.isAdmin;
-        user.isBanned = response.data.userRegisted.isAdmin;
-        console.log(response.data);
-        console.log(user);
-        } catch (error) {
-        console.log(error);
-        }
-    }
-
-    useEffect(() => {
-        if (isAuthenticated) {
-        return () => {
-            const usuario = callProtectedApiToken2();
-            console.log(usuario);
-        };
-        }
-    });
-    */
 
   return (
     <div>
-      {/* {isAuthenticated && user.isAdmin ?*/}
       <form
         type="POST"
         className={styles.formContainerBrand}
@@ -137,21 +103,6 @@ export default function BrandForm() {
           autoComplete="off"
         />
         {!errorName ? null : <span className={styles.danger}>{errorName}</span>}
-
-        {/* <label className={styles.imglabel}>Image: </label>
-        <input
-          className={errorImage ? styles.invalido : styles.valido}
-          key="image"
-          name="image"
-          value={image}
-          type="text"
-          required
-          onChange={(e) => validateImage(e.target.value)}
-          autoComplete="off"
-        />
-        {!errorImage ? null : (
-          <span className={styles.danger}>{errorImage}</span>
-        )} */}
         
         <label>Imagen a:</label>
             <div className={styles.formImageBrand}>
@@ -182,16 +133,22 @@ export default function BrandForm() {
                 Aceptar
               </button>
             </div></div>
-        <button
+        {brand ? <button
           name="submit"
           className={styles.button}
           type="submit"
-          disabled={!image || errorImage || !name || errorName ? true : false}
+          disabled={!image || !name || errorName ? true : false}
+        >
+          Modificar Marca
+        </button> : <button
+          name="submit"
+          className={styles.button}
+          type="submit"
+          disabled={!image || !name || errorName ? true : false}
         >
           Crear Marca
-        </button>
+        </button>}
       </form>{" "}
-      {/*: <label>upss parece que no tienes permisos</label>}  */}
     </div>
   );
 }
