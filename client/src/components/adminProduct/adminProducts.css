@@ -5,7 +5,7 @@
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
-    border: 2px gray solid;
+    border:none;
     border-radius: 5px;
     padding: 30px;
     border-radius: 10px;
