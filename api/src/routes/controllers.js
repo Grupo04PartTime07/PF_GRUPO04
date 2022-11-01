@@ -44,7 +44,7 @@ const getCategoriesDb = async () => {
     try {
 
         let categories = await Categories.findAll({
-            attributes: ['name', 'image']
+            attributes: ['name', 'image', 'id']
         });
 
         //let namesCategories = categories.map(e =>  e.name);

@@ -3,7 +3,6 @@ import styles from "./brandForm.module.css";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createBrand } from "../../redux/actions/create_brand";
-//import {useAuth0} from '@auth0/auth0-react';
 import axios from 'axios';
 import { Image } from "cloudinary-react";
 import { getBrands } from "../../redux/actions/get_brands";
@@ -58,7 +57,6 @@ export default function BrandForm({brand, setDisplay}) {
 
 
   function validateName(value) {
-    console.log("input", /^[a-zA-Z]+$/.test(value))
     setName(value);
     if (!name.length) {
       setErrorName('El campo no puede quedar vacio');
@@ -73,10 +71,10 @@ export default function BrandForm({brand, setDisplay}) {
       const obj = { name: name, image: image, id: brand.id};
       dispatch(updateBrand(obj));
       setDisplay("")
+      setTimeout(()=>{dispatch(getBrands())},2000)
     } else {
       const obj = { name: name, image: image };
       dispatch(createBrand(obj));
-      setTimeout(()=>{dispatch(getBrands())},2000)
     }
     setName("");
     setImage("");
