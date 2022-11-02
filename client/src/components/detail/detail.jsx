@@ -133,6 +133,9 @@ function Detail(props) {
               </Button>
             </span>
             <Button
+              sx={{
+                    minWidth: 130,
+                 }}
               onClick={() =>
                 dispatch(
                   addToFavorite({
@@ -179,16 +182,16 @@ function Detail(props) {
                 //   starsOpinion.push(<StarRoundedIcon />);
                 // }
                 return (
-                  <div>
+                  <div className="opinionStars">
                     <StyledRating
                       defaultValue={e.score}
                       precision={0.5}
                       readOnly
                       icon={<StarRoundedIcon fontSize="inherit" />}
                       emptyIcon={<StarBorderRoundedIcon fontSize="inherit" />}
-                      sx={{ margin: "15px" }}
+                      sx={{ margin: "15px" , textAlign:"center"}}
                     />
-                    <p className="detailDescription">{e.coment}</p>
+                    <p className="detailDescription opinionDescription">{e.coment}</p>
                   </div>
                 );
               })}
