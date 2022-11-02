@@ -123,6 +123,10 @@ h6{
     color: antiquewhite;
 }
 
+.linkFooter:hover{
+    cursor: pointer;
+}
+
 @media screen and (max-width: 600px){
     .footerContainer{
         width: 100%;

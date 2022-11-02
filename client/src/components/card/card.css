@@ -17,7 +17,7 @@
 
 .productImg{
     position: relative;
-    left: 11%;
+    left: 15%;
 }
 
 .productPrice{
@@ -30,6 +30,9 @@
 }
 
 @media screen and (max-width: 600px){
+    .card{
+        margin: 5px;
+    }
     .productImg{
         position: relative;
         left: 0%;
