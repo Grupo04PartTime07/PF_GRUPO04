@@ -22,9 +22,13 @@ import Rating from "@mui/material/Rating";
 import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import { styled } from "@mui/material/styles";
 
+import { useHistory } from "react-router-dom";
+import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
+import IconButton from '@mui/material/IconButton';
+
 function Detail(props) {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
-
+  const history = useHistory()
   const { id } = props.match.params;
   const dispatch = useDispatch();
   const [displayForm, setDisplay] = React.useState(false);
@@ -64,6 +68,7 @@ function Detail(props) {
 
   return typeof detail.id === "number" ? (
     <div className="detailContainer">
+      <div className='volverDetail' onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon /></IconButton> Volver</div>
       <div className="detailContainerArticles">
         <div>
           <div className="detailLeft">
@@ -203,7 +208,7 @@ function Detail(props) {
           <br />
           {isAuthenticated && (
             <Button variant="contained" onClick={() => formDisplay()}>
-              Dar tu Opinión
+              Deja un comentario
             </Button>
           )}
         </div>

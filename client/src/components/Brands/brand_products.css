@@ -6,6 +6,26 @@
     color: rgb(82, 82, 82);
 }
 
+.volverBrand{
+    display: flex;
+    justify-content: left;
+    /* align-items: center; */
+    text-decoration: none;
+    color:whitesmoke;
+    background-color: #1976d2;
+    margin-bottom: 30px;
+    margin-top: 10px;
+    border-radius: 9999px;
+    padding: 6px 15px 6px 8px;
+    width: fit-content;
+    font-weight: 600;
+}
+
+.volverBrand:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 @media screen and (max-width: 600px){
     .categorieTitle{
         right: 0px
