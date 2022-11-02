@@ -15,11 +15,15 @@ router.post('/', async (req, res) => {
 
   const { idCart, cart, subtotal, userEmail, dataShipping } = req.body
   const carrito = await Cart.findByPk(idCart);
+
   // const user = await UserRegisted.findOne({
   //   where: {
   //     email: userEmail,
   //   }
   // });
+
+
+  //console.log("Direccion:",direccion)
 
 try{
   if(!carrito){

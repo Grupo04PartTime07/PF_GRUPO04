@@ -23,7 +23,7 @@ const getUsersRegisted = async () => {
         //     let carts = p.carts.map(e => e.id)
         //     return {id: p.id, name: p.name, price: p.price, description: p.description, image: p.image, categories, stock: p.stock, score: p.score_promedio, brand: p.brand.name }
         // })
-        return response;
+        return users;
         
     }catch(e){
         console.log(e)

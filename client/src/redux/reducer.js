@@ -31,7 +31,7 @@ import { GET_REVIEWS } from "./actions/get_reviews";
 import { CLEAN_OTHER_PRODUCTS } from "./actions/clean_other_products";
 import { CREATE_SCORE } from "./actions/create_score";
 import { CREATE_SCORE_USER } from "./actions/create_score_user";
-import { SEARCH_FOR_INVENTORY } from '../redux/actions/search_4_inventory'
+import { GET_ADMIN_PRODUCTS } from './actions/get_admin_products'
 import { CLEAN_INV_PRODUCTS } from "./actions/clean_inv_products";
 import { CLEAN_REVIEWS } from "./actions/clean_reviews";
 import { GET_ORDERS } from "./actions/get_orders";
@@ -41,6 +41,9 @@ import { ADD_ORDER_TO_CART} from "./actions/add_order_to_cart";
 import { UPDATE_ORDER_STATUS } from "./actions/update_order_status";
 import { SORTED_ORDERS} from "./actions/sorted_orders";
 import { UPDATE_SCORE_PROM } from './actions/update_score_prom'
+import { GET_USER_DETAILS } from './actions/get_user_details'
+import { GET_ALL_USERS } from './actions/get_all_users'
+
 import swal from 'sweetalert';
 
 const initialState = {
@@ -60,6 +63,8 @@ const initialState = {
     orderDetail:[],    
     score_prom: "",
     scoreUser: "",
+    users:[],
+    userDetail:{},
 
 };
 
@@ -77,6 +82,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 productdetail: action.payload
+            }
+
+        case GET_USER_DETAILS:
+            return {
+                ...state,
+                userDetail: action.payload
             }
         case CLEAN_PRODUCT_STATE:
             return {
@@ -468,6 +479,12 @@ const reducer = (state = initialState, action) => {
                 categories: action.payload
             }
         }
+        case GET_ALL_USERS: {
+            return {
+                ...state,
+                users: action.payload
+            }
+        }
         case GET_BRANDS: {
             return {
                 ...state,
@@ -479,7 +496,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 products: action.payload
             }
-        case SEARCH_FOR_INVENTORY:
+        case GET_ADMIN_PRODUCTS:
             return {
                 ...state,
                 productsinv: action.payload

@@ -3,12 +3,14 @@ import styles from "./categoryFormDos.module.css";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createCategory } from "../../redux/actions/create_category";
+import { updateCategory } from '../../redux/actions/update_category'
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import { useEffect } from "react";
 import { Image } from "cloudinary-react";
+import { getCategories } from "../../redux/actions/get_categories";
 
-export default function CategoryForm() {
+export default function CategoryForm({category, setDisplay}) {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
 
   const dispatch = useDispatch();
@@ -18,19 +20,18 @@ export default function CategoryForm() {
   const [imagen, setImagen] = useState(""); //este estado va a subir los datos a cloudinary
   const [imageData, setimageData] = useState(""); // este estado guardara las direcciones de cloudinary para pisar el input
   const [errorName, setErrorName] = useState("");
-  const [errorImage, setErrorImage] = useState("");
+
   let currentUser = "Guest"
     if(user && user.email) currentUser = user.email
     let profile = JSON.parse(window.localStorage.getItem(`p${currentUser}`))
 
   function validateName(value) {
-    if (!/^[a-zA-Z]+$/.test(value)) {
-      // solo caracteres a-z y al menos uno
-      setErrorName('Solo caracteres de la "a-z" y al menos uno');
+    setName(value);
+    if (!name.length) {
+      setErrorName('El campo no puede quedar vacio');
     } else {
       setErrorName("");
     }
-    setName(value);
   }
 
   const updateImage = (e) => {
@@ -41,8 +42,6 @@ export default function CategoryForm() {
   function handleButton(e) {
     // pisa el input con los datos que hay en imagenes
     e.preventDefault();
-
-
     setImage(imageData);
   }
 
@@ -61,58 +60,35 @@ export default function CategoryForm() {
 
   const handleDeleteImage = (e) => {
     //borra una preview al hacer click sobre la misma
-    // setimageData({
-    //   imageReel: imageData.filter((e) => e !== imageSurce),
-    // });
     setimageData("")
   };
 
+  React.useEffect(() =>{
+    if(category){
+      setName(category.name)
+      setImage(category.image)
+      setimageData(category.image)
+    }
+  },[])
+
   function onSubmit(e) {
     e.preventDefault();
+    if(category){
+      const obj = { name: name, image: image, id: category.id};
+      dispatch(updateCategory(obj));
+      setDisplay("")
+      setTimeout(()=>{dispatch(getCategories())},2000)
+    }else{
     const obj = { name: name, image: image };
-    //console.log(obj)
     dispatch(createCategory(obj));
     setName("");
     setImage("");
-  }
-
-  async function callProtectedApiToken2() {
-    try {
-      const token = await getAccessTokenSilently();
-      const response = await axios.post(
-        "http://localhost:3001/users",
-        {
-          name: user.name || " ",
-          email: user.email,
-        },
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      user.isAdmin = response.data.userRegisted.isAdmin;
-      user.isBanned = response.data.userRegisted.isAdmin;
-      //console.log(response.data);
-      //console.log(user);
-    } catch (error) {
-      console.log(error);
     }
   }
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      return () => {
-        const usuario = callProtectedApiToken2();
-        //console.log(usuario);
-      };
-    }
-  });
 
   return (
-    <div>
+    <div className={styles.centerdiv}>
     <div className={styles.formContainerCat}>
-      {profile || (isAuthenticated && user.isAdmin) ? (
         <form type="POST" className={styles.formDataCat} onSubmit={onSubmit}>
           <div className={styles.formFirstDivCat}>
             <label className={styles.label}>Nombre: </label>
@@ -158,21 +134,25 @@ export default function CategoryForm() {
               <button className={styles.button} onClick={handleButton}>
                 Aceptar
               </button>
-              {/* <p className={error.image ? "danger" : "normal"}>{error.image}</p>         */}
             </div>
           </div>
+          {category ? 
           <button
             name="submit"
             className={styles.button}
             type="submit"
-            disabled={!image || errorImage || !name || errorName ? true : false}
+            disabled={!image || !name || errorName ? true : false}
+          >
+            Modificar Categoria
+          </button> : <button
+            name="submit"
+            className={styles.button}
+            type="submit"
+            disabled={!image || !name || errorName ? true : false}
           >
             Crear Categoria
-          </button>
+          </button>}
         </form>
-      ) : (
-        <label>upss parece que no tienes permisos</label>
-      )}
     </div>
     </div>
   );
