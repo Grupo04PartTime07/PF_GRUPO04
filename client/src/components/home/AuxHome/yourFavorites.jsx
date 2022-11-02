@@ -22,7 +22,7 @@ export default function YourFavorites(){
             <div>
               <h2 className="homeTitle">Algunos de tus favoritos</h2>
               <div className="homeTable"> {/*#AgregameUnaEstrella*/}
-                  { favoritesHomeFunction().map(a => a.stock === 0 ? null : <Card id={a.id} name={a.name} image={a.image} price={a.price} score={a.score}/>) }
+                  { favoritesHomeFunction().map(a => a.stock === 0 ? null : <Card key={a.id} id={a.id} name={a.name} image={a.image} price={a.price} score={a.score}/>) }
               </div>
             </div>
         </div> : null

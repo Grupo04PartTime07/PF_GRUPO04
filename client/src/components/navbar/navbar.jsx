@@ -87,9 +87,6 @@ export default function PrimarySearchAppBar() {
   let dhacart = JSON.parse(window.localStorage.getItem(`c${currentUser}`))
   let dhafav = JSON.parse(window.localStorage.getItem(`f${currentUser}`))
  
-  console.log(currentUser)
-  console.log(dhacart)
-  console.log( "LSfav",dhafav)
   React.useEffect(()=>{
     if(dhacart && dhacart.length){
       dispatch(fulfillCart([]))
