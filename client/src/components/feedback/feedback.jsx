@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from 'react-redux';
 import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import emailjs from '@emailjs/browser';
 import './feedback.css'
 import axios from 'axios';
@@ -10,6 +10,7 @@ import {useAuth0} from '@auth0/auth0-react';
 
 export default function Feedback(){
     
+    const history = useHistory()
     //payment_id, status, payment_type, merchant_order_id
     const url = window.location.search
     const urlParams = new URLSearchParams(url)
@@ -104,7 +105,7 @@ export default function Feedback(){
                 {status === 'approved' ? <div className="feedbackMessage">
                     ¡Gracias por tu compra {user.given_name}!
                     <p>Tu código de seguimiento es <b>{merchant_order_id}</b></p>
-                </div> : <div className="feedbackMessage">
+                </div> : status === 'null' ? history.push('/') : <div className="feedbackMessage">
                     ¡Algo salió mal!
                     <p>Te invitamos a probar nuevamente</p>
                 </div>}

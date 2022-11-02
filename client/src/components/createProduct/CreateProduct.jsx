@@ -1,25 +1,21 @@
 import React from 'react';
 import { useDispatch, useSelector} from "react-redux";
 import { useState, useEffect} from "react";
-import  {getCategories}  from "../../redux/actions/get_categories";
-import {getBrands} from "../../redux/actions/get_brands"
+import { getCategories }  from "../../redux/actions/get_categories";
+import { getBrands } from "../../redux/actions/get_brands"
 import { createNewProducts } from '../../redux/actions/create_new_products';
-import { Link, useHistory} from "react-router-dom";
+import { getAdminProducts } from '../../redux/actions/get_admin_products'
+import { updateProduct } from '../../redux/actions/update_product'
+import { Link } from "react-router-dom";
 import "./createProduct.css"
-import {useAuth0} from '@auth0/auth0-react';
 import axios from 'axios';
 import { Image } from "cloudinary-react";
     
 
-function CreateProduct({product}) {
-  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+function CreateProduct({product, setDisplay, cleanCurrent}) {
   const dispatch = useDispatch();
-  const history = useHistory();
   let category = useSelector((state) => state.categories)
   let brands = useSelector((state) => state.brand)
-  let currentUser = "Guest"
-  if(user && user.email) currentUser = user.email
-  let profile = JSON.parse(window.localStorage.getItem(`p${currentUser}`))
 
   const [imagen, setImagen] = useState(""); //este estado va a subir los datos a cloudinary
   const [imageData, setimageData] = useState({imageReel: [], });
@@ -55,39 +51,6 @@ function CreateProduct({product}) {
       dispatch(getCategories());
       dispatch(getBrands());
   },[])
-
-    async function callProtectedApiToken2() {
-      try {
-        const token = await getAccessTokenSilently();
-        const response = await axios.post(
-          "http://localhost:3001/users",
-          {
-            name: user.name || " ",
-            email: user.email,
-          },
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        user.isAdmin = response.data.userRegisted.isAdmin;
-        user.isBanned = response.data.userRegisted.isAdmin;
-        console.log(response.data);
-        console.log(user);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  
-    useEffect(() => {
-      if (isAuthenticated) {
-        return () => {
-          const usuario = callProtectedApiToken2();
-          console.log(usuario);
-        };
-      }
-    });
 
     function handleChange(e){
       if(e.target.name === "brand"){
@@ -147,17 +110,6 @@ function CreateProduct({product}) {
     setImagen(e.target.files[0]);
   };
 
-  // function handleImage(e){ // agrega una nueva direccion de imagen al array de imagenes
-  //   e.preventDefault();
-  //   let imagen = document.getElementById("imagen").value
-
-  //   console.log(imagen)
-  //   setImagen(
-  //       e.target.value
-  //   )
-
-  // }
-
   function handleButton(e) {
     // pisa el input con los datos que hay en imagenes
     e.preventDefault();
@@ -209,15 +161,6 @@ function CreateProduct({product}) {
       );
     }
   }
-  /*function handleBrand(e) {
-      console.log(e.target.value)
-      setInput((prev) => ({...prev, brand: e.target.value}));
-      console.log(input)
-      let selectedbrand = brands.filter(b => b.name === e.target.value)
-      setInput({...input, brandimage: selectedbrand[0].image})
-      setError(validate({ ...input, brand: e.target.value }));
-    
-  }*/
 
   function handleDelete(e) {
     let nombre = e.target.innerText;
@@ -235,21 +178,15 @@ function CreateProduct({product}) {
     });
   };
 
-  /*function handleDeleteBrand(e) {
-    setInput({
-      ...input,
-      brand: "",
-    });
-  }*/
-
   function handleSubmit(e) {
     // crea el nuevo articulo, faltaria agregarle en el dispatch la accion que lo crea
     e.preventDefault(e);
     if(product){
-      //aqui va la ruta de modificar
+      dispatch(updateProduct(product.id,input))
+      setDisplay("")
+      setTimeout(()=>{dispatch(getAdminProducts())},2000)
     }else{
       dispatch(createNewProducts(input));
-      alert("Articulo Creado");
       setInput({
         name: "",
         price: "",
@@ -286,7 +223,7 @@ function CreateProduct({product}) {
     
     <div>        
         
-        {profile || (isAuthenticated && user.isAdmin) ?  <form className="formContainerProd" onSubmit={e => handleSubmit(e)}>
+      <form className="formContainerProd" onSubmit={e => handleSubmit(e)}>
         <div className='formDataProd'>
           <div className='formFirstDivProd'>  
 
@@ -356,15 +293,6 @@ function CreateProduct({product}) {
             </select>
             { input.brandimage ? <img src={input.brandimage}></img>:null}
             
-            {/*<div className="formCategories">
-              {input.brand ? (
-                <div className="inputCategories">
-                  <p onClick={(e) => handleDeleteBrand(e)}>{input.brand}</p>
-                </div>
-              ) : (
-                ""
-              )}
-            </div>*/}
             <p className={error.brand ? "danger" : "normal"}>{error.brand}</p>
           </div>
           <div className="formSecondDivProd">        
@@ -413,11 +341,13 @@ function CreateProduct({product}) {
 
         </div>
         <div>
-          <button className="button buttonLink">
+          {product ? <button className="button buttonLink" onClick={() => cleanCurrent()}>
+              Cancelar
+          </button> : <button className="button buttonLink">
             <Link to="/" className="buttonLink">
               Volver
             </Link>
-          </button>
+          </button>}
           {button.complete === false ? product ? (
             <button disabled="disabled" className="button disable">
               Modificar
@@ -443,10 +373,8 @@ function CreateProduct({product}) {
             Limpiar
           </button>
         </div>
-      
 
-        </form> : <label >upss parece que no tienes sopermi</label> }
-
+        </form> 
     </div>
   );
 }

@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
   //     email: userEmail,
   //   }
   // });
-
+  //console.log("Direccion:",direccion)
 try{
   if(!carrito){
   const cartCreated = await Cart.create({

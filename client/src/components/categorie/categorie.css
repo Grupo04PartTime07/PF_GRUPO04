@@ -2,13 +2,34 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     width: 40%;
+    min-height: 100vh;
+}
+
+.volverCategorie{
+    display: flex;
+    justify-content: left;
+    /* align-items: center; */
+    text-decoration: none;
+    color:whitesmoke;
+    background-color: #1976d2;
+    margin-bottom: 30px;
+    margin-top: 10px;
+    border-radius: 9999px;
+    padding: 6px 15px 6px 8px;
+    width: fit-content;
+    font-weight: 600;
+}
+
+.volverCategorie:hover{
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 .categorieFilters{
     width: 200px;
     height: 93%;
     position: relative;
-    top: 3%;
+    top: 20px;
     color:rgb(82, 82, 82);
     margin-left: 15%;
     border-right: 1.4px solid rgb(154, 154, 154);
@@ -36,10 +57,7 @@
 }
 
 .categorieTitle{
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    position: relative;
-    right: 440px;
+    display: flex;
     margin-left: 30px;
     margin-bottom: 0%;
     font-weight: 350;

@@ -8,6 +8,15 @@
     top: 11px
 }
 
+.greetingsPoint{
+    position: relative;
+    top: -10px; left: 0px;
+    height: 0px;
+    font-size: 15px;
+    font-weight: 500;
+    color: rgb(225, 225, 225);
+}
+
 .greetingsUser{
     height: 10px;
     font-size: 9px;

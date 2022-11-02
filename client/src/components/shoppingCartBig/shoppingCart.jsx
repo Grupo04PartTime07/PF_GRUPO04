@@ -9,12 +9,16 @@ import { checkOutCart } from '../../redux/actions/check_out_cart';
 import styles from "./shoppingCart.module.css";
 import { getCart } from '../../redux/actions/get_cart';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
+import IconButton from '@mui/material/IconButton';
+import ModalShippingAddress from "../modalShippingAddress/modalShippingAddress.jsx"
+import { User } from '@auth0/auth0-react';
+
 
 export default function ShoppingCartBig(props) {
 
-
+    const history = useHistory()
     const dispatch = useDispatch()
     const cartItems = useSelector(state => state.cart)
 
@@ -25,6 +29,8 @@ export default function ShoppingCartBig(props) {
     }, [dispatch])
 
     const [shipping, setShipping] = useState("")
+    const [modal, setModal] = useState(false)
+    const [address, setAddress] = useState("Av del Libertador 2254, Piso 22 Depto A, CP1425 CABA")
 
     function handleDisabled() {
         return (
@@ -32,23 +38,32 @@ export default function ShoppingCartBig(props) {
             cartItems.length === 0);
     }
 
-function handlecheckout(){
-    let total = cartItems.map(e => {
-        return {id:e.id,title:e.name, unit_price:e.price, quantity:e.quantity}
-    }).concat({id: 0, title:"Costo de Envio", 
-                unit_price:Number(shipping), quantity: 1
-            })
-    let objTotal = {subtotal: cartItems.reduce(function ( acc, va){return (acc + (va.quantity*va.price))},0)+Number(shipping), cart: total}
-    dispatch(checkOutCart(objTotal))
-    dispatch(deleteCart())
-}
+    function handlecheckout() {
 
+        let total = cartItems.map(e => {
+            return { id: e.id, title: e.name, unit_price: e.price, quantity: e.quantity }
+        }).concat({
+            id: 0, title: "Costo de Envio",
+            unit_price: Number(shipping), quantity: 1
+        })
+        let objTotal = { subtotal: cartItems.reduce(function (acc, va) { return (acc + (va.quantity * va.price)) }, 0) + Number(shipping), cart: total, email: User.email, direccion: address }
+        dispatch(checkOutCart(objTotal))
+        dispatch(deleteCart())
+        closeModal()
+    }
+
+    const openModal = (e) => {
+        setModal(true)
+    }
+    const closeModal = () => {
+        setModal(false)
+    }
 
 
 
     return (
         <div>
-            <Link to='/' className={styles.volverLink}><div className={styles.volver}><ArrowLeftRoundedIcon /> Volver</div></Link>
+            <div className={styles.volver} onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon /></IconButton> Volver</div>
             <div className={styles.divShoppingCart}>
                 <h1 className={styles.title}>Carrito de compras</h1>
                 <hr></hr>
@@ -98,6 +113,19 @@ function handlecheckout(){
                             }, 0) * .1)
                             )}
                             Puntos.</span>
+                        {/* <input
+                            className={styles.puntos}
+                            type="number"
+                            // value=
+                            name="puntos"
+                            autocomplete="off"
+                            min="500"
+                            max="2000"
+                        // onChange={e => handleChange(e)}
+                        />
+                        <button className={styles.bttnUse} 
+                        onClick={() => props.addOneToCart(props.id)}
+                        >usar</button> */}
                     </div>
                     <div className={styles.divCantProductos}>
                         <p className={styles.pCantProductos}>Cantidad de productos: </p>
@@ -108,8 +136,18 @@ function handlecheckout(){
                         <span className={styles.cartPrice}>${cartItems.reduce(function (acc, va) { return (acc + (va.quantity * va.price)) }, 0) + Number(shipping)}</span>
                     </div>
                     <div className={styles.divBttnPagar} >
-                        <button className={styles.bttnPagar} disabled={handleDisabled()} onClick={() => handlecheckout()}>Finalizar compra</button>
+                        <button className={styles.bttnPagar} disabled={handleDisabled()} onClick={shipping === "0" ? () => handlecheckout() : () => openModal()}>Finalizar compra</button>
                     </div>
+                    <ModalShippingAddress
+                        modal={modal}
+                        openModal={openModal}
+                        closeModal={closeModal}
+                        handlecheckout={handlecheckout}
+                        address={address}
+                        setAddress={setAddress}
+
+                    >
+                    </ModalShippingAddress>
                 </div>
             </div>
         </div>

@@ -1,0 +1,97 @@
+.forthasearching{
+    width: 100%;
+    border: none;
+    padding: 30px 0px;
+}
+.forthasearchcontainer{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.tharealcontainer{
+    width: 100%;
+    display: flex;
+    justify-content:flex-start;
+    flex-direction: column;
+    text-align: left;
+    border: none;
+    padding: 30px 0px;
+}
+.buttoncont{
+    display: inline-flex;
+    justify-content: center;
+}
+.search{
+    max-height: max-content;
+    padding-inline: 50px;
+}
+.searchlabel{
+    margin-bottom: 15px;
+    padding-right: 8px;
+    font-weight: 600;
+    color: rgb(82, 82, 82);
+    font-size: larger;
+}
+.searchInput{
+    width: 80%;
+    padding-left: 8px;
+    height: 25px;
+    margin-right: 8px;
+    border-radius: 5px;
+    border:none;
+    border-bottom: 1px gray solid;
+}
+.searchbtn{
+    margin-inline: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    border:none;
+    background-color: #1976d2;
+    color: white;
+    font-size: 15px;
+    line-height: 1.75;
+    text-decoration: none;
+    box-sizing: border-box;
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+}
+.resultcontainer{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+.itemscontainer{
+    display: inline-grid;
+    grid-template-columns: 30px 350px 50px 30px 80px 70px;
+    margin: 15px;
+    align-items: center;
+    border-bottom: 1px solid rgb(82, 82, 82);
+}
+.stockinput{
+    margin-inline-start: 5px;
+    padding-left: 8px;
+    height: 25px;
+    margin-right: 8px;
+    border-radius: 5px;
+    border:none;
+    border-bottom: 1px gray solid;
+}
+.labelheader{
+    margin-bottom: 8px;
+    padding-inline: 8px;
+    font-weight: 500;
+    color: rgb(82, 82, 82);
+    font-size: large;
+    justify-self: baseline;
+}
+.itemlabel{
+    font-weight: 400;
+    color: rgb(82, 82, 82);
+    font-size: medium;
+    justify-self: baseline;
+    padding-inline: 10px;
+}
+.div4search{
+    display: inline-flex;
+    align-items: center;
+    width: 70%;
+}
