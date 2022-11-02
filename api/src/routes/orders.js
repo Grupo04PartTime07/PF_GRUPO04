@@ -23,8 +23,8 @@ router.get('/', async function(req, res){
         }
 
         if(email){
-            let USers = await getOrdersByUser(email)
-            res.send(USers)
+            let Users = await getOrdersByUser(email)
+            res.send(Users)
         }
         else{
             res.status(200).send(orders)
