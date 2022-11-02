@@ -43,11 +43,7 @@ const style = {
     overflowY: 'auto',
   };
 
-  const Div = styled('div')(({ theme }) => ({
-    ...theme.typography.button,
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(1),
-  }));
+  
   
 export default function ModalReclamo(props) {
 
@@ -67,7 +63,7 @@ export default function ModalReclamo(props) {
     const body=(
         <div >
             <div align="center">
-                <h2>Incia tu reclamo</h2>
+                <h2>Inicia tu reclamo</h2>
             </div>
             <label>Email: {props.userEmail}</label>
             <br/>
@@ -104,7 +100,6 @@ return (
     <Modal
     open={props.modal}
     onClose={props.closeModal}
-   
     >
     <Box sx={style}>
     <Typography sx={style} id="transition-modal-description" >
@@ -112,10 +107,6 @@ return (
      </Typography>
     </Box>
     </Modal>
-
     </div>
 )
-
-
-
 }

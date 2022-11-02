@@ -354,7 +354,7 @@ export default function PrimarySearchAppBar() {
               onKeyDown={(e) =>{if(e.key === 'Enter'){handleSubmit()}}}
             />
           </Search>
-          <Box sx={{width: '35%'}} />
+          <Box sx={{flexGrow: 0.8}} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <div></div>
           <IconButton sx={{width: '40%', height: '50%'}} size="large" aria-label="show 4 new mails" color="inherit">

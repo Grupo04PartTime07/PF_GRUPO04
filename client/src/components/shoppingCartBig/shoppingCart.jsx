@@ -12,13 +12,16 @@ import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined
 import { useHistory } from "react-router-dom";
 import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
 import IconButton from '@mui/material/IconButton';
+import ModalShippingAddress from "../modalShippingAddress/modalShippingAddress.jsx"
+import { User } from '@auth0/auth0-react';
+
 
 export default function ShoppingCartBig(props) {
 
     const history = useHistory()
     const dispatch = useDispatch()
     const cartItems = useSelector(state => state.cart)
-
+  
 
     useEffect(() => {  // Didmount and DidUpdate controlled
         window.scrollTo(0, 0)
@@ -26,7 +29,9 @@ export default function ShoppingCartBig(props) {
     }, [dispatch])
 
     const [shipping, setShipping] = useState("")
-
+    const [modal, setModal] = useState(false)
+    const [address, setAddress] = useState("Av del Libertador 2254, Piso 22 Depto A, CP1425 CABA")
+    
     function handleDisabled() {
         return (
             !shipping ||
@@ -34,16 +39,24 @@ export default function ShoppingCartBig(props) {
     }
 
 function handlecheckout(){
+    
     let total = cartItems.map(e => {
         return {id:e.id,title:e.name, unit_price:e.price, quantity:e.quantity}
     }).concat({id: 0, title:"Costo de Envio", 
                 unit_price:Number(shipping), quantity: 1
             })
-    let objTotal = {subtotal: cartItems.reduce(function ( acc, va){return (acc + (va.quantity*va.price))},0)+Number(shipping), cart: total}
+    let objTotal = {subtotal: cartItems.reduce(function ( acc, va){return (acc + (va.quantity*va.price))},0)+Number(shipping), cart: total, email:User.email, direccion:address }
     dispatch(checkOutCart(objTotal))
     dispatch(deleteCart())
+    closeModal()
 }
 
+const openModal = (e) => {
+    setModal(true)
+  }
+  const closeModal = () => {
+    setModal(false)
+  }
 
 
 
@@ -109,8 +122,18 @@ function handlecheckout(){
                         <span className={styles.cartPrice}>${cartItems.reduce(function (acc, va) { return (acc + (va.quantity * va.price)) }, 0) + Number(shipping)}</span>
                     </div>
                     <div className={styles.divBttnPagar} >
-                        <button className={styles.bttnPagar} disabled={handleDisabled()} onClick={() => handlecheckout()}>Finalizar compra</button>
+                        <button className={styles.bttnPagar} disabled={handleDisabled()} onClick={shipping === "0"? () => handlecheckout() : () => openModal()}>Finalizar compra</button>
                     </div>
+                    <ModalShippingAddress
+                    modal={modal}
+                    openModal={openModal}
+                    closeModal={closeModal}
+                    handlecheckout={handlecheckout}
+                    address={address}
+                    setAddress={setAddress}
+                    
+                    >
+                    </ModalShippingAddress>
                 </div>
             </div>
         </div>

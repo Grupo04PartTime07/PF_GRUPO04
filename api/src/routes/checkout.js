@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
 
   const { idCart, cart, subtotal } = req.body
   const carrito = await Cart.findByPk(idCart);
-
+  //console.log("Direccion:",direccion)
 try{
   if(!carrito){
   const cartCreated = await Cart.create({

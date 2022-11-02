@@ -84,9 +84,9 @@ function Row(props) {
         </TableCell> 
        
         <TableCell> 
-        {props.status !== "Entregada" && props.status !== "Cancelada" ? 
+        {props.status !== "Completada" && props.status !== "Cancelada" && props.status !== "Rechazada" && props.status !== "Pendiente" ? 
         <Tooltip title="Confirmar entrega" placement="top-start">
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit" name="Entregada"
+        <IconButton size="large" aria-label="show 4 new mails" color="inherit" name="Completada"
             onClick={(e)=> dispatch(updateOrderStatus(props.id,e.target.name)) }>
             <CheckBoxOutlinedIcon/>
         </IconButton>
@@ -100,9 +100,9 @@ function Row(props) {
          }
         </TableCell>
         <TableCell> 
-        {props.status === "Preparando"? 
+        {props.status === "Pendiente" || props.status === "Aprobado" ? 
         <Tooltip title="Cancelar compra" placement="top-start">
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit" name="Cancelado"
+        <IconButton size="large" aria-label="show 4 new mails" color="inherit" name="Cancelada"
             onClick={(e)=> dispatch(updateOrderStatus(props.id,e.target.name))}>
             <DisabledByDefaultOutlinedIcon/>
         </IconButton>
@@ -228,7 +228,6 @@ return (
             <TableCell align="right">Total</TableCell>
             <TableCell align="right">Orden#&nbsp;</TableCell>
             <TableCell align="right">Status&nbsp;</TableCell>
-            
             <TableCell>
             <label  htmlFor="mayor-menor-a-z">Ordenar/Filtrar: </label>
             <select name="mayor-menor-a-z"id="mayor-menor-a-z" 
@@ -239,9 +238,11 @@ return (
                 <option value="Primeras compras">Primeras compras</option>
                 <option value="Mayor precio">Mayor precio</option>
                 <option value="Menor precio">Menor precio</option>
-                <option value="Preparando">Preparando</option>
-                <option value="Despachada">Despachada</option>
-                <option value="Entregada">Entregada</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Rechazado">Rechazado</option>
+                <option value="Aprobado">Aprobado</option>
+                <option value="En camino">En camino</option>
+                <option value="Completada">Completada</option>
                 <option value="Cancelada">Cancelada</option>
             </select>
             </TableCell>
