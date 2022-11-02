@@ -3,7 +3,7 @@ import './loading.css'
 
 export default function Loading(){
     //cambiar el steTime out y condicionarlo a la existencia del estado
-    const [loading, setLoading] = useState(<div><img className="loadingImg" src='https://www.superiorlawncareusa.com/wp-content/uploads/2020/05/loading-gif-png-5.gif' alt='loading'/></div>)
+    const [loading, setLoading] = useState(<div><img className='henryLoading' src='https://assets.soyhenry.com/henry-landing/assets/Henry/logo.png' alt='HenryLogo'/><br/><img className="loadingImg" src='https://www.superiorlawncareusa.com/wp-content/uploads/2020/05/loading-gif-png-5.gif' alt='loading'/></div>)
     
     setTimeout(() => {
         setLoading(
@@ -12,7 +12,7 @@ export default function Loading(){
                 <h3 className="errorText">No encontramos el producto que buscas</h3>
             </div>
         )
-    }, 4000);
+    }, 5000);
     
     return(
         <div className="LoadingPage">

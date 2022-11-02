@@ -83,7 +83,7 @@ export default function Home(props){
 
     return(
         products[0] && products[0].price ? <div>
-            <Toolbar id="back-to-top-anchor" />
+            {path === '/' ? <Toolbar id="back-to-top-anchor" /> : null}
             {path === '/' ? <div><Banner/></div> : <div className="volver" onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon /></IconButton> Volver</div>}
             <div>
               {path === '/' ? <YourFavorites/> : null}
@@ -92,11 +92,11 @@ export default function Home(props){
               <div className="homeTable"> {/*#AgregameUnaEstrella*/}
                   { products.map(a => a.stock === 0 ? null : <Card id={a.id} name={a.name} image={a.image} price={a.price} score={a.score}/>) }
               </div>
-              <ScrollTop sx={{ zIndex: 10}} {...props}>
+              {path === '/' ? <ScrollTop sx={{ zIndex: 10}} {...props}>
                   <Fab  size="small" aria-label="scroll back to top">
                       <KeyboardArrowUpIcon/>
                   </Fab>
-              </ScrollTop>
+              </ScrollTop> : null}
             </div>
         </div> : <Loading/>
     )

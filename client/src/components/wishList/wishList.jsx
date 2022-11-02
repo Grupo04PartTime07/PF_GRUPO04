@@ -19,6 +19,7 @@ const favorites = useSelector(state => state.favorites)
 
 
 useEffect(() => {  // Didmount and DidUpdate controlled
+    window.scrollTo(0, 0)
     dispatch(getFavorites());
 },[dispatch])
 
