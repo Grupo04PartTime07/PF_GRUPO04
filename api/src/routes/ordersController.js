@@ -3,7 +3,7 @@ const {Orden, UserRegisted, Cart, StateOrden, Products} = require('../db')
 const getOrders = async() => {
     try{
         let orders = await Orden.findAll({
-            where: { isDeleted: false },
+            where: { isDeleted: false  },
             attributes: [ 'id', 'total', 'createdAt', 'estado' ]
         })
         return orders
