@@ -23,8 +23,8 @@ router.get('/:email', async (req, res) => {
     try{
         
         const user = await getUserDetail(email);
-        user ? res.status(200).send(detail) : res.status(400).send('El usuario no fue encontrado')
-        console.log(email);
+        user ? res.status(200).send(user) : res.status(400).send('El usuario no fue encontrado')
+        console.log(email+" "+user);
     }catch(e){
         console.log(e)
     }
