@@ -19,7 +19,7 @@ function CreateAccount() {
     const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
     //if(user && user.email) currentUser = user.email
     //let profile = JSON.parse(window.localStorage.getItem(`p${currentUser}`))
-    console.log(user,"soy el user")
+    // console.log(user,"soy el user")
     // async function callProtectedApiToken2(){
     //     try{
     //       const token = await getAccessTokenSilently();
@@ -140,7 +140,7 @@ const regexEmail =/\S+@\S+\.\S+/
     return (
         <div>
             
-            <form className="formContainer" onSubmit={e => handleSubmit(e)}>
+            <form className="formContainer formContainerAccount" onSubmit={e => handleSubmit(e)}>
                 <div className='formData'>
                     <div className='formFirstDiv'>
                         <label>Nombre:</label>
@@ -219,7 +219,7 @@ const regexEmail =/\S+@\S+\.\S+/
                 </div>
                 <div >
                 <button className="button buttonLink"><Link to="/" className="buttonLink">Volver</Link></button>
-                    {button.complete === false ? <button disabled="disabled" className="button disable">Crear</button> : <button type="submit" className="button">Crear</button>}
+                    {button.complete === false ? <button disabled="disabled" className="button disable">Guardar</button> : <button type="submit" className="button">Crear</button>}
                     <button type="boton" onClick={e => handleReset(e)} className="button">Limpiar</button>
                 </div>
             </form>
