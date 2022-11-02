@@ -9,6 +9,7 @@ const mwcheckout = require('./checkout')
 const mwreview = require('./reviews') 
 const mwusers = require('./users') 
 const mwfeedback = require('./feedback')
+const mworders = require('./orders');
 //const mwserver = require('./server') 
 
 const router = Router();
@@ -22,6 +23,7 @@ router.use('/checkout', mwcheckout);
 router.use('/reviews', mwreview)
 router.use('/users', mwusers);
 router.use('/feedback', mwfeedback);
+router.use('/orders', mworders)
 //router.use('/server', mwserver);
 
 
