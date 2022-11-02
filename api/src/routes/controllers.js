@@ -64,6 +64,15 @@ const getBrandsDb = async () => {
     }
 };
 
+const getPromotionDb = async () => {
+    try {
+        let promotion = await Promotion.findAll();
+        return promotion;
+    } catch (e) {
+        console.log(e)
+    }
+};
+
 const createProduct = async (name, price, description, image, stock, score, categories, brand) => {
     try {
         var newProduct = await Products.create({
@@ -124,6 +133,19 @@ const createBrand = async (name, image) => {
         });
 
         return newBrand
+    } catch (e) {
+        console.log(e)
+    }
+};
+
+const createPromotion = async (option, value) => {
+    try {
+        var newPromotion = await Promotion.create({
+            option: option,
+            value: value,
+        });
+
+        return newPromotion
     } catch (e) {
         console.log(e)
     }
@@ -245,10 +267,12 @@ const updateScoreProm = async (id) => {
 }
 
 module.exports = {
+    getPromotionDb,
     getProductsDb,
     getCategoriesDb,
     getBrandsDb,
     createProduct,
+    createPromotion,
     createCategory,
     createBrand,
     getProductDetail,

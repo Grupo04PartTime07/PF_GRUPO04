@@ -20,7 +20,7 @@ export default function ShoppingCartBig(props) {
 
     const dispatch = useDispatch()
     const cartItems = useSelector(state => state.cart)
-  
+
 
     useEffect(() => {  // Didmount and DidUpdate controlled
         window.scrollTo(0, 0)
@@ -30,32 +30,33 @@ export default function ShoppingCartBig(props) {
     const [shipping, setShipping] = useState("")
     const [modal, setModal] = useState(false)
     const [address, setAddress] = useState("Av del Libertador 2254, Piso 22 Depto A, CP1425 CABA")
-    
+
     function handleDisabled() {
         return (
             !shipping ||
             cartItems.length === 0);
     }
 
-function handlecheckout(){
-    
-    let total = cartItems.map(e => {
-        return {id:e.id,title:e.name, unit_price:e.price, quantity:e.quantity}
-    }).concat({id: 0, title:"Costo de Envio", 
-                unit_price:Number(shipping), quantity: 1
-            })
-    let objTotal = {subtotal: cartItems.reduce(function ( acc, va){return (acc + (va.quantity*va.price))},0)+Number(shipping), cart: total, email:User.email, direccion:address }
-    dispatch(checkOutCart(objTotal))
-    dispatch(deleteCart())
-    closeModal()
-}
+    function handlecheckout() {
 
-const openModal = (e) => {
-    setModal(true)
-  }
-  const closeModal = () => {
-    setModal(false)
-  }
+        let total = cartItems.map(e => {
+            return { id: e.id, title: e.name, unit_price: e.price, quantity: e.quantity }
+        }).concat({
+            id: 0, title: "Costo de Envio",
+            unit_price: Number(shipping), quantity: 1
+        })
+        let objTotal = { subtotal: cartItems.reduce(function (acc, va) { return (acc + (va.quantity * va.price)) }, 0) + Number(shipping), cart: total, email: User.email, direccion: address }
+        dispatch(checkOutCart(objTotal))
+        dispatch(deleteCart())
+        closeModal()
+    }
+
+    const openModal = (e) => {
+        setModal(true)
+    }
+    const closeModal = () => {
+        setModal(false)
+    }
 
 
 
@@ -111,6 +112,19 @@ const openModal = (e) => {
                             }, 0) * .1)
                             )}
                             Puntos.</span>
+                        {/* <input
+                            className={styles.puntos}
+                            type="number"
+                            // value=
+                            name="puntos"
+                            autocomplete="off"
+                            min="500"
+                            max="2000"
+                        // onChange={e => handleChange(e)}
+                        />
+                        <button className={styles.bttnUse} 
+                        onClick={() => props.addOneToCart(props.id)}
+                        >usar</button> */}
                     </div>
                     <div className={styles.divCantProductos}>
                         <p className={styles.pCantProductos}>Cantidad de productos: </p>
@@ -121,16 +135,16 @@ const openModal = (e) => {
                         <span className={styles.cartPrice}>${cartItems.reduce(function (acc, va) { return (acc + (va.quantity * va.price)) }, 0) + Number(shipping)}</span>
                     </div>
                     <div className={styles.divBttnPagar} >
-                        <button className={styles.bttnPagar} disabled={handleDisabled()} onClick={shipping === "0"? () => handlecheckout() : () => openModal()}>Finalizar compra</button>
+                        <button className={styles.bttnPagar} disabled={handleDisabled()} onClick={shipping === "0" ? () => handlecheckout() : () => openModal()}>Finalizar compra</button>
                     </div>
                     <ModalShippingAddress
-                    modal={modal}
-                    openModal={openModal}
-                    closeModal={closeModal}
-                    handlecheckout={handlecheckout}
-                    address={address}
-                    setAddress={setAddress}
-                    
+                        modal={modal}
+                        openModal={openModal}
+                        closeModal={closeModal}
+                        handlecheckout={handlecheckout}
+                        address={address}
+                        setAddress={setAddress}
+
                     >
                     </ModalShippingAddress>
                 </div>
