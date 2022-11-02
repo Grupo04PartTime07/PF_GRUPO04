@@ -45,6 +45,9 @@ Products.belongsTo(Brand);
 Promotion.hasMany(Products);
 Products.belongsTo(Promotion);
 
+Promotion.belongsTo(UserRegisted);
+UserRegisted.hasMany(Promotion);
+
 Products.hasMany(Score);
 Score.belongsTo(Products);
 
