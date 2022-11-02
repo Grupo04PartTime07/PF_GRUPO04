@@ -86,6 +86,7 @@ export default function PrimarySearchAppBar() {
   // let navbarEmail = user && JSON.parse(window.localStorage.getItem(`userEmail`))
   let dhacart = JSON.parse(window.localStorage.getItem(`c${currentUser}`))
   let dhafav = JSON.parse(window.localStorage.getItem(`f${currentUser}`))
+ 
   console.log(currentUser)
   console.log(dhacart)
   console.log( "LSfav",dhafav)
@@ -194,7 +195,7 @@ export default function PrimarySearchAppBar() {
       { Ver diseño, corresponde a cambios auth0} */}
       
       {/* Aca se hace el login */}
-      {!isAuthenticated?<label className='link'><MenuItem id="1" onClick={loginWithPopup }>Iniciar sesión</MenuItem></label>:<label className='link'><MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem></label>}
+      {!isAuthenticated?<label className='link'><MenuItem id="1" onClick={loginWithRedirect }>Iniciar sesión</MenuItem></label>:<label className='link'><MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem></label>}
       
     </Menu>
   );
@@ -298,10 +299,13 @@ export default function PrimarySearchAppBar() {
           },
         }
       );
-      user.isAdmin = response.data.userRegisted.isAdmin;
-      user.isBanned = response.data.userRegisted.isAdmin;
+      // user.isAdmin = response.data.userRegisted.isAdmin;
+      // user.isBanned = response.data.userRegisted.isAdmin;
       window.localStorage.setItem(`userName`, user.name)
       window.localStorage.setItem(`userEmail`, user.email)
+      window.localStorage.setItem(`isAdmin`, response.data.userRegisted.isAdmin)
+      window.localStorage.setItem(`isBanned`, response.data.userRegisted.isBanned)
+      
       //console.log(response.userRegisted);
       //console.log(response.message);
       //console.log(response.data);
@@ -314,11 +318,15 @@ export default function PrimarySearchAppBar() {
   useEffect(() => {
     if (isAuthenticated) {
       return () => {
-
         const usuario = callProtectedApiToken2();
         //console.log(usuario);
-
+        //localStorage.isAdmin=usuario.isAdmin;
       };
+    } else {
+      window.localStorage.removeItem(`isAdmin`);
+      window.localStorage.removeItem(`isBanned`);
+      window.localStorage.removeItem(`userEmail`);
+      window.localStorage.removeItem(`userName`);
     }
   });
   
