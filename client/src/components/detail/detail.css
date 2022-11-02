@@ -178,3 +178,53 @@ img:hover{
     text-align: left;
     
 }
+
+
+
+@media screen and (max-width: 600px){
+    .detailContainer{
+        padding: 0px;
+    }
+    
+    .detailContainerArticles{
+        display: flex;
+       flex-direction: column-reverse;
+    }
+
+    .detailTitle{
+        text-align: center;
+        padding: 0px 10px;
+        
+    }
+    .detailButton{
+        justify-content: center;
+        padding-left: 0%;
+        width: 100%;
+    }
+    .detailContainerOpinion{
+        align-items: center;
+             
+    }
+    .opinionCard{
+        display: block;
+    }
+    .opinionDescription{
+        text-align: center;
+    }
+    .opinionStars{
+        text-align: center;
+    }
+    .opinionTitle{
+        padding-left: 0px;
+    }
+    .divBttnsOpinions{
+        margin-left: 0px;
+    }
+    .relatedTitle{
+        margin-right: 0px;
+        
+    }
+    .relatedProductsFlex{
+        justify-content: center;
+    }
+}
