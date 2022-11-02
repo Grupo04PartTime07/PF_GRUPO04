@@ -210,8 +210,44 @@ const updateProduct = async (id, props) => {
             }
         })
 
-        let productModified = await Products.findByPk(id)
-        return productModified
+        const product = await Products.findByPk(props.id, {
+            include: [
+                {
+                    model: Categories,
+                    attributes: ["name"],
+                    through: {
+                        attributes: [],
+                    },
+
+                },
+
+                {
+                    model: Brand,
+                    attributes: ["name"],
+                }
+
+            ],
+
+        })
+
+        const brands = await Brand.findOne({
+            where: {
+                name: props.brand,
+            }
+        });
+
+        product.setBrand(brands)
+        product.setCategories([])
+        for (c of props.categories) {
+            category = await Categories.findOne({
+                where: {
+                    name: c
+                }
+            })
+            product.addCategories(category.id);
+        }
+
+        return product
     } catch (e) {
         console.log(e)
     }

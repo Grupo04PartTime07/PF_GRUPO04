@@ -31,7 +31,7 @@ import { GET_REVIEWS } from "./actions/get_reviews";
 import { CLEAN_OTHER_PRODUCTS } from "./actions/clean_other_products";
 import { CREATE_SCORE } from "./actions/create_score";
 import { CREATE_SCORE_USER } from "./actions/create_score_user";
-import { SEARCH_FOR_INVENTORY } from '../redux/actions/search_4_inventory'
+import { GET_ADMIN_PRODUCTS } from './actions/get_admin_products'
 import { CLEAN_INV_PRODUCTS } from "./actions/clean_inv_products";
 import { CLEAN_REVIEWS } from "./actions/clean_reviews";
 import { GET_ORDERS } from "./actions/get_orders";
@@ -479,7 +479,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 products: action.payload
             }
-        case SEARCH_FOR_INVENTORY:
+        case GET_ADMIN_PRODUCTS:
             return {
                 ...state,
                 productsinv: action.payload
