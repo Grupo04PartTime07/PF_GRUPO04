@@ -16,6 +16,8 @@ import Toolbar from '@mui/material/Toolbar';
 import { cleanOtherProducts } from '../../redux/actions/clean_other_products'
 import BestRatedProducts from "./AuxHome/bestRatedPRoducts";
 import YourFavorites from "./AuxHome/yourFavorites";
+import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
+import IconButton from '@mui/material/IconButton';
 
 function ScrollTop(props) {
     const { children, window } = props;
@@ -82,10 +84,10 @@ export default function Home(props){
     return(
         products[0] && products[0].price ? <div>
             <Toolbar id="back-to-top-anchor" />
-            {path === '/' ? <div><Banner/></div> : null}
+            {path === '/' ? <div><Banner/></div> : <div className="volver" onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon /></IconButton> Volver</div>}
             <div>
-              <YourFavorites></YourFavorites>
-              <BestRatedProducts></BestRatedProducts>
+              {path === '/' ? <YourFavorites/> : null}
+              {path === '/' ? <BestRatedProducts/> : null}
               {path === '/' ? <h2 className="homeTitle">Todos los productos</h2> : <h2 className="homeTitle">Resultados de la Busqueda</h2>}
               <div className="homeTable"> {/*#AgregameUnaEstrella*/}
                   { products.map(a => a.stock === 0 ? null : <Card id={a.id} name={a.name} image={a.image} price={a.price} score={a.score}/>) }

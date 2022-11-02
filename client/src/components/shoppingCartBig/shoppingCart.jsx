@@ -9,12 +9,13 @@ import { checkOutCart } from '../../redux/actions/check_out_cart';
 import styles from "./shoppingCart.module.css";
 import { getCart } from '../../redux/actions/get_cart';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
+import IconButton from '@mui/material/IconButton';
 
 export default function ShoppingCartBig(props) {
 
-
+    const history = useHistory()
     const dispatch = useDispatch()
     const cartItems = useSelector(state => state.cart)
 
@@ -48,7 +49,7 @@ function handlecheckout(){
 
     return (
         <div>
-            <Link to='/' className={styles.volverLink}><div className={styles.volver}><ArrowLeftRoundedIcon /> Volver</div></Link>
+            <div className={styles.volver} onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon /></IconButton> Volver</div>
             <div className={styles.divShoppingCart}>
                 <h1 className={styles.title}>Carrito de compras</h1>
                 <hr></hr>

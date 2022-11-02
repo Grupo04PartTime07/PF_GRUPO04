@@ -88,24 +88,27 @@ export default function PrimarySearchAppBar() {
   let dhafav = JSON.parse(window.localStorage.getItem(`f${currentUser}`))
   console.log(currentUser)
   console.log(dhacart)
-  console.log(dhafav)
-    React.useEffect(()=>{
-        if(dhacart && dhacart.length){
-          dispatch(fulfillCart([]))
-          dispatch(fulfillCart(dhacart))
-        } 
-        if(dhafav && dhafav.length) {
-          dispatch(fulfillWishList([]))
-          dispatch(fulfillWishList(dhafav))
-        }
-    }, [dispatch])
+  console.log( "LSfav",dhafav)
+  React.useEffect(()=>{
+    if(dhacart && dhacart.length){
+      dispatch(fulfillCart([]))
+      dispatch(fulfillCart(dhacart))
+      } 
+    }, [dispatch, user])
 
-    React.useEffect(() => {
-        updateStorage(`c${currentUser}`, cart)
+  React.useEffect(()=>{ 
+    //if(dhafav && dhafav.length){
+      dispatch(fulfillWishList([]))
+      dispatch(fulfillWishList(dhafav))
+     // } 
+    }, [dispatch, user])
+
+  React.useEffect(() => {
+      updateStorage(`c${currentUser}`, cart)
     }, [cart])
   
-    React.useEffect(() => {
-      updateWishList(`f${currentUser}`, favorites)
+  React.useEffect(() => {
+    updateWishList(`f${currentUser}`, favorites)
   }, [favorites])
 
   function updateStorage(user, cart){
@@ -113,7 +116,7 @@ export default function PrimarySearchAppBar() {
       window.localStorage.setItem(user, updatedCart)
   }
   function updateWishList(user, fav){
-    let updatedWishList = JSON.stringify(favorites);
+    let updatedWishList = JSON.stringify(fav);
     window.localStorage.setItem(user, updatedWishList)
 }
 
