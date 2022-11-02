@@ -97,10 +97,10 @@ export default function PrimarySearchAppBar() {
     }, [dispatch, user])
 
   React.useEffect(()=>{ 
-    //if(dhafav && dhafav.length){
+    if(dhafav && dhafav.length){
       dispatch(fulfillWishList([]))
       dispatch(fulfillWishList(dhafav))
-     // } 
+    } 
     }, [dispatch, user])
 
   React.useEffect(() => {
