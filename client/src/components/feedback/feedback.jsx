@@ -96,14 +96,14 @@ export default function Feedback(){
                 console.log(usuario);
             }
         }
-    }, [dispatch]);
+    }, [dispatch, user]);
     
     return(
         <div className="feedbackContainer">
             <div className="feedbackContent">
                 <img src='https://assets.soyhenry.com/henry-landing/assets/Henry/logo.png' alt='Henry Logo'></img>
                 {status === 'approved' ? <div className="feedbackMessage">
-                    ¡Gracias por tu compra {user.given_name}!
+                    ¡Gracias por tu compra {user && user.given_name}!
                     <p>Tu código de seguimiento es <b>{merchant_order_id}</b></p>
                 </div> : status === 'null' ? history.push('/') : <div className="feedbackMessage">
                     ¡Algo salió mal!
