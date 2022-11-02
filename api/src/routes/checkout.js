@@ -1,6 +1,6 @@
 const {Router, application} = require('express')
 const router = Router()
-const { Cart, User, Products, } = require('../db');
+const { Cart, UserRegisted, Products, Orden, StateOrden, StateCarrito } = require('../db');
 
 
 //SDK de MercadPago
@@ -13,8 +13,13 @@ mercadopago.configure({
 
 router.post('/', async (req, res) => {
 
-  const { idCart, cart, subtotal } = req.body
+  const { idCart, cart, subtotal, userEmail, dataShipping } = req.body
   const carrito = await Cart.findByPk(idCart);
+  // const user = await UserRegisted.findOne({
+  //   where: {
+  //     email: userEmail,
+  //   }
+  // });
 
 try{
   if(!carrito){
@@ -32,8 +37,32 @@ try{
       })
     });
 
-  }else{
+    await cartCreated.setStateCarrito(4);
 
+    // await user.addCart(cartCreated.id);
+
+    const order = await Orden.findOne({
+      where: {
+        cartId: cartCreated.id,
+      }
+    });
+
+    if(!order){
+      const newOrder = await Orden.create({
+        total: subtotal, 
+        // datosEnvio: dataShipping,
+      });
+
+      console.log('esto es cartCreated ID', cartCreated.id)
+
+      // await newOrder.setCart(cartCreated.id);
+
+      await newOrder.setStateOrden(4);
+
+      console.log('esto es newOrder', newOrder);
+    }
+
+  }else{
     await Cart.update({
       subtotal
     }, {
@@ -54,7 +83,36 @@ try{
       })
     });
 
+    await carrito.setStateCarrito(4);
+    
+    // await user.addCart(carrito.id)
+
+    const order = await Orden.findOne({
+      where: {
+        cartId: idCart,
+      }
+    });
+
+    if(!order){
+      const newOrder = await Orden.create({
+        total: subtotal, 
+        datosEnvio: dataShipping,
+      });
+
+      console.log('esto es carrito ID', carrito.id)
+
+      // await newOrder.setCart(carrito.id)
+  
+      await newOrder.setStateOrden(4);
+
+      console.log('esto es newOrder', newOrder)
+
+      
+  
+    }
+
   };
+
 }catch(e){
   console.log(e)
 }
