@@ -97,14 +97,17 @@ const getUserDetail = async (email) => {
     }
 };
 
-const updateUserRegisted = async (email, name, isAdmin, isBanned) => {
-
+const updateUserRegisted = async (email, name, surname, address, city, dni ) => {
+    console.log(name);
     try {
         await UserRegisted.update(
             {
              name: name,
-             isAdmin: isAdmin,
-             isBanned: isBanned,
+             surname: surname,
+             address: address,	
+             city: city,
+             dni:dni
+
             //  image: [...props.image]
             }, {
                 where: {
@@ -112,7 +115,35 @@ const updateUserRegisted = async (email, name, isAdmin, isBanned) => {
                 }
             })
 
-        let userModified = await UserRegisted.findByPk(email)
+        let userModified = await UserRegisted.findOne({ where: { email: email } })
+        return userModified
+    } catch(e) {
+        console.log(e)
+    }
+};
+
+
+const updateUserRegistedAdmin = async (email, name, isAdmin, isBanned, surname, address, city, dni ) => {
+
+    try {
+        await UserRegisted.update(
+            {
+             name: name,
+             isAdmin: isAdmin,
+             isBanned: isBanned,
+             surname: surname,	
+             address:address,
+             city:city,
+             dni:dni
+
+            //  image: [...props.image]
+            }, {
+                where: {
+                    email: email
+                }
+            })
+
+        let userModified = await UserRegisted.findOne({ where: { email: email } })
         return userModified
     } catch(e) {
         console.log(e)
@@ -123,7 +154,7 @@ module.exports = {
     getUsersRegisted,
   
     createUserRegisted,
-   
+    updateUserRegistedAdmin,
     getUserDetail,
     updateUserRegisted
 }
