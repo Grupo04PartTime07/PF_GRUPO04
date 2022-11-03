@@ -47,18 +47,18 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.put('/admin/:email', async (req, res) => {
+router.put('/admin/', async (req, res) => {
     try{
-        const { name, email,  surname, address, city, dni, isAdmin, isDeleted } = req.params;
+        const { name, email,  surname, address, city, dni, isAdmin, isBanned } = req.body;
         //let props = req.body;
-        let result = await updateUserRegistedAdmin( name, email,  surname, address, city, dni, isAdmin, isDeleted);
+        let result = await updateUserRegistedAdmin( name, email,  surname, address, city, dni, isAdmin, isBanned);
         result ? res.status(200).send('El usuario fue modificado con éxito!') : res.status(400).send('El usuario no pudo ser modificado');
     }catch(e){
         console.log(e)
     }
 });
 
-router.put('/:email', async (req, res) => {
+router.put('/', async (req, res) => {
     try{
         const { email, name, surname, address, city, dni  } = req.body;
         
