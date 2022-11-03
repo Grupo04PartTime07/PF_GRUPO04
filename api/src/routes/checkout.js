@@ -22,9 +22,6 @@ router.post('/', async (req, res) => {
   //   }
   // });
 
-
-  //console.log("Direccion:",direccion)
-
 try{
   if(!carrito){
   const cartCreated = await Cart.create({
@@ -100,7 +97,7 @@ try{
     if(!order){
       const newOrder = await Orden.create({
         total: subtotal, 
-        datosEnvio: dataShipping,
+        // datosEnvio: dataShipping,
       });
 
       console.log('esto es carrito ID', carrito.id)
@@ -110,8 +107,6 @@ try{
       await newOrder.setStateOrden(4);
 
       console.log('esto es newOrder', newOrder)
-
-      
   
     }
 
@@ -148,49 +143,5 @@ router.get('/success', (req, res) => {
   res.send('TODO OK');
 });
 
-// router.post('/notificar', async (req, res) => {
-//   try {
-//     const { body, query } = req;
-//     const topic = query.topic || query.type;
-//     var merchantOrder;
 
-//     switch (topic) {
-//       case "payment":
-//         const paymentId = query.id || query['data.id'];
-//         const payment = await mercadopago.payment.findById(paymentId);
-//         merchantOrder = await mercadopago.merchant_orders.findById(payment.body.order.id)
-//         break;
-//       case "merchant_order":
-//         const orderId = query.id;
-//         merchantOrder = await mercadopago.merchant_orders.findById(orderId);
-//         break;
-//     }
-//     const { id, status } = merchantOrder.body.payments[0] ? merchantOrder.body.payments[0] : 'HOLA';
-//     const arrayDatos = [];
-
-//     if (id && status) {
-//       arrayDatos.push(id);
-//       arrayDatos.push(status)
-//     };
-//     console.log('Esto es DATOS', arrayDatos)
-//     res.status(200).send();
-//   } catch (e) {
-//     console.log(e)
-//   }
-// });
-
-// router.get('/feedback', function (req, res) {
-
-//   const { payment_id, status, merchant_order_id } = req.query; 
-
-//   try{
-//       res.status(200).json({
-//         Payment: payment_id,
-//         Status: status,
-//         MerchantOrder: merchant_order_id
-//       });
-//   }catch(e){
-//     console.log(e)
-//   }
-// });
 module.exports = router;

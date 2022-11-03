@@ -43,6 +43,8 @@ import { SORTED_ORDERS} from "./actions/sorted_orders";
 import { UPDATE_SCORE_PROM } from './actions/update_score_prom'
 import { GET_USER_DETAILS } from './actions/get_user_details'
 import { GET_ALL_USERS } from './actions/get_all_users'
+import { GET_USER_MODIFICAR } from './actions/get_user_modificar'
+import { UPDATE_USER_ADMIN } from './actions/update_user_admin'
 
 import swal from 'sweetalert';
 
@@ -65,7 +67,8 @@ const initialState = {
     scoreUser: "",
     users:[],
     userDetail:{},
-
+    userModificar:{},
+    userUpdate:{},
 };
 
 
@@ -88,6 +91,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 userDetail: action.payload
+            }
+
+        case GET_USER_MODIFICAR:
+            return {
+                ...state,
+                userModificar: action.payload
             }
         case CLEAN_PRODUCT_STATE:
             return {
@@ -186,6 +195,13 @@ const reducer = (state = initialState, action) => {
                 title: action.payload,
                 icon: "success",
             });
+            return {
+                ...state,
+                message: action.payload
+                    }
+
+        case UPDATE_USER_ADMIN:
+            swal(action.payload)
             return {
                 ...state,
                 message: action.payload

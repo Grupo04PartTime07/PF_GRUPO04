@@ -10,14 +10,20 @@ import axios from 'axios';
 import {useEffect} from 'react';
 import AdminOrders from "../adminOrders/adminOrders";
 import { useState } from "react";
+import Loading from "../loading/loading";
+
+import { getUserDetails } from "../../redux/actions/get_user_details";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Profile(){
-    
+    const dispatch = useDispatch();
     const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
     let currentUser = "Guest"
     if(user && user.email) currentUser = user.email
     let profile = JSON.parse(window.localStorage.getItem(`p${currentUser}`))
     
+    const userdetail = useSelector((state) => state.userDetail)
+    user.isAdmin = userdetail.isAdmin;
 
     //let isAdmin=window.localStorage.getItem('isAdmin');
 
@@ -40,6 +46,8 @@ export default function Profile(){
       
     useEffect(() => {
         window.scrollTo(0, 0)
+        dispatch(getUserDetails(user.email));
+
         if (!isAuthenticated){
             return () => {
                 user.isAdmin = false;
@@ -49,15 +57,15 @@ export default function Profile(){
             //window.localStorage.removeItem(`isAdmin`);
 
         }
-    })
+    },[dispatch])
     
     const [ checked, setChecked ] = React.useState('datos')
 
     function handleCheck(e){
         setChecked(e.target.value);
     };
-
-    return(
+    console.log("userdetail" + userdetail.email);
+    return typeof user.isAdmin === "boolean" ?(
         
         <div className="profile">
             {/* {console.log("esta autenticado? "+isAuthenticated)}*/}
@@ -96,5 +104,7 @@ export default function Profile(){
                 {checked === 'datos' ? <CreateAccount/> : checked === 'compras' ? <OrderList/> : checked === 'adminProducts' ? <AdminProducts/> : checked === 'adminOrders' ? <AdminOrders/> : checked === 'adminUsers' ? <AdminUsers/> : <CreateAccount/>}
             </div>
         </div>
-    )
+    ):    (
+        <Loading />
+      );
 }

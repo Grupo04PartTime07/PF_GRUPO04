@@ -39,11 +39,13 @@ router.get('/', async function(req, res){
 
 router.put('/', async function(req, res){
     try {
+
         const {id, estado} = req.body     
         let orderModified = await modifyStatusOrder(id, estado)
         res.status(200).json(orderModified.estado === "Completada"? "Muchas gracias por confirmar la recepcion de su compra" : orderModified.estado === "Cancelada"? "Su compra ha sido Cancelada" : "La orden ha sido actualizada" )
+
     } catch (error) {
-        console.log(error)
+        res.send({error: error.messagge})
     }
 })
 
