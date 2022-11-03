@@ -1,7 +1,7 @@
 const {Router} = require('express')
 const router = Router()
 
-const { getProductsDb, createProduct, getProductDetail, updateProduct} = require('./controllers')
+const { getProductsDb, createProduct, getProductDetail, updateProduct, deleteProduct} = require('./controllers')
 
 
 
@@ -61,5 +61,16 @@ router.put('/:id', async (req, res) => {
         console.log(e)
     }
 });
+
+router.delete('/', async function(req, res){
+    const {id} = req.query
+    try {
+        let response = await deleteProduct(id)
+        res.status(200).send(response)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
 
 module.exports = router

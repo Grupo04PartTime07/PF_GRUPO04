@@ -3,8 +3,12 @@ const {Orden, UserRegisted, Cart, StateOrden, Products} = require('../db')
 const getOrders = async() => {
     try{
         let orders = await Orden.findAll({
-            where: { isDeleted: false  },
-            attributes: [ 'id', 'total', 'createdAt', 'estado' ]
+            where: { isDeleted: false },
+        }, {
+            include: {
+                model: StateOrden,
+                attributes: ['id']
+            }
         })
         return orders
     }
@@ -77,26 +81,26 @@ const getOrderbyId = async(id) => {
     }
 }
 
-const modifyStatusOrder = async (id, props) => {
+const modifyStatusOrder = async (id, status) => {
+    console.log(status)
     try{
 
-        let statusOrdermodified = await StateOrden.findOne({ 
-            where:{
-                state: props
-            }
-        })
-
-        let statusOrdermodifiedId = statusOrdermodified.id
-
-         await Orden.update({
-            estado: props,
-            stateOrdenId: statusOrdermodifiedId
-        }, 
-        {
+        let order = await Orden.findOne({
             where: {
-                id: id
+                id: id,
             }
         })
+
+        let newStateOrder = await StateOrden.findOne({ 
+            where:{
+                state: status
+            }
+        })
+
+        let newStateOrderId = newStateOrder.id
+
+        await order.setStateOrden(newStateOrderId)
+       
         let orderModified = await Orden.findByPk(id, {
             include: {
                 model: StateOrden
@@ -129,13 +133,38 @@ const createNewOrder = async (datosEnvio, total, estado, /* shippingId */ cartId
     } catch (error) {
         console.log(error)
     }
-    
+
 }
+
+const deleteOrder = async (id) => {
+    try{
+        let order = await Orden.findByPk(id)
+        if(order.isDeleted === true){
+            return 'This order doesn\'t exist'
+        }
+        else{
+            await Orden.update({
+                isDeleted: true
+            },
+            {
+                where:{
+                    id: id
+            }
+        })
+    return 'Order deleted succesfully!'
+        }
+    }
+    catch(error){
+        console.log(error)
+    }
+}
+
 
 module.exports = {
     getOrders,
     getOrderbyId,
     modifyStatusOrder,
     createNewOrder,
-    getOrdersByUser
+    getOrdersByUser,
+    deleteOrder
 }

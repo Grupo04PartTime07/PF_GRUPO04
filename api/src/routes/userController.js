@@ -5,6 +5,11 @@ const {UserRegisted, Cart} = require('../db');
 const getUsersRegisted = async () => {
     try{
         let users = await UserRegisted.findAll({
+            where: {
+                isDeleted: false,
+                isBanned: false
+            }
+
         //     include: [
         //         {
         //         model: Cart,
@@ -12,18 +17,15 @@ const getUsersRegisted = async () => {
         //         through:{
         //             attributes: [],
         //         },
-               
         //     },
-
-            
         // ],
-
         })
         // let response = users.map(p =>{
         //     let carts = p.carts.map(e => e.id)
-        //     return {id: p.id, name: p.name, price: p.price, description: p.description, image: p.image, categories, stock: p.stock, score: p.score_promedio, brand: p.brand.name }
+        //     return {id: p.id, name: p.name, price: p.price, description: p.description, image: p.image, 
+        // categories, stock: p.stock, score: p.score_promedio, brand: p.brand.name }
         // })
-        return response;
+        return users;
         
     }catch(e){
         console.log(e)
@@ -42,12 +44,6 @@ const createUserRegisted = async (name, email) => {
                 // score_promedio: score,
         });
 
-        
-
-        
-        
-        
-
         return newUser
     } catch (error) {
         console.log(error)
@@ -65,7 +61,6 @@ const getUserDetail = async (email) => {
         //         through:{
         //             attributes: [],
         //         },
-               
         //     },
 
         //     {
@@ -82,17 +77,21 @@ const getUserDetail = async (email) => {
         //         model: Score,
         //         attributes: ["score", "coment", "id"],
         //     }
-        
         // ],
 
         })
-       
-           
-            let response = {name: user.name, email: user.email, isAdmin: user.isAdmin, isBanned:user.isBanned }
-    
-        return response;
-        
-    }catch(e){
+
+        if(user.isDeleted === true ){
+            return /* 'User doesn\'t exist' */
+        }
+
+        else{
+            let response = {name: user.name, email: user.email, isAdmin: user.isAdmin, isBanned:user.isBanned } 
+            return response;
+        }
+
+    }
+    catch(e){
         console.log(e)
     }
 };
@@ -100,30 +99,60 @@ const getUserDetail = async (email) => {
 const updateUserRegisted = async (email, name, isAdmin, isBanned) => {
 
     try {
-        await UserRegisted.update(
-            {
-             name: name,
-             isAdmin: isAdmin,
-             isBanned: isBanned,
-            //  image: [...props.image]
-            }, {
-                where: {
-                    email: email
-                }
-            })
+        let user = UserRegisted.findOne({where: {email: email}})
+        if(user.isDeleted === true){
+            return 'The user doesn\'t exist' 
+        }
 
-        let userModified = await UserRegisted.findByPk(email)
-        return userModified
+        else{
+            await UserRegisted.update(
+                {
+                 name: name,
+                 isAdmin: isAdmin,
+                 isBanned: isBanned,
+                }, {
+                    where: {
+                        email: email
+                    }
+                })
+    
+            let userModified = await UserRegisted.findByPk(email)
+            return userModified
+        }
+
     } catch(e) {
         console.log(e)
     }
 };
 
+const deteleUserRegisted = async (email) => {
+    try {
+
+        let user = await UserRegisted.findOne({where: {email: email}})
+        if(user.isDeleted === true ){
+            return 'User doesn\'t exist'
+        }
+        else {
+             await UserRegisted.update({
+            isDeleted: true
+            }, {
+                where: {
+                    email: email
+                }
+            })
+            return 'User deleted succesfully'
+        }
+       
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
 module.exports = {
     getUsersRegisted,
-  
     createUserRegisted,
-   
     getUserDetail,
-    updateUserRegisted
+    updateUserRegisted,
+    deteleUserRegisted
 }

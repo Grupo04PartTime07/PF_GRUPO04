@@ -2,10 +2,7 @@ const { Router } = require('express');
 const UserRegisted = require('../models/UserRegisted');
 const router = Router();
 
-const { getUsersRegisted, createUserRegisted, getUserDetail, updateUserRegisted} = require('./userController')
-
-
-
+const { getUsersRegisted, createUserRegisted, getUserDetail, updateUserRegisted, deteleUserRegisted} = require('./userController')
 
 router.get('/', async function(req, res){
     try{
@@ -21,9 +18,8 @@ router.get('/', async function(req, res){
 router.get('/:email', async (req, res) => {
     const { email } = req.params;
     try{
-        
         const user = await getUserDetail(email);
-        user ? res.status(200).send(detail) : res.status(400).send('El usuario no fue encontrado')
+        user ? res.status(200).send(user) : res.status(400).send('El usuario no fue encontrado')
         console.log(email);
     }catch(e){
         console.log(e)
@@ -49,11 +45,22 @@ router.put('/:email', async (req, res) => {
     try{
         const { email } = req.params;
         //let props = req.body;
-        let result = await updateUserRegisted(name, email, isAdmin, isDeleted);
+        let result = await updateUserRegisted(email, isAdmin, isDeleted);
         result ? res.status(200).send('El usuario fue modificado con éxito!') : res.status(400).send('El usuario no pudo ser modificado');
     }catch(e){
         console.log(e)
     }
 });
+
+router.delete('/:email', async function(req, res){
+    try{
+        const {email} = req.params
+        let result = await deteleUserRegisted(email)
+        res.status(200).send(result)
+    }
+    catch(error){
+        console.log(error)
+    }
+})
 
 module.exports = router
