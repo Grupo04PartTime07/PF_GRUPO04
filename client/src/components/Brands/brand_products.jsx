@@ -1,6 +1,5 @@
 import React,{useEffect, useState} from "react";
 import Card from '../card/card'
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { filterByBrand } from "../../redux/actions/filter_by_brand";
 import { cleanProducts } from "../../redux/actions/clean_products";
@@ -25,7 +24,7 @@ export default function Brand(props){
         return(() => {
             dispatch(cleanProducts({}))
         })
-    },[dispatch]) 
+    },[dispatch, props.history.location.state]) 
 
     function handlePrice(e){
         dispatch(orderByPrice(e.target.value))
