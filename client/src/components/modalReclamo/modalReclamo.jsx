@@ -1,33 +1,11 @@
 import React, { useState } from "react";
-import {Modal, TextField, Button} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import {Modal, Button} from "@material-ui/core";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
+import styles from "./modalReclamo.module.css";
 
 
-/*const useStyles = makeStyles((theme)=> ({
-modal: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 700,
-    height: '400px',
-    bgcolor: 'whitesmoke',
-    border: 'none',
-    borderRadius: '5px',
-    boxShadow: 0,
-    p: 4,
-    overflowY: 'auto',
-  },
-  textfield:{
-      width: "100%"
-  }
 
-
-}))
-*/
 const style = {
     position: 'absolute',
     top: '50%',
@@ -47,19 +25,19 @@ const style = {
   
 export default function ModalReclamo(props) {
 
-    //const styles = useStyles();
-    
-    
-   
     const [motivos, setMotivos] = useState("")
     const [coments, setComents] = useState("")
-    
-    
-
     
     const handleOnChange = (e) => {
         setMotivos(e.target.value)
         }
+
+    function handleDisabled() {
+        return (
+                !motivos ||
+                !coments)
+                };
+
     const body=(
         <div >
             <div align="center">
@@ -74,9 +52,10 @@ export default function ModalReclamo(props) {
               onChange={(e)=>handleOnChange(e)}
              >
             <option disabled value="" >Elije una opcion</option>  
-            <option >Problema con algunos productos</option>
+            <option >Problema con algun producto</option>
             <option>Problema con la entrega</option>
             <option>Problema de facturacion</option>
+            <option>Problema con la suma de puntos</option>
             <option>Otros motivos</option>
             </select>
 
@@ -85,7 +64,7 @@ export default function ModalReclamo(props) {
             <p className="commentLength">{coments.length}/300</p>
             
             <div align="right">
-            <Button onClick={{}}>Enviar</Button>
+            <Button className={styles.bttn} disabled = {handleDisabled()} onClick={{}}>Enviar</Button>
             <Button onClick={()=>props.closeModal() }>Cancelar</Button>
             </div>
 
