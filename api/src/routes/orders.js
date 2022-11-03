@@ -47,22 +47,5 @@ router.put('/', async function(req, res){
     }
 })
 
-router.post('/', async function(req, res){
-    const {datosEnvio, total, estado, /* shippingId */ cartId } = req.body
-    try {
-
-        const newOrder = await createNewOrder(
-            datosEnvio,
-            total,
-            estado,
-            /* shippingId */
-            cartId
-        )
-    res.send(newOrder)
-
-    } catch (error) {
-        console.log(error)
-    }
-})
 
 module.exports = router
