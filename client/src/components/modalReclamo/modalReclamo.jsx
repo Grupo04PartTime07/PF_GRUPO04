@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
+import emailjs from '@emailjs/browser';
 
 
 /*const useStyles = makeStyles((theme)=> ({
@@ -60,6 +61,36 @@ export default function ModalReclamo(props) {
     const handleOnChange = (e) => {
         setMotivos(e.target.value)
         }
+
+    const handleSubmit = (e) =>{
+        let templateParams = {
+            reclamo: props.id,
+            message: coments,
+            motivos: motivos
+          };
+        
+        let templateParamsClient = {
+            reclamo: props.id,
+            email: props.userEmail,
+            
+          };
+
+          emailjs.send('service_m2i6vur', 'reclamo', templateParams, 'SQ418bEG_ax1lvJbG')
+          .then(function(response) {
+             console.log('SUCCESS!', response.status, response.text);
+          }, function(error) {
+             console.log('FAILED...', error);
+          });
+          
+          emailjs.send('service_m2i6vur', 'reclamoCliente', templateParamsClient, 'SQ418bEG_ax1lvJbG')
+          .then(function(response) {
+             console.log('SUCCESS!', response.status, response.text);
+          }, function(error) {
+             console.log('FAILED...', error);
+          });
+        
+    }
+
     const body=(
         <div >
             <div align="center">
@@ -85,8 +116,8 @@ export default function ModalReclamo(props) {
             <p className="commentLength">{coments.length}/300</p>
             
             <div align="right">
-            <Button onClick={{}}>Enviar</Button>
-            <Button onClick={()=>props.closeModal() }>Cancelar</Button>
+            <Button onClick={(e) => handleSubmit(e)}>Enviar</Button>
+            <Button onClick={() =>props.closeModal() }>Cancelar</Button>
             </div>
 
         </div>
