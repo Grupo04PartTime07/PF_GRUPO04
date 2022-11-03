@@ -2,7 +2,7 @@ const { Router } = require('express');
 const UserRegisted = require('../models/UserRegisted');
 const router = Router();
 
-const { getUsersRegisted, createUserRegisted, getUserDetail, updateUserRegisted} = require('./userController')
+const { getUsersRegisted, createUserRegisted, getUserDetail, updateUserRegisted, updateUserRegistedAdmin} = require('./userController')
 
 
 
@@ -31,9 +31,11 @@ router.get('/:email', async (req, res) => {
 });
 
 
+
+
 router.post('/', async (req, res) => {
     try{
-        const {email, name} = req.body
+        const {name, email} = req.body
 
         const user = await getUserDetail(email);
         if (!user){
@@ -45,12 +47,24 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.put('/admin/:email', async (req, res) => {
+    try{
+        const { name, email,  surname, address, city, dni, isAdmin, isDeleted } = req.params;
+        //let props = req.body;
+        let result = await updateUserRegistedAdmin( name, email,  surname, address, city, dni, isAdmin, isDeleted);
+        result ? res.status(200).send('El usuario fue modificado con éxito!') : res.status(400).send('El usuario no pudo ser modificado');
+    }catch(e){
+        console.log(e)
+    }
+});
+
 router.put('/:email', async (req, res) => {
     try{
-        const { email } = req.params;
+        const { email, name, surname, address, city, dni  } = req.body;
+        
         //let props = req.body;
-        let result = await updateUserRegisted(name, email, isAdmin, isDeleted);
-        result ? res.status(200).send('El usuario fue modificado con éxito!') : res.status(400).send('El usuario no pudo ser modificado');
+        let result = await updateUserRegisted(email, name, surname, address, city, dni);
+        result ? res.status(200).send({message:'El usuario fue modificado con éxito!', result}) : res.status(400).send('El usuario no pudo ser modificado');
     }catch(e){
         console.log(e)
     }
