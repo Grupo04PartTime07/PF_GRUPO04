@@ -92,7 +92,5 @@
     padding-inline: 10px;
 }
 .div4search{
-    display: inline-flex;
-    align-items: center;
-    width: 70%;
+    margin-bottom: 20px;
 }
