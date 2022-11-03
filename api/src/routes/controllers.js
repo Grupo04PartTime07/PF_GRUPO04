@@ -1,5 +1,8 @@
 const axios = require('axios');
+var Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 const { Products, Categories, Brand, Promotion, Score } = require('../db');
+const { getOrderbyId } = require('./ordersController');
 
 
 const getProductsDb = async () => {
@@ -9,28 +12,33 @@ const getProductsDb = async () => {
                 {
                     model: Categories,
                     attributes: ["name"],
-                    through: {
-                        attributes: [],
-                    },
-
+                    where: {
+                        isDeleted: false,
+                    }
                 },
 
                 {
                     model: Brand,
                     attributes: ["name"],
+                    where: {
+                        isDeleted: false
+                    }
                 },
 
                 {
                     model: Promotion,
                     attributes: ["option"],
-
+/*                     where: {
+                        isDeleted: false
+                    } */
                 },
-
             ],
-
+            where: {isDeleted: false}
         })
+        
         let response = products.map(p => {
             let categories = p.categories.map(e => e.name)
+
             return { id: p.id, name: p.name, price: p.price, description: p.description, image: p.image, categories, stock: p.stock, score: p.score_promedio, brand: p.brand.name }
         })
         return response;
@@ -44,7 +52,8 @@ const getCategoriesDb = async () => {
     try {
 
         let categories = await Categories.findAll({
-            attributes: ['name', 'image', 'id']
+            attributes: ['name', 'image', 'id', "isDeleted"],
+            where: {isDeleted: false}
         });
 
         //let namesCategories = categories.map(e =>  e.name);
@@ -57,12 +66,17 @@ const getCategoriesDb = async () => {
 
 const getBrandsDb = async () => {
     try {
-        let brands = await Brand.findAll();
+        let brands = await Brand.findAll({
+            where: {
+                isDeleted: false
+            }
+        });
         return brands;
     } catch (e) {
         console.log(e)
     }
 };
+
 
 const createProduct = async (name, price, description, image, stock, score, categories, brand) => {
     try {
@@ -89,7 +103,8 @@ const createProduct = async (name, price, description, image, stock, score, cate
         for (c of categories) {
             category = await Categories.findOne({
                 where: {
-                    name: c
+                    name: c,
+                    isDeleted: false
                 }
             })
             newProduct.addCategories(category.id);
@@ -116,14 +131,16 @@ const createCategory = async (name, image) => {
     }
 };
 
+
+
 const createBrand = async (name, image) => {
     try {
         var newBrand = await Brand.create({
             name: name,
             image: image,
         });
-
         return newBrand
+
     } catch (e) {
         console.log(e)
     }
@@ -131,7 +148,7 @@ const createBrand = async (name, image) => {
 
 const getProductDetail = async (id) => {
     try {
-        let product = await Products.findByPk(id, {
+    let product = await Products.findByPk(id, {
             include: [
                 {
                     model: Categories,
@@ -139,7 +156,6 @@ const getProductDetail = async (id) => {
                     through: {
                         attributes: [],
                     },
-
                 },
 
                 {
@@ -150,22 +166,26 @@ const getProductDetail = async (id) => {
                 {
                     model: Promotion,
                     attributes: ["option"],
-
                 },
                 {
                     model: Score,
                     attributes: ["score", "coment", "id"],
                 }
-
             ],
-
         })
 
-        let categories = product.categories.map(e => e.name)
+        if(product.isDeleted === true ){
+            return 'This product doesn\'t exist '
+        }
+
+        else{
+            let categories = product.categories.map(e => e.name)
         let opiniones = product.scores.slice(0, 3)
         let response = { id: product.id, name: product.name, price: product.price, description: product.description, image: product.image, categories, stock: product.stock, score: product.score_promedio, brand: product.brand.name, opiniones: opiniones }
 
         return response;
+        }
+        
 
     } catch (e) {
         console.log(e)
@@ -208,18 +228,58 @@ const createScore = async (id, score, coment) => {
 
 const getScores = async (id) => {
     try {
+
         let product = await Products.findByPk(id, {
             include: [
                 {
                     model: Score,
-                    attributes: ["score", "coment", "id"],
+                    attributes: ["score", "coment", "id", "isDeleted"],
+                    where: {
+                        isDeleted: false
+                    }
                 }
-
-            ]
+            ],
         });
-        let response = { id: product.id, name: product.name, price: product.price, image: product.image, stock: product.stock, score: product.score_promedio, opiniones: product.scores }
 
-        return response;
+
+        if(product.isDeleted === true){
+            return 'This product doesn\'t exist'
+        }
+        
+       /*  let response = { 
+            id: product.id, 
+            name: product.name, 
+            price: product.price,
+            image: product.image, 
+            stock: product.stock, 
+            score: product.score_promedio, 
+            opiniones: [] 
+        }
+
+        product.scores.map(e => {
+            if(e.isDeleted === false){
+                let op = {
+                    score: e.score,
+                    comment: e.coment,
+                    id: e.id
+                }
+                response.opiniones.push(op)
+            }
+        })
+
+         */
+
+        /* else if (product.scores[0].isDeleted === true){
+            let response = { id: product.id, 
+                name: product.name, 
+                price: product.price,
+                image: product.image, 
+                stock: product.stock, 
+                score: product.score_promedio, 
+                opiniones: product.scores } */
+
+            return product;
+        
     } catch (error) {
         console.log(error)
     }
@@ -244,6 +304,94 @@ const updateScoreProm = async (id) => {
     }
 }
 
+
+
+const deleteBrand = async(id) => {
+    try {
+        let brand = await Brand.findByPk(id)
+        if(brand.isDeleted === true){
+            return 'This brand doesn\'t exists'
+        }
+
+        else{
+            await Brand.update({
+                isDeleted: true
+                }, {
+                    where: {
+                        id: id
+                    }
+                })
+
+             return 'Brand deleted succesfully'
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const deleteCategory = async(id) => {
+    try{
+        let category = await Categories.findByPk(id)
+        if(category.isDeleted === true){
+            return 'This category doesn\'t exists'
+        }   
+
+        else{
+            await Categories.update({
+                isDeleted: true
+            }, {
+                where: {
+                    id: id
+                }
+            })
+            return 'Category deleted succesfully'
+        }
+    }
+    catch(error){
+        console.log(error)
+    }
+}
+
+const deleteProduct = async(id) => {
+    try{
+        let prod = await Products.findByPk(id)
+        if(prod.isDeleted === true){
+            return 'This product doesn\'t exists'
+        }
+
+        else{
+            await Products.update({
+                isDeleted: true
+            }, { 
+                where: {
+                    id: id
+                }
+            })
+            return 'Product deleted succeesfully'
+        }
+    }
+    catch(error){
+        console.log(error)
+    }
+}
+
+const deleteScore = async (id) => {
+    try{
+        await Score.update({
+            isDeleted: true
+        }, {
+            where: {
+                id: id
+            }
+        })
+        return 'Score deleted succesfully'
+    }
+    catch(error){
+        console.log(error)
+    }
+}
+
+
 module.exports = {
     getProductsDb,
     getCategoriesDb,
@@ -256,4 +404,8 @@ module.exports = {
     createScore,
     getScores,
     updateScoreProm,
+    deleteBrand,
+    deleteCategory, 
+    deleteProduct,
+    deleteScore
 }
