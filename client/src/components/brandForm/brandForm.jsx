@@ -82,7 +82,7 @@ export default function BrandForm({brand, setDisplay}) {
   }
 
   return (
-    <div>
+    <div className={styles.centerdiv}>
       <form
         type="POST"
         className={styles.formContainerBrand}

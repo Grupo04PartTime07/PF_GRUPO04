@@ -1,8 +1,5 @@
 const axios = require('axios');
-var Sequelize = require('sequelize');
-const Op = Sequelize.Op;
 const { Products, Categories, Brand, Promotion, Score } = require('../db');
-const { getOrderbyId } = require('./ordersController');
 
 
 const getProductsDb = async () => {
@@ -12,33 +9,28 @@ const getProductsDb = async () => {
                 {
                     model: Categories,
                     attributes: ["name"],
-                    where: {
-                        isDeleted: false,
-                    }
+                    through: {
+                        attributes: [],
+                    }, where: { isDeleted: false }
+
                 },
 
                 {
                     model: Brand,
-                    attributes: ["name"],
-                    where: {
-                        isDeleted: false
-                    }
+                    attributes: ["name"],  where: { isDeleted: false }
                 },
 
                 {
                     model: Promotion,
-                    attributes: ["option"],
-/*                     where: {
-                        isDeleted: false
-                    } */
+                    attributes: ["option"],  where: { isDeleted: false }
+
                 },
+
             ],
-            where: {isDeleted: false}
+
         })
-        
         let response = products.map(p => {
             let categories = p.categories.map(e => e.name)
-
             return { id: p.id, name: p.name, price: p.price, description: p.description, image: p.image, categories, stock: p.stock, score: p.score_promedio, brand: p.brand.name }
         })
         return response;
@@ -52,8 +44,7 @@ const getCategoriesDb = async () => {
     try {
 
         let categories = await Categories.findAll({
-            attributes: ['name', 'image', 'id', "isDeleted"],
-            where: {isDeleted: false}
+            attributes: ['name', 'image', 'id']
         });
 
         //let namesCategories = categories.map(e =>  e.name);
@@ -66,12 +57,17 @@ const getCategoriesDb = async () => {
 
 const getBrandsDb = async () => {
     try {
-        let brands = await Brand.findAll({
-            where: {
-                isDeleted: false
-            }
-        });
+        let brands = await Brand.findAll( where: { isDeleted: false });
         return brands;
+    } catch (e) {
+        console.log(e)
+    }
+};
+
+const getPromotionDb = async () => {
+    try {
+        let promotion = await Promotion.findAll();
+        return promotion;
     } catch (e) {
         console.log(e)
     }
@@ -146,6 +142,19 @@ const createBrand = async (name, image) => {
     }
 };
 
+const createPromotion = async (option, value) => {
+    try {
+        var newPromotion = await Promotion.create({
+            option: option,
+            value: value,
+        });
+
+        return newPromotion
+    } catch (e) {
+        console.log(e)
+    }
+};
+
 const getProductDetail = async (id) => {
     try {
     let product = await Products.findByPk(id, {
@@ -208,8 +217,44 @@ const updateProduct = async (id, props) => {
             }
         })
 
-        let productModified = await Products.findByPk(id)
-        return productModified
+        const product = await Products.findByPk(props.id, {
+            include: [
+                {
+                    model: Categories,
+                    attributes: ["name"],
+                    through: {
+                        attributes: [],
+                    },
+
+                },
+
+                {
+                    model: Brand,
+                    attributes: ["name"],
+                }
+
+            ],
+
+        })
+
+        const brands = await Brand.findOne({
+            where: {
+                name: props.brand,
+            }
+        });
+
+        product.setBrand(brands)
+        product.setCategories([])
+        for (c of props.categories) {
+            category = await Categories.findOne({
+                where: {
+                    name: c
+                }
+            })
+            product.addCategories(category.id);
+        }
+
+        return product
     } catch (e) {
         console.log(e)
     }
@@ -393,10 +438,12 @@ const deleteScore = async (id) => {
 
 
 module.exports = {
+    getPromotionDb,
     getProductsDb,
     getCategoriesDb,
     getBrandsDb,
     createProduct,
+    createPromotion,
     createCategory,
     createBrand,
     getProductDetail,

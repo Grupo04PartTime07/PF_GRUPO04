@@ -3,6 +3,25 @@
     padding: 15px 35px;
 }
 
+.volverDetail{
+    display: flex;
+    justify-content: left;
+    /* align-items: center; */
+    text-decoration: none;
+    color:whitesmoke;
+    background-color: #1976d2;
+    margin-bottom: 35px;
+    border-radius: 9999px;
+    padding: 6px 15px 6px 8px;
+    width: fit-content;
+    font-weight: 600;
+}
+
+.volverDetail:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 .detailLeft{
     text-align: left;
 }
@@ -147,10 +166,8 @@ img:hover{
     align-items: center;
 }
 .relatedTitle{
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    margin-top: 50px;
-    margin-right: 650px;
+    display: flex;
+    margin-left: 30px;
     margin-bottom: 0%;
     font-weight: 350;
     color: rgb(82, 82, 82);
@@ -177,4 +194,54 @@ img:hover{
 .opinionStars{
     text-align: left;
     
+}
+
+
+
+@media screen and (max-width: 600px){
+    .detailContainer{
+        padding: 0px;
+    }
+    
+    .detailContainerArticles{
+        display: flex;
+       flex-direction: column-reverse;
+    }
+
+    .detailTitle{
+        text-align: center;
+        padding: 0px 10px;
+        
+    }
+    .detailButton{
+        justify-content: center;
+        padding-left: 0%;
+        width: 100%;
+    }
+    .detailContainerOpinion{
+        align-items: center;
+             
+    }
+    .opinionCard{
+        display: block;
+    }
+    .opinionDescription{
+        text-align: center;
+    }
+    .opinionStars{
+        text-align: center;
+    }
+    .opinionTitle{
+        padding-left: 0px;
+    }
+    .divBttnsOpinions{
+        margin-left: 0px;
+    }
+    .relatedTitle{
+        margin-right: 0px;
+        
+    }
+    .relatedProductsFlex{
+        justify-content: center;
+    }
 }

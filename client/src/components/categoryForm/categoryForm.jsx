@@ -87,7 +87,7 @@ export default function CategoryForm({category, setDisplay}) {
   }
 
   return (
-    <div>
+    <div className={styles.centerdiv}>
     <div className={styles.formContainerCat}>
         <form type="POST" className={styles.formDataCat} onSubmit={onSubmit}>
           <div className={styles.formFirstDivCat}>

@@ -21,7 +21,7 @@ import {useEffect} from 'react';
 
 export default function TemporaryDrawer() {
   
-  const { loginWithPopup, loginWithRedirect, logout, user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [state, setState] = React.useState({
     left: false,
   });
@@ -90,10 +90,6 @@ export default function TemporaryDrawer() {
       user.isAdmin = response.data.userRegisted.isAdmin;
       user.isBanned = response.data.userRegisted.isAdmin;
       
-      console.log(response.userRegisted);
-      console.log(response.message);
-      console.log(response.data);
-      console.log(user)
     }catch(error) {
       console.log(error);
     }
@@ -105,7 +101,6 @@ export default function TemporaryDrawer() {
   
           return () => {
               const usuario = callProtectedApiToken2();
-              console.log(usuario);
           }
         }})
   

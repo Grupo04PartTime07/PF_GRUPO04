@@ -1,5 +1,7 @@
-
-
+.centerdiv{
+    display:flex;
+    justify-content: center;
+}
 .formContainerCat{
     width: 80%;
     border: none;
@@ -14,7 +16,6 @@
 }
 
 .formFirstDivCat{
-    width: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -52,7 +53,7 @@
 }
 
 .formImageCat input{
-    width: 450px;
+    width: 100%;
 }
 
 .button{

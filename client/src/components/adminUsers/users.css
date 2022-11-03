@@ -21,10 +21,9 @@
     display: inline-flex;
     justify-content: center;
 }
-.search4product{
+.search{
     max-height: max-content;
     padding-inline: 50px;
-    margin-bottom: 20px;
 }
 .searchlabel{
     margin-bottom: 15px;
@@ -92,5 +91,7 @@
     padding-inline: 10px;
 }
 .div4search{
-    margin-bottom: 20px;
+    display: inline-flex;
+    align-items: center;
+    width: 70%;
 }
