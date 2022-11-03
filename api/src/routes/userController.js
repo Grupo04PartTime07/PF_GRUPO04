@@ -123,7 +123,7 @@ const updateUserRegisted = async (email, name, surname, address, city, dni ) => 
 };
 
 
-const updateUserRegistedAdmin = async (email, name, isAdmin, isBanned, surname, address, city, dni ) => {
+const updateUserRegistedAdmin = async ( name, email,surname, address, city, dni, isAdmin, isBanned) => {
 
     try {
         await UserRegisted.update(

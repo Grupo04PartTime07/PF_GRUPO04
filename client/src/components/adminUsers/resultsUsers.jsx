@@ -72,6 +72,14 @@ const headCells = [
     align: "center",
   },
   {
+    id: 'surname',
+    numeric: false,
+    disablePadding: true,
+    label: 'Apellido',
+    headerAlign: "center",
+    align: "center",
+  },
+  {
     id: 'email',
     numeric: false,
     disablePadding: true,
@@ -94,6 +102,30 @@ const headCells = [
     boolean: true,
     label: 'isBanned',
   },
+  // {
+  //   id: 'dni',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   headerAlign: "center",
+  //   align: "center",
+  //   label: 'Dni',
+  // },
+  // {
+  //   id: 'city',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   headerAlign: "center",
+  //   align: "center",
+  //   label: 'Ciudad',
+  // },
+  // {
+  //   id: 'address',
+  //   numeric: false,
+  //   disablePadding: false,
+  //   headerAlign: "center",
+  //   align: "center",
+  //   label: 'Direccion',
+  // },
   {
     id: 'button',
     numeric: false,
@@ -112,7 +144,8 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
+        {/* Tablecell para checkbox cabecera */}
+        {/* <TableCell padding="checkbox">
           <Checkbox
             color="primary"
             indeterminate={numSelected > 0 && numSelected < rowCount}
@@ -122,7 +155,7 @@ function EnhancedTableHead(props) {
               'aria-label': 'select all desserts',
             }}
           />
-        </TableCell>
+        </TableCell> */}
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -163,7 +196,9 @@ function EnhancedTableToolbar(props) {
 
   return (
     <Toolbar
+      
       sx={{
+        
         pl: { sm: 2 },
         pr: { xs: 1, sm: 1 },
         ...(numSelected > 0 && {
@@ -188,7 +223,7 @@ function EnhancedTableToolbar(props) {
           id="tableTitle"
           component="div"
         >
-          Productos
+          Usuarios:
         </Typography>
       )}
 
@@ -273,11 +308,13 @@ export default function EnhancedTable({displayUserForm, rows}) {
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
           <Table
+          
             sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
           >
             <EnhancedTableHead
+            
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
@@ -304,7 +341,10 @@ export default function EnhancedTable({displayUserForm, rows}) {
                       key={row.id}
                       selected={isItemSelected}
                     >
-                      <TableCell padding="checkbox">
+                      
+                      {/* Aca esta el tablecell del checkbox para eliminar */}
+                      
+                      {/* <TableCell padding="checkbox">
                         <Checkbox
                           onClick={(event) => handleClick(event, row.id)}
                           color="primary"
@@ -313,7 +353,10 @@ export default function EnhancedTable({displayUserForm, rows}) {
                             'aria-labelledby': labelId,
                           }}
                         />
-                      </TableCell>
+                      </TableCell> */}
+
+
+
                       {/* <TableCell
                         component="th"
                         id={labelId}
@@ -323,11 +366,16 @@ export default function EnhancedTable({displayUserForm, rows}) {
                        <Avatar alt={row.name} src={row.image[0]} ></Avatar> 
                       </TableCell> */}
                       <TableCell align="center">{row.name}</TableCell>
+                      <TableCell align="center">{row.surname}</TableCell>
                       <TableCell align="center">{row.email}</TableCell>
                       <TableCell align="center">{row.isAdmin.toString()}</TableCell>
                       <TableCell align="center">{row.isBanned.toString()}</TableCell>
+                      {/* <TableCell align="center">{row.dni}</TableCell>
+                      <TableCell align="center">{row.city}</TableCell>
+                      <TableCell align="center">{row.address}</TableCell>                      */}
+                      
                       <TableCell align="center">
-                        <IconButton id={row.email} onClick={(e)=>displayUserForm(e)} ><EditTwoToneIcon id={row.email}  ></EditTwoToneIcon></IconButton>
+                        <IconButton id={row.email} onClick={(e)=>displayUserForm(e, rows)} ><EditTwoToneIcon id={row.email}  ></EditTwoToneIcon></IconButton>
                       </TableCell>
                     </TableRow>
                   );
@@ -355,5 +403,6 @@ export default function EnhancedTable({displayUserForm, rows}) {
         />
       </Paper>
     </Box>
+    
   );
 }
