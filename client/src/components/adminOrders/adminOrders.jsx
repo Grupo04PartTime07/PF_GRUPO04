@@ -22,6 +22,8 @@ import { styled, alpha } from '@mui/material/styles';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAdminOrders } from '../../redux/actions/get_adminOrders';
+import { updateOrderStatus } from '../../redux/actions/update_order_status'
+import { getOrderDetail } from '../../redux/actions/get_order_detail'
 
 function createData(orderNum, client, status, total) {
   return {
@@ -60,16 +62,26 @@ const rows = [
 
 function Row(props) {
   const { row } = props;
+  //const { orders } = props
   const [open, setOpen] = React.useState(false);
 
-    function changeSelect(e){
-        const newSelectedStatus = document.getElementById(row.orderNum).options[document.getElementById(row.orderNum).selectedIndex].text
-        if(row.status !== newSelectedStatus){
-            row.status = newSelectedStatus
-            console.log(newSelectedStatus)
-            console.log(row.client + ' se cambio a ' + newSelectedStatus)
-        }
+  // function openCollapse(){
+  //   setOpen(!open)
+  //   dispatch(getOrderDetail(orders.numOrder))
+  // }
+
+  // const orderDetail = useSelector(state => state.orderDetail)
+
+  function changeSelect(e){
+    const newSelectedStatus = document.getElementById(row.orderNum).options[document.getElementById(row.orderNum).selectedIndex].text
+    
+    if(row.status !== newSelectedStatus){
+      //dispatch(updateOrderStatus(orders.numOrder, newSelectedStatus))
+        row.status = newSelectedStatus
+        console.log(newSelectedStatus)
+        console.log(row.client + ' se cambio a ' + newSelectedStatus)
     }
+  }
 
   return (
     <React.Fragment>
@@ -79,6 +91,7 @@ function Row(props) {
             aria-label="expand row"
             size="small"
             onClick={() => setOpen(!open)}
+            /*onClick={() => openCollapse()}*/
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
@@ -200,12 +213,12 @@ const Search = styled('div')(({ theme }) => ({
   }));
 
 export default function AdminOrders() {
-    const dispatch = useDispatch()
-    const orders = useSelector( state => state.orders)
+    // const dispatch = useDispatch()
+    // const orders = useSelector( state => state.orders)
     
-    useEffect(() => {
-      dispatch(getAdminOrders())
-    })
+    // useEffect(() => {
+    //   dispatch(getAdminOrders())
+    // })
 
     const [filter, setFilter] = React.useState(0)
     const [name, setName] = React.useState('')
@@ -244,7 +257,7 @@ export default function AdminOrders() {
                 document.getElementById('filterStatus').selectedIndex = 0
                 const searched = rows.filter(row => row.client.includes(name))
             return searched
-            default: return rows
+            default: return rows /*orders*/
         }
     }
 
@@ -294,7 +307,7 @@ export default function AdminOrders() {
     
         <TableBody>
           {filterStatus().map((row) => (
-            <Row  key={row.orderNum} row={row} />
+            <Row  key={row.orderNum} row={row}/>
           ))}
         </TableBody>
 
