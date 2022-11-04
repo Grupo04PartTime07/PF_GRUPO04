@@ -140,7 +140,7 @@ const deleteOrder = async (id) => {
     try{
         let order = await Orden.findByPk(id)
         if(order.isDeleted === true){
-            return 'This order doesn\'t exist'
+            return 'La orden no fue encontrada'
         }
         else{
             await Orden.update({
@@ -151,7 +151,7 @@ const deleteOrder = async (id) => {
                     id: id
             }
         })
-    return 'Order deleted succesfully!'
+    return 'La Orden fue Borrada exitosamente'
         }
     }
     catch(error){
