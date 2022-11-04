@@ -293,7 +293,6 @@ const updateScoreProm = async (id) => {
         console.log(error)
     }
 }
-
 const updateScoreUser = async (option, value, userRegistedId) => {
     console.log(value);
     try {
@@ -317,6 +316,8 @@ const updateScoreUser = async (option, value, userRegistedId) => {
         console.log(e)
     }
 };
+
+
 
 module.exports = {
     getPromotionDb,
