@@ -278,6 +278,7 @@ const reducer = (state = initialState, action) => {
                     reviews: action.payload
                     }            
         case GET_ORDERS:
+            console.log("Orders:",action.payload)
                 return {
                     ...state,
                     orders: action.payload.map(order => {
