@@ -5,8 +5,6 @@ import Tooltip from '@mui/material/Tooltip';
 
 
 export default function CartItem(props) {
-    console.log("stock", props)
-    console.log("qtty", props.quantity)
 
     return (
         <div className={styles.divCartItem}>
