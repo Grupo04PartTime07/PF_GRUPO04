@@ -100,6 +100,12 @@ Cart.belongsTo(StateCarrito);
 Orden.hasOne(Invoice);
 Invoice.belongsTo(Orden);
 
+////
+Cart.hasOne(Orden);
+Orden.belongsTo(Cart);
+////
+
+
 Orden.hasOne(Checkout);
 Checkout.belongsTo(Orden);
 
