@@ -19,12 +19,18 @@ import './adminOrders.css'
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { styled, alpha } from '@mui/material/styles';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAdminOrders } from '../../redux/actions/get_adminOrders';
+import { updateOrderStatus } from '../../redux/actions/update_order_status'
+import { getOrderDetail } from '../../redux/actions/get_order_detail'
 
-function createData(orderNum, client, status) {
+function createData(orderNum, client, status, total) {
   return {
     orderNum,
     client,
     status,
+    total,
     history: [
       {
         producto: 'Vino',
@@ -41,13 +47,13 @@ function createData(orderNum, client, status) {
 }
 
 const rows = [
-    createData('12345', 'cliente2@hotmail.com', 'Aprobada'),
-    createData('12346', 'admin@hotmail.com', 'En camino'),
-    createData('1234', 'cliente1@hotmail.com', 'Completada'),
-    createData('1', 'cliente4@hotmail.com', 'Cancelada'),
-    createData('147', 'cliente3@hotmail.com', 'Aprobada'),
-    createData('20548', 'cuchuflito@hotmail.com', 'Pendiente'),
-    createData('20445', 'cumpleañito@hotmail.com', 'Rechazada'),
+    createData('12345', 'cliente2@hotmail.com', 'Aprobada', 1500),
+    createData('12346', 'admin@hotmail.com', 'En camino', 3500),
+    createData('1234', 'cliente1@hotmail.com', 'Completada', 4100),
+    createData('1', 'cliente4@hotmail.com', 'Cancelada', 4537),
+    createData('147', 'cliente3@hotmail.com', 'Aprobada', 3675),
+    createData('20548', 'cuchuflito@hotmail.com', 'Pendiente', 4572),
+    createData('20445', 'cumpleañito@hotmail.com', 'Rechazada', 500),
   ];
   
 
@@ -56,16 +62,27 @@ const rows = [
 
 function Row(props) {
   const { row } = props;
+  //const { orders } = props
   const [open, setOpen] = React.useState(false);
 
-    function changeSelect(e){
-        const newSelectedStatus = document.getElementById(row.orderNum).options[document.getElementById(row.orderNum).selectedIndex].text
-        if(row.status !== newSelectedStatus){
-            row.status = newSelectedStatus
-            // console.log(newSelectedStatus)
-            // console.log(row.client + ' se cambio a ' + newSelectedStatus)
-        }
+
+  // function openCollapse(){
+  //   setOpen(!open)
+  //   dispatch(getOrderDetail(orders.numOrder))
+  // }
+
+  // const orderDetail = useSelector(state => state.orderDetail)
+
+  function changeSelect(e){
+    const newSelectedStatus = document.getElementById(row.orderNum).options[document.getElementById(row.orderNum).selectedIndex].text
+    
+    if(row.status !== newSelectedStatus){
+      //dispatch(updateOrderStatus(orders.numOrder, newSelectedStatus))
+        row.status = newSelectedStatus
+        console.log(newSelectedStatus)
+        console.log(row.client + ' se cambio a ' + newSelectedStatus)
     }
+  }
 
   return (
     <React.Fragment>
@@ -75,6 +92,7 @@ function Row(props) {
             aria-label="expand row"
             size="small"
             onClick={() => setOpen(!open)}
+            /*onClick={() => openCollapse()}*/
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
@@ -83,6 +101,7 @@ function Row(props) {
           {row.orderNum}
         </TableCell>
         <TableCell align="left">{row.client}</TableCell>
+        <TableCell align="left">{row.total}</TableCell>
         <TableCell align="left">
             <select id={row.orderNum} defaultValue={row.status} onClick={e => changeSelect(e)}>
                 <option disabled={true}>Pendiente</option> {/* A la espera del pago */}
@@ -195,6 +214,12 @@ const Search = styled('div')(({ theme }) => ({
   }));
 
 export default function AdminOrders() {
+    // const dispatch = useDispatch()
+    // const orders = useSelector( state => state.orders)
+    
+    // useEffect(() => {
+    //   dispatch(getAdminOrders())
+    // })
 
     const [filter, setFilter] = React.useState(0)
     const [name, setName] = React.useState('')
@@ -233,7 +258,7 @@ export default function AdminOrders() {
                 document.getElementById('filterStatus').selectedIndex = 0
                 const searched = rows.filter(row => row.client.includes(name))
             return searched
-            default: return rows
+            default: return rows /*orders*/
         }
     }
 
@@ -250,7 +275,7 @@ export default function AdminOrders() {
             <StyledInputBase
               value= {name}
               sx={{ display: 'flex'}}
-              placeholder="Busca un e-mail…"
+              placeholder="Busca por e-mail…"
               inputProps={{ 'aria-label': 'search' }}
               onChange={(e) => handleInputChange(e)}
               onKeyDown={(e) =>{if(e.key === 'Enter'){handleSubmit()}}}
@@ -276,13 +301,14 @@ export default function AdminOrders() {
             <TableCell />
             <TableCell>Nro de orden</TableCell>
             <TableCell align="left">Cliente</TableCell>
+            <TableCell align="left">Total ($)</TableCell>
             <TableCell align="left">Estado</TableCell>
           </TableRow>
         </TableHead>
     
         <TableBody>
           {filterStatus().map((row) => (
-            <Row  key={row.orderNum} row={row} />
+            <Row  key={row.orderNum} row={row}/>
           ))}
         </TableBody>
 
