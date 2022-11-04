@@ -184,7 +184,7 @@ const getProductDetail = async (id) => {
         })
 
         let categories = product.categories.map(e => e.name)
-        let opiniones = product.scores.slice(0, 3)
+        let opiniones = product.scores.slice(0, 4)
         let response = { id: product.id, name: product.name, price: product.price, description: product.description, image: product.image, categories, stock: product.stock, score: product.score_promedio, brand: product.brand.name, opiniones: opiniones }
 
         return response;
