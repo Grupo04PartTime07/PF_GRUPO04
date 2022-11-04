@@ -45,7 +45,8 @@ import { GET_USER_DETAILS } from './actions/get_user_details'
 import { GET_ALL_USERS } from './actions/get_all_users'
 import { GET_ADMIN_ORDERS } from './actions/get_adminOrders';
 import { GET_USER_MODIFICAR } from './actions/get_user_modificar'
-import { UPDATE_USER_ADMIN } from './actions/update_user_admin'
+import { UPDATE_USER_ADMIN } from './actions/update_user_admin';
+import { UPDATE_USER } from './actions/update_user';
 
 
 import swal from 'sweetalert';
@@ -135,6 +136,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 message: action.payload
             }
+            
         case CREATE_CATEGORY:
             swal({
                 title: action.payload,
@@ -208,6 +210,15 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 message: action.payload
                     }
+        case UPDATE_USER:
+            swal({
+                title: action.payload.message,
+                icon: "success",
+            });
+            return {
+                ...state,
+                message: action.payload
+                }
         case FULFILL_CART: {
             return {
                 ...state,

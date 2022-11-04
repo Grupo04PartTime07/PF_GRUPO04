@@ -102,7 +102,7 @@ try{
 
       console.log('esto es carrito ID', carrito.id)
 
-      // await newOrder.setCart(carrito.id)
+      await newOrder.setCart(carrito.id)
   
       await newOrder.setStateOrden(4);
 
