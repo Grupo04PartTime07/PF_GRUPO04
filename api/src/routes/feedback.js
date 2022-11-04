@@ -1,9 +1,9 @@
 const {Router} = require('express')
 const router = Router()
 const axios = require('axios')
-const {Products, Orden} = require('../db');
+const {Products, Orden, Cart, Shipping} = require('../db');
 
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
 const {payment_id, status, payment_type, merchant_order_id} = req.body
 try{
     const { data } = await axios.get(`https://api.mercadopago.com/merchant_orders/${merchant_order_id}?access_token=APP_USR-8763003876428984-102015-2626c522c3a666ad57ca4f935dabf886-1221748734`);
@@ -11,21 +11,47 @@ try{
     const order = await Orden.findOne({
         where: {
             total: paid_amount,
+        },
+        include: [
+            {
+                model: Cart,
+                attributes: ['id']
+            }
+        ]
+    });
+
+    const cart = await Cart.findOne({
+        where: {
+            id: order.cartId
         }
     });
 
     if(status === 'approved'){
         const newItems = items.filter((e) => e.id !== '0');
+        // const shipping = items.find((e) => e.id === '0');
+
+        // switch(shipping.unit_price){
+        //     case '299':
+        //         let shipping1 = await Shipping.findByPk(1)
+        //         await shipping1.setCart(cart.id)
+        //     case '349':
+        //         let shipping2 = await Shipping.findByPk(2)
+        //         await shipping1.setCart(cart.id)
+        //     case '399':
+        //         let shipping3 = await Shipping.findByPk(3)
+        //         await shipping2.setCart(cart.id)
+        //     default:
+        //         let shipping4 = await Shipping.findByPk(4)
+        //         await shipping4.setCart(cart.id)
+        // };
 
         await Orden.update({
-            estado: payment_id,
+            estado: merchant_order_id,
         },{
             where: {
                 id: order.id
             }
         })
-
-        // order.setStateOrden('');
 
         await order.setStateOrden(2)
 
@@ -38,10 +64,8 @@ try{
                     id: e.id
                 }})
             });
-
         
         }else{
-            // order.setStateOrden('');
 
             await order.setStateOrden(3)
         }
@@ -49,22 +73,7 @@ try{
         console.log(e)
     }
 
-res.status(200).send({payment_id, status, payment_type, merchant_order_id});
+res.status(200).send('Proceso finalizado');
 })
 
 module.exports = router;
-
-    //datos que devuelve el Feedback:
-
-    // http://localhost:3000/?
-    // collection_id=50830799641
-    // &collection_status=approved
-    // &payment_id=50830799641
-    // &status=approved
-    // &external_reference=null
-    // &payment_type=credit_card
-    // &merchant_order_id=6262016968
-    // &preference_id=1221748734-60a74065-c2c5-4afe-a013-690671b32bb9
-    // &site_id=MLA
-    // &processing_mode=aggregator
-    // &merchant_account_id=null
