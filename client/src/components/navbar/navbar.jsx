@@ -27,7 +27,6 @@ import {useAuth0} from '@auth0/auth0-react';
 import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
 import {useEffect} from 'react';
-import { width } from '@mui/system';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative', 
