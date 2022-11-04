@@ -62,8 +62,8 @@ function Row(props) {
         const newSelectedStatus = document.getElementById(row.orderNum).options[document.getElementById(row.orderNum).selectedIndex].text
         if(row.status !== newSelectedStatus){
             row.status = newSelectedStatus
-            console.log(newSelectedStatus)
-            console.log(row.client + ' se cambio a ' + newSelectedStatus)
+            // console.log(newSelectedStatus)
+            // console.log(row.client + ' se cambio a ' + newSelectedStatus)
         }
     }
 
