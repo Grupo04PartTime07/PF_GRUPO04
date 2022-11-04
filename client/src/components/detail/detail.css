@@ -132,20 +132,14 @@ img:hover{
     justify-content: center;
     align-items: flex-start;
     flex-direction: column;
-    background-color: whitesmoke;
     border-radius: 5px;
-    padding: 25px;
-    -webkit-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
-    -moz-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
-    box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
 }
 
 .opinionContainer{
     display: flex;
     align-items: left;
     margin-bottom: 30px;
-    flex-direction: column;
-    text-align: left;
+
 }
 
 .opinionContainerSpan{
@@ -154,8 +148,8 @@ img:hover{
 
 .opinionTitle{
     padding-left: 25px;
-    margin-bottom: 40px;
-    font-weight: 400;
+    font-weight: 350;
+    color: rgb(82, 82, 82);
 }
 
 .opinionCard{
@@ -172,8 +166,14 @@ img:hover{
     font-weight: 350;
     color: rgb(82, 82, 82);
 }
+.divFormOpinions{
+    margin-left: 500px; /*200px*/
+    margin-bottom: 30px;
+}
+
 .divBttnsOpinions{
-    margin-left: 15px;
+    margin-left: 490px; /*200px*/
+    margin-bottom: 20px;
 }
 .stoocks{
     font-size: medium;
@@ -218,12 +218,15 @@ img:hover{
         padding-left: 0%;
         width: 100%;
     }
-    .detailContainerOpinion{
-        align-items: center;
-             
+    .opinionContainer{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        margin-left: 30%;
     }
-    .opinionCard{
-        display: block;
+    .opinionTitle{
+        display: flex;
+        margin-left: 25%;
     }
     .opinionDescription{
         text-align: center;
@@ -231,11 +234,13 @@ img:hover{
     .opinionStars{
         text-align: center;
     }
-    .opinionTitle{
-        padding-left: 0px;
+    .divFormOpinions{
+        width: 185px;
+        margin-left: 50%;
+        margin-bottom: 30px;
     }
     .divBttnsOpinions{
-        margin-left: 0px;
+        margin-left: 25%;
     }
     .relatedTitle{
         margin-right: 0px;
@@ -243,5 +248,8 @@ img:hover{
     }
     .relatedProductsFlex{
         justify-content: center;
+    }
+    .opinionComment{
+        display: flex;
     }
 }

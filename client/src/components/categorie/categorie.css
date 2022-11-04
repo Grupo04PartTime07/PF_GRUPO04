@@ -36,21 +36,6 @@
     text-align: start;
 }
 
-.linkToBack{
-    display: flex;
-    text-decoration: none;
-    color:rgb(0, 122, 170);
-    margin-top: 5%;
-    margin-bottom: 5%;
-    border: none;
-    background: none;
-}
-
-.linkToBack:hover{
-    cursor: pointer;
-    text-decoration: underline;
-}
-
 .productsByCategorie{
     margin-left: 30px;
     width: 1000px;
@@ -106,10 +91,6 @@
         display: flex;
         flex-wrap: wrap;
         width: 100%;
-    }
-    .linkToBack{
-        position: relative;
-        left: 0%;
     }
     .categorieFilters{
         width: 80%;
