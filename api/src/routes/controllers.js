@@ -5,19 +5,20 @@ const { Products, Categories, Brand, Promotion, Score, UserRegisted } = require(
 const getProductsDb = async () => {
     try {
         let products = await Products.findAll({
+            where: { isDeleted: false },
             include: [
                 {
                     model: Categories,
                     attributes: ["name"],
                     through: {
                         attributes: [],
-                    },
+                    }//, where: { isDeleted: false }
 
                 },
 
                 {
                     model: Brand,
-                    attributes: ["name"],
+                    attributes: ["name"], // where: { isDeleted: false }
                 },
 
             ],
@@ -38,6 +39,7 @@ const getCategoriesDb = async () => {
     try {
 
         let categories = await Categories.findAll({
+            where: { isDeleted: false},
             attributes: ['name', 'image', 'id']
         });
 
@@ -51,7 +53,7 @@ const getCategoriesDb = async () => {
 
 const getBrandsDb = async () => {
     try {
-        let brands = await Brand.findAll();
+        let brands = await Brand.findAll({where: { isDeleted: false }});
         return brands;
     } catch (e) {
         console.log(e)
@@ -67,7 +69,8 @@ const getPromotionDb = async () => {
     }
 };
 
-const createProduct = async (name, price, description, image, stock, score, categories, brand) => {
+
+const createProduct = async (name, price, description, image, stock, categories, brand) => {
     try {
         var newProduct = await Products.create({
             name: name,
@@ -92,7 +95,8 @@ const createProduct = async (name, price, description, image, stock, score, cate
         for (c of categories) {
             category = await Categories.findOne({
                 where: {
-                    name: c
+                    name: c,
+                    isDeleted: false
                 }
             })
             newProduct.addCategories(category.id);
@@ -119,14 +123,16 @@ const createCategory = async (name, image) => {
     }
 };
 
+
+
 const createBrand = async (name, image) => {
     try {
         var newBrand = await Brand.create({
             name: name,
             image: image,
         });
-
         return newBrand
+
     } catch (e) {
         console.log(e)
     }
@@ -150,7 +156,7 @@ const createPromotion = async (option, value, userRegistedId) => {
 
 const getProductDetail = async (id) => {
     try {
-        let product = await Products.findByPk(id, {
+    let product = await Products.findByPk(id, {
             include: [
                 {
                     model: Categories,
@@ -158,7 +164,6 @@ const getProductDetail = async (id) => {
                     through: {
                         attributes: [],
                     },
-
                 },
 
                 {
@@ -170,16 +175,17 @@ const getProductDetail = async (id) => {
                     model: Score,
                     attributes: ["score", "coment", "id"],
                 }
-
             ],
-
         })
 
         let categories = product.categories.map(e => e.name)
-        let opiniones = product.scores.slice(0, 3)
+        let opiniones = product.scores.slice(0, 4)
+
         let response = { id: product.id, name: product.name, price: product.price, description: product.description, image: product.image, categories, stock: product.stock, score: product.score_promedio, brand: product.brand.name, opiniones: opiniones }
 
         return response;
+        
+        
 
     } catch (e) {
         console.log(e)
@@ -258,18 +264,58 @@ const createScore = async (id, score, coment) => {
 
 const getScores = async (id) => {
     try {
+
         let product = await Products.findByPk(id, {
             include: [
                 {
                     model: Score,
-                    attributes: ["score", "coment", "id"],
+                    attributes: ["score", "coment", "id", "isDeleted"],
+                    where: {
+                        isDeleted: false
+                    }
                 }
-
-            ]
+            ],
         });
-        let response = { id: product.id, name: product.name, price: product.price, image: product.image, stock: product.stock, score: product.score_promedio, opiniones: product.scores }
 
-        return response;
+
+        if(product.isDeleted === true){
+            return 'El producto no fue encontrado'
+        }
+        
+       /*  let response = { 
+            id: product.id, 
+            name: product.name, 
+            price: product.price,
+            image: product.image, 
+            stock: product.stock, 
+            score: product.score_promedio, 
+            opiniones: [] 
+        }
+
+        product.scores.map(e => {
+            if(e.isDeleted === false){
+                let op = {
+                    score: e.score,
+                    comment: e.coment,
+                    id: e.id
+                }
+                response.opiniones.push(op)
+            }
+        })
+
+         */
+
+        /* else if (product.scores[0].isDeleted === true){
+            let response = { id: product.id, 
+                name: product.name, 
+                price: product.price,
+                image: product.image, 
+                stock: product.stock, 
+                score: product.score_promedio, 
+                opiniones: product.scores } */
+
+            return product;
+        
     } catch (error) {
         console.log(error)
     }
@@ -293,30 +339,92 @@ const updateScoreProm = async (id) => {
         console.log(error)
     }
 }
-const updateScoreUser = async (option, value, userRegistedId) => {
-    console.log(value);
+
+
+
+const deleteBrand = async(id) => {
     try {
-        await Promotion.update(
-            {
-                option: option,
-                value: value,
-                userRegistedId: userRegistedId
-            },
-            {
-                where: {
-                    userRegistedId: userRegistedId
-                }
-            }
-            )
+        let brand = await Brand.findByPk(id)
+        if(brand.isDeleted === true){
+            return 'La marca no fue encontrada'
+        }
+        else{
+            await Brand.update({
+                isDeleted: true
+                }, {
+                    where: {
+                        id: id
+                    }
+                })
 
-        let scoreUser = await Promotion.findOne({ where: { userRegistedId: userRegistedId } })
-        return scoreUser
-        console.log(scoreUser)
-    } catch(e) {
-        console.log(e)
+             return 'La Marca fue borrada con éxito'
+        }
+    } catch (error) {
+        console.log(error)
     }
-};
+}
 
+const deleteCategory = async(id) => {
+    try{
+        let category = await Categories.findByPk(id)
+        if(category.isDeleted === true){
+            return 'La categoría no fue encontrada'
+        }   
+
+        else{
+            await Categories.update({
+                isDeleted: true
+            }, {
+                where: {
+                    id: id
+                }
+            })
+            return 'La categoría fue Borrada exitosamente'
+        }
+    }
+    catch(error){
+        console.log(error)
+    }
+}
+
+const deleteProduct = async(id) => {
+    try{
+        let prod = await Products.findByPk(id)
+        if(prod.isDeleted === true){
+            return 'El producto no fue encontrado'
+        }
+
+        else{
+            await Products.update({
+                isDeleted: true
+            }, { 
+                where: {
+                    id: id
+                }
+            })
+            return 'El Producto fue Borrado exitosamente'
+        }
+    }
+    catch(error){
+        console.log(error)
+    }
+}
+
+const deleteScore = async (id) => {
+    try{
+        await Score.update({
+            isDeleted: true
+        }, {
+            where: {
+                id: id
+            }
+        })
+        return 'La opinión fue Borrada exitosamente'
+    }
+    catch(error){
+        console.log(error)
+    }
+}
 
 
 module.exports = {

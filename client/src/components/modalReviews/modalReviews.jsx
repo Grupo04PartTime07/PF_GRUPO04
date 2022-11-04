@@ -51,6 +51,7 @@ export default function ModalReviews({ id }) {
   }, [dispatch]);
 
   const productDetails = useSelector((state) => state.reviews);
+  
   // let stars = [];
   // for (let i = 0; i < Math.ceil(productDetails.score); i++) {
   //     stars.push(<StarRoundedIcon />)
@@ -66,7 +67,7 @@ export default function ModalReviews({ id }) {
 
   return (
     <div>
-      <p className="linkToBack" onClick={handleOpen} variant="contained">
+      <p className={styles.linkModal} onClick={handleOpen} variant="contained">
         Ver más opiniones
       </p>
       <Modal
@@ -85,9 +86,9 @@ export default function ModalReviews({ id }) {
             <Typography sx={style} id="transition-modal-description">
               <h1 className={styles.opinionTitle}>Opiniones</h1>
               <div className={styles.opinionCard}>
-                <div className="opinionContainer detailMargin">
-                  {productDetails.opiniones &&
-                    productDetails.opiniones.map((e) => {
+                <div className="opinionModalContainer detailMargin">
+                  {productDetails.scores &&
+                    productDetails.scores.map((e) => {
                       // let starsOpinion = [];
                       // for (let i = 0; i < Math.ceil(e.score); i++) {
                       //     starsOpinion.push(<StarRoundedIcon />)
