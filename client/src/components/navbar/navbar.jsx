@@ -364,8 +364,8 @@ export default function PrimarySearchAppBar() {
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
           <IconButton sx={{width: '40%', height: '50%'}} size="large" aria-label="show 4 new mails" color="inherit">
               <Badge >
-              {/* {isAuthenticated?<p className='greetingsPoint'>800Pts.</p>:<LocalActivityOutlinedIcon/>} */}
-              <LocalActivityOutlinedIcon/>
+              {isAuthenticated?<p className='greetingsPoint'>800Pts.</p>:<LocalActivityOutlinedIcon/>}
+              {/* <LocalActivityOutlinedIcon/> */}
               </Badge>
             </IconButton>
             <IconButton sx={{width: '40%', height: '50%'}} onClick={handleDisplayCart} size="large" aria-label="show 4 new mails" color="inherit">

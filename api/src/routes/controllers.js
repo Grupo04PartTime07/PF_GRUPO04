@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { Products, Categories, Brand, Promotion, Score } = require('../db');
+const { Products, Categories, Brand, Promotion, Score, UserRegisted } = require('../db');
 
 
 const getProductsDb = async () => {
@@ -18,12 +18,6 @@ const getProductsDb = async () => {
                 {
                     model: Brand,
                     attributes: ["name"],
-                },
-
-                {
-                    model: Promotion,
-                    attributes: ["option"],
-
                 },
 
             ],
@@ -138,14 +132,17 @@ const createBrand = async (name, image) => {
     }
 };
 
-const createPromotion = async (option, value) => {
+const createPromotion = async (option, value, userRegistedId) => {
     try {
+        var user = await UserRegisted.findOne({where: {email: userRegistedId}})
+        
         var newPromotion = await Promotion.create({
             option: option,
             value: value,
+            userRegistedId: user.id
         });
-
         return newPromotion
+        console.log(newPromotion)
     } catch (e) {
         console.log(e)
     }
@@ -169,11 +166,6 @@ const getProductDetail = async (id) => {
                     attributes: ["name"],
                 },
 
-                {
-                    model: Promotion,
-                    attributes: ["option"],
-
-                },
                 {
                     model: Score,
                     attributes: ["score", "coment", "id"],
@@ -302,6 +294,30 @@ const updateScoreProm = async (id) => {
     }
 }
 
+const updateScoreUser = async (option, value, userRegistedId) => {
+    console.log(value);
+    try {
+        await Promotion.update(
+            {
+                option: option,
+                value: value,
+                userRegistedId: userRegistedId
+            },
+            {
+                where: {
+                    userRegistedId: userRegistedId
+                }
+            }
+            )
+
+        let scoreUser = await Promotion.findOne({ where: { userRegistedId: userRegistedId } })
+        return scoreUser
+        console.log(scoreUser)
+    } catch(e) {
+        console.log(e)
+    }
+};
+
 module.exports = {
     getPromotionDb,
     getProductsDb,
@@ -316,4 +332,5 @@ module.exports = {
     createScore,
     getScores,
     updateScoreProm,
+    updateScoreUser,
 }
