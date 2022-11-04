@@ -31,7 +31,7 @@ import { GET_REVIEWS } from "./actions/get_reviews";
 import { CLEAN_OTHER_PRODUCTS } from "./actions/clean_other_products";
 import { CREATE_SCORE } from "./actions/create_score";
 import { CREATE_SCORE_USER } from "./actions/create_score_user";
-import { SEARCH_FOR_INVENTORY } from '../redux/actions/search_4_inventory'
+import { GET_ADMIN_PRODUCTS } from './actions/get_admin_products'
 import { CLEAN_INV_PRODUCTS } from "./actions/clean_inv_products";
 import { CLEAN_REVIEWS } from "./actions/clean_reviews";
 import { GET_ORDERS } from "./actions/get_orders";
@@ -41,6 +41,14 @@ import { ADD_ORDER_TO_CART} from "./actions/add_order_to_cart";
 import { UPDATE_ORDER_STATUS } from "./actions/update_order_status";
 import { SORTED_ORDERS} from "./actions/sorted_orders";
 import { UPDATE_SCORE_PROM } from './actions/update_score_prom'
+import { GET_USER_DETAILS } from './actions/get_user_details'
+import { GET_ALL_USERS } from './actions/get_all_users'
+import { GET_ADMIN_ORDERS } from './actions/get_adminOrders';
+import { GET_USER_MODIFICAR } from './actions/get_user_modificar'
+import { UPDATE_USER_ADMIN } from './actions/update_user_admin';
+import { UPDATE_USER } from './actions/update_user';
+
+
 import swal from 'sweetalert';
 
 const initialState = {
@@ -60,7 +68,10 @@ const initialState = {
     orderDetail:[],    
     score_prom: "",
     scoreUser: "",
-
+    users:[],
+    userDetail:{},
+    userModificar:{},
+    userUpdate:{},
 };
 
 
@@ -77,6 +88,18 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 productdetail: action.payload
+            }
+
+        case GET_USER_DETAILS:
+            return {
+                ...state,
+                userDetail: action.payload
+            }
+
+        case GET_USER_MODIFICAR:
+            return {
+                ...state,
+                userModificar: action.payload
             }
         case CLEAN_PRODUCT_STATE:
             return {
@@ -113,6 +136,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 message: action.payload
             }
+            
         case CREATE_CATEGORY:
             swal({
                 title: action.payload,
@@ -171,11 +195,30 @@ const reducer = (state = initialState, action) => {
                 message: action.payload
                 }
         case UPDATE_ORDER_STATUS:
-            alert(action.payload)
+            swal({
+                title: action.payload,
+                icon: "success",
+            });
             return {
                 ...state,
                 message: action.payload
                     }
+
+        case UPDATE_USER_ADMIN:
+            swal(action.payload)
+            return {
+                ...state,
+                message: action.payload
+                    }
+        case UPDATE_USER:
+            swal({
+                title: action.payload.message,
+                icon: "success",
+            });
+            return {
+                ...state,
+                message: action.payload
+                }
         case FULFILL_CART: {
             return {
                 ...state,
@@ -237,8 +280,22 @@ const reducer = (state = initialState, action) => {
         case GET_ORDERS:
                 return {
                     ...state,
-                    orders: action.payload,
-                    sortedOrders: state.orders 
+                    orders: action.payload.map(order => {
+                        const obj = {};
+                        obj.id = order.id;
+                        obj.total = order.total;
+                        obj.estado = order.estado;
+                        obj.date = order.createdAt.slice(0,10);
+                        return obj
+                    }),
+                    sortedOrders: action.payload.map(order => {
+                        const obj = {};
+                        obj.id = order.id;
+                        obj.total = order.total;
+                        obj.estado = order.estado;
+                        obj.date = order.createdAt.slice(0,10);
+                        return obj
+                    }),
                     }
         case GET_ORDER_DETAIL:
                 return {
@@ -253,7 +310,7 @@ const reducer = (state = initialState, action) => {
                     }   
                         }else
                         if(action.payload === "Compras recientes"){
-                        const newestOrders = state.sortedOrders.sort((a, b) => moment(b.date, "DD-MM-YYYY").unix() - moment(a.date, "DD-MM-YYYY").unix());
+                        const newestOrders = state.sortedOrders.sort((a, b) => moment(b.date, "YYYY-MM-DD").unix() - moment(a.date, "YYYY-MM-DD").unix());
                         console.log("newestOrders:",newestOrders)
                         return {
                             ...state,
@@ -261,7 +318,7 @@ const reducer = (state = initialState, action) => {
                               }  
                         } else
                         if(action.payload === "Primeras compras"){
-                        const oldestOrders = state.sortedOrders.sort((a, b) => moment(a.date, "DD-MM-YYYY").unix() - moment(b.date, "DD-MM-YYYY").unix());
+                        const oldestOrders = state.sortedOrders.sort((a, b) => moment(a.date, "YYYY-MM-DD").unix() - moment(b.date, "YYYY-MM-DD").unix());
                         console.log("oldestOrders:",oldestOrders)
                         return {
                               ...state,
@@ -301,44 +358,59 @@ const reducer = (state = initialState, action) => {
                               sortedOrders: [...sortedLP]
                         }
                         }else
-                        if(action.payload === "Preparando"){
+                        if(action.payload === "Pendiente"){
                             let allOrders = state.orders
-                            let prepOrders = allOrders.filter(order => 
-                                order.status === "Preparando" ) 
+                            let pendingOrders = allOrders.filter(order => 
+                                order.estado === "Pendiente" ) 
                           return {
                                  ...state,
-                                 sortedOrders: [...prepOrders]
+                                 sortedOrders: [...pendingOrders]
                                   }      
                            }else
-                           if(action.payload === "Despachada"){
+                           if(action.payload === "Rechazado"){
                             let allOrders2 = state.orders
-                            let shippedOrders = allOrders2.filter(order => 
-                                order.status === "Despachada")
-                               
+                            let rejectedOrders = allOrders2.filter(order => 
+                            order.estado === "Rechazado")   
                            return {
                                     ...state,
-                                    sortedOrders: [...shippedOrders]
+                                    sortedOrders: [...rejectedOrders]
                                   }
                                 }else
-                                if(action.payload === "Entregada"){
+                                if(action.payload === "Aprobado"){
                                  let allOrders3 = state.orders
-                                 let deliveriedOrders = allOrders3.filter(order => 
-                                     order.status === "Entregada")
-                                    
-                                return {
+                                 let approvedOrders = allOrders3.filter(order => 
+                                     order.estado === "Aprobado")       
+                            return {
                                          ...state,
-                                         sortedOrders: [...deliveriedOrders]
-                                       } 
-                                    }else
-                                    if(action.payload === "Cancelada"){
-                                     let allOrders4 = state.orders
-                                     let cancelledOrders = allOrders4.filter(order => 
-                                         order.status === "Cancelada")
-                                        
-                                    return {
-                                             ...state,
-                                             sortedOrders: [...cancelledOrders]
-                                           }                     
+                                         sortedOrders: [...approvedOrders]
+                                       }
+                                }else
+                                if(action.payload === "En camino"){
+                                 let allOrders3 = state.orders
+                                 let onTheWayOrders = allOrders3.filter(order => 
+                                     order.estado === "En camino")       
+                            return {
+                                         ...state,
+                                         sortedOrders: [...onTheWayOrders]
+                                       }
+                                }else
+                                if(action.payload === "Completada"){
+                                let allOrders4 = state.orders
+                                let completedOrders = allOrders4.filter(order => 
+                                order.estado === "Completada")       
+                            return {
+                                        ...state,
+                                        sortedOrders: [...completedOrders]
+                                        }
+                                }else
+                                if(action.payload === "Cancelada"){
+                                let allOrders5 = state.orders
+                                let cancelledOrders = allOrders5.filter(order => 
+                                order.estado === "Cancelada")           
+                            return {
+                                        ...state,
+                                        sortedOrders: [...cancelledOrders]
+                                        }                     
                         }break;
         case GET_FAVORITES:
             return {
@@ -468,6 +540,12 @@ const reducer = (state = initialState, action) => {
                 categories: action.payload
             }
         }
+        case GET_ALL_USERS: {
+            return {
+                ...state,
+                users: action.payload
+            }
+        }
         case GET_BRANDS: {
             return {
                 ...state,
@@ -479,7 +557,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 products: action.payload
             }
-        case SEARCH_FOR_INVENTORY:
+        case GET_ADMIN_PRODUCTS:
             return {
                 ...state,
                 productsinv: action.payload
@@ -493,6 +571,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 score_prom: action.payload
+            }
+        case GET_ADMIN_ORDERS:
+            return {
+                ...state,
+                orders: action.payload
             }
         default: return state;
     }

@@ -81,6 +81,7 @@ const getUserDetail = async (email) => {
 
         })
 
+
         if(user.isDeleted === true ){
             return /* 'User doesn\'t exist' */
         }
@@ -92,13 +93,49 @@ const getUserDetail = async (email) => {
 
     }
     catch(e){
+
+       
+           
+            let response = {name: user.name, email: user.email, address: user.address, city: user.city, dni: user.dni,isAdmin: user.isAdmin, isBanned:user.isBanned }
+    
+        return response;
+        
+    }catch(e){
+
         console.log(e)
     }
 };
 
-const updateUserRegisted = async (email, name, isAdmin, isBanned) => {
+const updateUserRegisted = async (email, name, surname, address, city, dni ) => {
+    console.log(name);
+    try {
+        await UserRegisted.update(
+            {
+             name: name,
+             surname: surname,
+             address: address,	
+             city: city,
+             dni:dni
+
+            //  image: [...props.image]
+            }, {
+                where: {
+                    email: email
+                }
+            })
+
+        let userModified = await UserRegisted.findOne({ where: { email: email } })
+        return userModified
+    } catch(e) {
+        console.log(e)
+    }
+};
+
+
+const updateUserRegistedAdmin = async ( name, email,surname, address, city, dni, isAdmin, isBanned) => {
 
     try {
+
         let user = UserRegisted.findOne({where: {email: email}})
         if(user.isDeleted === true){
             return 'The user doesn\'t exist' 
@@ -135,16 +172,37 @@ const deteleUserRegisted = async (email) => {
         else {
              await UserRegisted.update({
             isDeleted: true
+
+        await UserRegisted.update(
+            {
+             name: name,
+             isAdmin: isAdmin,
+             isBanned: isBanned,
+             surname: surname,	
+             address:address,
+             city:city,
+             dni:dni
+
+            //  image: [...props.image]
+
             }, {
                 where: {
                     email: email
                 }
             })
+
             return 'User deleted succesfully'
         }
        
     } catch (error) {
         console.log(error)
+
+
+        let userModified = await UserRegisted.findOne({ where: { email: email } })
+        return userModified
+    } catch(e) {
+        console.log(e)
+
     }
 
 }
@@ -152,6 +210,7 @@ const deteleUserRegisted = async (email) => {
 module.exports = {
     getUsersRegisted,
     createUserRegisted,
+    updateUserRegistedAdmin,
     getUserDetail,
     updateUserRegisted,
     deteleUserRegisted

@@ -27,7 +27,6 @@ import {useAuth0} from '@auth0/auth0-react';
 import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
 import {useEffect} from 'react';
-import { width } from '@mui/system';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative', 
@@ -86,26 +85,27 @@ export default function PrimarySearchAppBar() {
   // let navbarEmail = user && JSON.parse(window.localStorage.getItem(`userEmail`))
   let dhacart = JSON.parse(window.localStorage.getItem(`c${currentUser}`))
   let dhafav = JSON.parse(window.localStorage.getItem(`f${currentUser}`))
-  console.log(currentUser)
-  console.log(dhacart)
-  console.log(dhafav)
-    React.useEffect(()=>{
-        if(dhacart && dhacart.length){
-          dispatch(fulfillCart([]))
-          dispatch(fulfillCart(dhacart))
-        } 
-        if(dhafav && dhafav.length) {
-          dispatch(fulfillWishList([]))
-          dispatch(fulfillWishList(dhafav))
-        }
-    }, [dispatch])
+ 
+  React.useEffect(()=>{
+    if(dhacart && dhacart.length){
+      dispatch(fulfillCart([]))
+      dispatch(fulfillCart(dhacart))
+      } 
+    }, [dispatch, user])
 
-    React.useEffect(() => {
-        updateStorage(`c${currentUser}`, cart)
+  React.useEffect(()=>{ 
+    if(dhafav && dhafav.length){
+      dispatch(fulfillWishList([]))
+      dispatch(fulfillWishList(dhafav))
+    } 
+    }, [dispatch, user])
+
+  React.useEffect(() => {
+      updateStorage(`c${currentUser}`, cart)
     }, [cart])
   
-    React.useEffect(() => {
-      updateWishList(`f${currentUser}`, favorites)
+  React.useEffect(() => {
+    updateWishList(`f${currentUser}`, favorites)
   }, [favorites])
 
   function updateStorage(user, cart){
@@ -113,7 +113,7 @@ export default function PrimarySearchAppBar() {
       window.localStorage.setItem(user, updatedCart)
   }
   function updateWishList(user, fav){
-    let updatedWishList = JSON.stringify(favorites);
+    let updatedWishList = JSON.stringify(fav);
     window.localStorage.setItem(user, updatedWishList)
 }
 
@@ -191,7 +191,7 @@ export default function PrimarySearchAppBar() {
       { Ver diseño, corresponde a cambios auth0} */}
       
       {/* Aca se hace el login */}
-      {!isAuthenticated?<label className='link'><MenuItem id="1" onClick={loginWithPopup }>Iniciar sesión</MenuItem></label>:<label className='link'><MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem></label>}
+      {!isAuthenticated?<label className='link'><MenuItem id="1" onClick={loginWithRedirect }>Iniciar sesión</MenuItem></label>:<label className='link'><MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem></label>}
       
     </Menu>
   );
@@ -295,10 +295,13 @@ export default function PrimarySearchAppBar() {
           },
         }
       );
-      user.isAdmin = response.data.userRegisted.isAdmin;
-      user.isBanned = response.data.userRegisted.isAdmin;
+      // user.isAdmin = response.data.userRegisted.isAdmin;
+      // user.isBanned = response.data.userRegisted.isAdmin;
       window.localStorage.setItem(`userName`, user.name)
       window.localStorage.setItem(`userEmail`, user.email)
+      window.localStorage.setItem(`isAdmin`, response.data.userRegisted.isAdmin)
+      window.localStorage.setItem(`isBanned`, response.data.userRegisted.isBanned)
+      
       //console.log(response.userRegisted);
       //console.log(response.message);
       //console.log(response.data);
@@ -311,11 +314,15 @@ export default function PrimarySearchAppBar() {
   useEffect(() => {
     if (isAuthenticated) {
       return () => {
-
         const usuario = callProtectedApiToken2();
         //console.log(usuario);
-
+        //localStorage.isAdmin=usuario.isAdmin;
       };
+    } else {
+      window.localStorage.removeItem(`isAdmin`);
+      window.localStorage.removeItem(`isBanned`);
+      window.localStorage.removeItem(`userEmail`);
+      window.localStorage.removeItem(`userName`);
     }
   });
   
@@ -352,11 +359,12 @@ export default function PrimarySearchAppBar() {
             />
           </Search>
           <Box sx={{flexGrow: 0.8}} />
+            
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <div></div>
           <IconButton sx={{width: '40%', height: '50%'}} size="large" aria-label="show 4 new mails" color="inherit">
               <Badge >
-                <LocalActivityOutlinedIcon />
+              {/* {isAuthenticated?<p className='greetingsPoint'>800Pts.</p>:<LocalActivityOutlinedIcon/>} */}
+              <LocalActivityOutlinedIcon/>
               </Badge>
             </IconButton>
             <IconButton sx={{width: '40%', height: '50%'}} onClick={handleDisplayCart} size="large" aria-label="show 4 new mails" color="inherit">

@@ -6,17 +6,20 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { Link } from "react-router-dom";
+import {useAuth0} from '@auth0/auth0-react';
 
-function footer() {
+function Footer() {
+  const { isAuthenticated, user, loginWithPopup } = useAuth0();
+
   return (
     <div className="footerContainer">
       <div className="container_text">
       <div>
         <h3>Mi Cuenta</h3>
         <ul className="footerList">
-          <li><Link/><a href="http://localhost:3000/myProfile">Perfil</a></li>
-          <li><Link/><a href="http://localhost:3000/wishList">Favoritos</a></li>
-          <li><Link/><a href="http://localhost:3000/shoppingCart">Carrito</a></li>
+          {isAuthenticated ? <li><Link to='myProfile'>Perfil</Link></li> : <li className="linkFooter" onClick={loginWithPopup}>Inicia sesión</li>}
+          <li><Link to='wishList'>Favoritos</Link></li>
+          <li><Link to='shoppingCart'>Carrito</Link></li>
         </ul>
       </div>
 
@@ -64,4 +67,4 @@ function footer() {
   );
 }
 
-export default footer;
+export default Footer;

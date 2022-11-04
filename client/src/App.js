@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react';
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Navbar from './components/navbar/navbar.jsx'
 import Home from './components/home/home';
 import Footer from './components/footer/footer.jsx';
@@ -17,18 +17,19 @@ import WishList from './components/wishList/wishList';
 import Profile from './components/profile/profile';
 import Feedback from './components/feedback/feedback';
 
+
 function App() {
   return (
-    <BrowserRouter>
-      <React.Fragment>
           <div className="App">
-            <Route path='/' component={Navbar}/>
+    <BrowserRouter>
+            <Navbar/>
+      <React.Fragment>
+        <Switch>
             <Route exact path='/' component={Home}/>
             <Route exact path='/busqueda' component={Home}/>
-            <Route path='/Categorías' component={CategoriesList}/>
+            <Route exact path='/Categorías' component={CategoriesList}/>
             <Route exact path='/products' component={Categorie}/>
-            <Route exact path="/products/:id" component={Detail} />
-            {/* modificar la ruta segun convenga */}
+            <Route exact path="/products/:id" component={Detail} />           
             <Route exact path="/createProduct" component={CreateProduct} />
             <Route exact path="/myProfile" component={Profile} />
             <Route exact path="/Marcas" component={Marcas} />
@@ -38,11 +39,18 @@ function App() {
             <Route exact path='/shoppingCart' component={ShoppingCartBig}/>
             <Route exact path='/wishList' component={WishList}/>
             <Route exact path='/feedback' component={Feedback}/>
+            <Route path="*" component={NotFound} />
+          </Switch>
             <Route path="/" component={Footer} />
-          </div>
       </React.Fragment>
     </BrowserRouter>
+          </div>
   );
 }
 
+
 export default App;
+
+function NotFound (){
+  return <img src='https://marj3y.com/wp-content/uploads/2022/03/Error-404.jpg'/>
+}

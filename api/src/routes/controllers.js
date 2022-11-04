@@ -64,6 +64,15 @@ const getBrandsDb = async () => {
     }
 };
 
+const getPromotionDb = async () => {
+    try {
+        let promotion = await Promotion.findAll();
+        return promotion;
+    } catch (e) {
+        console.log(e)
+    }
+};
+
 const createProduct = async (name, price, description, image, stock, score, categories, brand) => {
     try {
         var newProduct = await Products.create({
@@ -129,6 +138,19 @@ const createBrand = async (name, image) => {
     }
 };
 
+const createPromotion = async (option, value) => {
+    try {
+        var newPromotion = await Promotion.create({
+            option: option,
+            value: value,
+        });
+
+        return newPromotion
+    } catch (e) {
+        console.log(e)
+    }
+};
+
 const getProductDetail = async (id) => {
     try {
         let product = await Products.findByPk(id, {
@@ -162,7 +184,7 @@ const getProductDetail = async (id) => {
         })
 
         let categories = product.categories.map(e => e.name)
-        let opiniones = product.scores.slice(0, 3)
+        let opiniones = product.scores.slice(0, 4)
         let response = { id: product.id, name: product.name, price: product.price, description: product.description, image: product.image, categories, stock: product.stock, score: product.score_promedio, brand: product.brand.name, opiniones: opiniones }
 
         return response;
@@ -188,8 +210,44 @@ const updateProduct = async (id, props) => {
             }
         })
 
-        let productModified = await Products.findByPk(id)
-        return productModified
+        const product = await Products.findByPk(props.id, {
+            include: [
+                {
+                    model: Categories,
+                    attributes: ["name"],
+                    through: {
+                        attributes: [],
+                    },
+
+                },
+
+                {
+                    model: Brand,
+                    attributes: ["name"],
+                }
+
+            ],
+
+        })
+
+        const brands = await Brand.findOne({
+            where: {
+                name: props.brand,
+            }
+        });
+
+        product.setBrand(brands)
+        product.setCategories([])
+        for (c of props.categories) {
+            category = await Categories.findOne({
+                where: {
+                    name: c
+                }
+            })
+            product.addCategories(category.id);
+        }
+
+        return product
     } catch (e) {
         console.log(e)
     }
@@ -245,10 +303,12 @@ const updateScoreProm = async (id) => {
 }
 
 module.exports = {
+    getPromotionDb,
     getProductsDb,
     getCategoriesDb,
     getBrandsDb,
     createProduct,
+    createPromotion,
     createCategory,
     createBrand,
     getProductDetail,

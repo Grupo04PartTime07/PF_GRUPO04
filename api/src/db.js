@@ -45,6 +45,9 @@ Products.belongsTo(Brand);
 Promotion.hasMany(Products);
 Products.belongsTo(Promotion);
 
+Promotion.belongsTo(UserRegisted);
+UserRegisted.hasMany(Promotion);
+
 Products.hasMany(Score);
 Score.belongsTo(Products);
 
@@ -96,6 +99,12 @@ Cart.belongsTo(StateCarrito);
 //console.table(Shipping_Cart);
 Orden.hasOne(Invoice);
 Invoice.belongsTo(Orden);
+
+////
+Cart.hasOne(Orden);
+Orden.belongsTo(Cart);
+////
+
 
 Orden.hasOne(Checkout);
 Checkout.belongsTo(Orden);
