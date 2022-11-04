@@ -53,55 +53,18 @@ const createUserRegisted = async (name, email) => {
 
 const getUserDetail = async (email) => {
     try{
-        let user = await UserRegisted.findOne({ where: { email: email } }, {
-        //     include: [
-        //         {
-        //         model: Categories,
-        //         attributes: ["name"],
-        //         through:{
-        //             attributes: [],
-        //         },
-        //     },
-
-        //     {
-        //         model: Brand,
-        //         attributes: ["name"],              
-        //     },
-
-        //     {
-        //         model: Promotion,
-        //         attributes: ["option"],              
-          
-        //     },
-        //     {
-        //         model: Score,
-        //         attributes: ["score", "coment", "id"],
-        //     }
-        // ],
-
-        })
+        let user = await UserRegisted.findOne({ where: { email: email } })
 
 
         if(user.isDeleted === true ){
-            return /* 'User doesn\'t exist' */
+            return "Usuario no encontrado"
         }
-
         else{
-            let response = {name: user.name, email: user.email, isAdmin: user.isAdmin, isBanned:user.isBanned } 
+            let response = {name: user.name, email: user.email, address: user.address, city: user.city, dni: user.dni,isAdmin: user.isAdmin, isBanned:user.isBanned }
             return response;
         }
-
     }
     catch(e){
-
-       
-           
-            let response = {name: user.name, email: user.email, address: user.address, city: user.city, dni: user.dni,isAdmin: user.isAdmin, isBanned:user.isBanned }
-    
-        return response;
-        
-    }catch(e){
-
         console.log(e)
     }
 };
@@ -144,9 +107,13 @@ const updateUserRegistedAdmin = async ( name, email,surname, address, city, dni,
         else{
             await UserRegisted.update(
                 {
-                 name: name,
-                 isAdmin: isAdmin,
-                 isBanned: isBanned,
+                    name: name,
+                    isAdmin: isAdmin,
+                    isBanned: isBanned,
+                    surname: surname,	
+                    address:address,
+                    city:city,
+                    dni:dni
                 }, {
                     where: {
                         email: email
@@ -164,48 +131,22 @@ const updateUserRegistedAdmin = async ( name, email,surname, address, city, dni,
 
 const deteleUserRegisted = async (email) => {
     try {
-
         let user = await UserRegisted.findOne({where: {email: email}})
         if(user.isDeleted === true ){
-            return 'User doesn\'t exist'
+            return 'Usuario no encontrado'
         }
         else {
              await UserRegisted.update({
             isDeleted: true
-
-        await UserRegisted.update(
-            {
-             name: name,
-             isAdmin: isAdmin,
-             isBanned: isBanned,
-             surname: surname,	
-             address:address,
-             city:city,
-             dni:dni
-
-            //  image: [...props.image]
-
-            }, {
-                where: {
-                    email: email
-                }
             })
 
-            return 'User deleted succesfully'
+            return 'El Usuario fue eliminado exitosamente'
         }
        
     } catch (error) {
         console.log(error)
 
-
-        let userModified = await UserRegisted.findOne({ where: { email: email } })
-        return userModified
-    } catch(e) {
-        console.log(e)
-
-    }
-
-}
+}}
 
 module.exports = {
     getUsersRegisted,
