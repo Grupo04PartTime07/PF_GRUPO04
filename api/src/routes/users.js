@@ -3,13 +3,7 @@ const UserRegisted = require('../models/UserRegisted');
 const router = Router();
 
 
-const { getUsersRegisted, createUserRegisted, getUserDetail, updateUserRegisted, deteleUserRegisted} = require('./userController')
-
-const { getUsersRegisted, createUserRegisted, getUserDetail, updateUserRegisted, updateUserRegistedAdmin} = require('./userController')
-
-
-
-
+const { getUsersRegisted, createUserRegisted, getUserDetail, updateUserRegisted, deteleUserRegisted, updateUserRegistedAdmin} = require('./userController')
 
 router.get('/', async function(req, res){
     try{
@@ -58,8 +52,6 @@ router.put('/admin/', async (req, res) => {
     try{
         const { name, email,  surname, address, city, dni, isAdmin, isBanned } = req.body;
         //let props = req.body;
-
-        let result = await updateUserRegisted(email, isAdmin, isDeleted);
 
         let result = await updateUserRegistedAdmin( name, email,  surname, address, city, dni, isAdmin, isBanned);
 

@@ -57,7 +57,7 @@ const getCategoriesDb = async () => {
 
 const getBrandsDb = async () => {
     try {
-        let brands = await Brand.findAll( where: { isDeleted: false });
+        let brands = await Brand.findAll({where: { isDeleted: false }});
         return brands;
     } catch (e) {
         console.log(e)
@@ -183,22 +183,13 @@ const getProductDetail = async (id) => {
             ],
         })
 
-
-        if(product.isDeleted === true ){
-            return 'This product doesn\'t exist '
-        }
-
-        else{
-            let categories = product.categories.map(e => e.name)
-        let opiniones = product.scores.slice(0, 3)
-
         let categories = product.categories.map(e => e.name)
         let opiniones = product.scores.slice(0, 4)
 
         let response = { id: product.id, name: product.name, price: product.price, description: product.description, image: product.image, categories, stock: product.stock, score: product.score_promedio, brand: product.brand.name, opiniones: opiniones }
 
         return response;
-        }
+        
         
 
     } catch (e) {
