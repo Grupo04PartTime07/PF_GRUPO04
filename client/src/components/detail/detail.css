@@ -167,12 +167,12 @@ img:hover{
     color: rgb(82, 82, 82);
 }
 .divFormOpinions{
-    margin-left: 500px;
+    margin-left: 500px; /*200px*/
     margin-bottom: 30px;
 }
 
 .divBttnsOpinions{
-    margin-left: 490px;
+    margin-left: 490px; /*200px*/
     margin-bottom: 20px;
 }
 .stoocks{
