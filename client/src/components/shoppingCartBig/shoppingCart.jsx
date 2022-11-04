@@ -82,6 +82,7 @@ export default function ShoppingCartBig(props) {
                         key={item.id}
                         id={item.id}
                         image={item.image[0]}
+                        stock= {item.stock} 
                         name={item.name.slice(0, 20) + "..."}
                         price={item.price}
                         addOneToCart={() => dispatch(addOneToCart(item.id))}

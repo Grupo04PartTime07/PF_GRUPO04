@@ -109,6 +109,7 @@ function Detail(props) {
                         name: detail.name,
                         image: detail.image,
                         price: detail.price,
+                        stock: props.stock, 
                         quantity: 1,
                       })
                     )
@@ -128,6 +129,7 @@ function Detail(props) {
                       name: detail.name,
                       image: detail.image,
                       price: detail.price,
+                      stock: props.stock, 
                       quantity: 1,
                     })
                   )
@@ -149,6 +151,7 @@ function Detail(props) {
                     image: detail.image,
                     price: detail.price,
                     score: detail.score,
+                    stock: props.stock, 
                     quantity: 1,
                   })
                 )

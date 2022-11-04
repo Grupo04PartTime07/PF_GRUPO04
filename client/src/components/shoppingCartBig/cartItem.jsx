@@ -1,9 +1,12 @@
 import React from 'react';
 import styles from "./cartItem.module.css";
 import {Link} from "react-router-dom"
+import Tooltip from '@mui/material/Tooltip';
 
 
 export default function CartItem(props) {
+    console.log("stock", props)
+    console.log("qtty", props.quantity)
 
     return (
         <div className={styles.divCartItem}>
@@ -22,7 +25,8 @@ export default function CartItem(props) {
             <div className={styles.divQuantity}>
                 <button className={styles.bttnRemove} onClick={()=> props.removeOneFromCart(props.id)}>-</button>
                 <span className={styles.quantity}>{props.quantity}u.</span>
-                <button className={styles.bttnAdd} onClick={()=> props.addOneToCart(props.id)}>+</button>
+                {props.stock === props.quantity ? <Tooltip title="No contamos con mas unidades por el momento" placement="top-start"><button className={styles.bttnAdd}>•</button></Tooltip> 
+                                                    : <button className={styles.bttnAdd} onClick={()=> props.addOneToCart(props.id)}>+</button>}
             </div>
 
             <div className={styles.divTotalPrice}>
