@@ -133,13 +133,38 @@ const createNewOrder = async (datosEnvio, total, estado, /* shippingId */ cartId
     } catch (error) {
         console.log(error)
     }
-    
+
 }
+
+const deleteOrder = async (id) => {
+    try{
+        let order = await Orden.findByPk(id)
+        if(order.isDeleted === true){
+            return 'This order doesn\'t exist'
+        }
+        else{
+            await Orden.update({
+                isDeleted: true
+            },
+            {
+                where:{
+                    id: id
+            }
+        })
+    return 'Order deleted succesfully!'
+        }
+    }
+    catch(error){
+        console.log(error)
+    }
+}
+
 
 module.exports = {
     getOrders,
     getOrderbyId,
     modifyStatusOrder,
     createNewOrder,
-    getOrdersByUser
+    getOrdersByUser,
+    deleteOrder
 }
