@@ -88,7 +88,7 @@ const getUserDetail = async (email) => {
         })
        
            
-            let response = {name: user.name, email: user.email, isAdmin: user.isAdmin, isBanned:user.isBanned }
+            let response = {name: user.name, email: user.email, address: user.address, city: user.city, dni: user.dni,isAdmin: user.isAdmin, isBanned:user.isBanned }
     
         return response;
         
