@@ -13,7 +13,8 @@ import { useHistory } from "react-router-dom";
 import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
 import IconButton from '@mui/material/IconButton';
 import ModalShippingAddress from "../modalShippingAddress/modalShippingAddress.jsx"
-import { User } from '@auth0/auth0-react';
+import {useAuth0} from '@auth0/auth0-react';
+import { getUserDetails } from '../../redux/actions/get_user_details.js';
 
 
 export default function ShoppingCartBig(props) {
@@ -21,16 +22,21 @@ export default function ShoppingCartBig(props) {
     const history = useHistory()
     const dispatch = useDispatch()
     const cartItems = useSelector(state => state.cart)
-
+    const registeredUser = useSelector(state => state.userDetail)
+    const { user, loginWithPopup } = useAuth0();
 
     useEffect(() => {  // Didmount and DidUpdate controlled
         window.scrollTo(0, 0)
         dispatch(getCart());
     }, [dispatch])
 
+    useEffect(()=>{
+        dispatch(getUserDetails(user && user.email))
+    }, [user])
+
     const [shipping, setShipping] = useState("")
     const [modal, setModal] = useState(false)
-    const [address, setAddress] = useState("Av del Libertador 2254, Piso 22 Depto A, CP1425 CABA")
+    const [address, setAddress] = useState(registeredUser && registeredUser.address ? registeredUser.address : "")
 
     function handleDisabled() {
         return (
@@ -46,7 +52,7 @@ export default function ShoppingCartBig(props) {
             id: 0, title: "Costo de Envio",
             unit_price: Number(shipping), quantity: 1
         })
-        let objTotal = { subtotal: cartItems.reduce(function (acc, va) { return (acc + (va.quantity * va.price)) }, 0) + Number(shipping), cart: total, email: User.email, direccion: address }
+        let objTotal = { subtotal: cartItems.reduce(function (acc, va) { return (acc + (va.quantity * va.price)) }, 0) + Number(shipping), cart: total, email: user.email, direccion: address }
         dispatch(checkOutCart(objTotal))
         dispatch(deleteCart())
         closeModal()
@@ -137,7 +143,7 @@ export default function ShoppingCartBig(props) {
                         <span className={styles.cartPrice}>${cartItems.reduce(function (acc, va) { return (acc + (va.quantity * va.price)) }, 0) + Number(shipping)}</span>
                     </div>
                     <div className={styles.divBttnPagar} >
-                        <button className={styles.bttnPagar} disabled={handleDisabled()} onClick={shipping === "0" ? () => handlecheckout() : () => openModal()}>Finalizar compra</button>
+                        {user && user.email ? <button className={styles.bttnPagar} disabled={handleDisabled()} onClick={shipping === "0" ? () => handlecheckout() : () => openModal()}>Finalizar compra</button>: <button className={styles.bttnPagar} onClick={loginWithPopup}>Inicia Sesión para Continuar</button>}
                     </div>
                     <ModalShippingAddress
                         modal={modal}
@@ -146,6 +152,7 @@ export default function ShoppingCartBig(props) {
                         handlecheckout={handlecheckout}
                         address={address}
                         setAddress={setAddress}
+                        user={user && user.given_name+" "+user.family_name}
 
                     >
                     </ModalShippingAddress>

@@ -35,6 +35,8 @@ import { updateOrderStatus } from '../../redux/actions/update_order_status';
 import { sortedOrders } from '../../redux/actions/sorted_orders';
 import ModalReclamo from "../modalReclamo/modalReclamo.jsx"
 import styles from "./orderList.module.css";
+import TablePagination from '@mui/material/TablePagination';
+import TableFooter from '@mui/material/TableFooter';
 
 function Row(props) {
 
@@ -203,6 +205,8 @@ const { user} = useAuth0();
 const dispatch = useDispatch()
 const [modal, setModal] = useState(false)
 const [idOrder, setIdOrder] = useState("")
+const [page, setPage] = useState(0)
+const [rowsPerPage, setRowsPerPage] = useState(5)
 
 useEffect(() => {  // Didmount and DidUpdate controlled
   //window.scrollTo(0, 0)
@@ -223,7 +227,13 @@ const closeModal = () => {
   setModal(false)
   //setIdorder("")
 }
-
+const handleChangesRowsPerPage = (event) => {
+  setRowsPerPage(parseInt(event.target.value),10)
+  setPage(0)
+}
+const handleChangePage = (event, newPage) => {
+  setPage(newPage)
+}
 
 
 return (
@@ -259,7 +269,8 @@ return (
           </TableRow>
         </TableHead>
         <TableBody>
-          {orders?.map((order) => (
+          {orders?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+          .map((order) => (
             <Row 
             key={order.id} 
             date={order.date}
@@ -281,6 +292,28 @@ return (
             </ModalReclamo>
         </TableBody>
       </Table>
+      <TableFooter>
+          <TableRow>
+            <TablePagination
+              rowsPerPageOptions={[5,10,15,20]}
+              component="div"
+              colSpan={3}
+              count={orders.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              SelectProps={{
+                inputProps: {
+                  'aria-label': 'rows per page',
+                },
+                native: true,
+              }}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangesRowsPerPage}
+              //ActionsComponent={TablePaginationActions}
+            />
+          </TableRow>
+        </TableFooter>
     </TableContainer>
+    
   );
 } 

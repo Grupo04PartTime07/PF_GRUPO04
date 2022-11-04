@@ -38,7 +38,7 @@ export default function ModalShippingAddress(props) {
             </div>
             <br/>
             <br/>
-            <label>Nombre y Apellido: Rosibel Mendoza</label>
+            <label>Nombre y Apellido: {props.user}</label>
             <br/>
             <br/>
             <TextField fullWidth label="Direccion:" id="fullWidth" value={props.address} onChange={handleOnChange}></TextField>
