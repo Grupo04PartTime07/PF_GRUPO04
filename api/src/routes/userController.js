@@ -88,7 +88,7 @@ const getUserDetail = async (email) => {
         })
        
            
-            let response = {name: user.name, email: user.email, isAdmin: user.isAdmin, isBanned:user.isBanned }
+            let response = {name: user.name, email: user.email, address: user.address, city: user.city, dni: user.dni,isAdmin: user.isAdmin, isBanned:user.isBanned }
     
         return response;
         
@@ -123,7 +123,7 @@ const updateUserRegisted = async (email, name, surname, address, city, dni ) => 
 };
 
 
-const updateUserRegistedAdmin = async (email, name, isAdmin, isBanned, surname, address, city, dni ) => {
+const updateUserRegistedAdmin = async ( name, email,surname, address, city, dni, isAdmin, isBanned) => {
 
     try {
         await UserRegisted.update(
