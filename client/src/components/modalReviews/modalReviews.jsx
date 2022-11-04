@@ -51,6 +51,7 @@ export default function ModalReviews({ id }) {
   }, [dispatch]);
 
   const productDetails = useSelector((state) => state.reviews);
+  
   // let stars = [];
   // for (let i = 0; i < Math.ceil(productDetails.score); i++) {
   //     stars.push(<StarRoundedIcon />)
@@ -86,8 +87,8 @@ export default function ModalReviews({ id }) {
               <h1 className={styles.opinionTitle}>Opiniones</h1>
               <div className={styles.opinionCard}>
                 <div className="opinionModalContainer detailMargin">
-                  {productDetails.opiniones &&
-                    productDetails.opiniones.map((e) => {
+                  {productDetails.scores &&
+                    productDetails.scores.map((e) => {
                       // let starsOpinion = [];
                       // for (let i = 0; i < Math.ceil(e.score); i++) {
                       //     starsOpinion.push(<StarRoundedIcon />)
