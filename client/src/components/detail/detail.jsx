@@ -25,6 +25,7 @@ import { styled } from "@mui/material/styles";
 import { useHistory } from "react-router-dom";
 import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
 import IconButton from '@mui/material/IconButton';
+import OpinionCard from "./auxDetail/opinionCard";
 
 function Detail(props) {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
@@ -109,6 +110,7 @@ function Detail(props) {
                         name: detail.name,
                         image: detail.image,
                         price: detail.price,
+                        stock: props.stock, 
                         quantity: 1,
                       })
                     )
@@ -128,6 +130,7 @@ function Detail(props) {
                       name: detail.name,
                       image: detail.image,
                       price: detail.price,
+                      stock: props.stock, 
                       quantity: 1,
                     })
                   )
@@ -149,6 +152,7 @@ function Detail(props) {
                     image: detail.image,
                     price: detail.price,
                     score: detail.score,
+                    stock: props.stock, 
                     quantity: 1,
                   })
                 )
@@ -178,40 +182,23 @@ function Detail(props) {
 
       <div className="detailContainerOpinion detailMargin">
         <h1 className="opinionTitle">Opiniones</h1>
+        <ModalReviews id={id}></ModalReviews><br/>
         <div className="opinionCard">
-          <div className="opinionContainer">
-            {detail.opiniones &&
-              detail.opiniones.map((e) => {
-                // let starsOpinion = [];
-                // for (let i = 0; i < Math.ceil(e.score); i++) {
-                //   starsOpinion.push(<StarRoundedIcon />);
-                // }
-                return (
-                  <div className="opinionStars">
-                    <StyledRating
-                      defaultValue={e.score}
-                      precision={0.5}
-                      readOnly
-                      icon={<StarRoundedIcon fontSize="inherit" />}
-                      emptyIcon={<StarBorderRoundedIcon fontSize="inherit" />}
-                      sx={{ margin: "15px" , textAlign:"center"}}
-                    />
-                    <p className="detailDescription opinionDescription">{e.coment}</p>
-                  </div>
-                );
-              })}
-          </div>
-          {displayForm && <ScoreForm id={id} formDisplay={formDisplay}/>}
+          <OpinionCard detail={detail}></OpinionCard>
         </div>
-        <div className="divBttnsOpinions">
-          <ModalReviews id={id}></ModalReviews>
-          <br />
-          {isAuthenticated && (
-            <Button variant="contained" onClick={() => formDisplay()}>
-              Deja un comentario
-            </Button>
-          )}
-        </div>
+        
+
+            <div className="divFormOpinions">
+              {displayForm && <ScoreForm id={id} formDisplay={formDisplay}/>}
+            </div>
+            <div className="divBttnsOpinions">
+              {isAuthenticated && (
+                <Button variant="contained" onClick={() => formDisplay()}>
+                  Deja un comentario
+                </Button>
+              )}
+            </div>
+
       </div>
       <div>
         <RelatedProducts

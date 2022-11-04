@@ -34,6 +34,9 @@ import {Link} from "react-router-dom";
 import { updateOrderStatus } from '../../redux/actions/update_order_status';
 import { sortedOrders } from '../../redux/actions/sorted_orders';
 import ModalReclamo from "../modalReclamo/modalReclamo.jsx"
+import styles from "./orderList.module.css";
+import TablePagination from '@mui/material/TablePagination';
+import TableFooter from '@mui/material/TableFooter';
 
 function Row(props) {
 
@@ -57,7 +60,7 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+      <TableRow className={styles.orderRow} sx={{ '& > *': { borderBottom: 'unset' } }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -74,21 +77,23 @@ function Row(props) {
         <TableCell align="right" size="fit-content">{props.id}</TableCell>
         <TableCell align="right" size="fit-content">{props.status}</TableCell>
        
-        <TableCell> 
+        <TableCell>
+          <div onClick={(e)=>props.openModal(e)} id={props.id}>
         <Tooltip title="Generar un reclamo" placement="top-start">
         <IconButton size="large" aria-label="show 4 new mails" color="inherit" id={props.id}
             onClick={(e)=>props.openModal(e)}>
-            <AssignmentOutlinedIcon id={props.id}/>
+            <AssignmentOutlinedIcon onClick={(e)=>props.openModal(e)} id={props.id}/>
         </IconButton>
-        </Tooltip> 
+        </Tooltip>
+        </div>  
         </TableCell> 
        
         <TableCell> 
         {props.status !== "Completada" && props.status !== "Cancelada" && props.status !== "Rechazada" && props.status !== "Pendiente" ? 
         <Tooltip title="Confirmar entrega" placement="top-start">
         <IconButton size="large" aria-label="show 4 new mails" color="inherit" name="Completada"
-            onClick={(e)=> dispatch(updateOrderStatus(props.id,e.target.name)) }>
-            <CheckBoxOutlinedIcon/>
+          onClick={()=> dispatch(updateOrderStatus({id:props.id,estado:"Completada"})) }   >
+            <CheckBoxOutlinedIcon />
         </IconButton>
         </Tooltip> :
          <Tooltip title="Entrega confirmada" placement="top-start">
@@ -103,8 +108,8 @@ function Row(props) {
         {props.status === "Pendiente" || props.status === "Aprobado" ? 
         <Tooltip title="Cancelar compra" placement="top-start">
         <IconButton size="large" aria-label="show 4 new mails" color="inherit" name="Cancelada"
-            onClick={(e)=> dispatch(updateOrderStatus(props.id,e.target.name))}>
-            <DisabledByDefaultOutlinedIcon/>
+          onClick={()=> dispatch(updateOrderStatus({id:props.id,estado:"Cancelada"}))}   >
+            <DisabledByDefaultOutlinedIcon />
         </IconButton>
         </Tooltip> :
          <Tooltip title="" placement="top-start">
@@ -199,7 +204,9 @@ export default function OrderList(props) {
 const { user} = useAuth0();
 const dispatch = useDispatch()
 const [modal, setModal] = useState(false)
-const [idOrder, setIdorder] = useState("")
+const [idOrder, setIdOrder] = useState("")
+const [page, setPage] = useState(0)
+const [rowsPerPage, setRowsPerPage] = useState(5)
 
 useEffect(() => {  // Didmount and DidUpdate controlled
   //window.scrollTo(0, 0)
@@ -207,27 +214,38 @@ useEffect(() => {  // Didmount and DidUpdate controlled
 },[dispatch])
 
 const orders = useSelector(state => state.sortedOrders)
+
 const openModal = (e) => {
+  if(e.target.id){
   setModal(true)
   console.log("Id:",e.target.id)
-  setIdorder(e.target.id)
-}
+  setIdOrder(e.target.id)
+  }else{
+  setModal(false)  
+}}
 const closeModal = () => {
   setModal(false)
-  setIdorder("")
+  //setIdorder("")
+}
+const handleChangesRowsPerPage = (event) => {
+  setRowsPerPage(parseInt(event.target.value),10)
+  setPage(0)
+}
+const handleChangePage = (event, newPage) => {
+  setPage(newPage)
 }
 
 
 return (
-    <TableContainer component={Paper}>
+    <TableContainer className={styles.tableContainer}component={Paper} sx={{width: "1000px"}}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
           <TableCell />
             <TableCell>Fecha </TableCell>
             <TableCell align="right">Total</TableCell>
-            <TableCell align="right">Orden#&nbsp;</TableCell>
-            <TableCell align="right">Status&nbsp;</TableCell>
+            <TableCell align="right">Nro de orden&nbsp;</TableCell>
+            <TableCell align="right">Estado&nbsp;</TableCell>
             <TableCell>
             <label  htmlFor="mayor-menor-a-z">Ordenar/Filtrar: </label>
             <select name="mayor-menor-a-z"id="mayor-menor-a-z" 
@@ -251,13 +269,14 @@ return (
           </TableRow>
         </TableHead>
         <TableBody>
-          {orders?.map((order) => (
+          {orders?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+          .map((order) => (
             <Row 
             key={order.id} 
             date={order.date}
             total={order.total}
             id={order.id}
-            status={order.status}
+            status={order.estado}
             addOrderToCart={()=> dispatch(addOrderToCart(order.id))}
             openModal={openModal}
             
@@ -273,6 +292,28 @@ return (
             </ModalReclamo>
         </TableBody>
       </Table>
+      <TableFooter>
+          <TableRow>
+            <TablePagination
+              rowsPerPageOptions={[5,10,15,20]}
+              component="div"
+              colSpan={3}
+              count={orders.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              SelectProps={{
+                inputProps: {
+                  'aria-label': 'rows per page',
+                },
+                native: true,
+              }}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangesRowsPerPage}
+              //ActionsComponent={TablePaginationActions}
+            />
+          </TableRow>
+        </TableFooter>
     </TableContainer>
+    
   );
 } 

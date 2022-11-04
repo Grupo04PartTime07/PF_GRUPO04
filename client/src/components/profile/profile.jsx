@@ -18,9 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 export default function Profile(){
     const dispatch = useDispatch();
     const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
-    let currentUser = "Guest"
-    if(user && user.email) currentUser = user.email
-    let profile = JSON.parse(window.localStorage.getItem(`p${currentUser}`))
+    let profile = window.localStorage.getItem('isAdmin')
     
     const userdetail = useSelector((state) => state.userDetail)
     user.isAdmin = userdetail.isAdmin;
@@ -47,16 +45,6 @@ export default function Profile(){
     useEffect(() => {
         window.scrollTo(0, 0)
         dispatch(getUserDetails(user.email));
-
-        if (!isAuthenticated){
-            return () => {
-                user.isAdmin = false;
-                //console.log(usuario);
-            }
-        }else{
-            //window.localStorage.removeItem(`isAdmin`);
-
-        }
     },[dispatch])
     
     const [ checked, setChecked ] = React.useState('datos')

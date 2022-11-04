@@ -2,7 +2,7 @@ const { Router } = require('express');
 const router = Router();
 const { Brand } = require('../db');
 
-const { getBrandsDb, createBrand } = require('./controllers');
+const { getBrandsDb, createBrand, deleteBrand } = require('./controllers');
 
 router.get('/', async (req, res) => { 
     try{
@@ -31,6 +31,17 @@ router.put('/', async (req, res) => {
         res.status(201).json("Modificado con Exito")
     } catch (error) {
         console.log(e)
+    }
+})
+
+router.delete('/', async function(req, res){
+    const {id} = req.query
+    try{
+        let deleted = await deleteBrand(id)
+        res.status(200).send(deleted)
+    }
+    catch(error){
+        console.log(error)
     }
 })
 

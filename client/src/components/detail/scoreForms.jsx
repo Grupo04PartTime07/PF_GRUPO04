@@ -69,7 +69,7 @@ export default function ScoreForm({ id, formDisplay}) {
   });
 
   return (
-    <div>
+    <div className="scoreFormContainer">
       <h1 className="CommentTitle">¿Qué te pareció este producto?</h1>
       <form onSubmit={(e) => handleSubmit(e)}>
         <div className="commentContainer">

@@ -66,7 +66,7 @@ export default function ModalReviews({ id }) {
 
   return (
     <div>
-      <p className="linkToBack" onClick={handleOpen} variant="contained">
+      <p className={styles.linkModal} onClick={handleOpen} variant="contained">
         Ver más opiniones
       </p>
       <Modal
@@ -85,7 +85,7 @@ export default function ModalReviews({ id }) {
             <Typography sx={style} id="transition-modal-description">
               <h1 className={styles.opinionTitle}>Opiniones</h1>
               <div className={styles.opinionCard}>
-                <div className="opinionContainer detailMargin">
+                <div className="opinionModalContainer detailMargin">
                   {productDetails.opiniones &&
                     productDetails.opiniones.map((e) => {
                       // let starsOpinion = [];

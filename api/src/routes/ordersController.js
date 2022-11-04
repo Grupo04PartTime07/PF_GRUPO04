@@ -7,7 +7,7 @@ const getOrders = async() => {
         }, {
             include: {
                 model: StateOrden,
-                attributes: ['id']
+                attributes: ['name']
             }
         })
         return orders
@@ -133,13 +133,38 @@ const createNewOrder = async (datosEnvio, total, estado, /* shippingId */ cartId
     } catch (error) {
         console.log(error)
     }
-    
+
 }
+
+const deleteOrder = async (id) => {
+    try{
+        let order = await Orden.findByPk(id)
+        if(order.isDeleted === true){
+            return 'La orden no fue encontrada'
+        }
+        else{
+            await Orden.update({
+                isDeleted: true
+            },
+            {
+                where:{
+                    id: id
+            }
+        })
+    return 'La Orden fue Borrada exitosamente'
+        }
+    }
+    catch(error){
+        console.log(error)
+    }
+}
+
 
 module.exports = {
     getOrders,
     getOrderbyId,
     modifyStatusOrder,
     createNewOrder,
-    getOrdersByUser
+    getOrdersByUser,
+    deleteOrder
 }

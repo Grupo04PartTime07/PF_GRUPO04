@@ -13,14 +13,14 @@ mercadopago.configure({
 
 router.post('/', async (req, res) => {
 
-  const { idCart, cart, subtotal, userEmail, dataShipping } = req.body
+  const { idCart, cart, subtotal, email, direccion } = req.body
   const carrito = await Cart.findByPk(idCart);
 
-  // const user = await UserRegisted.findOne({
-  //   where: {
-  //     email: userEmail,
-  //   }
-  // });
+  const user = await UserRegisted.findOne({
+     where: {
+       email: email,
+     }
+   });
 
 try{
   if(!carrito){
@@ -40,7 +40,7 @@ try{
 
     await cartCreated.setStateCarrito(4);
 
-    // await user.addCart(cartCreated.id);
+    await user.addCart(cartCreated.id);
 
     const order = await Orden.findOne({
       where: {
@@ -51,12 +51,12 @@ try{
     if(!order){
       const newOrder = await Orden.create({
         total: subtotal, 
-        // datosEnvio: dataShipping,
+        datosEnvio: direccion,
       });
 
       console.log('esto es cartCreated ID', cartCreated.id)
 
-      // await newOrder.setCart(cartCreated.id);
+      await newOrder.setCart(cartCreated.id);
 
       await newOrder.setStateOrden(4);
 
@@ -86,7 +86,7 @@ try{
 
     await carrito.setStateCarrito(4);
     
-    // await user.addCart(carrito.id)
+    await user.addCart(carrito.id)
 
     const order = await Orden.findOne({
       where: {
@@ -97,12 +97,12 @@ try{
     if(!order){
       const newOrder = await Orden.create({
         total: subtotal, 
-        // datosEnvio: dataShipping,
+        datosEnvio: direccion,
       });
 
       console.log('esto es carrito ID', carrito.id)
 
-      // await newOrder.setCart(carrito.id)
+      await newOrder.setCart(carrito.id)
   
       await newOrder.setStateOrden(4);
 
