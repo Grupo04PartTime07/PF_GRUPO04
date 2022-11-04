@@ -7,7 +7,7 @@ const getOrders = async() => {
         }, {
             include: {
                 model: StateOrden,
-                attributes: ['id']
+                attributes: ['name']
             }
         })
         return orders

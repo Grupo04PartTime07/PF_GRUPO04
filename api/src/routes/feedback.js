@@ -17,6 +17,14 @@ try{
     if(status === 'approved'){
         const newItems = items.filter((e) => e.id !== '0');
 
+        await Orden.update({
+            estado: payment_id,
+        },{
+            where: {
+                id: order.id
+            }
+        })
+
         // order.setStateOrden('');
 
         await order.setStateOrden(2)
