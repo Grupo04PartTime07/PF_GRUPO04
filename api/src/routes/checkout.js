@@ -17,100 +17,91 @@ router.post('/', async (req, res) => {
   const carrito = await Cart.findByPk(idCart);
 
   const user = await UserRegisted.findOne({
-     where: {
-       email: email,
-     }
-   });
+    where: {
+      email: email,
+    }
+  });
 
-try{
-  if(!carrito){
-  const cartCreated = await Cart.create({
-      subtotal
-    });
-
-    cart.map(async (e) => {
-      await cartCreated.addProducts(e.id,
-      {
-        through: {
-          precio: e.unit_price,
-          cantidad: e.quantity
-        }
-      })
-    });
-
-    await cartCreated.setStateCarrito(4);
-
-    await user.addCart(cartCreated.id);
-
-    const order = await Orden.findOne({
-      where: {
-        cartId: cartCreated.id,
-      }
-    });
-
-    if(!order){
-      const newOrder = await Orden.create({
-        total: subtotal, 
-        datosEnvio: direccion,
+  try {
+    if (!carrito) {
+      const cartCreated = await Cart.create({
+        subtotal
       });
 
-      console.log('esto es cartCreated ID', cartCreated.id)
-
-      await newOrder.setCart(cartCreated.id);
-
-      await newOrder.setStateOrden(4);
-
-      console.log('esto es newOrder', newOrder);
-    }
-
-  }else{
-    await Cart.update({
-      subtotal
-    }, {
-      where: {
-        id: idCart
-      }
-    })
-
-    await carrito.setProducts([]);
-
-    cart.map(async (e) => {
-      await carrito.addProducts(e.id,
-      {
-        through: {
-          precio: e.unit_price,
-          cantidad: e.quantity
-        }
-      })
-    });
-
-    await carrito.setStateCarrito(4);
-    
-    await user.addCart(carrito.id)
-
-    const order = await Orden.findOne({
-      where: {
-        cartId: idCart,
-      }
-    });
-
-    if(!order){
-      const newOrder = await Orden.create({
-        total: subtotal, 
-        datosEnvio: direccion,
+      cart.map(async (e) => {
+        await cartCreated.addProducts(e.id,
+          {
+            through: {
+              precio: e.unit_price,
+              cantidad: e.quantity
+            }
+          })
       });
 
-      console.log('esto es carrito ID', carrito.id)
+      await cartCreated.setStateCarrito(4);
 
-      await newOrder.setCart(carrito.id)
-  
-      await newOrder.setStateOrden(4);
+      await user.addCart(cartCreated.id);
 
-      console.log('esto es newOrder', newOrder)
-  
-    }
+      const order = await Orden.findOne({
+        where: {
+          cartId: cartCreated.id,
+        }
+      });
 
-  };
+      if (!order) {
+        const newOrder = await Orden.create({
+          total: subtotal,
+          datosEnvio: direccion,
+        });
+
+        await newOrder.setCart(cartCreated.id);
+
+        await newOrder.setStateOrden(4);
+      }
+
+    } else {
+      await Cart.update({
+        subtotal
+      }, {
+        where: {
+          id: idCart
+        }
+      })
+
+      await carrito.setProducts([]);
+
+      cart.map(async (e) => {
+        await carrito.addProducts(e.id,
+          {
+            through: {
+              precio: e.unit_price,
+              cantidad: e.quantity
+            }
+          })
+      });
+
+      await carrito.setStateCarrito(4);
+
+      await user.addCart(carrito.id)
+
+      const order = await Orden.findOne({
+        where: {
+          cartId: idCart,
+        }
+      });
+
+      if (!order) {
+        const newOrder = await Orden.create({
+          total: subtotal,
+          datosEnvio: direccion,
+        });
+
+        await newOrder.setCart(carrito.id)
+
+        await newOrder.setStateOrden(4);
+      }
+
+    };
 
 }catch(e){
   console.log(e)
