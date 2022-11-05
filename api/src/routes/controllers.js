@@ -171,6 +171,7 @@ const getProductDetail = async (id) => {
                     attributes: ["name"],
                 },
 
+
                 {
                     model: Score,
                     attributes: ["score", "coment", "id"],
@@ -441,5 +442,12 @@ module.exports = {
     createScore,
     getScores,
     updateScoreProm,
+
     updateScoreUser,
+
+    deleteBrand,
+    deleteCategory, 
+    deleteProduct,
+    deleteScore
+
 }
