@@ -13,17 +13,17 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { Button } from "@mui/material";
+//import { Button } from "@mui/material";
 import './adminOrders.css'
-
+import emailjs from '@emailjs/browser';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { styled, alpha } from '@mui/material/styles';
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { getAdminOrders } from '../../redux/actions/get_adminOrders';
-import { updateOrderStatus } from '../../redux/actions/update_order_status'
-import { getOrderDetail } from '../../redux/actions/get_order_detail'
+// import { useEffect } from 'react';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { getAdminOrders } from '../../redux/actions/get_adminOrders';
+// import { updateOrderStatus } from '../../redux/actions/update_order_status'
+// import { getOrderDetail } from '../../redux/actions/get_order_detail'
 
 function createData(orderNum, client, status, total) {
   return {
@@ -56,7 +56,21 @@ const rows = [
     createData('20445', 'cumpleañito@hotmail.com', 'Rechazada', 500),
   ];
   
+  function emailSender(){
+  let templateParams = {
+    state: "fue despachado por el vendedor",
+    name: rows.client,
+    email: "bernardo.broscheit@gmail.com", // cambiar por el dato del mail del comprador
 
+  };
+
+  emailjs.send('service_d1v2e28', 'cambioEstado', templateParams, 'fbwvxNnmkAc-vqxnx')
+          .then(function(response) {
+             console.log('SUCCESS!', response.status, response.text);
+          }, function(error) {
+             console.log('FAILED...', error);
+          });
+  }
 // info del colapsable
 
 
@@ -79,8 +93,9 @@ function Row(props) {
     if(row.status !== newSelectedStatus){
       //dispatch(updateOrderStatus(orders.numOrder, newSelectedStatus))
         row.status = newSelectedStatus
-        console.log(newSelectedStatus)
-        console.log(row.client + ' se cambio a ' + newSelectedStatus)
+        emailSender()
+        // console.log(newSelectedStatus)
+        // console.log(row.client + ' se cambio a ' + newSelectedStatus)
     }
   }
 
