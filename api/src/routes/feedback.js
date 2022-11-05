@@ -7,10 +7,10 @@ router.post('/', async (req, res) => {
 const {payment_id, status, payment_type, merchant_order_id} = req.body
 try{
     const { data } = await axios.get(`https://api.mercadopago.com/merchant_orders/${merchant_order_id}?access_token=APP_USR-8763003876428984-102015-2626c522c3a666ad57ca4f935dabf886-1221748734`);
-    const { items, paid_amount } = data;
+    const { items, total_amount } = data;
     const order = await Orden.findOne({
         where: {
-            total: paid_amount,
+            total: total_amount,
         },
         include: [
             {
@@ -20,11 +20,11 @@ try{
         ]
     });
 
-    const cart = await Cart.findOne({
-        where: {
-            id: order.cartId
-        }
-    });
+    // const cart = await Cart.findOne({
+    //     where: {
+    //         id: order.cartId
+    //     }
+    // });
 
     if(status === 'approved'){
         const newItems = items.filter((e) => e.id !== '0');
@@ -66,6 +66,13 @@ try{
             });
         
         }else{
+            await Orden.update({
+                estado: merchant_order_id,
+            },{
+                where: {
+                    id: order.id
+                }
+            })
 
             await order.setStateOrden(3)
         }
@@ -73,7 +80,7 @@ try{
         console.log(e)
     }
 
-res.status(200).send('Proceso finalizado');
+res.status(200).send('Proceso de compra finalizado!');
 })
 
 module.exports = router;
