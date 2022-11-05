@@ -20,31 +20,31 @@ import Feedback from './components/feedback/feedback';
 
 function App() {
   return (
-          <div className="App">
-    <BrowserRouter>
-            <Navbar/>
-      <React.Fragment>
-        <Switch>
-            <Route exact path='/' component={Home}/>
-            <Route exact path='/busqueda' component={Home}/>
-            <Route exact path='/Categorías' component={CategoriesList}/>
-            <Route exact path='/products' component={Categorie}/>
-            <Route exact path="/products/:id" component={Detail} />           
+    <div className="App">
+      <BrowserRouter>
+        <Navbar />
+        <React.Fragment>
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route exact path='/busqueda' component={Home} />
+            <Route exact path='/Categorías' component={CategoriesList} />
+            <Route exact path='/products' component={Categorie} />
+            <Route exact path="/products/:id" component={Detail} />
             <Route exact path="/createProduct" component={CreateProduct} />
             <Route exact path="/myProfile" component={Profile} />
             <Route exact path="/Marcas" component={Marcas} />
-            <Route exact path='/createCategory' component={CategoryForm}/>
-            <Route exact path='/createBrand' component={BrandForm}/>
-            <Route exact path='/brands' component={Brand}/>
-            <Route exact path='/shoppingCart' component={ShoppingCartBig}/>
-            <Route exact path='/wishList' component={WishList}/>
-            <Route exact path='/feedback' component={Feedback}/>
+            <Route exact path='/createCategory' component={CategoryForm} />
+            <Route exact path='/createBrand' component={BrandForm} />
+            <Route exact path='/brands' component={Brand} />
+            <Route exact path='/shoppingCart' component={ShoppingCartBig} />
+            <Route exact path='/wishList' component={WishList} />
+            <Route exact path='/feedback' component={Feedback} />
             <Route path="*" component={NotFound} />
           </Switch>
-            <Route path="/" component={Footer} />
-      </React.Fragment>
-    </BrowserRouter>
-          </div>
+          <Route path="/" component={Footer} />
+        </React.Fragment>
+      </BrowserRouter>
+    </div>
   );
 }
 

@@ -120,7 +120,7 @@ export default function ShoppingCartBig(props) {
                             }, 0) * .1)
                             )}
                             Puntos.</span>
-                        {/* <input
+                        <input
                             className={styles.puntos}
                             type="number"
                             // value=
@@ -132,7 +132,7 @@ export default function ShoppingCartBig(props) {
                         />
                         <button className={styles.bttnUse} 
                         onClick={() => props.addOneToCart(props.id)}
-                        >usar</button> */}
+                        >usar</button>
                     </div>
                     <div className={styles.divCantProductos}>
                         <p className={styles.pCantProductos}>Cantidad de productos: </p>

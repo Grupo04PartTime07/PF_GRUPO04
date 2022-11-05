@@ -8,7 +8,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
-import PaidTwoToneIcon from '@mui/icons-material/PaidTwoTone';
+import LoyaltyTwoToneIcon from '@mui/icons-material/LoyaltyTwoTone';
 import CategoryTwoToneIcon from '@mui/icons-material/CategoryTwoTone';
 // import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 // import InventoryIcon from '@mui/icons-material/Inventory';
@@ -42,12 +42,12 @@ export default function TemporaryDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['Inicio', 'Categorías', 'Promociones', 'Marcas'].map((text, index) => (
+        {['Inicio', 'Categorías', 'Marcas'].map((text, index) => (
             <Link className='link' to={index !== 0 ? '/' + text : '/'}> 
                 <ListItemButton>
                     <ListItem key={text} disablePadding>
                         <ListItemIcon>
-                            {index === 0 ? <HomeTwoToneIcon/> : index % 2 === 0 ? <PaidTwoToneIcon /> : <CategoryTwoToneIcon />}
+                            {index === 0 ? <HomeTwoToneIcon/> : index % 2 === 0 ? <LoyaltyTwoToneIcon /> : <CategoryTwoToneIcon />}
                         </ListItemIcon>
                         <ListItemText primary={text} /> 
                     </ListItem>
