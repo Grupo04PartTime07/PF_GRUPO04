@@ -10,6 +10,7 @@ import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined
 import { useHistory } from "react-router-dom";
 import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
 import IconButton from '@mui/material/IconButton';
+import { grey } from '@mui/material/colors';
 
 export default function WishList(props){
 
@@ -28,7 +29,7 @@ useEffect(() => {  // Didmount and DidUpdate controlled
 return(
         <div>
             
-            <div className={styles.volver} onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon /></IconButton> Volver</div>
+            <div className={styles.volver} onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon sx={{ color: grey[50]}}/></IconButton> Volver</div>
             
         <div className={styles.divShoppingCart}>
             <h1 className={styles.title}>Mis productos favoritos</h1>

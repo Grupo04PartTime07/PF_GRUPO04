@@ -46,7 +46,7 @@ export default function ModalShippingAddress(props) {
             <br/>
             <br/>
             <Button disabled = {!props.address? true : false}onClick={()=>props.handlecheckout()}>Continuar</Button>
-            <Button onClick={()=>props.closeModal() }>Cancelar</Button>
+            <Button onClick={()=>props.closeModal() } variant="contained">Cancelar</Button>
             </div>
 
         </div>
