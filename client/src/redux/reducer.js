@@ -47,9 +47,13 @@ import { GET_ADMIN_ORDERS } from './actions/get_adminOrders';
 import { GET_USER_MODIFICAR } from './actions/get_user_modificar'
 import { UPDATE_USER_ADMIN } from './actions/update_user_admin';
 import { UPDATE_USER } from './actions/update_user';
-
+import { DELETE_CATEGORY } from "./actions/delete_category";
+import { DELETE_BRAND } from './actions/delete_brand';
+import { DELETE_PRODUCT } from './actions/delete_product';
+import { DELETE_USER } from './actions/delete_user';
 
 import swal from 'sweetalert';
+
 
 const initialState = {
     categories: [],
@@ -262,7 +266,7 @@ const reducer = (state = initialState, action) => {
                 return !productFound?
                 {
                 ...state,
-                cart: [...state.cart, ...state.orderDetail] //action.payload
+                cart: [...state.cart, ...state.orderDetail] 
                 }: {
                 ...state,
                 cart: [...state.cart]    
@@ -470,6 +474,42 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 favorites: []
             }
+        case DELETE_CATEGORY:
+            swal({
+                title: action.payload.message,
+                icon: "success",
+            });
+            return {
+                ...state,
+                message: action.payload
+                }
+        case DELETE_BRAND:
+            swal({
+                title: action.payload.message,
+                icon: "success",
+            });
+            return {
+                ...state,
+                message: action.payload
+                }
+        case DELETE_PRODUCT:
+            swal({
+                title: action.payload.message,
+                icon: "success",
+                });
+            return {
+                 ...state,
+                message: action.payload
+                }
+        case DELETE_USER:
+            swal({
+                title: action.payload.message,
+                icon: "success",
+                });
+            return {
+                ...state,
+                message: action.payload
+                }
         case ADD_TO_FAVORITE:
             let favoritesCopy = state.favorites;
             let itemExist = favoritesCopy.filter(e => e.name === action.payload.name)
