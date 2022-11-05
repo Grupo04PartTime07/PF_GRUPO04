@@ -476,7 +476,7 @@ const reducer = (state = initialState, action) => {
             }
         case DELETE_CATEGORY:
             swal({
-                title: action.payload.message,
+                title: action.payload,
                 icon: "success",
             });
             return {
@@ -485,7 +485,7 @@ const reducer = (state = initialState, action) => {
                 }
         case DELETE_BRAND:
             swal({
-                title: action.payload.message,
+                title: action.payload,
                 icon: "success",
             });
             return {
@@ -494,7 +494,7 @@ const reducer = (state = initialState, action) => {
                 }
         case DELETE_PRODUCT:
             swal({
-                title: action.payload.message,
+                title: action.payload,
                 icon: "success",
                 });
             return {
@@ -503,7 +503,7 @@ const reducer = (state = initialState, action) => {
                 }
         case DELETE_USER:
             swal({
-                title: action.payload.message,
+                title: action.payload,
                 icon: "success",
                 });
             return {

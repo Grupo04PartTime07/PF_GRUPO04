@@ -16,13 +16,13 @@ import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import Avatar from '@mui/material/Avatar';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
+import { useDispatch } from 'react-redux';
+import { deleteProduct } from '../../redux/actions/delete_product'
+import { getAdminProducts } from '../../redux/actions/get_admin_products'
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -97,7 +97,7 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
-          <Checkbox
+          {/*<Checkbox
             color="primary"
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
@@ -105,7 +105,7 @@ function EnhancedTableHead(props) {
             inputProps={{
               'aria-label': 'select all desserts',
             }}
-          />
+          />*/}
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
@@ -143,7 +143,7 @@ EnhancedTableHead.propTypes = {
 };
 
 function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
+  const { numSelected, handleDelete } = props;
 
   return (
     <Toolbar
@@ -163,7 +163,7 @@ function EnhancedTableToolbar(props) {
           variant="subtitle1"
           component="div"
         >
-          {numSelected} seleccionados
+          {numSelected} seleccionado
         </Typography>
       ) : (
         <Typography
@@ -178,8 +178,8 @@ function EnhancedTableToolbar(props) {
 
       {numSelected > 0 ? (
         <Tooltip title="Eliminar Producto">
-          <IconButton>
-            <DeleteIcon />
+          <IconButton onClick={handleDelete}>
+            <DeleteIcon onClick={handleDelete}/>
           </IconButton>
         </Tooltip>
       ) : null}
@@ -191,13 +191,14 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable({displayProductForm, rows}) {
+export default function EnhancedTable({displayProductForm, rows, setSearchQuery}) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const dispacth = useDispatch()
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -218,17 +219,14 @@ export default function EnhancedTable({displayProductForm, rows}) {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+   if (selectedIndex === -1) {
+      newSelected = [name];
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
       newSelected = newSelected.concat(selected.slice(0, -1));
     } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
+      newSelected = []
     }
     setSelected(newSelected);
   };
@@ -244,6 +242,13 @@ export default function EnhancedTable({displayProductForm, rows}) {
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
+  const handleDelete = () =>{
+    dispacth(deleteProduct(selected[0]))
+    setSelected([])
+    setSearchQuery("")
+    setTimeout(()=>{dispacth(getAdminProducts())},2000)
+  }
+
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
@@ -251,7 +256,7 @@ export default function EnhancedTable({displayProductForm, rows}) {
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} handleDelete={handleDelete} />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
