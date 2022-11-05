@@ -108,7 +108,7 @@ export default function AllBrands(){
                         </Search>
                     </div>
 
-                    {dataFiltered && dataFiltered.length? <EnhancedTable rows={dataFiltered} displayProductForm={displayProductForm}></EnhancedTable>:null}           
+                    {dataFiltered && dataFiltered.length? <EnhancedTable rows={dataFiltered} displayProductForm={displayProductForm} setSearchQuery={setSearchQuery}></EnhancedTable>:null}           
                     
                 </div>
                 {currentBrand && display == currentBrand.id ? <div><BrandForm brand={currentBrand} setDisplay={setDisplay} /></div> : null}

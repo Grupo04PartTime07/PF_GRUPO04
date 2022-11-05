@@ -12,13 +12,13 @@ const getProductsDb = async () => {
                     attributes: ["name"],
                     through: {
                         attributes: [],
-                    }//, where: { isDeleted: false }
+                    }, where: { isDeleted: false }
 
                 },
 
                 {
                     model: Brand,
-                    attributes: ["name"], // where: { isDeleted: false }
+                    attributes: ["name"],  where: { isDeleted: false }
                 },
 
             ],

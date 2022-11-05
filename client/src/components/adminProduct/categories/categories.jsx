@@ -108,7 +108,7 @@ export default function AllCategories(){
                         </Search>
                     </div>
 
-                    {dataFiltered && dataFiltered.length? <EnhancedTable rows={dataFiltered} displayProductForm={displayProductForm}></EnhancedTable>:null}           
+                    {dataFiltered && dataFiltered.length? <EnhancedTable rows={dataFiltered} displayProductForm={displayProductForm} setSearchQuery={setSearchQuery}></EnhancedTable>:null}           
                     
                 </div>
                 {currentCategory && display == currentCategory.id ? <div><CategoryForm category={currentCategory} setDisplay={setDisplay} /></div> : null}
