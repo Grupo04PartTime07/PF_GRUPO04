@@ -21,7 +21,7 @@ import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
 import Rating from "@mui/material/Rating";
 import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import { styled } from "@mui/material/styles";
-
+import { grey } from '@mui/material/colors';
 import { useHistory } from "react-router-dom";
 import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
 import IconButton from '@mui/material/IconButton';
@@ -69,7 +69,7 @@ function Detail(props) {
 
   return typeof detail.id === "number" ? (
     <div className="detailContainer">
-      <div className='volverDetail' onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon /></IconButton> Volver</div>
+      <div className='volverDetail' onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon sx={{ color: grey[50]}}/></IconButton> Volver</div>
       <div className="detailContainerArticles">
         <div>
           <div className="detailLeft">
