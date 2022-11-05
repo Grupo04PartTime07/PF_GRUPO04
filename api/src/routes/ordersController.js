@@ -4,13 +4,47 @@ const getOrders = async() => {
     try{
         let orders = await Orden.findAll({
             where: { isDeleted: false },
-        }, {
-            include: {
+            include: [
+                {
                 model: StateOrden,
-                attributes: ['name']
-            }
+                attributes: ['state'],
+            },
+            {
+                model: Cart,
+                attributes: ['userRegistedId'],
+            }]
         })
-        return orders
+
+        let ordersFinal = []
+        
+        for(const e of orders){
+            let user = await UserRegisted.findOne({
+                where: {
+                    id: e.cart.userRegistedId ? e.cart.userRegistedId : ' '
+                }
+            });
+
+            if(!user){
+                var userEmail = 'enzo@gmail.com'
+            }else{
+                var userEmail = user.email;
+            }
+            
+            ordersFinal.push({
+                
+                    id: e.id ? e.id : 'id',
+                    isDeleted: e.isDeleted,
+                    createdAt: e.createdAt ? e.createdAt : 'createdAt ',
+                    datosEnvio: e.datosEnvio ? e.datosEnvio : 'datosEnvio',
+                    total: e.total ? e.total : 'total',
+                    estado: e.estado ? e.estado : 'estado',
+                    shippingId: e.shippingId ? e.shippingId : 'shippingId',
+                    cartId: e.cartId ? e.cartId : 'cartId',
+                    stateOrden: e.stateOrden.state ? e.stateOrden.state : 'state',
+                    userEmail: userEmail ? userEmail : 'enzo@gmail.com'
+            })
+        };
+        return ordersFinal
     }
     catch(error){
         console.log(error)
