@@ -7,6 +7,7 @@ import './feedback.css'
 import axios from 'axios';
 import { verifyPurchase } from "../../redux/actions/verify_purchase";
 import {useAuth0} from '@auth0/auth0-react';
+import { deleteCart } from '../../redux/actions/delete_cart';
 
 
 const { BACK_URL = 'http://localhost:3001' } = process.env
@@ -24,6 +25,7 @@ export default function Feedback(){
     const { user, isAuthenticated, getAccessTokenSilently  } = useAuth0();
     let currentUser = "Guest"
     if(user && user.email) currentUser = user.email
+    
     // let navbarUser = JSON.parse(window.localStorage.getItem(`userName`))
     //let navbarEmail = JSON.parse(window.localStorage.getItem(`userEmail`))
     
@@ -82,7 +84,10 @@ export default function Feedback(){
           });
     }
 
-    
+    // function updateStorage(user, cart){
+    //     let updatedCart = JSON.stringify(cart);
+    //     window.localStorage.setItem(user, updatedCart)
+    // }   
 
     React.useEffect(() => {
         dispatch(verifyPurchase({payment_id, status, payment_type, merchant_order_id}))
@@ -98,6 +103,9 @@ export default function Feedback(){
                 console.log(usuario);
             }
         }
+        // dispatch(deleteCart())
+        // updateStorage(`c${currentUser}`, [])
+
     }, [dispatch, user]);
     
     return(
