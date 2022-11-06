@@ -27,6 +27,8 @@ import {useAuth0} from '@auth0/auth0-react';
 import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
 import {useEffect} from 'react';
+import { getScoreUserId } from '../../redux/actions/get_score_user_id';
+import {getAllUsers} from '../../redux/actions/get_all_users';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative', 
@@ -85,13 +87,36 @@ export default function PrimarySearchAppBar() {
   // let navbarEmail = user && JSON.parse(window.localStorage.getItem(`userEmail`))
   let dhacart = JSON.parse(window.localStorage.getItem(`c${currentUser}`))
   let dhafav = JSON.parse(window.localStorage.getItem(`f${currentUser}`))
- 
+
+  useEffect(() => {
+dispatch(getAllUsers());
+},[]);
+
+useEffect(() => {
+  if (isAuthenticated){
+    const useFilter = allUse.filter(user => user.email === currentUser)
+    // console.log('SOY useFilter',useFilter)
+    const usuario = useFilter && useFilter[0].id
+    // console.log('SOY USUARIO', usuario)
+    dispatch(getScoreUserId(usuario))
+    };
+    },[user])
+
+  const allUse = useSelector(state => state.users )
+  // console.log(allUse)
+
+
+
   React.useEffect(()=>{
     if(dhacart && dhacart.length){
       dispatch(fulfillCart([]))
       dispatch(fulfillCart(dhacart))
+      
       } 
     }, [dispatch, user])
+
+    const score = useSelector(state =>state.scoreUserId)
+    console.log('SOY SCORE',score)
 
   React.useEffect(()=>{ 
     if(dhafav && dhafav.length){
@@ -315,7 +340,7 @@ export default function PrimarySearchAppBar() {
     if (isAuthenticated) {
       return () => {
         const usuario = callProtectedApiToken2();
-        //console.log(usuario);
+        // console.log(usuario);
         //localStorage.isAdmin=usuario.isAdmin;
       };
     } else {
@@ -363,7 +388,7 @@ export default function PrimarySearchAppBar() {
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
           <IconButton sx={{width: '40%', height: '50%'}} size="large" aria-label="show 4 new mails" color="inherit">
               <Badge >
-              {isAuthenticated?<p className='greetingsPoint'>800Pts.</p>:<LocalActivityOutlinedIcon/>}
+              {isAuthenticated?<p className='greetingsPoint'>{score} Pts.</p>:<LocalActivityOutlinedIcon/>}
               {/* <LocalActivityOutlinedIcon/> */}
               </Badge>
             </IconButton>

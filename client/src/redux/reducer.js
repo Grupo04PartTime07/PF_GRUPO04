@@ -51,7 +51,7 @@ import { DELETE_CATEGORY } from "./actions/delete_category";
 import { DELETE_BRAND } from './actions/delete_brand';
 import { DELETE_PRODUCT } from './actions/delete_product';
 import { DELETE_USER } from './actions/delete_user';
-
+import {GET_SCORE_USER_ID} from './actions/get_score_user_id';
 import swal from 'sweetalert';
 
 
@@ -72,6 +72,7 @@ const initialState = {
     orderDetail:[],    
     score_prom: "",
     scoreUser: "",
+    scoreUserId: "",
     users:[],
     userDetail:{},
     userModificar:{},
@@ -98,6 +99,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 userDetail: action.payload
+            }
+
+        case GET_SCORE_USER_ID:
+            return {
+                ...state,
+                scoreUserId: action.payload
             }
 
         case GET_USER_MODIFICAR:
