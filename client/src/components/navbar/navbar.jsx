@@ -88,9 +88,17 @@ export default function PrimarySearchAppBar() {
  
   React.useEffect(()=>{
     if(dhacart && dhacart.length){
+      if(user){
+        let cguest = JSON.parse(window.localStorage.getItem('cGuest'))
+        let nvocart = dhacart.concat(cguest)
+        updateStorage(`c${currentUser}`, nvocart)
+        window.localStorage.removeItem('cGuest')
+        dispatch(fulfillCart([]))
+        dispatch(fulfillCart(nvocart))
+      }else{
       dispatch(fulfillCart([]))
       dispatch(fulfillCart(dhacart))
-      } 
+      }}
     }, [dispatch, user])
 
   React.useEffect(()=>{ 

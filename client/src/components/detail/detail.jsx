@@ -12,12 +12,11 @@ import Loading from "../loading/loading";
 
 import { addToCart } from "../../redux/actions/add_to_cart";
 import { addToFavorite } from "../../redux/actions/add_to_favorite";
-import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import ModalReviews from "../modalReviews/modalReviews";
 import ModalImg from "./modalImg";
 import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
-
+import RemoveTwoToneIcon from '@mui/icons-material/RemoveTwoTone';
 import Rating from "@mui/material/Rating";
 import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import { styled } from "@mui/material/styles";
@@ -28,13 +27,14 @@ import IconButton from '@mui/material/IconButton';
 import OpinionCard from "./auxDetail/opinionCard";
 
 function Detail(props) {
-  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   const history = useHistory()
   const { id } = props.match.params;
   const dispatch = useDispatch();
   const [displayForm, setDisplay] = React.useState(false);
   const detail = useSelector((state) => state.productdetail);
   const scoreProm = useSelector((state) => state.score_prom);
+  const favorites = useSelector(state => state.favorites)
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -57,7 +57,8 @@ function Detail(props) {
   // }
 
 
-  console.log(cart,"soy el carrito")
+  let itemFound = favorites.find(e => e.name === detail.name)
+  
   const StyledRating = styled(Rating)({
     "& .MuiRating-iconFilled": {
       color: "#1976d2",
@@ -66,6 +67,19 @@ function Detail(props) {
       color: "#154bbf",
     },
   });
+
+  const handleComprar = () =>{
+    dispatch(
+      addToCart({
+        id: detail.id,
+        name: detail.name,
+        image: detail.image,
+        price: detail.price,
+        stock: detail.stock, 
+        quantity: 1,
+      }))
+      history.push('/shoppingCart')
+  }
 
   return typeof detail.id === "number" ? (
     <div className="detailContainer">
@@ -100,27 +114,14 @@ function Detail(props) {
             <p className="detailDescription">{detail.description}</p>
           </div>
           <div className="detailButton">
-            <Link to="/shoppingCart" style={{ textDecoration: "none" }}>
               <span className="buttonMargin">
                 <Button
-                  onClick={() =>
-                    dispatch(
-                      addToCart({
-                        id: detail.id,
-                        name: detail.name,
-                        image: detail.image,
-                        price: detail.price,
-                        stock: props.stock, 
-                        quantity: 1,
-                      })
-                    )
-                  }
+                  onClick={isAuthenticated ? () =>handleComprar() : loginWithRedirect}
                   variant="contained"
                 >
                   Comprar
                 </Button>
               </span>
-            </Link>
             <span className="buttonMargin">
               <Button
                 onClick={() =>
@@ -130,7 +131,7 @@ function Detail(props) {
                       name: detail.name,
                       image: detail.image,
                       price: detail.price,
-                      stock: props.stock, 
+                      stock: detail.stock, 
                       quantity: 1,
                     })
                   )
@@ -152,14 +153,14 @@ function Detail(props) {
                     image: detail.image,
                     price: detail.price,
                     score: detail.score,
-                    stock: props.stock, 
+                    stock: detail.stock, 
                     quantity: 1,
                   })
                 )
               }
               variant="contained"
             >
-              <AddTwoToneIcon /> Favoritos
+             {itemFound ? <RemoveTwoToneIcon/> : <AddTwoToneIcon />} Favoritos
             </Button>
           </div>
         </div>
@@ -192,11 +193,11 @@ function Detail(props) {
               {displayForm && <ScoreForm id={id} formDisplay={formDisplay}/>}
             </div>
             <div className="divBttnsOpinions">
-              {isAuthenticated && (
+              {isAuthenticated && user.isAdmin === false ? (
                 <Button variant="contained" onClick={() => formDisplay()}>
                   Deja un comentario
                 </Button>
-              )}
+              ):null}
             </div>
 
       </div>
