@@ -21,13 +21,17 @@ export default function UserForm({usuario, setDisplay}) {
   
   const [isAdmin, setIsAdmin] = useState(""); //este estado va a subir los datos a cloudinary
   const [isBanned, setIsBanned] = useState(""); // este estado guardara las direcciones de cloudinary para pisar el input
-  
+  const [password, setPassword] = useState(""); // este estado guardara las direcciones de cloudinary para pisar el input
+  const [cambiaPassword, setCambiaPassword] = useState(false); // este estado guardara las direcciones de cloudinary para pisar el input
+
   const [errorName, setErrorName] = useState("");
   const [errorSurname, setErrorSurname] = useState("");
   const [errorAddress, setErrorAddress] = useState("");
   const [errorDni, setErrorDni] = useState("");
   const [errorCity, setErrorCity] = useState("");
- 
+  const [errorPassword, setErrorPassword] = useState(""); // este estado guardara las direcciones de cloudinary para pisar el input
+  const [errorCambiaPassword, setErrorCanmbiaPassword] = useState(""); // este estado guardara las direcciones de cloudinary para pisar el input
+
 
   let currentUser = "Guest"
     if(user && user.email) currentUser = user.email
@@ -80,8 +84,25 @@ export default function UserForm({usuario, setDisplay}) {
     // }
     if (!dni=="" && !dniOk) {
         setErrorDni('El dni ingresado es inválido');
-    // }else {
-    //   setErrorDni("");
+     }else {
+       setErrorDni("");
+     }
+  }
+
+  function validatePassword(value, cambiaPassword) {
+    setPassword(value);
+    console.log(password)
+    let rePassword= /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[_$@$!%*?&])([A-Za-z\d_$@$!%*?&]|[^ ]){8,15}$/
+    let passwordOk=rePassword.exec(password)
+    // if () {
+    //   setErrorDni('El campo no puede quedar vacio');
+    // } else {
+    //     setErrorDni("");
+    // }
+    if ((cambiaPassword==true && password=="") || (password==" ") || (!password=="" && !passwordOk)) {
+        setErrorPassword('La contraseña debe tener al menos 8 caracteres. Entre ellos al menos una letra minúscula, una mayúscula, un número y un carácter especial como !@_#&%*. ');
+     }else {
+       setErrorPassword("");
      }
   }
 
@@ -97,6 +118,15 @@ export default function UserForm({usuario, setDisplay}) {
     console.log(isBanned);
   }
 
+  function validateCambiaPassword(value) {
+    console.log(value +  " " + typeof(value));
+    setCambiaPassword(value);
+    console.log(cambiaPassword);
+  }
+
+
+
+
   function parseBoolean(val) { return val === true || val === "true" }
 
 
@@ -109,6 +139,8 @@ export default function UserForm({usuario, setDisplay}) {
       setDni(usuario.dni)
       setIsAdmin(usuario.isAdmin)
       setIsBanned(usuario.isBanned)
+      setPassword(usuario.password)
+      setCambiaPassword(usuario.cambiaPassword)
     }
   },[])
 
@@ -116,7 +148,7 @@ export default function UserForm({usuario, setDisplay}) {
     e.preventDefault();
     if(usuario){
       const obj = { name: name, surname: surname, email: usuario.email, address:address, 
-        city: city, dni:dni, isAdmin:isAdmin, isBanned:isBanned };
+        city: city, dni:dni, isAdmin:isAdmin, isBanned:isBanned, password:password, cambiaPassword:cambiaPassword };
       dispatch(userUpdate(obj));
       setDisplay("")
       setTimeout(()=>{dispatch(getAllUsers())},2000)
@@ -239,6 +271,36 @@ export default function UserForm({usuario, setDisplay}) {
               //onChange={(e) => validateIsAdmin(value)}
               //autoComplete="off"
             />
+
+            <label className={styles.label}>Setear nueva password(Danger): </label>
+            <input
+              className={styles.valido}
+              key="cambiaPassword"
+              name="cambiaPassword"
+              value={cambiaPassword}
+              type="checkbox"
+              //required
+              checked= {cambiaPassword}
+              onChange={(e) => validateCambiaPassword(e.target.checked)}
+              //onChange={(e) => validateIsAdmin(value)}
+              //autoComplete="off"
+            />
+
+            <label className={styles.label}>Password: </label>
+            <input
+              className={errorPassword ? styles.invalido : styles.valido}
+              key="password"
+              name="password"
+              value={password}
+              type="password"
+              placeholder="**********"
+              disabled={!cambiaPassword}
+              onChange={(e) => validatePassword(e.target.value, cambiaPassword)}
+              autoComplete="off"
+            />
+           {(errorPassword && cambiaPassword) ? <span className={styles.danger}>{errorPassword}</span> : (
+              null
+            )}
             
           </div>
           {/* {usuario ?  */}
@@ -246,7 +308,7 @@ export default function UserForm({usuario, setDisplay}) {
             name="submit"
             className={styles.button}
             type="submit"
-            disabled={ errorDni ? true : false}
+            disabled={ errorDni || (cambiaPassword && errorPassword) ? true : false }
           >
             Modificar Usuario
           </button> 

@@ -1,14 +1,170 @@
 const axios = require('axios');
 const {UserRegisted, Cart} = require('../db');
+//const {bloquearUsuario} = import ('../app');
 
+const getManageApiMtoM = () => {
+    var request = require("request");
+  
+    return new Promise(function (resolve, rejected) {
+      var options = {
+        method: "POST",
+        url: "https://dev-bjfya7kf.us.auth0.com/oauth/token",
+        headers: { "content-type": "application/json" },
+        body: '{"client_id":"RLmir7ItxLcyiRlklFfKJO0OI4zbTRLP","client_secret":"iuaA5JzrlqP8cLE7T3gPc846zX709LOH8cJYH3HuNArEy7hmVvTpDJAW8Ldw28Xb","audience":"https://dev-bjfya7kf.us.auth0.com/api/v2/","grant_type":"client_credentials"}',
+      };
+  
+      request(options, function (error, response, body) {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(JSON.parse(body));
+        }
+        //console.log(body);
+      });
+    });
+  };
+  
+const bloquearUsuario= (email, banned) => {
+//const { email } = req.body;
+
+//console.log(req.body);
+var rta;
+const emailModificado = "?email=" + email;
+const emailParam = emailModificado.replace("@", "%40");
+//console.log(emailParam);
+//console.log("?email=davidolivera8989%40gmail.com")
+// const xavierEmail = "xavier@email.com";
+// var xavierID = "auth0|6350e7da5bdae0d184bf3d83";
+
+var request = require("request");
+var request2 = require("request");
+getManageApiMtoM().then((data) => {
+    const token = data.access_token;
+    var options = {
+    method: "GET",
+    url:
+        "https://dev-bjfya7kf.us.auth0.com/api/v2/users-by-email"+emailParam,
+    //url: 'https://dev-bjfya7kf.us.auth0.com/api/v2/users-by-email?email=davidolivera8989%40gmail.com',
+    headers: {
+        authorization: `Bearer ${token}`,
+        "content-type": "application/json",
+    },
+
+    //revisar como mandadr los parametersssssss
+    //https://dev-bjfya7kf.us.auth0.com/api/v2/users-by-email?email=davidolivera8989%40gmail.com
+    json: true,
+    };
+
+    request(options, function (error, response, body) {
+    if (error) throw new Error(error);
+    //res.json(body)
+    //console.log(body);
+    rta = body[0].user_id;
+
+    console.log("Id usuario a bloquear " + rta);
+
+    //console.log(id);
+    var idUsuarioModificar;
+    idUsuarioModificar = rta.replace("|", "%7C");
+    //rta.includes('google')? idUsuarioModificar
+
+    // const token = data.access_token
+    var options2 = {
+        method: "PATCH",
+        url:
+        "https://dev-bjfya7kf.us.auth0.com/api/v2/users/" +
+        idUsuarioModificar,
+        //url: 'https://dev-bjfya7kf.us.auth0.com/api/v2/users-by-email?email=davidolivera8989%40gmail.com',
+        headers: {
+        authorization: `Bearer ${token}`,
+        "content-type": "application/json",
+        },
+        body: `{"blocked" : ${banned} }`,
+
+        //revisar como mandadr los parametersssssss
+        //https://dev-bjfya7kf.us.auth0.com/api/v2/users-by-email?email=davidolivera8989%40gmail.com
+    };
+
+    request2(options2, function (error, response, body) {
+        if (error) throw new Error(error);
+        //res.json(body);
+        //console.log(body);
+        //rta=(body[0].user_id);
+
+        console.log("Respuesta usuario bloqueado " + body);
+
+        //console.log(id);
+    });
+    });
+});
+};
+
+const reiniciarClave = (email, clave)=>  {
+    //const { email } = req.body;
+    //console.log(req.body);
+    var rta;
+    const emailModificado = "?email=" + email;
+    const emailParam = emailModificado.replace("@", "%40");
+   
+    var request = require("request");
+    var request2 = require("request");
+    getManageApiMtoM().then((data) => {
+      const token = data.access_token;
+      var options = {
+        method: "GET",
+        url:
+          "https://dev-bjfya7kf.us.auth0.com/api/v2/users-by-email" +emailParam,
+        //url: 'https://dev-bjfya7kf.us.auth0.com/api/v2/users-by-email?email=davidolivera8989%40gmail.com',
+        headers: {
+          authorization: `Bearer ${token}`,
+          "content-type": "application/json",
+        },      
+        //revisar como mandadr los parametersssssss
+        //https://dev-bjfya7kf.us.auth0.com/api/v2/users-by-email?email=davidolivera8989%40gmail.com
+        json: true,
+      };
+  
+      request(options, function (error, response, body) {
+        if (error) throw new Error(error);
+        //res.json(body)
+        //console.log(body);
+        rta = body[0].user_id;
+        console.log("Id usuario a reiniciar clave:  " + rta);
+        //console.log(id);
+        var idUsuarioModificar;
+        idUsuarioModificar = rta.replace("|", "%7C");
+        //rta.includes('google')? idUsuarioModificar
+        // const token = data.access_token
+        var options2 = {
+          method: "PATCH",
+          url: "https://dev-bjfya7kf.us.auth0.com/api/v2/users/" + idUsuarioModificar,
+          //url: 'https://dev-bjfya7kf.us.auth0.com/api/v2/users-by-email?email=davidolivera8989%40gmail.com',
+          headers: {
+            authorization: `Bearer ${token}`,
+            "content-type": "application/json",
+          },
+          body: `{"password": "${clave}" }`,
+          
+        };
+  
+        request2(options2, function (error, response, body) {
+          if (error) throw new Error(error);
+         
+          //rta=(body[0].user_id);
+          console.log("Respuesta usuario con clave reiniciada  " + body);
+          //console.log(id);
+        });
+      });
+    });
+};
 
 const getUsersRegisted = async () => {
     try{
         let users = await UserRegisted.findAll({
-            where: {
-                isDeleted: false,
-                isBanned: false
-            }
+            // where: {
+            //     //isDeleted: false,
+            //     // isBanned: false
+            // }
 
         //     include: [
         //         {
@@ -95,16 +251,16 @@ const updateUserRegisted = async (email, name, surname, address, city, dni ) => 
 };
 
 
-const updateUserRegistedAdmin = async ( name, email,surname, address, city, dni, isAdmin, isBanned) => {
+const updateUserRegistedAdmin = async ( name, email,surname, address, city, dni, isAdmin, isBanned, password, cambiaPassword ) => {
 
     try {
 
-        let user = UserRegisted.findOne({where: {email: email}})
-        if(user.isDeleted === true){
-            return 'The user doesn\'t exist' 
-        }
+        //let user = UserRegisted.findOne({where: {email: email}})
+        // if(user.isDeleted === true){
+        //     return 'The user doesn\'t exist' 
+        // }
 
-        else{
+        
             await UserRegisted.update(
                 {
                     name: name,
@@ -120,10 +276,17 @@ const updateUserRegistedAdmin = async ( name, email,surname, address, city, dni,
                     }
                 })
     
-            let userModified = await UserRegisted.findByPk(email)
+            let userModified = await UserRegisted.findOne({where: {email: email}})
+            
+            console.log("passss   "+password);
+            console.log("cambia "+cambiaPassword);
+            if (cambiaPassword){
+                reiniciarClave(email, password);
+            }
+            
+            bloquearUsuario(email, isBanned);
+            
             return userModified
-        }
-
     } catch(e) {
         console.log(e)
     }
