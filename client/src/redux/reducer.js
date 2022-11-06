@@ -51,6 +51,7 @@ import { DELETE_CATEGORY } from "./actions/delete_category";
 import { DELETE_BRAND } from './actions/delete_brand';
 import { DELETE_PRODUCT } from './actions/delete_product';
 import { DELETE_USER } from './actions/delete_user';
+import { GET_USER_HISTORY } from './actions/get_user_history';
 
 import swal from 'sweetalert';
 
@@ -76,6 +77,7 @@ const initialState = {
     userDetail:{},
     userModificar:{},
     userUpdate:{},
+    userHistory:[],
 };
 
 
@@ -307,6 +309,11 @@ const reducer = (state = initialState, action) => {
                     ...state,
                     orderDetail: action.payload
                     }
+        case GET_USER_HISTORY:
+                return{
+                    ...state,
+                    userHistory: action.payload
+                }
         case SORTED_ORDERS:
                 if(action.payload === "Todas las compras"){
                 return {

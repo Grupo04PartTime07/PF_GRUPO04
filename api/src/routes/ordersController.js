@@ -213,12 +213,59 @@ const deleteOrder = async (id) => {
     }
 }
 
+const allPurchases = async (email) =>{
+    try {
+        const user = await UserRegisted.findOne({
+            where: {
+                email: email
+            }
+        })
+        let orders = await Orden.findAll({
+            where: { isDeleted: false },
+            include: [
+                {
+                model: StateOrden,
+                attributes: ['state'],
+                where: {
+                    state: "Aprobada"
+                }
+            },
+            {
+                model: Cart,
+                where: {
+                    userRegistedId: user.id
+                },
+                include:[
+                    {
+                        model:Products,
+                        attributes:['id'],
+                        through: {
+                            attributes: [],
+                        },
+                    }
+                ]
+            }]
+        })
 
+        let response = []
+
+        for(const order of orders){
+            for( const p of order.cart.products){
+                //let finder = response.
+                if(!response.includes(p.id)) response.push(p.id)
+            }
+        }
+        return response
+    } catch (error) {
+        console.log(error)
+    }
+}
 module.exports = {
     getOrders,
     getOrderbyId,
     modifyStatusOrder,
     createNewOrder,
     getOrdersByUser,
-    deleteOrder
+    deleteOrder,
+    allPurchases
 }

@@ -1,12 +1,11 @@
 const {Router} = require('express')
 const router = Router()
-const {getOrders, getOrderbyId, modifyStatusOrder, getOrdersByUser, deleteOrder} = require('./ordersController')
+const {getOrders, getOrderbyId, modifyStatusOrder, getOrdersByUser, deleteOrder, allPurchases} = require('./ordersController')
 
 router.get('/', async function(req, res){
     
     try{
         const {id, status, email} = req.query
-        let orders = await getOrders()
 
         if(id){
             let orderById = await getOrderbyId(id)
@@ -16,6 +15,7 @@ router.get('/', async function(req, res){
         }
 
         if(status){
+            let orders = await getOrders()
             let orderByStatus = orders.filter(e => e.status.includes(status))
             orderByStatus.length ? res.status(200).send(orderByStatus) 
             : res.status(400).send('La orden no fue encontrada') 
@@ -27,6 +27,7 @@ router.get('/', async function(req, res){
             res.send(Users)
         }
         else{
+            let orders = await getOrders()
             res.status(200).send(orders)
         }
 
@@ -60,5 +61,14 @@ router.delete('/', async function(req, res){
     }
 })
 
+router.get('/user', async (req, res)=>{
+    try {
+        const { email } = req.query;
+        const response = await allPurchases(email)
+        res.status(200).json(response)
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 module.exports = router
