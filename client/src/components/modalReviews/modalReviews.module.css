@@ -151,6 +151,8 @@ ponga horizontal */
 
 @media screen and (max-width: 600px){
     .linkModal{
-        margin-left: 125px;
+        display: flex;
+        position: absolute;
+        left: 32%
     }
 }
