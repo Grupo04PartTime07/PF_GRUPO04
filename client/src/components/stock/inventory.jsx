@@ -109,7 +109,7 @@ export default function UpdateInventory(){
                       />
                     </Search>
                   </div>
-                    {dataFiltered && dataFiltered.length ? <EnhancedTable rows={dataFiltered} displayProductForm={displayProductForm}></EnhancedTable>:null}           
+                    {dataFiltered && dataFiltered.length ? <EnhancedTable rows={dataFiltered} displayProductForm={displayProductForm} setSearchQuery={setSearchQuery}></EnhancedTable>:null}           
                     
                 </div>
                 {currentProduct && display == currentProduct.id ? <div><CreateProduct product={currentProduct} setDisplay={setDisplay} cleanCurrent={cleanCurrent} ></CreateProduct></div> : null}

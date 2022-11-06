@@ -19,6 +19,7 @@ import YourFavorites from "./AuxHome/yourFavorites";
 import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
 import IconButton from '@mui/material/IconButton';
 
+
 function ScrollTop(props) {
     const { children, window } = props;
     // Note that you normally won't need to set the window ref as useScrollTrigger
@@ -37,7 +38,7 @@ function ScrollTop(props) {
   
       if (anchor) {
         anchor.scrollIntoView({
-          block: 'center',
+          block: 'center', behavior: 'smooth'
         });
       }
     };

@@ -7,7 +7,7 @@ import { orderByPrice } from '../../redux/actions/order_price';
 import { orderByRate } from "../../redux/actions/order_rate";
 import Loading from "../loading/loading";
 import './brand_products.css'
-
+import { grey } from '@mui/material/colors';
 import { useHistory } from "react-router-dom";
 import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
 import IconButton from '@mui/material/IconButton';
@@ -39,7 +39,7 @@ export default function Brand(props){
     return(
         productsaux[0] && productsaux[0].price ? <div className="categorieTable">
             <div className="categorieFilters">
-                <div className='volverBrand' onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon /></IconButton> Volver</div>
+                <div className='volverBrand' onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon sx={{ color: grey[50]}}/></IconButton> Volver</div>
                 <div>
                     Filtrar por:
                 

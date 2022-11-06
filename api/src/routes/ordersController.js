@@ -4,13 +4,47 @@ const getOrders = async() => {
     try{
         let orders = await Orden.findAll({
             where: { isDeleted: false },
-        }, {
-            include: {
+            include: [
+                {
                 model: StateOrden,
-                attributes: ['name']
-            }
+                attributes: ['state'],
+            },
+            {
+                model: Cart,
+                attributes: ['userRegistedId'],
+            }]
         })
-        return orders
+
+        let ordersFinal = []
+        
+        for(const e of orders){
+            let user = await UserRegisted.findOne({
+                where: {
+                    id: e.cart.userRegistedId ? e.cart.userRegistedId : ' '
+                }
+            });
+
+            if(!user){
+                var userEmail = 'enzo@gmail.com'
+            }else{
+                var userEmail = user.email;
+            }
+            
+            ordersFinal.push({
+                
+                    id: e.id ? e.id : 'id',
+                    isDeleted: e.isDeleted,
+                    createdAt: e.createdAt ? e.createdAt : 'createdAt ',
+                    datosEnvio: e.datosEnvio ? e.datosEnvio : 'datosEnvio',
+                    total: e.total ? e.total : 'total',
+                    estado: e.estado ? e.estado : 'estado',
+                    shippingId: e.shippingId ? e.shippingId : 'shippingId',
+                    cartId: e.cartId ? e.cartId : 'cartId',
+                    stateOrden: e.stateOrden.state ? e.stateOrden.state : 'state',
+                    userEmail: userEmail ? userEmail : 'enzo@gmail.com'
+            })
+        };
+        return ordersFinal
     }
     catch(error){
         console.log(error)
@@ -19,34 +53,54 @@ const getOrders = async() => {
 
 const getOrdersByUser = async(email) => {
     try{
-        const User = await UserRegisted.findOne({
+        const user = await UserRegisted.findOne({
             where: {
                 email: email
             }
-        }, {
-            include: {
-                model: Cart
+        })
+
+        let orders = await Orden.findAll({
+            where: { isDeleted: false },
+            include: [
+                {
+                model: StateOrden,
+                attributes: ['state'],
+            },
+            {
+                model: Cart,
+                attributes: ['id'],
+                where: {
+                    userRegistedId: user.id
+                }
+            }]
+        })
+
+        let ordersFinal = orders.map((e) => {
+            return {
+                    id: e.id ? e.id : 'id',
+                    isDeleted: e.isDeleted,
+                    createdAt: e.createdAt ? e.createdAt : 'createdAt ',
+                    datosEnvio: e.datosEnvio ? e.datosEnvio : 'datosEnvio',
+                    total: e.total ? e.total : 'total',
+                    estado: e.estado ? e.estado : 'estado',
+                    shippingId: e.shippingId ? e.shippingId : 'shippingId',
+                    cartId: e.cartId ? e.cartId : 'cartId',
+                    stateOrden: e.stateOrden.state ? e.stateOrden.state : 'state',
             }
         })
 
-        const idCart = User.cartId
-
-        const Orders = await Orden.findAll({
-            where: { cartId : idCart },
-            attributes: ["id", "total", "createdAt", "estado" ]
-        })
-        return Orders
+        return ordersFinal
 
     }
-    catch(Error){
-        console.log(Error)
+    catch(error){
+        console.log(error)
     }
 }
 
 const getOrderbyId = async(id) => {
     try {
-        const order = await Orden.findByPk(id)
-        const idCart = order.cartId
+        const order = await Orden.findByPk(id);
+        const idCart = order.cartId;
 
         const Carts = await Cart.findByPk(idCart, 
             {
@@ -68,7 +122,7 @@ const getOrderbyId = async(id) => {
             let obj = {
                 name: el.name,
                 price: el.price,
-                image: el.image[0][0],
+                image: el.image[0],
                 id: el.id,
                 quantity: el.cart_product.cantidad
             }
@@ -77,7 +131,7 @@ const getOrderbyId = async(id) => {
     
         return Factura
     } catch (error) {
-        
+        console.log(e)
     }
 }
 
@@ -159,12 +213,59 @@ const deleteOrder = async (id) => {
     }
 }
 
+const allPurchases = async (email) =>{
+    try {
+        const user = await UserRegisted.findOne({
+            where: {
+                email: email
+            }
+        })
+        let orders = await Orden.findAll({
+            where: { isDeleted: false },
+            include: [
+                {
+                model: StateOrden,
+                attributes: ['state'],
+                where: {
+                    state: "Aprobada"
+                }
+            },
+            {
+                model: Cart,
+                where: {
+                    userRegistedId: user.id
+                },
+                include:[
+                    {
+                        model:Products,
+                        attributes:['id'],
+                        through: {
+                            attributes: [],
+                        },
+                    }
+                ]
+            }]
+        })
 
+        let response = []
+
+        for(const order of orders){
+            for( const p of order.cart.products){
+                //let finder = response.
+                if(!response.includes(p.id)) response.push(p.id)
+            }
+        }
+        return response
+    } catch (error) {
+        console.log(error)
+    }
+}
 module.exports = {
     getOrders,
     getOrderbyId,
     modifyStatusOrder,
     createNewOrder,
     getOrdersByUser,
-    deleteOrder
+    deleteOrder,
+    allPurchases
 }

@@ -16,6 +16,7 @@ import IconButton from '@mui/material/IconButton';
 import ModalShippingAddress from "../modalShippingAddress/modalShippingAddress.jsx"
 import {useAuth0} from '@auth0/auth0-react';
 import { getUserDetails } from '../../redux/actions/get_user_details.js';
+import { grey } from '@mui/material/colors';
 
 
 export default function ShoppingCartBig(props) {
@@ -92,8 +93,8 @@ export default function ShoppingCartBig(props) {
 
 
     return (
-        <div>
-            <div className={styles.volver} onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon /></IconButton> Volver</div>
+        <div className={styles.container}>
+            <div className={styles.volver} onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon sx={{ color: grey[50]}}/></IconButton> Volver</div>
             <div className={styles.divShoppingCart}>
                 <h1 className={styles.title}>Carrito de compras</h1>
                 <hr></hr>
@@ -160,11 +161,11 @@ export default function ShoppingCartBig(props) {
                     </div>
                     <div className={styles.divCantProductos}>
                         <p className={styles.pCantProductos}>Cantidad de productos: </p>
-                        <span className={styles.spanCantProductos}>{cartItems.reduce(function (acc, va) { return (acc + va.quantity) }, 0)}u.</span>
+                        <span className={styles.spanCantProductos}>{cartItems.reduce(function (acc, va) { return (acc + va.quantity) }, 0)} u.</span>
                     </div>
                     <div className={styles.divTotal}>
                         <p className={styles.total}>Precio final: </p>
-                        <span className={styles.cartPrice}>${cartItems.reduce(function (acc, va) { return (acc + (va.quantity * va.price)) }, 0) + Number(shipping)}</span>
+                        <span className={styles.cartPrice}>$ {cartItems.reduce(function (acc, va) { return (acc + (va.quantity * va.price)) }, 0) + Number(shipping)}</span>
                     </div>
                     <div className={styles.divBttnPagar} >
                         {user && user.email ? <button className={styles.bttnPagar} disabled={handleDisabled()} onClick={shipping === "0" ? () => handlecheckout() : () => openModal()}>Finalizar compra</button>: <button className={styles.bttnPagar} onClick={loginWithPopup}>Inicia Sesión para Continuar</button>}

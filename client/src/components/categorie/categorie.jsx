@@ -7,7 +7,7 @@ import { orderByRate } from "../../redux/actions/order_rate";
 import { cleanProducts } from "../../redux/actions/clean_products";
 import Loading from "../loading/loading";
 import './categorie.css'
-
+import { grey } from '@mui/material/colors';
 import { useHistory } from "react-router-dom";
 import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
 import IconButton from '@mui/material/IconButton';
@@ -39,9 +39,9 @@ export default function Categorie(props){
     return(
         productsaux[0] && productsaux[0].price ? <div className="categorieTable">
             <div className="categorieFilters">
-                <div className='volverCategorie' onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon /></IconButton> Volver</div>
+                <div className='volverCategorie' onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon sx={{ color: grey[50]}}/></IconButton> Volver</div>
                 <div>
-                    Filtrar por:
+                    <h3>Filtrar por:</h3>
                 
                     <div className="categorieOptions">
                         <div className="priceFilter">

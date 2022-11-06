@@ -52,6 +52,7 @@ import { DELETE_BRAND } from './actions/delete_brand';
 import { DELETE_PRODUCT } from './actions/delete_product';
 import { DELETE_USER } from './actions/delete_user';
 import {GET_SCORE_USER_ID} from './actions/get_score_user_id';
+import { GET_USER_HISTORY } from './actions/get_user_history';
 import swal from 'sweetalert';
 
 
@@ -77,6 +78,7 @@ const initialState = {
     userDetail:{},
     userModificar:{},
     userUpdate:{},
+    userHistory:[],
 };
 
 
@@ -314,6 +316,11 @@ const reducer = (state = initialState, action) => {
                     ...state,
                     orderDetail: action.payload
                     }
+        case GET_USER_HISTORY:
+                return{
+                    ...state,
+                    userHistory: action.payload
+                }
         case SORTED_ORDERS:
                 if(action.payload === "Todas las compras"){
                 return {
@@ -483,7 +490,7 @@ const reducer = (state = initialState, action) => {
             }
         case DELETE_CATEGORY:
             swal({
-                title: action.payload.message,
+                title: action.payload,
                 icon: "success",
             });
             return {
@@ -492,7 +499,7 @@ const reducer = (state = initialState, action) => {
                 }
         case DELETE_BRAND:
             swal({
-                title: action.payload.message,
+                title: action.payload,
                 icon: "success",
             });
             return {
@@ -501,7 +508,7 @@ const reducer = (state = initialState, action) => {
                 }
         case DELETE_PRODUCT:
             swal({
-                title: action.payload.message,
+                title: action.payload,
                 icon: "success",
                 });
             return {
@@ -510,7 +517,7 @@ const reducer = (state = initialState, action) => {
                 }
         case DELETE_USER:
             swal({
-                title: action.payload.message,
+                title: action.payload,
                 icon: "success",
                 });
             return {
