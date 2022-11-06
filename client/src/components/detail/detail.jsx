@@ -9,7 +9,7 @@ import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import RelatedProducts from "./relatedProducts";
 import ScoreForm from "./scoreForms";
 import Loading from "../loading/loading";
-
+import { getUserHistory } from "../../redux/actions/get_user_history";
 import { addToCart } from "../../redux/actions/add_to_cart";
 import { addToFavorite } from "../../redux/actions/add_to_favorite";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -34,7 +34,8 @@ function Detail(props) {
   const [displayForm, setDisplay] = React.useState(false);
   const detail = useSelector((state) => state.productdetail);
   const scoreProm = useSelector((state) => state.score_prom);
-  const favorites = useSelector(state => state.favorites)
+  const favorites = useSelector(state => state.favorites);
+  const userHistory = useSelector(state => state.userHistory);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -44,6 +45,10 @@ function Detail(props) {
       dispatch(cleanProductState({}));
     };
   }, [dispatch, id, scoreProm]);
+
+  useEffect(() => {
+    if(isAuthenticated) dispatch(getUserHistory(user.email))
+  }, [dispatch, user])
 
   function formDisplay() {
     setDisplay(!displayForm);
@@ -56,7 +61,7 @@ function Detail(props) {
   //   stars.push(<StarRoundedIcon />);
   // }
 
-
+  let productHistory = userHistory.includes(detail.id)
   let itemFound = favorites.find(e => e.name === detail.name)
   
   const StyledRating = styled(Rating)({
@@ -193,7 +198,7 @@ function Detail(props) {
               {displayForm && <ScoreForm id={id} formDisplay={formDisplay}/>}
             </div>
             <div className="divBttnsOpinions">
-              {isAuthenticated && user.isAdmin === false ? (
+              {isAuthenticated && user.isAdmin === false && productHistory ? (
                 <Button variant="contained" onClick={() => formDisplay()}>
                   Deja un comentario
                 </Button>
