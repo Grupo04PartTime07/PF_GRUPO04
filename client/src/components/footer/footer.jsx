@@ -17,9 +17,9 @@ function Footer() {
       <div>
         <h3>Mi Cuenta</h3>
         <ul className="footerList">
-          {isAuthenticated ? <li><Link to='myProfile'>Perfil</Link></li> : <li className="linkFooter" onClick={loginWithPopup}>Inicia sesión</li>}
-          <li><Link to='wishList'>Favoritos</Link></li>
-          <li><Link to='shoppingCart'>Carrito</Link></li>
+          {isAuthenticated ? <li><Link to='/myProfile'>Perfil</Link></li> : <li className="linkFooter" onClick={loginWithPopup}>Inicia sesión</li>}
+          <li><Link to='/wishList'>Favoritos</Link></li>
+          <li><Link to='/shoppingCart'>Carrito</Link></li>
         </ul>
       </div>
 
