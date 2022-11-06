@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -13,89 +12,63 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-//import { Button } from "@mui/material";
 import './adminOrders.css'
 import emailjs from '@emailjs/browser';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { styled, alpha } from '@mui/material/styles';
-// import { useEffect } from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { getAdminOrders } from '../../redux/actions/get_adminOrders';
-// import { updateOrderStatus } from '../../redux/actions/update_order_status'
-// import { getOrderDetail } from '../../redux/actions/get_order_detail'
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAdminOrders } from '../../redux/actions/get_adminOrders';
+import { updateOrderStatus } from '../../redux/actions/update_order_status'
+import { getOrderDetail } from '../../redux/actions/get_order_detail'
+import { cleanOrderDetailState } from '../../redux/actions/clean_order_detail_state'
 
-function createData(orderNum, client, status, total) {
-  return {
-    orderNum,
-    client,
-    status,
-    total,
-    history: [
-      {
-        producto: 'Vino',
-        precio: '500',
-        cantidad: 3,
-      },
-      {
-        producto: 'Mayonesa',
-        precio: '200',
-        cantidad: 1,
-      },
-    ],
-  };
-}
-
-const rows = [
-    createData('12345', 'cliente2@hotmail.com', 'Aprobada', 1500),
-    createData('12346', 'admin@hotmail.com', 'En camino', 3500),
-    createData('1234', 'cliente1@hotmail.com', 'Completada', 4100),
-    createData('1', 'cliente4@hotmail.com', 'Cancelada', 4537),
-    createData('147', 'cliente3@hotmail.com', 'Aprobada', 3675),
-    createData('20548', 'cuchuflito@hotmail.com', 'Pendiente', 4572),
-    createData('20445', 'cumpleañito@hotmail.com', 'Rechazada', 500),
-  ];
-  
-  function emailSender(){
-  let templateParams = {
-    state: "fue despachado por el vendedor",
-    name: rows.client,
-    email: "bernardo.broscheit@gmail.com", // cambiar por el dato del mail del comprador
-
-  };
-
-  emailjs.send('service_d1v2e28', 'cambioEstado', templateParams, 'fbwvxNnmkAc-vqxnx')
-          .then(function(response) {
-             console.log('SUCCESS!', response.status, response.text);
-          }, function(error) {
-             console.log('FAILED...', error);
-          });
-  }
 // info del colapsable
 
-
 function Row(props) {
-  const { row } = props;
-  //const { orders } = props
-  const [open, setOpen] = React.useState(false);
+  const { open, setOpen } = props
+  const { order } = props;
+  
+  const dispatch = useDispatch()
+  const orderDetail = useSelector(state => state.orderDetail)
 
-
-  // function openCollapse(){
-  //   setOpen(!open)
-  //   dispatch(getOrderDetail(orders.numOrder))
-  // }
-
-  // const orderDetail = useSelector(state => state.orderDetail)
+  function emailSender(){
+    let templateParams = {
+      state: "fue despachado por el vendedor",
+      name: order.userEmail,
+      email: "bernardo.broscheit@gmail.com", // cambiar por el dato del mail del comprador
+    };
+  
+    emailjs.send('service_d1v2e28', 'cambioEstado', templateParams, 'fbwvxNnmkAc-vqxnx')
+      .then(function(response) {
+        console.log('SUCCESS!', response.status, response.text);
+      }, function(error) {
+        console.log('FAILED...', error);
+      }
+    );
+  }
+    
+  function openCollapse(){
+    dispatch(cleanOrderDetailState())
+    if(open !== order.id){
+      console.log(order.id)
+    setOpen(false)
+    setOpen(order.id)
+    dispatch(getOrderDetail(order.id))
+    } else {
+      setOpen(false)  
+    }
+  }
 
   function changeSelect(e){
-    const newSelectedStatus = document.getElementById(row.orderNum).options[document.getElementById(row.orderNum).selectedIndex].text
-    
-    if(row.status !== newSelectedStatus){
-      //dispatch(updateOrderStatus(orders.numOrder, newSelectedStatus))
-        row.status = newSelectedStatus
-        emailSender()
-        // console.log(newSelectedStatus)
-        // console.log(row.client + ' se cambio a ' + newSelectedStatus)
+    const newSelectedStatus = document.getElementById(order.estado).options[document.getElementById(order.estado).selectedIndex].text
+
+    if(order.stateOrden !== newSelectedStatus){
+      console.log('Se cambió a ' + newSelectedStatus)
+      dispatch(updateOrderStatus({id: order.id, estado: newSelectedStatus}))
+      emailSender()
+      console.log('Se cambió a ' + newSelectedStatus)
     }
   }
 
@@ -106,19 +79,19 @@ function Row(props) {
           <IconButton
             aria-label="expand row"
             size="small"
-            onClick={() => setOpen(!open)}
-            /*onClick={() => openCollapse()}*/
+            // onClick={() => setOpen(!open)}
+            onClick={() => openCollapse()}
           >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            {open === order.id ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.orderNum}
+          {order.estado}
         </TableCell>
-        <TableCell align="left">{row.client}</TableCell>
-        <TableCell align="left">{row.total}</TableCell>
+        <TableCell align="left">{order.userEmail}</TableCell>
+        <TableCell align="left">{order.total}</TableCell>
         <TableCell align="left">
-            <select id={row.orderNum} defaultValue={row.status} onClick={e => changeSelect(e)}>
+            <select id={order.estado} defaultValue={order.stateOrden} onClick={e => changeSelect(e)}>
                 <option disabled={true}>Pendiente</option> {/* A la espera del pago */}
                 <option disabled={true}>Rechazada</option>
                 <option disabled={true}>Aprobada</option> {/* Pago realizado, a la espera de despachar */}
@@ -130,7 +103,7 @@ function Row(props) {
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
+          <Collapse in={open === order.id} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
                 Detalle de la compra
@@ -145,18 +118,18 @@ function Row(props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.producto}>
+                  {orderDetail.productos ? orderDetail.productos.map((detail) => (
+                    <TableRow key={detail.id}>
                       <TableCell component="th" scope="row">
-                        {historyRow.producto}
+                        {detail.name}
                       </TableCell>
-                      <TableCell>{historyRow.precio}</TableCell>
-                      <TableCell align="left">{historyRow.cantidad}</TableCell>
+                      <TableCell>{detail.price}</TableCell>
+                      <TableCell align="left">{detail.quantity}</TableCell>
                       <TableCell align="left">
-                        {Math.round(historyRow.cantidad * historyRow.precio * 100) / 100}
+                        {Math.round(detail.quantity * detail.price * 100) / 100}
                       </TableCell>
                     </TableRow>
-                  ))}
+                  )) : <Typography sx={{marginTop: '10px'}}>Consultando a la base de datos...</Typography>}
                 </TableBody>
               </Table>
             </Box>
@@ -167,26 +140,7 @@ function Row(props) {
   );
 }
 
-Row.propTypes = {
-  row: PropTypes.shape({
-    orderNum: PropTypes.number.isRequired,
-    client: PropTypes.string.isRequired,
-    status: PropTypes.any.isRequired,
-    history: PropTypes.arrayOf(
-      PropTypes.shape({
-        cantidad: PropTypes.number.isRequired,
-        precio: PropTypes.string.isRequired,
-        producto: PropTypes.string.isRequired,
-      }),
-    ).isRequired,
-    orderNum: PropTypes.string.isRequired,
-  }).isRequired,
-};
-
-
 // Nombres de las columnas
-
-
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative', 
@@ -229,15 +183,15 @@ const Search = styled('div')(({ theme }) => ({
   }));
 
 export default function AdminOrders() {
-    // const dispatch = useDispatch()
-    // const orders = useSelector( state => state.orders)
-    
-    // useEffect(() => {
-    //   dispatch(getAdminOrders())
-    // })
-
+    const dispatch = useDispatch()
+    const orders = useSelector( state => state.orders)
+    const [open, setOpen] = React.useState(false);
     const [filter, setFilter] = React.useState(0)
     const [name, setName] = React.useState('')
+
+    useEffect(() => {
+      dispatch(getAdminOrders())
+    })
     
     function handleInputChange(e){
         e.preventDefault()
@@ -252,32 +206,31 @@ export default function AdminOrders() {
     function filterStatus(){
         switch(filter){
             case 1:
-              const pending = rows.filter(row => row.status === 'Pendiente')
+              const pending = orders.filter(row => row.stateOrden === 'Pendiente')
             return pending
             case 2:
-              const rejected = rows.filter(row => row.status === 'Rechazada')
+              const rejected = orders.filter(row => row.stateOrden === 'Rechazada')
             return rejected
             case 3:
-                const approved = rows.filter(row => row.status === 'Aprobada')
+                const approved = orders.filter(row => row.stateOrden === 'Aprobada')
             return approved
             case 4:
-                const processing = rows.filter(row => row.status === 'En camino')
+                const processing = orders.filter(row => row.stateOrden === 'En camino')
             return processing
             case 5:
-                const completed = rows.filter(row => row.status === 'Completada')
+                const completed = orders.filter(row => row.stateOrden === 'Completada')
             return completed
             case 6:
-                const cancelled = rows.filter(row => row.status === 'Cancelada')
+                const cancelled = orders.filter(row => row.stateOrden === 'Cancelada')
             return cancelled
             case 7:
                 document.getElementById('filterStatus').selectedIndex = 0
-                const searched = rows.filter(row => row.client.includes(name))
+                const searched = orders.filter(row => row.userEmail.includes(name))
             return searched
-            default: return rows /*orders*/
+            default: return orders
         }
     }
-
-
+    
   return (
     <TableContainer sx={{width: '800px', marginTop: '40px', marginBottom: '40px'}} component={Paper}>
       <Typography sx={{marginLeft: '20px', marginTop: '10px'}} align="left" gutterBottom variant="h5" component="div">
@@ -322,8 +275,8 @@ export default function AdminOrders() {
         </TableHead>
     
         <TableBody>
-          {filterStatus().map((row) => (
-            <Row  key={row.orderNum} row={row}/>
+          {filterStatus().map((order) => (
+            order.estado !== 'estado' && <Row open={open} setOpen={setOpen} key={order.id} order={order}/>
           ))}
         </TableBody>
 
