@@ -421,7 +421,7 @@ useEffect(() => {
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
           <IconButton sx={{width: '40%', height: '50%'}} size="large" aria-label="show 4 new mails" color="inherit">
               <Badge >
-              {isAuthenticated?<p className='greetingsPoint'>{score} Pts.</p>:<LocalActivityOutlinedIcon/>}
+              {/* {isAuthenticated?<p className='greetingsPoint'>{score} Pts.</p>:<LocalActivityOutlinedIcon/>} */}
               {/* <LocalActivityOutlinedIcon/> */}
               </Badge>
             </IconButton>

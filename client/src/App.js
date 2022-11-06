@@ -16,6 +16,7 @@ import ShoppingCartBig from './components/shoppingCartBig/shoppingCart';
 import WishList from './components/wishList/wishList';
 import Profile from './components/profile/profile';
 import Feedback from './components/feedback/feedback';
+import Search from './components/home/AuxHome/search';
 
 
 function App() {
@@ -26,7 +27,7 @@ function App() {
         <React.Fragment>
           <Switch>
             <Route exact path='/' component={Home} />
-            <Route exact path='/busqueda' component={Home} />
+            <Route exact path='/busqueda' component={Search} />
             <Route exact path='/Categorías' component={CategoriesList} />
             <Route exact path='/products' component={Categorie} />
             <Route exact path="/products/:id" component={Detail} />
