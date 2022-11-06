@@ -69,7 +69,7 @@ export default function ShoppingCartBig(props) {
 
 
     return (
-        <div>
+        <div className={styles.container}>
             <div className={styles.volver} onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon sx={{ color: grey[50]}}/></IconButton> Volver</div>
             <div className={styles.divShoppingCart}>
                 <h1 className={styles.title}>Carrito de compras</h1>
