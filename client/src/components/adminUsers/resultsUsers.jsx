@@ -94,6 +94,8 @@ const headCells = [
     disablePadding: false,
     boolean: true,
     label: 'isAdmin',
+    headerAlign: "center",
+    align: "center",
   },
   {
     id: 'isBanned',
@@ -101,6 +103,8 @@ const headCells = [
     disablePadding: false,
     boolean: true,
     label: 'isBanned',
+    headerAlign: "center",
+    align: "center",
   },
   // {
   //   id: 'dni',
@@ -145,8 +149,8 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         {/* Tablecell para checkbox cabecera */}
-        {/* <TableCell padding="checkbox">
-          <Checkbox
+         <TableCell padding="checkbox">
+          {/* <Checkbox
             color="primary"
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
@@ -154,8 +158,8 @@ function EnhancedTableHead(props) {
             inputProps={{
               'aria-label': 'select all desserts',
             }}
-          />
-        </TableCell> */}
+          /> */}
+        </TableCell> 
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -344,16 +348,16 @@ export default function EnhancedTable({displayUserForm, rows}) {
                       
                       {/* Aca esta el tablecell del checkbox para eliminar */}
                       
-                      {/* <TableCell padding="checkbox">
-                        <Checkbox
+                       <TableCell padding="checkbox">
+                        {/* <Checkbox
                           onClick={(event) => handleClick(event, row.id)}
                           color="primary"
                           checked={isItemSelected}
                           inputProps={{
                             'aria-labelledby': labelId,
                           }}
-                        />
-                      </TableCell> */}
+                        /> */}
+                      </TableCell> 
 
 
 

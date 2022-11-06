@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -30,6 +31,7 @@ import {useEffect} from 'react';
 import { getScoreUserId } from '../../redux/actions/get_score_user_id';
 import {getAllUsers} from '../../redux/actions/get_all_users';
 
+const { BACK_URL = 'http://localhost:3001' } = process.env
 const Search = styled('div')(({ theme }) => ({
   position: 'relative', 
   borderRadius: theme.shape.borderRadius,
@@ -316,7 +318,7 @@ useEffect(() => {
     try {
       const token = await getAccessTokenSilently();
       const response = await axios.post(
-        "http://localhost:3001/users",
+        `${BACK_URL}/users`,
         {
           name: user.name || " ",
           email: user.email,
@@ -342,6 +344,30 @@ useEffect(() => {
       console.log(error);
     }
   }
+
+  // async function pruebaAuth0() {
+  //   try {
+  //     console.log("estamos aca")
+  //     const token = await getAccessTokenSilently();
+  //     const response = await axios.post(
+  //       `${BACK_URL}/infoUserAuth0`,
+  //       {
+          
+  //         email: "xavier@email.com",
+  //         david: "david",
+  //       },
+  //       {
+  //         headers: {
+  //           authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+      
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
 
   useEffect(() => {
     if (isAuthenticated) {

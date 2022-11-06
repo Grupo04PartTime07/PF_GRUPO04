@@ -8,6 +8,8 @@ import axios from 'axios';
 import { verifyPurchase } from "../../redux/actions/verify_purchase";
 import {useAuth0} from '@auth0/auth0-react';
 
+
+const { BACK_URL = 'http://localhost:3001' } = process.env
 export default function Feedback(){
     
     const history = useHistory()
@@ -34,7 +36,7 @@ export default function Feedback(){
     async function callProtectedApiToken2(){
         try{
           const token = await getAccessTokenSilently();
-          const response = await axios.post('http://localhost:3001/users' , {
+          const response = await axios.post(`${BACK_URL}/users` , {
                 name: user.name || " " , 
                 email: user.email
             },{headers:{

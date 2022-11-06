@@ -50,10 +50,10 @@ router.post('/', async (req, res) => {
 
 router.put('/admin/', async (req, res) => {
     try{
-        const { name, email,  surname, address, city, dni, isAdmin, isBanned } = req.body;
+        const { name, email,  surname, address, city, dni, isAdmin, isBanned, password, cambiaPassword } = req.body;
         //let props = req.body;
 
-        let result = await updateUserRegistedAdmin( name, email,  surname, address, city, dni, isAdmin, isBanned);
+        let result = await updateUserRegistedAdmin( name, email,  surname, address, city, dni, isAdmin, isBanned, password, cambiaPassword );
 
         result ? res.status(200).send('El usuario fue modificado con éxito!') : res.status(400).send('El usuario no pudo ser modificado');
     }catch(e){

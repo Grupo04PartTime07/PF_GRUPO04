@@ -19,6 +19,8 @@ import {useAuth0} from '@auth0/auth0-react';
 import axios from 'axios';
 import {useEffect} from 'react';
 
+const { BACK_URL = 'http://localhost:3001' } = process.env
+
 export default function TemporaryDrawer() {
   
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
@@ -80,7 +82,7 @@ export default function TemporaryDrawer() {
     try{
   
       const token = await getAccessTokenSilently();
-      const response = await axios.post('http://localhost:3001/users' , {
+      const response = await axios.post(`${BACK_URL}/users` , {
         name: user.name || " " , email: user.email
        
       
