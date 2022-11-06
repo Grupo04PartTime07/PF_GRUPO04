@@ -95,7 +95,7 @@ function Row(props) {
                 <option disabled={true}>Pendiente</option> {/* A la espera del pago */}
                 <option disabled={true}>Rechazada</option>
                 <option disabled={true}>Aprobada</option> {/* Pago realizado, a la espera de despachar */}
-                <option>En camino</option> {/* Despachado */}
+                <option>En Camino</option> {/* Despachado */}
                 <option disabled={true}>Completada</option> {/* Recibido y confirmado por el cliente */}
                 <option disabled={true}>Cancelada</option> {/* Cancelada por el cliente */}
             </select>
@@ -215,7 +215,7 @@ export default function AdminOrders() {
                 const approved = orders.filter(row => row.stateOrden === 'Aprobada')
             return approved
             case 4:
-                const processing = orders.filter(row => row.stateOrden === 'En camino')
+                const processing = orders.filter(row => row.stateOrden === 'En Camino')
             return processing
             case 5:
                 const completed = orders.filter(row => row.stateOrden === 'Completada')
@@ -257,7 +257,7 @@ export default function AdminOrders() {
             <option value='Pendiente'>Pendiente</option>
             <option value='Rechazada'>Rechazada</option>
             <option value='Aprobada'>Aprobada</option>
-            <option value='En camino'>En camino</option>
+            <option value='En camino'>En Camino</option>
             <option value='Completada'>Completada</option>
             <option value='Cancelada'>Cancelada</option>
         </select> 
