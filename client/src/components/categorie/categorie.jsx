@@ -41,7 +41,7 @@ export default function Categorie(props){
             <div className="categorieFilters">
                 <div className='volverCategorie' onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon sx={{ color: grey[50]}}/></IconButton> Volver</div>
                 <div>
-                    Filtrar por:
+                    <h3>Filtrar por:</h3>
                 
                     <div className="categorieOptions">
                         <div className="priceFilter">

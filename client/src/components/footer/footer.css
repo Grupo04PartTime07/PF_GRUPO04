@@ -6,7 +6,10 @@
     align-items: flex-start;
     justify-content: space-evenly;
     color: antiquewhite;
+    position: relative;
+    z-index: 2;
 }
+
 
 .container_text{
     display: inline-grid;
@@ -41,6 +44,9 @@
     flex-direction: column;
     color: white;
 }
+
+
+
 .footerContact p{
     margin: 0px;
     padding: 0px;
