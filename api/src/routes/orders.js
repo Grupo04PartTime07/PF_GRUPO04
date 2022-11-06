@@ -6,19 +6,19 @@ router.get('/', async function(req, res){
     
     try{
         const {id, status, email} = req.query
-        let orders = await  getOrders()
+        let orders = await getOrders()
 
         if(id){
             let orderById = await getOrderbyId(id)
             orderById ? res.status(200).send(orderById) 
-            : res.status(400).send('order not found')
+            : res.status(400).send('La orden no fue encontrada')
             return 
         }
 
         if(status){
             let orderByStatus = orders.filter(e => e.status.includes(status))
             orderByStatus.length ? res.status(200).send(orderByStatus) 
-            : res.status(400).send('order not found') 
+            : res.status(400).send('La orden no fue encontrada') 
             return 
         }
 
