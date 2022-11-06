@@ -41,7 +41,7 @@ router.post('/', async (req, res) => {
       await cartCreated.setStateCarrito(4);
 
       await user.addCart(cartCreated.id);
-      console.log('!carrito',cartCreated)
+      // console.log('!carrito',cartCreated)
       const order = await Orden.findOne({
         where: {
           cartId: cartCreated.id,
@@ -58,7 +58,7 @@ router.post('/', async (req, res) => {
 
         await newOrder.setStateOrden(4);
       }
-      console.log('!order',cartCreated)
+      // console.log('!order',cartCreated)
     } else {
       await Cart.update({
         subtotal
@@ -84,7 +84,7 @@ router.post('/', async (req, res) => {
 
       await user.addCart(carrito.id)
 
-      console.log(order)
+      // console.log(order)
       const order = await Orden.findOne({
         where: {
           cartId: idCart,
@@ -98,7 +98,7 @@ router.post('/', async (req, res) => {
         });
 
         await newOrder.setCart(carrito.id)
-        console.log(newOrder)
+        // console.log(newOrder)
 
         await newOrder.setStateOrden(4);
       }

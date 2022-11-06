@@ -7,7 +7,6 @@ router.post('/', async (req, res) => {
 const {payment_id, status, payment_type, merchant_order_id} = req.body
 try{
     const { data } = await axios.get(`https://api.mercadopago.com/merchant_orders/${merchant_order_id}?access_token=APP_USR-8763003876428984-102015-2626c522c3a666ad57ca4f935dabf886-1221748734`);
-    console.log(data)
     const { items, total_amount } = data;
     const order = await Orden.findOne({
         where: {
@@ -21,30 +20,49 @@ try{
         ]
     });
 
-    // const cart = await Cart.findOne({
-    //     where: {
-    //         id: order.cartId
-    //     }
-    // });
 
     if(status === 'approved'){
         const newItems = items.filter((e) => e.id !== '0');
-        // const shipping = items.find((e) => e.id === '0');
+        const shipping = items.find((e) => e.id === '0');
 
-        // switch(shipping.unit_price){
-        //     case '299':
-        //         let shipping1 = await Shipping.findByPk(1)
-        //         await shipping1.setCart(cart.id)
-        //     case '349':
-        //         let shipping2 = await Shipping.findByPk(2)
-        //         await shipping1.setCart(cart.id)
-        //     case '399':
-        //         let shipping3 = await Shipping.findByPk(3)
-        //         await shipping2.setCart(cart.id)
-        //     default:
-        //         let shipping4 = await Shipping.findByPk(4)
-        //         await shipping4.setCart(cart.id)
-        // };
+        switch(shipping.unit_price){
+            case '299':
+                var shipping1 = await Shipping.findByPk(1)
+                await Orden.update({
+                    shippingId: shipping1.id,
+                },{
+                    where: {
+                        id: order.id
+                    }
+                });
+            case '349':
+                var shipping1 = await Shipping.findByPk(2)
+                await Orden.update({
+                    shippingId: shipping1.id,
+                },{
+                    where: {
+                        id: order.id
+                    }
+                });
+            case '399':
+                var shipping1 = await Shipping.findByPk(3)
+                await Orden.update({
+                    shippingId: shipping1.id,
+                },{
+                    where: {
+                        id: order.id
+                    }
+                });
+            default:
+                var shipping1 = await Shipping.findByPk(4)
+                await Orden.update({
+                    shippingId: shipping1.id,
+                },{
+                    where: {
+                        id: order.id
+                    }
+                });
+        };
 
         await Orden.update({
             estado: merchant_order_id,
