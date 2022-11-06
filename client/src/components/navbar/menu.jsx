@@ -10,6 +10,7 @@ import ListItemText from '@mui/material/ListItemText';
 import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
 import LoyaltyTwoToneIcon from '@mui/icons-material/LoyaltyTwoTone';
 import CategoryTwoToneIcon from '@mui/icons-material/CategoryTwoTone';
+import GroupsTwoToneIcon from '@mui/icons-material/GroupsTwoTone';
 // import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 // import InventoryIcon from '@mui/icons-material/Inventory';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -43,6 +44,7 @@ export default function TemporaryDrawer() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
+      <img className='henryLogoMenu' src='https://assets.soyhenry.com/henry-landing/assets/Henry/logo.png' alt='HenryLogo'></img>
       <List>
         {['Inicio', 'Categorías', 'Marcas'].map((text, index) => (
             <Link className='link' to={index !== 0 ? '/' + text : '/'}> 
@@ -59,22 +61,22 @@ export default function TemporaryDrawer() {
       </List>
       <Divider />
 
-      {/* {isAuthenticated && user.isAdmin && <List>
+      {<List>
       
-        {["Crear Articulo","Crear Categoria"].map((text, index) => ( //corregir la ruta de destino
-          <Link className='link' to={index === 0 ? `/createProduct` : '/createCategory'}>
+        {["El equipo"].map((text, index) => ( //corregir la ruta de destino
+          <Link className='link' to={`/about`}>
           <ListItemButton>
             <ListItem key={text} disablePadding>
             
               <ListItemIcon>
-                {index % 2 === 0 ? <InventoryIcon /> : <LocalOfferIcon />}
+                {index === 0 ? <GroupsTwoToneIcon /> : null}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           </ListItemButton>
           </Link>
         ))}
-      </List>} */}
+      </List>}
     </Box>
   );
 

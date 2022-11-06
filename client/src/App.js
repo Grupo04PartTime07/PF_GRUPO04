@@ -17,6 +17,7 @@ import WishList from './components/wishList/wishList';
 import Profile from './components/profile/profile';
 import Feedback from './components/feedback/feedback';
 import Search from './components/home/AuxHome/search';
+import About from './components/about/about';
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
             <Route exact path='/shoppingCart' component={ShoppingCartBig} />
             <Route exact path='/wishList' component={WishList} />
             <Route exact path='/feedback' component={Feedback} />
+            <Route exact path='/about' component={About} />
             <Route path="*" component={NotFound} />
           </Switch>
           <Route path="/" component={Footer} />
