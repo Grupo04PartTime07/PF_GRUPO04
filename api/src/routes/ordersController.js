@@ -1,4 +1,4 @@
-const {Orden, UserRegisted, Cart, StateOrden, Products} = require('../db')
+const {Orden, UserRegisted, Cart, StateOrden, Products, Shipping} = require('../db')
 
 const getOrders = async() => {
     try{
@@ -100,6 +100,9 @@ const getOrdersByUser = async(email) => {
 const getOrderbyId = async(id) => {
     try {
         const order = await Orden.findByPk(id);
+
+        const shipping = await Shipping.findByPk(order.shippingId)
+
         const idCart = order.cartId;
 
         const Carts = await Cart.findByPk(idCart, 
@@ -115,6 +118,7 @@ const getOrderbyId = async(id) => {
             date: order.createdAt,
             total: order.total,
             estado: order.estado,
+            shippingPrice: shipping.price,
             productos: []
         }
 

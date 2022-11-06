@@ -25,43 +25,40 @@ try{
         const newItems = items.filter((e) => e.id !== '0');
         const shipping = items.find((e) => e.id === '0');
 
-        switch(shipping.unit_price){
-            case '299':
-                var shipping1 = await Shipping.findByPk(1)
-                await Orden.update({
-                    shippingId: shipping1.id,
-                },{
-                    where: {
-                        id: order.id
-                    }
-                });
-            case '349':
-                var shipping1 = await Shipping.findByPk(2)
-                await Orden.update({
-                    shippingId: shipping1.id,
-                },{
-                    where: {
-                        id: order.id
-                    }
-                });
-            case '399':
-                var shipping1 = await Shipping.findByPk(3)
-                await Orden.update({
-                    shippingId: shipping1.id,
-                },{
-                    where: {
-                        id: order.id
-                    }
-                });
-            default:
-                var shipping1 = await Shipping.findByPk(4)
-                await Orden.update({
-                    shippingId: shipping1.id,
-                },{
-                    where: {
-                        id: order.id
-                    }
-                });
+        if(shipping.unit_price === 299){
+            await Orden.update({
+                shippingId: '1',
+            },{
+                where: {
+                    id: order.id
+                }
+            });
+        }
+        else if(shipping.unit_price === 349){
+            await Orden.update({
+                shippingId: '2',
+            },{
+                where: {
+                    id: order.id
+                }
+            });
+        }
+        else if(shipping.unit_price === 399){
+            await Orden.update({
+                shippingId: '3',
+            },{
+                where: {
+                    id: order.id
+                }
+            });
+        }else{
+            await Orden.update({
+                shippingId: '4',
+            },{
+                where: {
+                    id: order.id
+                }
+            });
         };
 
         await Orden.update({
