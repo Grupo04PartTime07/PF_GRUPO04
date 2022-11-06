@@ -12,7 +12,7 @@ const mwusers = require('./users')
 const mwfeedback = require('./feedback')
 const mworders = require('./orders');
 const mwWish = require('./wish')
-const mwCarts = require('./Carts')
+const mwcarts = require('./Carts')
 
 
 //const mwserver = require('./server') 
@@ -21,7 +21,7 @@ const router = Router();
 
 
 router.use('/categories', mwcategories);
-router.use('/Carts', mwCarts)
+router.use('/carts', mwcarts)
 router.use('/products', mwproducts);
 router.use('/brands', mwbrands);
 router.use('/scoreUser', mwscoreUser);

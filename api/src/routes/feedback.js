@@ -99,7 +99,7 @@ try{
         console.log(e)
     }
 
-res.status(200).send('Proceso de compra finalizado!');
+res.status(200).json('Proceso de compra finalizado!');
 })
 
 module.exports = router;
