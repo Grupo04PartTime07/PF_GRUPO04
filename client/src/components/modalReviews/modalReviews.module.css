@@ -128,6 +128,7 @@
     padding-left: 25px;
     margin-bottom: -30px;
     font-weight: 400;
+    color: rgb(82, 82, 82);
 }
 
 .opinionCard{
@@ -150,6 +151,8 @@ ponga horizontal */
 
 @media screen and (max-width: 600px){
     .linkModal{
-        margin-left: 125px;
+        display: flex;
+        position: absolute;
+        left: 30%
     }
 }

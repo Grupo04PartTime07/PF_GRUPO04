@@ -30,6 +30,7 @@
     justify-content: center;
     align-items: flex-start; */
     display: grid;
+    width: 70rem;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr;
     grid-column-gap: 6px;
@@ -206,6 +207,7 @@ img:hover{
     .detailContainerArticles{
         display: flex;
        flex-direction: column-reverse;
+       width: 90%;
     }
 
     .detailTitle{
@@ -226,7 +228,8 @@ img:hover{
     }
     .opinionTitle{
         display: flex;
-        margin-left: 25%;
+        position: relative;
+        left: 28%
     }
     .opinionDescription{
         text-align: center;
@@ -251,5 +254,6 @@ img:hover{
     }
     .opinionComment{
         display: flex;
+        justify-content: center;
     }
 }

@@ -27,7 +27,7 @@ useEffect(() => {  // Didmount and DidUpdate controlled
 
 
 return(
-        <div>
+        <div className={styles.container}>
             
             <div className={styles.volver} onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon sx={{ color: grey[50]}}/></IconButton> Volver</div>
             
