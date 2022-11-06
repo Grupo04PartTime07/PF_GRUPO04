@@ -153,6 +153,6 @@ ponga horizontal */
     .linkModal{
         display: flex;
         position: absolute;
-        left: 32%
+        left: 30%
     }
 }
