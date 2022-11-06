@@ -148,7 +148,7 @@ const createPromotion = async (option, value, userRegistedId) => {
             userRegistedId: user.id
         });
         return newPromotion
-        console.log(newPromotion)
+        console.log('esto es newPromotion',newPromotion)
     } catch (e) {
         console.log(e)
     }
@@ -340,31 +340,6 @@ const updateScoreProm = async (id) => {
         console.log(error)
     }
 }
-const updateScoreUser = async (option, value, userRegistedId) => {
-    console.log(value);
-    try {
-        await Promotion.update(
-            {
-                option: option,
-                value: value,
-                userRegistedId: userRegistedId
-            },
-            {
-                where: {
-                    userRegistedId: userRegistedId
-                }
-            }
-            )
-
-        let scoreUser = await Promotion.findOne({ where: { userRegistedId: userRegistedId } })
-        return scoreUser
-        console.log(scoreUser)
-    } catch(e) {
-        console.log(e)
-    }
-};
-
-
 
 
 
@@ -452,8 +427,59 @@ const deleteScore = async (id) => {
     }
 }
 
+const updateScoreUser = async (option, value, userRegistedId) => {
+    console.log(value);
+    try {
+        await Promotion.update(
+            {
+                option: option,
+                value: value,
+                userRegistedId: userRegistedId
+            },
+            {
+                where: {
+                    userRegistedId: userRegistedId
+                }
+            }
+            )
+
+        let scoreUser = await Promotion.findOne({ where: { userRegistedId: userRegistedId } })
+        return scoreUser
+        // console.log(scoreUser)
+    } catch(e) {
+        console.log(e)
+    }
+};
+
+const getScoresUser = async (id) => {
+    try {
+
+        let scoreUser = await UserRegisted.findByPk(id, {
+            include: [
+                {
+                    model: Promotion,
+                    attributes: ["id","value"],
+                    where: {
+                        isDeleted: false
+                    }
+                }
+            ],
+        });
+
+
+        // if(scoreUser.isDeleted === true){
+        //     return 'no se encontraron puntos'
+        //}
+        
+            return scoreUser;
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 module.exports = {
+    getScoresUser,
     getPromotionDb,
     getProductsDb,
     getCategoriesDb,

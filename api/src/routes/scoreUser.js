@@ -4,24 +4,43 @@ const { Router } = require('express');
 const router = Router();
 const { Promotion } = require('../db');
 
-const { getPromotionDb, createPromotion, updateScoreUser } = require('./controllers');
+const { getPromotionDb, createPromotion, updateScoreUser, getScoresUser } = require('./controllers');
 
 router.get('/', async (req, res) => { 
     try{
         const promotion = await getPromotionDb();
         res.status(200).send(promotion);
-        console.log(promotion)
+        console.log(promotion[18].userRegistedId)
     }catch(e){
         console.log(e) 
     }
 });
+
+router.get('/search', async (req, res) =>{
+    // console.log("esto es req",req)
+    const id = req.query.id
+    try {
+        let score = await getScoresUser(id);
+
+        let reduce = score.promotions.reduce((acumulador, actual) => acumulador + actual.value, 0);
+console.log(reduce)
+
+
+        res.status(200).json(reduce)
+        // console.log('SOY SCORE',score.promotions)
+    } catch (error) {
+        res.status(400).send(error)
+    }
+})
 
 router.post('/', async (req, res) => {
     console.log("req.body",req.body)
     try{
         const { option, value, userRegistedId } = req.body;
         let promotionCreated = await createPromotion(option, value, userRegistedId);
-        promotionCreated ? res.status(200).send('Los puntos se sumaron con éxito!') : res.status(400).send('Los punton no se sumaron');
+        promotionCreated ? 
+        res.status(200).send('Los puntos se sumaron con éxito!') : 
+        res.status(400).send('Los punton no se sumaron');
         console.log("esto es promotionCreated",promotionCreated)
     }catch(e){
         console.log(e);

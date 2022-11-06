@@ -5,6 +5,7 @@ import { addOneToCart } from '../../redux/actions/add_one_to_cart';
 import { removeOneFromCart } from '../../redux/actions/remove_one_from_cart';
 import { removeProductFromCart } from '../../redux/actions/remove_product_from_cart';
 import { deleteCart } from '../../redux/actions/delete_cart';
+import {createScoreUser} from '../../redux/actions/create_score_user';
 import { checkOutCart } from '../../redux/actions/check_out_cart';
 import styles from "./shoppingCart.module.css";
 import { getCart } from '../../redux/actions/get_cart';
@@ -34,7 +35,7 @@ export default function ShoppingCartBig(props) {
     useEffect(()=>{
         dispatch(getUserDetails(user && user.email))
     }, [user])
-
+    const [point, setPoint] = useState("")
     const [shipping, setShipping] = useState("")
     const [modal, setModal] = useState(false)
     const [address, setAddress] = useState(registeredUser && registeredUser.address ? registeredUser.address : "")
@@ -44,6 +45,28 @@ export default function ShoppingCartBig(props) {
             !shipping ||
             cartItems.length === 0);
     }
+
+    function handlePoint(){
+
+        let user = registeredUser.email
+        let point = Math.ceil((cartItems.reduce(function (acc, va) {
+            return (acc + (va.quantity * va.price))}
+        , 0) * .1)
+        );
+
+        let userPoint = {
+            option: 'puntos',
+            value: point,
+            userRegistedId: user
+        }
+        
+        dispatch(createScoreUser(userPoint))
+        console.log(userPoint)
+        // console.log(user)
+        setPoint(point)
+    }
+
+    
 
     function handlecheckout() {
 
@@ -55,6 +78,7 @@ export default function ShoppingCartBig(props) {
         })
         let objTotal = { subtotal: cartItems.reduce(function (acc, va) { return (acc + (va.quantity * va.price)) }, 0) + Number(shipping), cart: total, email: user.email, direccion: address }
         dispatch(checkOutCart(objTotal))
+        dispatch(handlePoint())
         dispatch(deleteCart())
         closeModal()
     }
@@ -115,11 +139,11 @@ export default function ShoppingCartBig(props) {
                     </div>
                     <div className={styles.divTotal}>
                         <p className={styles.total}>Con tu compra sumas: </p>
-                        <span className={styles.cartPrice}>
+                        <span className={styles.cartPrice} onChange={(e) => setPoint(e.target.value)}> 
                             {Math.ceil((cartItems.reduce(function (acc, va) {
                                 return (acc + (va.quantity * va.price))
                             }, 0) * .1)
-                            )}
+                            )} 
                             Puntos.</span>
                         <input
                             className={styles.puntos}
@@ -161,4 +185,5 @@ export default function ShoppingCartBig(props) {
             </div>
         </div>
     )
+    
 }
