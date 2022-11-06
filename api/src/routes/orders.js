@@ -10,7 +10,7 @@ router.get('/', async function(req, res){
         if(id){
             let orderById = await getOrderbyId(id)
             orderById ? res.status(200).send(orderById) 
-            : res.status(400).send('La orden no fue encontrada')
+            : res.status(400).json('La orden no fue encontrada')
             return 
         }
 
@@ -18,17 +18,17 @@ router.get('/', async function(req, res){
             let orders = await getOrders()
             let orderByStatus = orders.filter(e => e.status.includes(status))
             orderByStatus.length ? res.status(200).send(orderByStatus) 
-            : res.status(400).send('La orden no fue encontrada') 
+            : res.status(400).json('La orden no fue encontrada') 
             return 
         }
 
         if(email){
             let Users = await getOrdersByUser(email)
-            res.send(Users)
+            res.json(Users)
         }
         else{
             let orders = await getOrders()
-            res.status(200).send(orders)
+            res.status(200).json(orders)
         }
 
     }
@@ -41,12 +41,12 @@ router.get('/', async function(req, res){
 router.put('/', async function(req, res){
     try {
 
-        const {id, estado} = req.body     
+        const {id, estado} = req.body
         let orderModified = await modifyStatusOrder(id, estado)
         res.status(200).json(orderModified.estado === "Completada"? "Muchas gracias por confirmar la recepcion de su compra" : orderModified.estado === "Cancelada"? "Su compra ha sido Cancelada" : "La orden ha sido actualizada" )
 
     } catch (error) {
-        res.send({error: error.messagge})
+        res.json({error: error.messagge})
     }
 })
 
@@ -54,7 +54,7 @@ router.delete('/', async function(req, res){
     const {id} = req.query
     try{
         let Deleted = await deleteOrder(id)
-        res.status(200).send(Deleted)
+        res.status(200).json(Deleted)
     }
     catch(error){
         console.log(error)
