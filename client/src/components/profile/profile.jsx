@@ -23,25 +23,31 @@ export default function Profile(){
     const userdetail = useSelector((state) => state.userDetail)
     user.isAdmin = userdetail.isAdmin;
 
-    //let isAdmin=window.localStorage.getItem('isAdmin');
+    async function callProtectedApiToken2(){
+        try{
+          const token = await getAccessTokenSilently();
+          const response = await axios.post('http://localhost:3001/users' , {
+                name: user.name || " " , 
+                email: user.email
+            },{headers:{
+            authorization:`Bearer ${token}`,
+          }});
+          user.isAdmin = response.data.userRegisted.isAdmin;
+          user.isBanned = response.data.userRegisted.isAdmin;
+          window.localStorage.setItem('isAdmin', user.isAdmin)
+        }catch(error) {
+          console.log(error);
+        }
+    }
 
-    // async function callProtectedApiToken2(){
-    //     try{
-    //       const token = await getAccessTokenSilently();
-    //       const response = await axios.post('http://localhost:3001/users' , {
-    //             name: user.name || " " , 
-    //             email: user.email
-    //         },{headers:{
-    //         authorization:`Bearer ${token}`,
-    //       }});
-    //       user.isAdmin = response.data.userRegisted.isAdmin;
-    //       user.isBanned = response.data.userRegisted.isAdmin;
-    //       window.localStorage.setItem(`p${user.email}`, user.isAdmin)
-    //     }catch(error) {
-    //       console.log(error);
-    //     }
-    // }
-      
+     useEffect(() => {
+        if (isAuthenticated){
+            return () => {
+                const usuario = callProtectedApiToken2();
+            }
+        }
+    }, [isAuthenticated])
+
     useEffect(() => {
         window.scrollTo(0, 0)
         dispatch(getUserDetails(user.email));
@@ -70,10 +76,10 @@ export default function Profile(){
                         <input className="radioButton" value='datos' type="radio" checked={checked === 'datos'} onChange={(e) => handleCheck(e)}/>
                         <p className="menuText">Mis datos</p>
                     </label>
-                    <label>
+                    {user && user.isAdmin === false ? <label>
                         <input className="radioButton" value='compras' type="radio" checked={checked === 'compras'} onChange={(e) => handleCheck(e)}/>
                         <p className="menuText">Mis Compras</p>
-                    </label>
+                    </label> : null}
                     { user.isAdmin && <label>
                         <input className="radioButton" value='adminProducts' type="radio" checked={checked === 'adminProducts'} onChange={(e) => handleCheck(e)}/>
                         <p className="menuText">Gestión de Productos</p>
