@@ -64,7 +64,7 @@ export default function ModalReclamo(props) {
           }, function(error) {
              console.log('FAILED...', error);
           });
-        
+          props.closeModal()
     }
 
     function handleDisabled() {

@@ -270,12 +270,12 @@ const reducer = (state = initialState, action) => {
                  }
         case ADD_ORDER_TO_CART:
                 let cartCopySix = state.cart;
-                let orderDetail = state.orderDetail
+                let orderDetail = state.orderDetail.productos
                 let productFound = cartCopySix.find(item => item.id === orderDetail[0].id)
                 return !productFound?
                 {
                 ...state,
-                cart: [...state.cart, ...state.orderDetail] 
+                cart: [...state.cart, ...state.orderDetail.productos] 
                 }: {
                 ...state,
                 cart: [...state.cart]    
@@ -314,6 +314,7 @@ const reducer = (state = initialState, action) => {
                     }),
                     }
         case GET_ORDER_DETAIL:
+            console.log("OrderDetail:", action.payload)
                 return {
                     ...state,
                     orderDetail: action.payload
