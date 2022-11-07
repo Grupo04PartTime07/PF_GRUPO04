@@ -90,10 +90,6 @@
     justify-self: center;
 }
 
-img:hover{
-    cursor: pointer;
-}
-
 .imgMiniatura{
     margin-left: -10px;
     height: 70px;
@@ -105,8 +101,13 @@ img:hover{
     width: 80px;
 }
 
+.detailImagen:hover{
+    cursor: pointer;
+}
+
 .imgMiniatura:hover{
     border: 2px solid rgb(45, 143, 255);
+    cursor: pointer
 }
 
 .detailButton{
