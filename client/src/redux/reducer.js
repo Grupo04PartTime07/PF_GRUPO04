@@ -297,16 +297,18 @@ const reducer = (state = initialState, action) => {
                     orders: action.payload.map(order => {
                         const obj = {};
                         obj.id = order.id;
+                        obj.orden = order.estado
                         obj.total = order.total;
-                        obj.estado = order.estado;
+                        obj.estado = order.stateOrden;
                         obj.date = order.createdAt.slice(0,10);
                         return obj
                     }),
                     sortedOrders: action.payload.map(order => {
                         const obj = {};
                         obj.id = order.id;
+                        obj.orden = order.estado
                         obj.total = order.total;
-                        obj.estado = order.estado;
+                        obj.estado = order.stateOrden;
                         obj.date = order.createdAt.slice(0,10);
                         return obj
                     }),
@@ -386,19 +388,19 @@ const reducer = (state = initialState, action) => {
                                  sortedOrders: [...pendingOrders]
                                   }      
                            }else
-                           if(action.payload === "Rechazado"){
+                           if(action.payload === "Rechazada"){
                             let allOrders2 = state.orders
                             let rejectedOrders = allOrders2.filter(order => 
-                            order.estado === "Rechazado")   
+                            order.estado === "Rechazada")   
                            return {
                                     ...state,
                                     sortedOrders: [...rejectedOrders]
                                   }
                                 }else
-                                if(action.payload === "Aprobado"){
+                                if(action.payload === "Aprobada"){
                                  let allOrders3 = state.orders
                                  let approvedOrders = allOrders3.filter(order => 
-                                     order.estado === "Aprobado")       
+                                     order.estado === "Aprobada")       
                             return {
                                          ...state,
                                          sortedOrders: [...approvedOrders]
