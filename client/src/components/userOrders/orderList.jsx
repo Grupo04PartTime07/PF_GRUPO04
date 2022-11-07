@@ -106,7 +106,7 @@ function Row(props) {
          }
         </TableCell>
         <TableCell> 
-        {props.status === "Pendiente" || props.status === "Aprobado" ? 
+        {props.status === "Aprobada" ? 
         <Tooltip title="Cancelar compra" placement="top-start">
         <IconButton size="large" aria-label="show 4 new mails" color="inherit" name="Cancelada"
           onClick={()=> dispatch(updateOrderStatus({id:props.id,estado:"Cancelada"}))}   >

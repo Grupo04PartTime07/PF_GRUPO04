@@ -109,7 +109,7 @@ const getOrderbyId = async(id) => {
             {
                 include: {
                     model: Products,
-                    attributes: ["id", "name", "price", "image"],
+                    attributes: ["id", "name", "price", "image", "stock"],
                 }
             })
             
@@ -126,8 +126,9 @@ const getOrderbyId = async(id) => {
             let obj = {
                 name: el.name,
                 price: el.price,
-                image: el.image[0],
+                image: [el.image[0]],
                 id: el.id,
+                stock: el.stock,
                 quantity: el.cart_product.cantidad
             }
             Factura.productos.push(obj)
@@ -135,7 +136,7 @@ const getOrderbyId = async(id) => {
     
         return Factura
     } catch (error) {
-        console.log(e)
+        console.log(error)
     }
 }
 

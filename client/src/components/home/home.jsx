@@ -91,7 +91,7 @@ export default function Home(props){
               {path === '/' ? <BestRatedProducts/> : null}
               {path === '/' ? <h2 className="homeTitle">Todos los productos</h2> : <h2 className="homeTitle">Resultados de la Busqueda</h2>}
               <div className="homeTable"> {/*#AgregameUnaEstrella*/}
-                  { products.map(a => a.stock === 0 ? null : <Card key={a.id} id={a.id} name={a.name} stock={a.stock} image={a.image} price={a.price} score={a.score}/>) }
+                  { products.map(a => a.stock < 1 ? null : <Card key={a.id} id={a.id} name={a.name} stock={a.stock} image={a.image} price={a.price} score={a.score}/>) }
               </div>
               {path === '/' ? <ScrollTop sx={{ zIndex: 10}} {...props}>
                   <Fab  size="small" aria-label="scroll back to top">

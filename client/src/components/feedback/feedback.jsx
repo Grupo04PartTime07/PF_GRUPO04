@@ -89,8 +89,13 @@ export default function Feedback(){
     //     window.localStorage.setItem(user, updatedCart)
     // }   
 
+
     React.useEffect(() => {
-        dispatch(verifyPurchase({payment_id, status, payment_type, merchant_order_id}))
+    dispatch(verifyPurchase({payment_id, status, payment_type, merchant_order_id}))
+    },[])
+
+    React.useEffect(() => {
+        
         if(status === "approved"){
             mailerExitoso()
         }else{
