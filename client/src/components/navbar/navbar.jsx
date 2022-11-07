@@ -11,7 +11,6 @@ import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import LocalActivityOutlinedIcon from '@mui/icons-material/LocalActivityOutlined';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import ShoppingCartTwoToneIcon from '@mui/icons-material/ShoppingCartTwoTone';
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
@@ -30,8 +29,10 @@ import axios from 'axios';
 import {useEffect} from 'react';
 import { getScoreUserId } from '../../redux/actions/get_score_user_id';
 import {getAllUsers} from '../../redux/actions/get_all_users';
-
 const { BACK_URL = 'http://localhost:3001' } = process.env
+
+
+
 const Search = styled('div')(({ theme }) => ({
   position: 'relative', 
   borderRadius: theme.shape.borderRadius,
@@ -62,7 +63,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -85,47 +85,74 @@ export default function PrimarySearchAppBar() {
   const favorites = useSelector(state => state.favorites)
   let currentUser = "Guest"
   if(user && user.email) currentUser = user.email
-  // let navbarUser = user && JSON.parse(window.localStorage.getItem(`userName`))
-  // let navbarEmail = user && JSON.parse(window.localStorage.getItem(`userEmail`))
   let dhacart = JSON.parse(window.localStorage.getItem(`c${currentUser}`))
   let dhafav = JSON.parse(window.localStorage.getItem(`f${currentUser}`))
+  let localStorageEmail = window.localStorage.getItem("userEmail")
+  const allUse = useSelector(state => state.users )
+  
 
   useEffect(() => {
-dispatch(getAllUsers());
-},[]);
+    dispatch(getAllUsers());
+  },[]);
 
 useEffect(() => {
   if (isAuthenticated){
-    const useFilter = allUse.filter(user => user.email === currentUser)
-    // console.log('SOY useFilter',useFilter)
+    window.localStorage.setItem(`userName`, user.name)
+    window.localStorage.setItem(`userEmail`, user.email)
+    const useFilter = allUse.filter(u => u.email === localStorageEmail)
     const usuario = useFilter && useFilter[0].id
-    // console.log('SOY USUARIO', usuario)
+    
     dispatch(getScoreUserId(usuario))
-    };
-    },[user])
-
-  const allUse = useSelector(state => state.users )
-  // console.log(allUse)
-
+  };
+  },[localStorageEmail])
 
 
   React.useEffect(()=>{
     if(dhacart && dhacart.length){
       if(user){
         let cguest = JSON.parse(window.localStorage.getItem('cGuest'))
-        let nvocart = dhacart.concat(cguest)
+        updateStorage('cGuest', [])
+        var nvocart = []
+        var respuesta = cguest[0] ? console.log(cguest[0].id, "soy cguest"):"no se en que estoy pensando"
+        console.log(respuesta)
+        console.log(dhacart[0], "soy dhacart") // carrito en local
+        
+        for (let i = 0; i < cguest.length; i++) {
+          var flag = 0
+          for (let j = 0; j < dhacart.length; j++) {
+              if(cguest[i].id == dhacart[j].id){
+                  dhacart[j].quantity = dhacart[j].quantity + cguest[i].quantity;
+                  dhacart[j].price = dhacart[j].price + cguest[i].price;
+                  flag = 1
+                }
+          }
+            if(flag !== 1 ){
+              dhacart.concat(cguest[i])
+            } 
+        
+        }
+        nvocart = dhacart
+        
         updateStorage(`c${currentUser}`, nvocart)
-        window.localStorage.removeItem('cGuest')
-        dispatch(fulfillCart([]))
+        updateStorage('cGuest', [])
+        //dispatch(fulfillCart([]))
         dispatch(fulfillCart(nvocart))
+      
       }else{
-      dispatch(fulfillCart([]))
+      
+      //dispatch(fulfillCart([]))
       dispatch(fulfillCart(dhacart))
-      }}
-    }, [dispatch, user])
+    }
+  
+  }else{
+    let cguest = JSON.parse(window.localStorage.getItem('cGuest'));
+    updateStorage(`c${currentUser}`, cguest)
+    updateStorage('cGuest', []);
+  }
+  }, [dispatch, user])
 
     const score = useSelector(state =>state.scoreUserId)
-    console.log('SOY SCORE',score)
+    //console.log('SOY SCORE',score)
 
   React.useEffect(()=>{ 
     if(dhafav && dhafav.length){
@@ -146,10 +173,11 @@ useEffect(() => {
       let updatedCart = JSON.stringify(cart);
       window.localStorage.setItem(user, updatedCart)
   }
+
   function updateWishList(user, fav){
     let updatedWishList = JSON.stringify(fav);
     window.localStorage.setItem(user, updatedWishList)
-}
+  }
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);

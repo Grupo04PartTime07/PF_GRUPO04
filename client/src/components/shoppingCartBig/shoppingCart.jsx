@@ -26,6 +26,8 @@ export default function ShoppingCartBig(props) {
     const cartItems = useSelector(state => state.cart)
     const registeredUser = useSelector(state => state.userDetail)
     const { user, loginWithPopup } = useAuth0();
+    let currentUser = "Guest"
+    if(user && user.email) currentUser = user.email
 
     useEffect(() => {  // Didmount and DidUpdate controlled
         window.scrollTo(0, 0)
@@ -66,7 +68,10 @@ export default function ShoppingCartBig(props) {
         setPoint(point)
     }
 
-    
+    function updateStorage(user, cart){
+        let updatedCart = JSON.stringify(cart);
+        window.localStorage.setItem(user, updatedCart)
+    }
 
     function handlecheckout() {
 
@@ -77,9 +82,14 @@ export default function ShoppingCartBig(props) {
             unit_price: Number(shipping), quantity: 1
         })
         let objTotal = { subtotal: cartItems.reduce(function (acc, va) { return (acc + (va.quantity * va.price)) }, 0) + Number(shipping), cart: total, email: user.email, direccion: address }
+       
         dispatch(checkOutCart(objTotal))
-        dispatch(handlePoint())
         dispatch(deleteCart())
+        updateStorage(`c${currentUser}`, [])
+        
+        dispatch(handlePoint());
+        
+
         closeModal()
     }
 
