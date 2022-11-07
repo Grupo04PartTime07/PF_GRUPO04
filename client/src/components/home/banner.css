@@ -41,6 +41,7 @@
 
 @media screen and (max-width: 600px){
     .slider{
-        display: none;
+        zoom: 30%;
+        margin-top: -10%;
     }
 }

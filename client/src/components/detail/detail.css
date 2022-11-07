@@ -238,6 +238,9 @@
     .opinionStars{
         text-align: center;
     }
+    .opinionComment{
+        margin-left: 0%;
+    }
     .divFormOpinions{
         width: 185px;
         margin-left: 50%;

@@ -47,7 +47,7 @@ export default function ImgMediaCard(props) {
   return (
     <Card 
       className='card' 
-      sx={{ maxWidth: 245 }}       
+      sx={{ width: '245px' }}       
     >
       <Link className='cardLink' to={`/products/${props.id}`} style={{textDecoration:"none", color: "black"}} >
       <CardMedia

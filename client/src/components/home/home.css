@@ -1,30 +1,26 @@
 .homeTitle{
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    margin-right: 850px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 3%;
     margin-bottom: 0%;
+    margin-top: 5%;
     font-weight: 350;
     color: rgb(82, 82, 82);
 }
 
 .homeTable{
-    display: inline-grid;
-    grid-template-columns: repeat(4, 1fr);
-    margin: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 
 @media screen and (max-width: 600px){
-    .homeTable{
-        display: inline-grid;
-        grid-template-columns: repeat(2, 1fr);
-        padding: 3%;
-    }
+
     .homeTitle{
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
+        justify-content: center;
         margin-right: 0%;
-        margin-bottom: 0%;
+        margin-bottom: 5%;
         font-weight: 350;
         color: rgb(82, 82, 82);
     }
