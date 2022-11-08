@@ -83,7 +83,12 @@ export default function AllCategories(){
 
     function handleEnter(){
         setSearchQuery("")
-      }
+    }
+
+    function cleanCurrent (){
+      setSearchQuery("");
+      setCategory({});
+    }
 
     const dataFiltered = filterData(searchQuery, categories);
 
@@ -111,7 +116,7 @@ export default function AllCategories(){
                     {dataFiltered && dataFiltered.length? <EnhancedTable rows={dataFiltered} displayProductForm={displayProductForm} setSearchQuery={setSearchQuery}></EnhancedTable>:null}           
                     
                 </div>
-                {currentCategory && display == currentCategory.id ? <div><CategoryForm category={currentCategory} setDisplay={setDisplay} /></div> : null}
+                {currentCategory && display == currentCategory.id ? <div><CategoryForm category={currentCategory} setDisplay={setDisplay} cleanCurrent={cleanCurrent} /></div> : null}
             </div>
         </div>
         </div>

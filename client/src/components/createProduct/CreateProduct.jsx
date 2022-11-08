@@ -46,7 +46,7 @@ function CreateProduct({product, setDisplay, cleanCurrent}) {
         stock: product.stock,
         brand: product.brand,
       })
-      setimageData({imageReel: product.image && product.image,})
+      //setimageData({imageReel: product.image && product.image,})
     }
       dispatch(getCategories());
       dispatch(getBrands());
@@ -110,19 +110,17 @@ function CreateProduct({product, setDisplay, cleanCurrent}) {
     setImagen(e.target.files[0]);
   };
 
-  function handleButton(e) {
-    // pisa el input con los datos que hay en imagenes
-    e.preventDefault();
-   
+  function handleImage(data) {
+    // pisa el input con los datos que hay en imagenes   
     setInput({
       ...input,
-      image: imageData.imageReel,
+      image: data,
     });
 
     setError(
       validate({
         ...input,
-        image: imageData.imageReel,
+        image: data,
       })
     );
 
@@ -139,11 +137,19 @@ function CreateProduct({product, setDisplay, cleanCurrent}) {
     axios
       .post("https://api.cloudinary.com/v1_1/de2od3piw/image/upload", formData)
 
-      .then((res) =>
-        setimageData({
-          imageReel: [...imageData.imageReel, res.data.url],
+      .then((res) => {
+        setInput({ ...input,
+          image: [...input.image, res.data.url],
         })
-      );
+        setError(
+          validate({
+            ...input,
+            image: [...input.image, res.data.url],
+          })
+        )
+        setImagen("");
+      })
+
   };
 
   function handleSelect(e) {
@@ -171,10 +177,11 @@ function CreateProduct({product, setDisplay, cleanCurrent}) {
   }
 
   const handleDeleteImage = (e) => { //borra una preview al hacer click sobre la misma
-    let imageSurce = e.target.src;
+    let imageSource = e.target.src;
 
-    setimageData({
-      imageReel: imageData.imageReel.filter((e) => e !== imageSurce),
+    setInput({
+      ...input,
+      image: input.image.filter((e) => e !== imageSource),
     });
   };
 
@@ -320,8 +327,8 @@ function CreateProduct({product, setDisplay, cleanCurrent}) {
             <h5>Vista Previa</h5>
             {/* crea la tira de imagenes pequeñas */}
             <div className="formContainerPreview"> 
-              {imageData.imageReel &&
-                imageData.imageReel.map((e) => (
+              {input.image &&
+                input.image.map((e) => (
                   <Image
                     className="formImagenPreview"
                     cloudName="de2od3piw"
@@ -331,9 +338,9 @@ function CreateProduct({product, setDisplay, cleanCurrent}) {
                 ))}
             </div>
             
-            <button className="button" onClick={handleButton}>
+            {/*<button className="button" onClick={handleButton}>
               Aceptar
-            </button>
+                </button>*/}
             <p className={error.image ? "danger" : "normal"}>{error.image}</p>
           </div>
 

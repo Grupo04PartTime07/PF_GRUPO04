@@ -9,7 +9,7 @@ import { getBrands } from "../../redux/actions/get_brands";
 import { updateBrand } from "../../redux/actions/update_brand";
 
 
-export default function BrandForm({brand, setDisplay}) {
+export default function BrandForm({brand, setDisplay, cleanCurrent}) {
 
   const dispatch = useDispatch();
 
@@ -38,21 +38,21 @@ export default function BrandForm({brand, setDisplay}) {
 
     axios
       .post("https://api.cloudinary.com/v1_1/de2od3piw/image/upload", formData)
-        .then((res) => setimageData(res.data.url));
+        .then((res) => setImage(res.data.url));
   };
 
   React.useEffect(() =>{
     if(brand){
       setName(brand.name)
       setImage(brand.image)
-      setimageData(brand.image)
+      //setimageData(brand.image)
     }
   },[])
 
   const handleDeleteImage = (e) => {
     console.log("imagen", e)
     //borra una preview al hacer click sobre la misma
-    setimageData("")
+    setImage("")
   };
 
 
@@ -78,7 +78,8 @@ export default function BrandForm({brand, setDisplay}) {
     }
     setName("");
     setImage("");
-    setimageData("")
+    cleanCurrent();
+    //setimageData("")
   }
 
   return (
@@ -117,19 +118,19 @@ export default function BrandForm({brand, setDisplay}) {
               <h5>Vista Previa</h5>
               {/* crea la tira de imagenes pequeñas */}
               <div className={styles.formContainerPreview}>
-                {imageData && (
+                {image && (
                   <Image
                     className={styles.formImagenPreview}
                     cloudName="de2od3piw"
-                    publicID={imageData}
+                    publicID={image}
                     onClick={(e) => handleDeleteImage(e)}
                   />
                 )}
               </div>
 
-              <button className={styles.button} onClick={handleButton}>
+              {/*<button className={styles.button} onClick={handleButton}>
                 Aceptar
-              </button>
+                </button>*/}
             </div></div>
         {brand ? <button
           name="submit"
