@@ -30,8 +30,8 @@ router.put('/:id', async function(req, res){
     const {idUsuario} = req.body
     const {idProd} = req.body
     try{
-        let modifiedWish = await modifyWish(id, idUsuario, idProd)
-        res.send(modifiedWish)
+        await modifyWish(id, idUsuario, idProd)
+        res.status(200).json('La lista de favoritas fue modificada con éxito!')
     }
     catch(error){
         console.log(error)
@@ -39,10 +39,10 @@ router.put('/:id', async function(req, res){
 })
 
 router.post('/', async function(req, res){
-    const {user, products} = req.body
+    const {userEmail, cart} = req.body
     try {
-        let result = await createNewWishList(user, products)
-        res.status(200).send(result)
+        await createNewWishList(userEmail, cart)
+        res.status(200).json('La lista de favoritos fue creada con éxito!')
     } catch (error) {
         console.log(error)
     }
