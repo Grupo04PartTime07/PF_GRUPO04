@@ -129,8 +129,15 @@ function Row(props) {
                         {Math.round(detail.quantity * detail.price * 100) / 100}
                       </TableCell>
                     </TableRow>
-                  )) : <Typography sx={{marginTop: '10px'}}>Consultando a la base de datos...</Typography>}
+                  ))
+                  : <Typography sx={{marginTop: '10px'}}>Consultando a la base de datos...</Typography>}
                 </TableBody>
+                <TableRow>
+                  <Typography sx={{fontSize: '12px', marginTop: '10px'}}>Costo de envío: ${orderDetail.shippingPrice}</Typography>
+                </TableRow>
+                <TableRow>
+                  <Typography sx={{fontSize: '12px', marginTop: '10px'}}>Descuento aplicado: ${(orderDetail.productos && orderDetail.productos.reduce(function (acc, va) { return (acc + (va.quantity * va.price)) }, 0) - (orderDetail && (orderDetail.total - orderDetail.shippingPrice)) )}</Typography>
+                </TableRow>
               </Table>
             </Box>
           </Collapse>
