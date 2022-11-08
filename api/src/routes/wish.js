@@ -27,10 +27,9 @@ router.get('/:id', async function(req, res){
 
 router.put('/:id', async function(req, res){
     const {id} = req.params
-    const {idUsuario} = req.body
-    const {idProd} = req.body
+    const {idUsuario, idProd, newStock} = req.body 
     try{
-        let modifiedWish = await modifyWish(id, idUsuario, idProd)
+        let modifiedWish = await modifyWish(id, idUsuario, idProd, newStock)
         res.send(modifiedWish)
     }
     catch(error){

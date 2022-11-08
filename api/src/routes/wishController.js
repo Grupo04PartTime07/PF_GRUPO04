@@ -2,16 +2,46 @@ const { WishList, Products, UserRegisted, createNewWish } = require('../db')
 
 const getWishList = async() => {
     try {
-        let Wish = await WishList.findAll({
-            include: {
+        let wish = await WishList.findAll({
+            include:[ {
                 model: Products, 
-                attributes: ["id", "name", "price", "description", "isDeleted"],
+                attributes: ["id", "name", "price", "description", "isDeleted", "stock"],
                 where: {
                     isDeleted: false
                 }
-            }
+            },
+            {
+                model: UserRegisted, 
+                attributes: ['email'],
+                where: {
+                    isDeleted: false
+                }
+            }]
         })
-        return Wish
+        let wishListFinal = wish.map((e) => {
+            
+            let cartProducts = e.products
+
+            let productsClean = cartProducts.map((e) => {
+                return {
+                    id: e.id,
+                    name: e.name,
+                    price: e.price,
+                    description: e.description,
+                    stock: e.stock
+                }
+            })
+            
+            return {
+                    id: e.id,
+                    userRegistedId: e.userRegistedId,
+                    userRegisted: e.userRegisted.email,
+                    products: productsClean
+                }
+        })
+
+    
+        return wishListFinal
     } catch (error) {
         console.log(error)
     }
@@ -31,7 +61,7 @@ const getWishListDetail = async (id) => {
                 
                 {
                 model: Products, 
-                attributes: ["id", "name", "price", "description"], 
+                attributes: ["id", "name", "price", "description", "stock"], 
                 where: {
                     isDeleted: false
                 }
@@ -39,17 +69,37 @@ const getWishListDetail = async (id) => {
         ]
         })
 
-        return wish
+        let cartProducts = wish.products
+
+        let productsClean = cartProducts.map((e) => {
+            return {
+                id: e.id,
+                name: e.name,
+                price: e.price,
+                description: e.description, 
+                stock: e.stock
+            }
+        })
+
+        let wishList = {
+            id: wish.id,
+            userRegistedId: wish.userRegistedId,
+            userRegisted: wish.userRegisted.email,
+            products: productsClean
+        }
+
+        return wishList
 
     } catch (error) {
         console.log(error)
     }
 }
 
-const modifyWish = async (id, idProd) => {
+const modifyWish = async (id, idUsuario, idProd, newStock) => {
     try{
         let wishprod = await WishList.findByPk(id)
-        let user = await UserRegisted.findByPk(id)
+        let user = await UserRegisted.findByPk(idUsuario)
+        let newWish
 
         if(wishprod.isDeleted === true){
             return 'Lista no encontrada'
@@ -58,30 +108,22 @@ const modifyWish = async (id, idProd) => {
         if(user.isDeleted === true){
             return 'Usuario no encontrado'
         }
-        
-        let newWish = await WishList.findByPk(id, {
-            include: [
-                {
-                    model: UserRegisted, 
-                    attributes: ['email'],
-                    where: {
-                        isDeleted: false
-                    }
-                },
-                    
-                {
-                    model: Products, 
-                    attributes: ["id", "name", "price", "description"], 
-                    where: {
-                        isDeleted: false
-                    }
+
+        if(newStock){
+            await Products.update({
+                stock: newStock
+            }, {
+                where: {
+                    id: idProd
                 }
-            ]
             })
+        }
 
-            await newWish.addProducts(idProd)
+        newWish = await WishList.findByPk(id)
 
-            return newWish
+        await newWish.addProducts(idProd)
+
+        return newWish
     }
     catch(error){
         console.log(error)
@@ -89,37 +131,49 @@ const modifyWish = async (id, idProd) => {
 }
 
 
-const createNewWishList = async(user, products) => {
+const createNewWishList = async(userEmail, cart) => {
     try{
-        const User = await UserRegisted.findOne({
-            where: { email: user }, 
+        const user = await UserRegisted.findOne({
+            where: { email: userEmail }, 
         })
 
-        let wish = await WishList.findOne({
+        let wishList = await WishList.findOne({
             where: {
-                userRegistedId: User.id
+                userRegistedId: user.id
             }
         })
 
-        if(!wish){
-            wish = await WishList.create({
-            userRegistedId: User.id})
+        if(!wishList){
+            wishList = await WishList.create({
+            userRegistedId: user.id})
             
-            await products.forEach(prod => {
-            wish.addProducts(prod.id)
+            await cart.forEach((e) => {
+            wishList.addProducts(e.id)
             })
+
         }
 
         else{
-            wish.setProducts([])
-            await products.forEach(prod => {
-                wish.addProducts(prod.id)
+            wishList.setProducts([])
+            await cart.forEach((e) => {
+                wishList.addProducts(e.id)
             })
-        }
+        }  
 
-        
+        await cart.map(prod => {
+            let index = Products.findByPk(prod.id)
+            if(prod.stock !== index.stock){
+                Products.update({
+                    stock: prod.stock
+                }, {
+                    where: {
+                        id: prod.id
+                    }
+                })
+            }
+        })
 
-    return wish
+    return wishList
     }
     catch(error){
         console.log(error)
