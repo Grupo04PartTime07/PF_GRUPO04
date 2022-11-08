@@ -63,7 +63,7 @@ export default function Brand(props){
             </div>
             <div className="productsByCategorie">
                 <h2 className="categorieTitle">{props.history.location.state}</h2>
-                <div className="homeTable">
+                <div className="categorieProductsTable">
                     { productsaux.map(a => a.stock === 0 ? null : <Card id={a.id} name={a.name} image={a.image} price={a.price} score={a.score}/>) }
                 </div>
             </div>
