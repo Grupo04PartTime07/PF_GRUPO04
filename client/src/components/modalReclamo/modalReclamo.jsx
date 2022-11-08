@@ -77,13 +77,13 @@ export default function ModalReclamo(props) {
     const body=(
         <div >
             <div align="center">
-                <h2>Inicia tu reclamo</h2>
+                <h2 className="CommentTitle">Inicia tu reclamo</h2>
             </div>
-            <label>Email: {props.userEmail}</label>
+            <label className="CommentTitle">Email: {props.userEmail}</label>
             <br/>
-            <label>Orden: {props.id}</label>
+            <label className="CommentTitle">Orden: {props.id}</label>
             <br/>
-            <label>Motivos: </label> 
+            <label className="CommentTitle">Motivos: </label> 
              <select  name="motivos"id="motivos"  defaultValue="" 
               onChange={(e)=>handleOnChange(e)}
              >
@@ -94,15 +94,17 @@ export default function ModalReclamo(props) {
             <option>Problema con la suma de puntos</option>
             <option>Otros motivos</option>
             </select>
-
+            <br/>
+            <br/>
+            <div align="center">
             <h3 className="CommentTitle">Agrega un comentario</h3>
-            <textarea name="coment" type="text" maxlength="300" className="commentTextarea" value={coments} onChange={(e)=>setComents(e.target.value)}/>
+            <textarea  name="coment" type="text" maxlength="300" className="commentTextarea" value={coments} onChange={(e)=>setComents(e.target.value)}/>
             <p className="commentLength">{coments.length}/300</p>
-            
-            <div align="right">
+            </div>
+            <div align="center">
 
-            <Button className={styles.bttn} disabled = {handleDisabled()} onClick={(e) => handleSubmit(e)}>Enviar</Button>
-            <Button onClick={()=>props.closeModal() }>Cancelar</Button>
+            <button className={styles.button} disabled = {handleDisabled()} onClick={(e) => handleSubmit(e)}>Enviar</button>
+            <button className={styles.button} onClick={()=>props.closeModal() }>Cancelar</button>
 
             </div>
 
