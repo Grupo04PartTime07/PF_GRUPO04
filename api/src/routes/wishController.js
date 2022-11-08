@@ -174,6 +174,7 @@ const createNewWishList = async(userEmail, cart) => {
         })
 
     return wishList
+    
     }
     catch(error){
         console.log(error)
