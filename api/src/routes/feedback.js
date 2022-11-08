@@ -83,6 +83,44 @@ try{
             });
         
         }else{
+            const shipping = items.find((e) => e.id === '0');
+
+            if(shipping.unit_price === 299){
+                await Orden.update({
+                    shippingId: '1',
+                },{
+                    where: {
+                        id: order.id
+                    }
+                });
+            }
+            else if(shipping.unit_price === 349){
+                await Orden.update({
+                    shippingId: '2',
+                },{
+                    where: {
+                        id: order.id
+                    }
+                });
+            }
+            else if(shipping.unit_price === 399){
+                await Orden.update({
+                    shippingId: '3',
+                },{
+                    where: {
+                        id: order.id
+                    }
+                });
+            }else{
+                await Orden.update({
+                    shippingId: '4',
+                },{
+                    where: {
+                        id: order.id
+                    }
+                });
+            };
+            
             await Orden.update({
                 estado: merchant_order_id,
             },{
