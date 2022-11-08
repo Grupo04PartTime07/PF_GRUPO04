@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import { Image } from "cloudinary-react";
 import { getCategories } from "../../redux/actions/get_categories";
 
-export default function CategoryForm({category, setDisplay}) {
+export default function CategoryForm({category, setDisplay, cleanCurrent}) {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
 
   const dispatch = useDispatch();
@@ -55,19 +55,19 @@ export default function CategoryForm({category, setDisplay}) {
     axios
       .post("https://api.cloudinary.com/v1_1/de2od3piw/image/upload", formData)
 
-      .then((res) => setimageData(res.data.url));
+      .then((res) => setImage(res.data.url));
   };
 
   const handleDeleteImage = (e) => {
     //borra una preview al hacer click sobre la misma
-    setimageData("")
+    setImage("")
   };
 
   React.useEffect(() =>{
     if(category){
       setName(category.name)
       setImage(category.image)
-      setimageData(category.image)
+      //setimageData(category.image)
     }
   },[])
 
@@ -83,6 +83,7 @@ export default function CategoryForm({category, setDisplay}) {
     dispatch(createCategory(obj));
     setName("");
     setImage("");
+    cleanCurrent();
     }
   }
 
@@ -121,19 +122,19 @@ export default function CategoryForm({category, setDisplay}) {
               <h5>Vista Previa</h5>
               {/* crea la tira de imagenes pequeñas */}
               <div className={styles.formContainerPreview}>
-                {imageData && (
+                {image && (
                   <Image
                     className={styles.formImagenPreview}
                     cloudName="de2od3piw"
-                    publicID={imageData}
+                    publicID={image}
                     onClick={(e) => handleDeleteImage(e)}
                   />
                 )}
               </div>
 
-              <button className={styles.button} onClick={handleButton}>
+              {/*<button className={styles.button} onClick={handleButton}>
                 Aceptar
-              </button>
+                </button>*/}
             </div>
           </div>
           {category ? 

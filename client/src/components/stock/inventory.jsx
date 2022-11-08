@@ -80,7 +80,8 @@ export default function UpdateInventory(){
     }
 
     function cleanCurrent (){
-        setProduct({})
+      setSearchQuery("");
+      setProduct({});
     }
 
     function handleEnter(){

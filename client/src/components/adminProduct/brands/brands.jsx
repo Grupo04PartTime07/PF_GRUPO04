@@ -84,6 +84,11 @@ export default function AllBrands(){
     function handleEnter(){
         setSearchQuery("")
       }
+    
+    function cleanCurrent (){
+      setSearchQuery("");
+      setBrand({});
+    }
 
     const dataFiltered = filterData(searchQuery, brands);
 
@@ -111,7 +116,7 @@ export default function AllBrands(){
                     {dataFiltered && dataFiltered.length? <EnhancedTable rows={dataFiltered} displayProductForm={displayProductForm} setSearchQuery={setSearchQuery}></EnhancedTable>:null}           
                     
                 </div>
-                {currentBrand && display == currentBrand.id ? <div><BrandForm brand={currentBrand} setDisplay={setDisplay} /></div> : null}
+                {currentBrand && display == currentBrand.id ? <div><BrandForm brand={currentBrand} setDisplay={setDisplay} cleanCurrent={cleanCurrent}/></div> : null}
             </div>
         </div>
         </div>
