@@ -23,9 +23,9 @@ export default function About(){
             name: 'Rosibel Mendoza',
             rol: fullStack,
             rolLetter: fs,
-            image: '',
-            description: '',
-            linkedIn: '',
+            image: 'https://res.cloudinary.com/dnxvoi5ro/image/upload/v1667933184/ROSIBEL_u0370y.jpg',
+            description: 'Coordinación de Integración Back-Front, Lógica del Proceso, Manejo del Dato, Gestión de Productos y Debugging General',
+            linkedIn: 'https://www.linkedin.com/in/rosim24/',
         },
         {
             name: 'Bernardo Broscheit',

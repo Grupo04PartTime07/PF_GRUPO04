@@ -118,16 +118,21 @@ function Detail(props) {
             </h2>
             <p className="detailDescription">{detail.description}</p>
           </div>
-          <div className="detailButton">
+          {isAuthenticated && user.isAdmin === true ? null : <div className="detailButton">
               <span className="buttonMargin">
-                <Button
+                {detail.stock < 1 ? <Button
+                  variant="contained"
+                  disable= {true}
+                >
+                  No disponible
+                </Button> : <Button
                   onClick={isAuthenticated ? () =>handleComprar() : loginWithRedirect}
                   variant="contained"
                 >
                   Comprar
-                </Button>
+                </Button>}
               </span>
-            <span className="buttonMargin">
+            {detail.stock<1 ? null : <span className="buttonMargin">
               <Button
                 onClick={() =>
                   dispatch(
@@ -145,7 +150,7 @@ function Detail(props) {
               >
                 <AddTwoToneIcon /> Carrito
               </Button>
-            </span>
+            </span>}
             <Button
               sx={{
                     minWidth: 130,
@@ -167,7 +172,7 @@ function Detail(props) {
             >
              {itemFound ? <RemoveTwoToneIcon/> : <AddTwoToneIcon />} Favoritos
             </Button>
-          </div>
+          </div>}
         </div>
         <div className="detailImagen">
           <ModalImg img={detail.image[indice]} />

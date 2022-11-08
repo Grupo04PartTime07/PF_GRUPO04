@@ -262,11 +262,11 @@ const reducer = (state = initialState, action) => {
                 {
                  ...state,
                  cart: cartCopyFive.map(item => item.id === action.payload.id?{...item, quantity: item.quantity + 1} : item),
-                 favorites: state.favorites.filter(e => e.id !== action.payload.id )
+                 //favorites: state.favorites.filter(e => e.id !== action.payload.id )
                 }:{
                 ...state,
                 cart:[...state.cart, action.payload],
-                favorites: state.favorites.filter(e => e.id !== action.payload.id )
+                //favorites: state.favorites.filter(e => e.id !== action.payload.id )
                  }
         case ADD_ORDER_TO_CART:
                 let cartCopySix = state.cart;
