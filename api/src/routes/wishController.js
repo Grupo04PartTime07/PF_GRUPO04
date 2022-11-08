@@ -5,7 +5,7 @@ const getWishList = async() => {
         let wish = await WishList.findAll({
             include:[ {
                 model: Products, 
-                attributes: ["id", "name", "price", "description", "isDeleted"],
+                attributes: ["id", "name", "price", "description", 'image', "isDeleted", 'stock'],
                 where: {
                     isDeleted: false
                 }
@@ -27,7 +27,9 @@ const getWishList = async() => {
                     id: e.id,
                     name: e.name,
                     price: e.price,
-                    description: e.description
+                    description: e.description,
+                    image: e.image[0],
+                    stock: e.stock
                 }
             })
             
@@ -63,7 +65,7 @@ const getWishListDetail = async (id) => {
                 
                 {
                 model: Products, 
-                attributes: ["id", "name", "price", "description"], 
+                attributes: ["id", "name", "price", "description",'image', 'stock'], 
                 where: {
                     isDeleted: false
                 }
@@ -78,7 +80,9 @@ const getWishListDetail = async (id) => {
                 id: e.id,
                 name: e.name,
                 price: e.price,
-                description: e.description
+                description: e.description,
+                image: e.image[0],
+                stock: e.stock
             }
         })
 
@@ -109,27 +113,7 @@ const modifyWish = async (id, idUsuario, idProd) => {
             return 'Usuario no encontrado'
         }
         
-        let newWish = await WishList.findByPk(id 
-            // {
-            // include: [
-            //     {
-            //         model: UserRegisted, 
-            //         attributes: ['email'],
-            //         where: {
-            //             isDeleted: false
-            //         }
-            //     },
-                    
-            //     {
-            //         model: Products, 
-            //         attributes: ["id", "name", "price", "description"], 
-            //         where: {
-            //             isDeleted: false
-            //         }
-            //     }
-            // ]
-            // }
-            )
+        let newWish = await WishList.findByPk(id)
 
             await newWish.addProducts(idProd)
 
