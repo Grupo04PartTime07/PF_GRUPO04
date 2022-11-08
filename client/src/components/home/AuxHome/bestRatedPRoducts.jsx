@@ -32,7 +32,7 @@ export default function BestRatedProducts(){
             <div>
               <h2 className="homeTitle">Top 10 más valorados</h2>
               <div className="homeTable"> {/*#AgregameUnaEstrella*/}
-                  { bestRatedProducts.map(a => a.stock === 0 ? null : <Card id={a.id} name={a.name} image={a.image} price={a.price} score={a.score}/>) }
+                  { bestRatedProducts.map(a => a.stock === 0 ? null : <Card key={a.id} id={a.id} name={a.name} image={a.image} price={a.price} score={a.score}/>) }
               </div>
             </div>
         </div> : null

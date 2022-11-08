@@ -1,12 +1,50 @@
-const {Orden, UserRegisted, Cart, StateOrden, Products} = require('../db')
+const {Orden, UserRegisted, Cart, StateOrden, Products, Shipping} = require('../db')
 
 const getOrders = async() => {
     try{
         let orders = await Orden.findAll({
-            where: { isDeleted: false  },
-            attributes: [ 'id', 'total', 'createdAt', 'estado' ]
+            where: { isDeleted: false },
+            include: [
+                {
+                model: StateOrden,
+                attributes: ['state'],
+            },
+            {
+                model: Cart,
+                attributes: ['userRegistedId'],
+            }]
         })
-        return orders
+
+        let ordersFinal = []
+        
+        for(const e of orders){
+            let user = await UserRegisted.findOne({
+                where: {
+                    id: e.cart.userRegistedId ? e.cart.userRegistedId : ' '
+                }
+            });
+
+            if(!user){
+                var userEmail = 'enzo@gmail.com'
+            }else{
+                var userEmail = user.email;
+            }
+            
+            ordersFinal.push({
+                
+                    id: e.id ? e.id : 'id',
+                    isDeleted: e.isDeleted,
+                    createdAt: e.createdAt ? e.createdAt : 'createdAt ',
+                    datosEnvio: e.datosEnvio ? e.datosEnvio : 'datosEnvio',
+                    total: e.total ? e.total : 'total',
+                    estado: e.estado ? e.estado : 'estado',
+                    shippingId: e.shippingId ? e.shippingId : 'shippingId',
+                    cartId: e.cartId ? e.cartId : 'cartId',
+                    stateOrden: e.stateOrden.state ? e.stateOrden.state : 'state',
+                    userEmail: userEmail ? userEmail : 'enzo@gmail.com'
+            })
+        };
+        return ordersFinal
     }
     catch(error){
         console.log(error)
@@ -15,40 +53,63 @@ const getOrders = async() => {
 
 const getOrdersByUser = async(email) => {
     try{
-        const User = await UserRegisted.findOne({
+        const user = await UserRegisted.findOne({
             where: {
                 email: email
             }
-        }, {
-            include: {
-                model: Cart
+        })
+
+        let orders = await Orden.findAll({
+            where: { isDeleted: false },
+            include: [
+                {
+                model: StateOrden,
+                attributes: ['state'],
+            },
+            {
+                model: Cart,
+                attributes: ['id'],
+                where: {
+                    userRegistedId: user.id
+                }
+            }]
+        })
+
+        let ordersFinal = orders.map((e) => {
+            return {
+                    id: e.id ? e.id : 'id',
+                    isDeleted: e.isDeleted,
+                    createdAt: e.createdAt ? e.createdAt : 'createdAt ',
+                    datosEnvio: e.datosEnvio ? e.datosEnvio : 'datosEnvio',
+                    total: e.total ? e.total : 'total',
+                    estado: e.estado ? e.estado : 'estado',
+                    shippingId: e.shippingId ? e.shippingId : 'shippingId',
+                    cartId: e.cartId ? e.cartId : 'cartId',
+                    stateOrden: e.stateOrden.state ? e.stateOrden.state : 'state',
             }
         })
 
-        const idCart = User.cartId
-
-        const Orders = await Orden.findAll({
-            where: { cartId : idCart },
-            attributes: ["id", "total", "createdAt", "estado" ]
-        })
-        return Orders
+        return ordersFinal
 
     }
-    catch(Error){
-        console.log(Error)
+    catch(error){
+        console.log(error)
     }
 }
 
 const getOrderbyId = async(id) => {
     try {
-        const order = await Orden.findByPk(id)
-        const idCart = order.cartId
+        const order = await Orden.findByPk(id);
+
+        const shipping = await Shipping.findByPk(order.shippingId)
+
+        const idCart = order.cartId;
 
         const Carts = await Cart.findByPk(idCart, 
             {
                 include: {
                     model: Products,
-                    attributes: ["id", "name", "price", "image"],
+                    attributes: ["id", "name", "price", "image", "stock"],
                 }
             })
             
@@ -57,6 +118,7 @@ const getOrderbyId = async(id) => {
             date: order.createdAt,
             total: order.total,
             estado: order.estado,
+            shippingPrice: shipping.price,
             productos: []
         }
 
@@ -64,8 +126,9 @@ const getOrderbyId = async(id) => {
             let obj = {
                 name: el.name,
                 price: el.price,
-                image: el.image[0][0],
+                image: [el.image[0]],
                 id: el.id,
+                stock: el.stock,
                 quantity: el.cart_product.cantidad
             }
             Factura.productos.push(obj)
@@ -73,30 +136,30 @@ const getOrderbyId = async(id) => {
     
         return Factura
     } catch (error) {
-        
+        console.log(error)
     }
 }
 
-const modifyStatusOrder = async (id, props) => {
+const modifyStatusOrder = async (id, status) => {
+    console.log(status)
     try{
 
-        let statusOrdermodified = await StateOrden.findOne({ 
-            where:{
-                state: props
-            }
-        })
-
-        let statusOrdermodifiedId = statusOrdermodified.id
-
-         await Orden.update({
-            estado: props,
-            stateOrdenId: statusOrdermodifiedId
-        }, 
-        {
+        let order = await Orden.findOne({
             where: {
-                id: id
+                id: id,
             }
         })
+
+        let newStateOrder = await StateOrden.findOne({ 
+            where:{
+                state: status
+            }
+        })
+
+        let newStateOrderId = newStateOrder.id
+
+        await order.setStateOrden(newStateOrderId)
+       
         let orderModified = await Orden.findByPk(id, {
             include: {
                 model: StateOrden
@@ -129,13 +192,85 @@ const createNewOrder = async (datosEnvio, total, estado, /* shippingId */ cartId
     } catch (error) {
         console.log(error)
     }
-    
+
 }
 
+const deleteOrder = async (id) => {
+    try{
+        let order = await Orden.findByPk(id)
+        if(order.isDeleted === true){
+            return 'La orden no fue encontrada'
+        }
+        else{
+            await Orden.update({
+                isDeleted: true
+            },
+            {
+                where:{
+                    id: id
+            }
+        })
+    return 'La Orden fue Borrada exitosamente'
+        }
+    }
+    catch(error){
+        console.log(error)
+    }
+}
+
+const allPurchases = async (email) =>{
+    try {
+        const user = await UserRegisted.findOne({
+            where: {
+                email: email
+            }
+        })
+        let orders = await Orden.findAll({
+            where: { isDeleted: false },
+            include: [
+                {
+                model: StateOrden,
+                attributes: ['state'],
+                where: {
+                    state: "Aprobada"
+                }
+            },
+            {
+                model: Cart,
+                where: {
+                    userRegistedId: user.id
+                },
+                include:[
+                    {
+                        model:Products,
+                        attributes:['id'],
+                        through: {
+                            attributes: [],
+                        },
+                    }
+                ]
+            }]
+        })
+
+        let response = []
+
+        for(const order of orders){
+            for( const p of order.cart.products){
+                //let finder = response.
+                if(!response.includes(p.id)) response.push(p.id)
+            }
+        }
+        return response
+    } catch (error) {
+        console.log(error)
+    }
+}
 module.exports = {
     getOrders,
     getOrderbyId,
     modifyStatusOrder,
     createNewOrder,
-    getOrdersByUser
+    getOrdersByUser,
+    deleteOrder,
+    allPurchases
 }

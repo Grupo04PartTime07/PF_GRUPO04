@@ -7,7 +7,10 @@ import './feedback.css'
 import axios from 'axios';
 import { verifyPurchase } from "../../redux/actions/verify_purchase";
 import {useAuth0} from '@auth0/auth0-react';
+import { deleteCart } from '../../redux/actions/delete_cart';
 
+
+const { BACK_URL = 'http://localhost:3001' } = process.env
 export default function Feedback(){
     
     const history = useHistory()
@@ -22,6 +25,7 @@ export default function Feedback(){
     const { user, isAuthenticated, getAccessTokenSilently  } = useAuth0();
     let currentUser = "Guest"
     if(user && user.email) currentUser = user.email
+    
     // let navbarUser = JSON.parse(window.localStorage.getItem(`userName`))
     //let navbarEmail = JSON.parse(window.localStorage.getItem(`userEmail`))
     
@@ -34,7 +38,7 @@ export default function Feedback(){
     async function callProtectedApiToken2(){
         try{
           const token = await getAccessTokenSilently();
-          const response = await axios.post('http://localhost:3001/users' , {
+          const response = await axios.post(`${BACK_URL}/users` , {
                 name: user.name || " " , 
                 email: user.email
             },{headers:{
@@ -80,10 +84,18 @@ export default function Feedback(){
           });
     }
 
-    
+    // function updateStorage(user, cart){
+    //     let updatedCart = JSON.stringify(cart);
+    //     window.localStorage.setItem(user, updatedCart)
+    // }   
+
 
     React.useEffect(() => {
-        dispatch(verifyPurchase({payment_id, status, payment_type, merchant_order_id}))
+    dispatch(verifyPurchase({payment_id, status, payment_type, merchant_order_id}))
+    },[])
+
+    React.useEffect(() => {
+        
         if(status === "approved"){
             mailerExitoso()
         }else{
@@ -96,14 +108,18 @@ export default function Feedback(){
                 console.log(usuario);
             }
         }
-    }, [dispatch]);
+        // dispatch(deleteCart())
+        // updateStorage(`c${currentUser}`, [])
+
+    }, [dispatch, user]);
+    
     
     return(
         <div className="feedbackContainer">
             <div className="feedbackContent">
                 <img src='https://assets.soyhenry.com/henry-landing/assets/Henry/logo.png' alt='Henry Logo'></img>
                 {status === 'approved' ? <div className="feedbackMessage">
-                    ¡Gracias por tu compra {user.given_name}!
+                    ¡Gracias por tu compra {user && user.given_name}!
                     <p>Tu código de seguimiento es <b>{merchant_order_id}</b></p>
                 </div> : status === 'null' ? history.push('/') : <div className="feedbackMessage">
                     ¡Algo salió mal!

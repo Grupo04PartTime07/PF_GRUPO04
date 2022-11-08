@@ -1,16 +1,77 @@
 const {Router} = require('express')
 const router = Router()
 const axios = require('axios')
-const {Products} = require('../db');
+const {Products, Orden, Cart, Shipping} = require('../db');
 
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
 const {payment_id, status, payment_type, merchant_order_id} = req.body
 try{
+    const { data } = await axios.get(`https://api.mercadopago.com/merchant_orders/${merchant_order_id}?access_token=APP_USR-8763003876428984-102015-2626c522c3a666ad57ca4f935dabf886-1221748734`);
+    const { items, total_amount } = data;
+    const order = await Orden.findOne({
+        where: {
+            total: total_amount,
+        },
+        include: [
+            {
+                model: Cart,
+                attributes: ['id']
+            }
+        ]
+    });
+
+
     if(status === 'approved'){
-        const { data } = await axios.get(`https://api.mercadopago.com/merchant_orders/${merchant_order_id}?access_token=APP_USR-8763003876428984-102015-2626c522c3a666ad57ca4f935dabf886-1221748734`);
-        const { items } = data;
-        const newItems = items.filter((e) => e.id !== '0');
-       
+        const newItems0 = items.filter((e) => e.id !== '0');
+        const newItems = newItems0.filter((e) => e.id !== '999');
+        const shipping = items.find((e) => e.id === '0');
+
+        if(shipping.unit_price === 299){
+            await Orden.update({
+                shippingId: '1',
+            },{
+                where: {
+                    id: order.id
+                }
+            });
+        }
+        else if(shipping.unit_price === 349){
+            await Orden.update({
+                shippingId: '2',
+            },{
+                where: {
+                    id: order.id
+                }
+            });
+        }
+        else if(shipping.unit_price === 399){
+            await Orden.update({
+                shippingId: '3',
+            },{
+                where: {
+                    id: order.id
+                }
+            });
+        }else{
+            await Orden.update({
+                shippingId: '4',
+            },{
+                where: {
+                    id: order.id
+                }
+            });
+        };
+
+        await Orden.update({
+            estado: merchant_order_id,
+        },{
+            where: {
+                id: order.id
+            }
+        })
+
+        await order.setStateOrden(2)
+
         newItems.map(async (e) => {
             let producto = await Products.findByPk(e.id)
             await Products.update({
@@ -20,27 +81,23 @@ try{
                     id: e.id
                 }})
             });
+        
+        }else{
+            await Orden.update({
+                estado: merchant_order_id,
+            },{
+                where: {
+                    id: order.id
+                }
+            })
+
+            await order.setStateOrden(3)
         }
     }catch(e){
         console.log(e)
     }
 
-res.status(200).send({payment_id, status, payment_type, merchant_order_id});
+res.status(200).json('Proceso de compra finalizado!');
 })
 
 module.exports = router;
-
-    //datos que devuelve el Feedback:
-
-    // http://localhost:3000/?
-    // collection_id=50830799641
-    // &collection_status=approved
-    // &payment_id=50830799641
-    // &status=approved
-    // &external_reference=null
-    // &payment_type=credit_card
-    // &merchant_order_id=6262016968
-    // &preference_id=1221748734-60a74065-c2c5-4afe-a013-690671b32bb9
-    // &site_id=MLA
-    // &processing_mode=aggregator
-    // &merchant_account_id=null

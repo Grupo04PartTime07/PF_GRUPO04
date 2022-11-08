@@ -47,7 +47,7 @@ export default function ImgMediaCard(props) {
   return (
     <Card 
       className='card' 
-      sx={{ maxWidth: 245 }}       
+      sx={{ width: '245px' }}       
     >
       <Link className='cardLink' to={`/products/${props.id}`} style={{textDecoration:"none", color: "black"}} >
       <CardMedia
@@ -85,14 +85,14 @@ export default function ImgMediaCard(props) {
             size="large"
             aria-label="show 17 new notifications"
             color="inherit"
-            onClick={()=> dispatch(addToFavorite({id: props.id, name: props.name, image: props.image, price: props.price, score: props.score, quantity:1 })) }
+            onClick={()=> dispatch(addToFavorite({id: props.id, name: props.name, image: props.image, price: props.price, score: props.score, stock: props.stock, quantity:1 })) }
         >
         {/* { itemFound? <FavoriteTwoToneIcon /> : <FavoriteBorderOutlinedIcon/> } */}
         { itemFound? <FavoriteRoundedIcon sx={{ color: pink[500] }}/> : <FavoriteBorderOutlinedIcon /> }
         </IconButton>
 
         <IconButton size="large" aria-label="show 4 new mails" color="inherit"
-        onClick={()=> dispatch(addToCart({id: props.id, name: props.name, image: props.image, price: props.price, quantity: 1})) }>
+        onClick={()=> dispatch(addToCart({id: props.id, name: props.name, image: props.image, stock: props.stock, price: props.price, quantity: 1})) }>
             <AddShoppingCartTwoToneIcon />
         </IconButton>
       </CardActions>

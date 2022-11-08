@@ -32,9 +32,7 @@ router.post('/', async function(req, res){
             });
 
             await cartCreated.setStateCarrito(4);
-
             await user.addCart(cartCreated.id);
-
 
         }else{
             await Cart.update({
@@ -59,13 +57,15 @@ router.post('/', async function(req, res){
 
             await carrito.setStateCarrito(4);
 
-            user.addCart(carrito.id)
+            await user.addCart(carrito.id)
         }
     }catch(e){
         console.log(e)
     }
+
     res.status(200).json('El carrito fue creado con exito!');
 })
+
 
 router.get('/', async function(req, res){
     try{

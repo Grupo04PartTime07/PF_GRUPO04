@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -10,7 +11,6 @@ import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import LocalActivityOutlinedIcon from '@mui/icons-material/LocalActivityOutlined';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import ShoppingCartTwoToneIcon from '@mui/icons-material/ShoppingCartTwoTone';
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
@@ -27,7 +27,13 @@ import {useAuth0} from '@auth0/auth0-react';
 import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
 import {useEffect} from 'react';
-import { width } from '@mui/system';
+import { getScoreUserId } from '../../redux/actions/get_score_user_id';
+import {getAllUsers} from '../../redux/actions/get_all_users';
+import LocalActivityOutlinedIcon from '@mui/icons-material/LocalActivityOutlined';
+import scoreUserId from '../../redux/reducer'
+const { BACK_URL = 'http://localhost:3001' } = process.env
+
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative', 
@@ -59,7 +65,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -82,40 +87,122 @@ export default function PrimarySearchAppBar() {
   const favorites = useSelector(state => state.favorites)
   let currentUser = "Guest"
   if(user && user.email) currentUser = user.email
-  // let navbarUser = user && JSON.parse(window.localStorage.getItem(`userName`))
-  // let navbarEmail = user && JSON.parse(window.localStorage.getItem(`userEmail`))
   let dhacart = JSON.parse(window.localStorage.getItem(`c${currentUser}`))
   let dhafav = JSON.parse(window.localStorage.getItem(`f${currentUser}`))
-  console.log(currentUser)
-  console.log(dhacart)
-  console.log(dhafav)
-    React.useEffect(()=>{
-        if(dhacart && dhacart.length){
-          dispatch(fulfillCart([]))
-          dispatch(fulfillCart(dhacart))
-        } 
-        if(dhafav && dhafav.length) {
-          dispatch(fulfillWishList([]))
-          dispatch(fulfillWishList(dhafav))
-        }
-    }, [dispatch])
+  let localStorageEmail = window.localStorage.getItem("userEmail")
+  // const allUse = useSelector(state => state.users )
+  // console.log(allUse)
 
-    React.useEffect(() => {
-        updateStorage(`c${currentUser}`, cart)
+  useEffect(() => {
+    dispatch(getAllUsers());
+    },[]);
+    
+    useEffect(() => {
+      if (isAuthenticated){
+        const useFilter = allUse.filter(user => user.email === currentUser)
+        // console.log('SOY useFilter',useFilter)
+        const usuario = useFilter && useFilter[0].id
+        // console.log('SOY USUARIO', usuario)
+        dispatch(getScoreUserId(usuario))
+        };
+        },[user])
+    
+      const allUse = useSelector(state => state.users )
+      // console.log(allUse)
+  
+  
+  // React.useEffect(() => {
+  //   dispatch(getAllUsers());
+  // },[]);
+  
+
+  
+  // React.useEffect(() => {console.log('ENTRO', score)
+  // if (isAuthenticated){
+  //   // window.localStorage.setItem(`userName`, user.name)
+  //   // window.localStorage.setItem(`userEmail`, user.email)
+  //   const useFilter = allUse.filter(u => u.email === localStorageEmail)
+  //   console.log(useFilter)
+  //   const usuario = useFilter && useFilter[0].id
+
+  //   console.log('SOY USUARIO',usuario)
+  //   dispatch(getScoreUserId(usuario))
+  // };
+  // },[localStorageEmail])
+
+  const score = useSelector(state =>state.scoreUserId)
+  console.log('SOY SCORE',score)
+
+  React.useEffect(()=>{
+    if(dhacart && dhacart.length){
+      if(user){
+        let cguest = JSON.parse(window.localStorage.getItem('cGuest'))
+        updateStorage('cGuest', [])
+        var nvocart = []
+        var respuesta = cguest[0] ? console.log(cguest[0].id, "soy cguest"):"no se en que estoy pensando"
+        // console.log(respuesta)
+        // console.log(dhacart[0], "soy dhacart") // carrito en local
+        
+        for (let i = 0; i < cguest.length; i++) {
+          var flag = 0
+          for (let j = 0; j < dhacart.length; j++) {
+              if(cguest[i].id == dhacart[j].id){
+                  dhacart[j].quantity = dhacart[j].quantity + cguest[i].quantity;
+                  dhacart[j].price = dhacart[j].price + cguest[i].price;
+                  flag = 1
+                }
+          }
+            if(flag !== 1 ){
+              dhacart.concat(cguest[i])
+            } 
+        
+        }
+        nvocart = dhacart
+        
+        updateStorage(`c${currentUser}`, nvocart)
+        updateStorage('cGuest', [])
+        //dispatch(fulfillCart([]))
+        dispatch(fulfillCart(nvocart))
+      
+      }else{
+      
+      //dispatch(fulfillCart([]))
+      dispatch(fulfillCart(dhacart))
+    }
+  
+  }else{
+    let cguest = JSON.parse(window.localStorage.getItem('cGuest'));
+    updateStorage(`c${currentUser}`, cguest)
+    updateStorage('cGuest', []);
+  }
+  }, [dispatch, user])
+
+    
+
+  React.useEffect(()=>{ 
+    if(dhafav && dhafav.length){
+      dispatch(fulfillWishList([]))
+      dispatch(fulfillWishList(dhafav))
+    } 
+    }, [dispatch, user])
+
+  React.useEffect(() => {
+      updateStorage(`c${currentUser}`, cart)
     }, [cart])
   
-    React.useEffect(() => {
-      updateWishList(`f${currentUser}`, favorites)
+  React.useEffect(() => {
+    updateWishList(`f${currentUser}`, favorites)
   }, [favorites])
 
   function updateStorage(user, cart){
       let updatedCart = JSON.stringify(cart);
       window.localStorage.setItem(user, updatedCart)
   }
+
   function updateWishList(user, fav){
-    let updatedWishList = JSON.stringify(favorites);
+    let updatedWishList = JSON.stringify(fav);
     window.localStorage.setItem(user, updatedWishList)
-}
+  }
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -191,7 +278,7 @@ export default function PrimarySearchAppBar() {
       { Ver diseño, corresponde a cambios auth0} */}
       
       {/* Aca se hace el login */}
-      {!isAuthenticated?<label className='link'><MenuItem id="1" onClick={loginWithPopup }>Iniciar sesión</MenuItem></label>:<label className='link'><MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem></label>}
+      {!isAuthenticated?<label className='link'><MenuItem id="1" onClick={loginWithRedirect }>Iniciar sesión</MenuItem></label>:<label className='link'><MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem></label>}
       
     </Menu>
   );
@@ -284,7 +371,7 @@ export default function PrimarySearchAppBar() {
     try {
       const token = await getAccessTokenSilently();
       const response = await axios.post(
-        "http://localhost:3001/users",
+        `${BACK_URL}/users`,
         {
           name: user.name || " ",
           email: user.email,
@@ -295,10 +382,13 @@ export default function PrimarySearchAppBar() {
           },
         }
       );
-      user.isAdmin = response.data.userRegisted.isAdmin;
-      user.isBanned = response.data.userRegisted.isAdmin;
+      // user.isAdmin = response.data.userRegisted.isAdmin;
+      // user.isBanned = response.data.userRegisted.isAdmin;
       window.localStorage.setItem(`userName`, user.name)
       window.localStorage.setItem(`userEmail`, user.email)
+      window.localStorage.setItem(`isAdmin`, response.data.userRegisted.isAdmin)
+      window.localStorage.setItem(`isBanned`, response.data.userRegisted.isBanned)
+      
       //console.log(response.userRegisted);
       //console.log(response.message);
       //console.log(response.data);
@@ -308,14 +398,42 @@ export default function PrimarySearchAppBar() {
     }
   }
 
+  // async function pruebaAuth0() {
+  //   try {
+  //     console.log("estamos aca")
+  //     const token = await getAccessTokenSilently();
+  //     const response = await axios.post(
+  //       `${BACK_URL}/infoUserAuth0`,
+  //       {
+          
+  //         email: "xavier@email.com",
+  //         david: "david",
+  //       },
+  //       {
+  //         headers: {
+  //           authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+      
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+
   useEffect(() => {
     if (isAuthenticated) {
       return () => {
-
         const usuario = callProtectedApiToken2();
-        //console.log(usuario);
-
+        // console.log(usuario);
+        //localStorage.isAdmin=usuario.isAdmin;
       };
+    } else {
+      window.localStorage.removeItem(`isAdmin`);
+      window.localStorage.removeItem(`isBanned`);
+      window.localStorage.removeItem(`userEmail`);
+      window.localStorage.removeItem(`userName`);
     }
   });
   
@@ -352,11 +470,12 @@ export default function PrimarySearchAppBar() {
             />
           </Search>
           <Box sx={{flexGrow: 0.8}} />
+            
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <div></div>
           <IconButton sx={{width: '40%', height: '50%'}} size="large" aria-label="show 4 new mails" color="inherit">
               <Badge >
-                <LocalActivityOutlinedIcon />
+              {isAuthenticated?<p className='greetingsPoint'>{score} Pts.</p>:<LocalActivityOutlinedIcon/>}
+              
               </Badge>
             </IconButton>
             <IconButton sx={{width: '40%', height: '50%'}} onClick={handleDisplayCart} size="large" aria-label="show 4 new mails" color="inherit">

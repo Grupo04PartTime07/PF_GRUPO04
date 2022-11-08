@@ -1,119 +1,118 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import './inventory.css'
-import { searchForInventory } from '../../redux/actions/search_4_inventory'
-//import { updateInventory } from "../../redux/actions/update_inventory";
-import { cleanProductState } from "../../redux/actions/clean_product_state";
-import { getProductDetails } from "../../redux/actions/get_product_details";
+import { getAdminProducts } from '../../redux/actions/get_admin_products'
 import { cleanInvProducts } from "../../redux/actions/clean_inv_products";
 import SearchIcon from '@mui/icons-material/Search';
-import IconButton from '@mui/material/IconButton';
 import CreateProduct from "../createProduct/CreateProduct";
+import InputBase from '@mui/material/InputBase';
+import { styled, alpha } from '@mui/material/styles';
 
 import swal from 'sweetalert';
 
 import EnhancedTable from "./results";
 
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative', 
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.7),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(1),
+    width: 'auto',
+  },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  },
+}));
 
 export default function UpdateInventory(){
     const dispatch = useDispatch();
     const products = useSelector((state) => state.productsinv);
-    const productdetail = useSelector((state) => state.productdetail)
-    const [search, setSearch] = useState("")
-    //const [input, setInventory] = useState({id: "", stock: ""})
     const [display, setDisplay] = useState("")
-   
+    const [currentProduct, setProduct] = useState({})
+    const [searchQuery, setSearchQuery] = useState("");   
 
     useEffect(() => {
+        dispatch(getAdminProducts())
         return () => {
-          dispatch(cleanProductState({}));
           dispatch(cleanInvProducts())
         };
       }, [dispatch]);
 
-    function handleSearchChange(e){
-        setSearch(e.target.value)
-    }
-
-    function searchSubmit(e){
-        e.preventDefault()
-        dispatch(cleanProductState())
-        dispatch(searchForInventory(search))
-        setSearch("")
-    }
+    const filterData = (query, data) => {
+        if (!query) {
+          return data;
+        } else {
+          return data.filter((d) => d.name.toLowerCase().includes(query));
+        }
+      };
 
     function displayProductForm(e){
         setDisplay(e.target.id)
-        dispatch(getProductDetails(e.target.id))
+        setProduct(products.find(p => p.id == e.target.id))
     }
 
-    /*function handleSubmitInventory(){
-        dispatch(updateInventory(input.id, {newStock: input.stock}))
-        dispatch(cleanInvProducts())
-        // alert("Producto actualizado con exito")
-        swal({
-            title: "Producto actualizado con exito",
-            icon: "success",
-          });
-        dispatch(getProductDetails(input.id))
-        setInventory({id: "", stock: ""})
-        setDisplay("")
+    function cleanCurrent (){
+        setProduct({})
     }
 
-    function handleInputChange(e){
-        setInventory({ id: e.target.name, stock: e.target.value})
-    }*/
+    function handleEnter(){
+      setSearchQuery("")
+    }
+
+    const dataFiltered = filterData(searchQuery, products);
 
     return(
         <div>
         <div className="forthasearching">
             <div className='forthasearchcontainer'>
-                <div className='tharealcontainer'>           
-                    <form className="search" onSubmit={(e) => searchSubmit(e)}>
-                        <p className="searchlabel">Busca un producto para editar su información:</p>
-                        <div className="div4search">
-                            <input type="text" className="searchInput" value={search} onChange={(e) => handleSearchChange(e)}/>
-                        <IconButton>
-                            <SearchIcon onClick={(e) => searchSubmit(e)}></SearchIcon>
-                        </IconButton>
-                        </div>
-                    </form>
-                    <div className="resultcontainer">
-                        { /*products && products.length ?
-                            <div className="itemscontainer">
-                            <label className="labelheader">  </label>
-                            <label className="labelheader">Producto  </label>
-                            <label className="labelheader">Cant.  </label>
-                            <label>  </label>
-                            <label>  </label>
-                            <label>  </label>
-                        </div> : null}
-                        { products && products.length ?
-                            products.map(p => {
-                                return(
-                                    <div className="itemscontainer">
-                                        <img src={p.image[0]} width={"30px"} height={"35px"} />
-                                        <label className="itemlabel">{p.name}</label>
-                                        <label className="itemlabel">{p.stock}</label>
-                                        <button name={p.id} className="searchbtn" onClick={()=>{}}>&#8594;</button>
-                                        {display && display == p.id ? <input type="number" className="stockinput" min="0" max="1000" value={input.stock} name={p.id} onChange={(e)=>handleInputChange(e)}/> : null }
-                                        {display && display == p.id ? <button className="searchbtn" onClick={handleSubmitInventory}>Guardar</button>: null }
-                                    </div>
-                                )
-                            }): null
-                        }
-                        { productdetail && productdetail.name ? 
-                        <div>
-                            <img src={productdetail.image[0]} width={"30px"} height={"35px"} />
-                            <label>{productdetail.name}</label>
-                            <label>{productdetail.stock}</label>
-                        </div>
-                        : null */}
-                    </div>
-                    {products && products.length? <EnhancedTable rows={products} displayProductForm={displayProductForm}></EnhancedTable>:null}           
+                <div className='tharealcontainer'>
+                  <div className="div4search">
+                    <Search className='input' sx={{ position: 'relative', left: '-10px', maxWidth: '40%', border: '1.5px solid rgb(225, 225, 225)' }}>
+                      <SearchIconWrapper>
+                          <SearchIcon sx={{color: 'rgb(110, 110, 110)'}}/>
+                      </SearchIconWrapper>
+                      <StyledInputBase
+                        value= {searchQuery}
+                        sx={{ display: 'flex'}}
+                        placeholder="Busca un producto…"
+                        inputProps={{ 'aria-label': 'search' }}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onKeyDown={(e) =>{if(e.key === 'Enter'){handleEnter()}}}
+                      />
+                    </Search>
+                  </div>
+                    {dataFiltered && dataFiltered.length ? <EnhancedTable rows={dataFiltered} displayProductForm={displayProductForm} setSearchQuery={setSearchQuery}></EnhancedTable>:null}           
                     
                 </div>
-                {productdetail && display == productdetail.id ? <div><CreateProduct product={productdetail} ></CreateProduct></div> : null}
+                {currentProduct && display == currentProduct.id ? <div><CreateProduct product={currentProduct} setDisplay={setDisplay} cleanCurrent={cleanCurrent} ></CreateProduct></div> : null}
             </div>
         </div>
         </div>

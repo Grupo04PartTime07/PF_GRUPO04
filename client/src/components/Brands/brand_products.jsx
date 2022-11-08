@@ -1,6 +1,5 @@
 import React,{useEffect, useState} from "react";
 import Card from '../card/card'
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { filterByBrand } from "../../redux/actions/filter_by_brand";
 import { cleanProducts } from "../../redux/actions/clean_products";
@@ -8,9 +7,13 @@ import { orderByPrice } from '../../redux/actions/order_price';
 import { orderByRate } from "../../redux/actions/order_rate";
 import Loading from "../loading/loading";
 import './brand_products.css'
+import { grey } from '@mui/material/colors';
+import { useHistory } from "react-router-dom";
+import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
+import IconButton from '@mui/material/IconButton';
 
 export default function Brand(props){
-    
+    const history = useHistory()
     const dispatch = useDispatch();
     const productsaux = useSelector( state => state.productsaux)
     const [ order, setOrder ] = useState('')
@@ -21,7 +24,7 @@ export default function Brand(props){
         return(() => {
             dispatch(cleanProducts({}))
         })
-    },[dispatch]) 
+    },[dispatch, props.history.location.state]) 
 
     function handlePrice(e){
         dispatch(orderByPrice(e.target.value))
@@ -36,11 +39,7 @@ export default function Brand(props){
     return(
         productsaux[0] && productsaux[0].price ? <div className="categorieTable">
             <div className="categorieFilters">
-                <Link className="linkToBack" to='/Marcas'>
-                    <button className="linkToBack">
-                        Volver
-                    </button>
-                </Link>
+                <div className='volverBrand' onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon sx={{ color: grey[50]}}/></IconButton> Volver</div>
                 <div>
                     Filtrar por:
                 

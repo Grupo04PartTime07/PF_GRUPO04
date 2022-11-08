@@ -8,8 +8,9 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
-import PaidTwoToneIcon from '@mui/icons-material/PaidTwoTone';
+import LoyaltyTwoToneIcon from '@mui/icons-material/LoyaltyTwoTone';
 import CategoryTwoToneIcon from '@mui/icons-material/CategoryTwoTone';
+import GroupsTwoToneIcon from '@mui/icons-material/GroupsTwoTone';
 // import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 // import InventoryIcon from '@mui/icons-material/Inventory';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -19,9 +20,11 @@ import {useAuth0} from '@auth0/auth0-react';
 import axios from 'axios';
 import {useEffect} from 'react';
 
+const { BACK_URL = 'http://localhost:3001' } = process.env
+
 export default function TemporaryDrawer() {
   
-  const { loginWithPopup, loginWithRedirect, logout, user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [state, setState] = React.useState({
     left: false,
   });
@@ -41,13 +44,14 @@ export default function TemporaryDrawer() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
+      <img className='henryLogoMenu' src='https://assets.soyhenry.com/henry-landing/assets/Henry/logo.png' alt='HenryLogo'></img>
       <List>
-        {['Inicio', 'Categorías', 'Promociones', 'Marcas'].map((text, index) => (
+        {['Inicio', 'Categorías', 'Marcas'].map((text, index) => (
             <Link className='link' to={index !== 0 ? '/' + text : '/'}> 
                 <ListItemButton>
                     <ListItem key={text} disablePadding>
                         <ListItemIcon>
-                            {index === 0 ? <HomeTwoToneIcon/> : index % 2 === 0 ? <PaidTwoToneIcon /> : <CategoryTwoToneIcon />}
+                            {index === 0 ? <HomeTwoToneIcon/> : index % 2 === 0 ? <LoyaltyTwoToneIcon /> : <CategoryTwoToneIcon />}
                         </ListItemIcon>
                         <ListItemText primary={text} /> 
                     </ListItem>
@@ -57,22 +61,22 @@ export default function TemporaryDrawer() {
       </List>
       <Divider />
 
-      {/* {isAuthenticated && user.isAdmin && <List>
+      {<List>
       
-        {["Crear Articulo","Crear Categoria"].map((text, index) => ( //corregir la ruta de destino
-          <Link className='link' to={index === 0 ? `/createProduct` : '/createCategory'}>
+        {["El equipo"].map((text, index) => ( //corregir la ruta de destino
+          <Link className='link' to={`/about`}>
           <ListItemButton>
             <ListItem key={text} disablePadding>
             
               <ListItemIcon>
-                {index % 2 === 0 ? <InventoryIcon /> : <LocalOfferIcon />}
+                {index === 0 ? <GroupsTwoToneIcon /> : null}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           </ListItemButton>
           </Link>
         ))}
-      </List>} */}
+      </List>}
     </Box>
   );
 
@@ -80,7 +84,7 @@ export default function TemporaryDrawer() {
     try{
   
       const token = await getAccessTokenSilently();
-      const response = await axios.post('http://localhost:3001/users' , {
+      const response = await axios.post(`${BACK_URL}/users` , {
         name: user.name || " " , email: user.email
        
       
@@ -90,10 +94,6 @@ export default function TemporaryDrawer() {
       user.isAdmin = response.data.userRegisted.isAdmin;
       user.isBanned = response.data.userRegisted.isAdmin;
       
-      console.log(response.userRegisted);
-      console.log(response.message);
-      console.log(response.data);
-      console.log(user)
     }catch(error) {
       console.log(error);
     }
@@ -105,7 +105,6 @@ export default function TemporaryDrawer() {
   
           return () => {
               const usuario = callProtectedApiToken2();
-              console.log(usuario);
           }
         }})
   

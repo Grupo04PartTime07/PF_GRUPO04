@@ -2,32 +2,54 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     width: 40%;
+    min-height: 100vh;
 }
 
-.categorieFilters{
+.volverCategorie{
+    display: flex;
+    justify-content: left;
+    /* align-items: center; */
+    text-decoration: none;
+    color:whitesmoke;
+    background-color: #1976d2;
+    margin-bottom: 30px;
+    margin-top: 10px;
+    border-radius: 9999px;
+    padding: 6px 15px 6px 8px;
+    width: fit-content;
+    font-weight: 600;
+}
+
+.volverCategorie:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* .categorieFilters{
     width: 200px;
     height: 93%;
     position: relative;
-    top: 3%;
+    top: 20px;
     color:rgb(82, 82, 82);
     margin-left: 15%;
     border-right: 1.4px solid rgb(154, 154, 154);
     text-align: start;
-}
+} */
 
-.linkToBack{
-    display: flex;
-    text-decoration: none;
-    color:rgb(0, 122, 170);
-    margin-top: 5%;
-    margin-bottom: 5%;
-    border: none;
-    background: none;
-}
-
-.linkToBack:hover{
-    cursor: pointer;
-    text-decoration: underline;
+.categorieFilters{
+    padding-left: 15%;
+    width: 200px;
+    height: 100%;
+    position: relative;
+    padding-top: 40px;
+    color: whi;
+    text-align: start;
+    background-color: white;
+    z-index: 1;
+    box-shadow: 5px -5px 10px 0px rgba(161,159,159,0.99);
+    -webkit-box-shadow: 5px -5px 10px 0px rgb(161 159 159 / 99%);
+    -moz-box-shadow: 5px -5px 10px 0px rgba(161,159,159,0.99);
+    -moz-box-shadow: 5px -5px 10px 0px rgba(161,159,159,0.99);
 }
 
 .productsByCategorie{
@@ -46,6 +68,9 @@
 .priceFilter, .ratingFilter{
     margin: 8%;
     margin-left: 0%;
+    font-size: 16px;
+    font-weight: 600;
+    font-style: oblique;
 }
 
 .buttonsTable{
@@ -54,29 +79,32 @@
     align-items: start;
 }
 
-.filterButtons{
-    border: none;
+.filterButtons,.ratingButtons {
+    border: 1px solid;
+    border-radius: 9999px;
+    padding: 4px 8px;
     color: rgb(82, 82, 82);
     background: none;
+    margin-bottom: 9px;
+    font-size: smaller;
+    background-color: snow;
 }
 
-.ratingButtons{
-    border: none;
-    color: rgb(82, 82, 82);
-    background: none;
-}
+
 
 .filterButtons:hover, .filterButtons:focus{
     cursor: pointer;
-    background-color: rgb(1, 149, 207);
-    border-radius: 10px;
+    background-color: #1976d2;
+    border-color: #1976d2;
+    border-radius: 9999px;
     color: whitesmoke;
 }
 
 .ratingButtons:hover, .ratingButtons:focus{
     cursor: pointer;
-    background-color: rgb(1, 149, 207);
-    border-radius: 10px;
+    background-color: #1976d2;
+    border-radius: 9999px;
+    border-color: #1976d2;
     color: whitesmoke;
 }
 
@@ -85,10 +113,6 @@
         display: flex;
         flex-wrap: wrap;
         width: 100%;
-    }
-    .linkToBack{
-        position: relative;
-        left: 0%;
     }
     .categorieFilters{
         width: 80%;

@@ -2,7 +2,7 @@ import React from "react";
 import {Modal, TextField, Button} from "@material-ui/core";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-
+import styles from "./modalShippingAddress.module.css";
 
 
 
@@ -34,19 +34,19 @@ export default function ModalShippingAddress(props) {
         <div >
             
             <div align="center">
-                <h2>Confirma tu direccion de envio</h2>
+                <h2 className={styles.h2}>Confirma tu dirección de envío</h2>
             </div>
             <br/>
             <br/>
-            <label>Nombre y Apellido: Rosibel Mendoza</label>
+            <label className={styles.label}>Nombre y Apellido: {props.user}</label>
             <br/>
             <br/>
             <TextField fullWidth label="Direccion:" id="fullWidth" value={props.address} onChange={handleOnChange}></TextField>
             <div align="center">
             <br/>
             <br/>
-            <Button disabled = {!props.address? true : false}onClick={()=>props.handlecheckout()}>Continuar</Button>
-            <Button onClick={()=>props.closeModal() }>Cancelar</Button>
+            <button className={styles.button} disabled = {!props.address? true : false}onClick={()=>props.handlecheckout()}>Continuar</button>
+            <button className={styles.button} onClick={()=>props.closeModal() } variant="contained">Cancelar</button>
             </div>
 
         </div>

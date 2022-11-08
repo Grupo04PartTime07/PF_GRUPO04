@@ -1,6 +1,6 @@
 const {Router, application} = require('express')
 const router = Router()
-const { Cart, User, Products, } = require('../db');
+const { Cart, UserRegisted, Products, Orden, StateOrden, StateCarrito } = require('../db');
 
 
 //SDK de MercadPago
@@ -13,48 +13,100 @@ mercadopago.configure({
 
 router.post('/', async (req, res) => {
 
-  const { idCart, cart, subtotal } = req.body
+  const { idCart, cart, subtotal, email, direccion } = req.body
   const carrito = await Cart.findByPk(idCart);
-  //console.log("Direccion:",direccion)
-try{
-  if(!carrito){
-  const cartCreated = await Cart.create({
-      subtotal
-    });
 
-    cart.map(async (e) => {
-      await cartCreated.addProducts(e.id,
-      {
-        through: {
-          precio: e.unit_price,
-          cantidad: e.quantity
+  const user = await UserRegisted.findOne({
+    where: {
+      email: email,
+    }
+  });
+
+  try {
+    if (!carrito) {
+      const cartCreated = await Cart.create({
+        subtotal
+      });
+
+      cart.map(async (e) => {
+        if(e.id !== 999){
+        await cartCreated.addProducts(e.id,
+          {
+            through: {
+              precio: e.unit_price,
+              cantidad: e.quantity
+            }
+          })
+    }});
+
+      await cartCreated.setStateCarrito(4);
+
+      await user.addCart(cartCreated.id);
+      // console.log('!carrito',cartCreated)
+      const order = await Orden.findOne({
+        where: {
+          cartId: cartCreated.id,
         }
-      })
-    });
+      });
 
-  }else{
+      if (!order) {
+        const newOrder = await Orden.create({
+          total: subtotal,
+          datosEnvio: direccion,
+        });
 
-    await Cart.update({
-      subtotal
-    }, {
-      where: {
-        id: idCart
+        await newOrder.setCart(cartCreated.id);
+
+        await newOrder.setStateOrden(4);
       }
-    })
-
-    await carrito.setProducts([]);
-
-    cart.map(async (e) => {
-      await carrito.addProducts(e.id,
-      {
-        through: {
-          precio: e.unit_price,
-          cantidad: e.quantity
+      // console.log('!order',cartCreated)
+    } else {
+      await Cart.update({
+        subtotal
+      }, {
+        where: {
+          id: idCart
         }
       })
-    });
 
-  };
+      await carrito.setProducts([]);
+
+      cart.map(async (e) => {
+        if(e.id !== 999){
+        await carrito.addProducts(e.id,
+          {
+            through: {
+              precio: e.unit_price,
+              cantidad: e.quantity
+            }
+          })
+    }});
+
+      await carrito.setStateCarrito(4);
+
+      await user.addCart(carrito.id)
+
+      // console.log(order)
+      const order = await Orden.findOne({
+        where: {
+          cartId: idCart,
+        }
+      });
+
+      if (!order) {
+        const newOrder = await Orden.create({
+          total: subtotal,
+          datosEnvio: direccion,
+        });
+
+        await newOrder.setCart(carrito.id)
+        // console.log(newOrder)
+
+        await newOrder.setStateOrden(4);
+      }
+
+    };
+
 }catch(e){
   console.log(e)
 }
@@ -86,49 +138,5 @@ router.get('/success', (req, res) => {
   res.send('TODO OK');
 });
 
-// router.post('/notificar', async (req, res) => {
-//   try {
-//     const { body, query } = req;
-//     const topic = query.topic || query.type;
-//     var merchantOrder;
 
-//     switch (topic) {
-//       case "payment":
-//         const paymentId = query.id || query['data.id'];
-//         const payment = await mercadopago.payment.findById(paymentId);
-//         merchantOrder = await mercadopago.merchant_orders.findById(payment.body.order.id)
-//         break;
-//       case "merchant_order":
-//         const orderId = query.id;
-//         merchantOrder = await mercadopago.merchant_orders.findById(orderId);
-//         break;
-//     }
-//     const { id, status } = merchantOrder.body.payments[0] ? merchantOrder.body.payments[0] : 'HOLA';
-//     const arrayDatos = [];
-
-//     if (id && status) {
-//       arrayDatos.push(id);
-//       arrayDatos.push(status)
-//     };
-//     console.log('Esto es DATOS', arrayDatos)
-//     res.status(200).send();
-//   } catch (e) {
-//     console.log(e)
-//   }
-// });
-
-// router.get('/feedback', function (req, res) {
-
-//   const { payment_id, status, merchant_order_id } = req.query; 
-
-//   try{
-//       res.status(200).json({
-//         Payment: payment_id,
-//         Status: status,
-//         MerchantOrder: merchant_order_id
-//       });
-//   }catch(e){
-//     console.log(e)
-//   }
-// });
 module.exports = router;

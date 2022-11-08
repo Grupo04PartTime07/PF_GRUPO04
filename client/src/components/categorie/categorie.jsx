@@ -1,6 +1,5 @@
 import React,{useEffect, useState} from "react";
 import Card from '../card/card'
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { filterByCategory } from '../../redux/actions/filter_by_category';
 import { orderByPrice } from '../../redux/actions/order_price';
@@ -8,9 +7,13 @@ import { orderByRate } from "../../redux/actions/order_rate";
 import { cleanProducts } from "../../redux/actions/clean_products";
 import Loading from "../loading/loading";
 import './categorie.css'
+import { grey } from '@mui/material/colors';
+import { useHistory } from "react-router-dom";
+import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
+import IconButton from '@mui/material/IconButton';
 
 export default function Categorie(props){
-    
+    const history = useHistory()
     const dispatch = useDispatch();
     const productsaux = useSelector( state => state.productsaux)
     const [ order, setOrder ] = useState('')
@@ -21,7 +24,7 @@ export default function Categorie(props){
         return(() => {
             dispatch(cleanProducts({}))
         })
-    },[dispatch])
+    },[dispatch, props.history.location.state])
 
     function handlePrice(e){
         dispatch(orderByPrice(e.target.value))
@@ -36,13 +39,9 @@ export default function Categorie(props){
     return(
         productsaux[0] && productsaux[0].price ? <div className="categorieTable">
             <div className="categorieFilters">
-                <Link className="linkToBack" to='/Categorías'>
-                    <button className="linkToBack">
-                        Volver
-                    </button>
-                </Link>
+                <div className='volverCategorie' onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon sx={{ color: grey[50]}}/></IconButton> Volver</div>
                 <div>
-                    Filtrar por:
+                    <h3>Filtrar por:</h3>
                 
                     <div className="categorieOptions">
                         <div className="priceFilter">

@@ -1,3 +1,18 @@
+.linkModal{
+    margin-left: 30px;
+    text-decoration: none;
+    color:rgb(0, 122, 170);
+    margin-top: 0%;
+    margin-bottom: 0%;
+    border: none;
+    background: none;
+}
+
+.linkModal:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 .detailContainer{
     margin: 20px 20px;
     padding: 15px 35px;
@@ -105,7 +120,7 @@
     text-align: left;
 }
 
-.opinionContainerSpan{
+.opinionModalContainerSpan{
     margin-left: 25px;
 }
 
@@ -113,6 +128,7 @@
     padding-left: 25px;
     margin-bottom: -30px;
     font-weight: 400;
+    color: rgb(82, 82, 82);
 }
 
 .opinionCard{
@@ -132,3 +148,11 @@
 
 /* .detailContainerArticles  le saque el display:flex; para que la caja de opiniones se 
 ponga horizontal */ 
+
+@media screen and (max-width: 600px){
+    .linkModal{
+        display: flex;
+        position: absolute;
+        left: 30%
+    }
+}
