@@ -32,9 +32,7 @@ router.post('/', async function(req, res){
             });
 
             await cartCreated.setStateCarrito(4);
-
             await user.addCart(cartCreated.id);
-
 
         }else{
             await Cart.update({
@@ -60,14 +58,57 @@ router.post('/', async function(req, res){
             await carrito.setStateCarrito(4);
 
             await user.addCart(carrito.id)
-
-
         }
     }catch(e){
         console.log(e)
     }
 
     res.status(200).json('El carrito fue creado con exito!');
+})
+
+
+router.get('/', async function(req, res){
+    try{
+        const {email} = req.query
+        let result = await Cart.findAll({
+            attributes: ["id", "createdAt", "stateCarritoId"], 
+            include:[{
+                model: UserRegisted, 
+                attributes: ["id", "email", "isAdmin"]
+            }, 
+            {
+                model: Products, 
+                attributes: ["id", "name", "price", "description"]
+            }]
+        })
+
+        if(email){
+
+          let cartsEmail = []
+
+          result.map(el => {
+            if(el.userRegisted !== null && el.userRegisted.email.includes(email)){
+              cartsEmail.push(el)
+            }
+          })
+
+          cartsEmail.sort((a,b) => {
+            if( a.createdAt <  b.createdAt) return -1
+            else if(a.createdAt > b.createdAt) return 1
+            else return 0
+          })
+
+          res.status(200).send(cartsEmail[0])
+        }
+
+        else{
+          res.send(result)
+        }
+       
+    }
+    catch(error){
+        console.log(error)
+    }
 })
 
 
