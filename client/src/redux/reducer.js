@@ -53,6 +53,8 @@ import { DELETE_PRODUCT } from './actions/delete_product';
 import { DELETE_USER } from './actions/delete_user';
 import {GET_SCORE_USER_ID} from './actions/get_score_user_id';
 import { GET_USER_HISTORY } from './actions/get_user_history';
+import { UPDATE_BRAND } from './actions/update_brand';
+import { UPDATE_CATEGORY } from './actions/update_category';
 import swal from 'sweetalert';
 
 
@@ -198,6 +200,26 @@ const reducer = (state = initialState, action) => {
             }
         }
         case UPDATE_PRODUCT:
+            swal({
+                title: action.payload,
+                icon: "success",
+            });
+            // alert(action.payload)
+            return {
+                ...state,
+                message: action.payload
+                }
+        case UPDATE_BRAND:
+            swal({
+                title: action.payload,
+                icon: "success",
+            });
+            // alert(action.payload)
+            return {
+                ...state,
+                message: action.payload
+                }
+        case UPDATE_CATEGORY:
             swal({
                 title: action.payload,
                 icon: "success",
