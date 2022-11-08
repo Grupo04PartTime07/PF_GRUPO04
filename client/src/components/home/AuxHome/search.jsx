@@ -25,10 +25,10 @@ export default function Search(){
     return(
         <div>
             <div className="volver" onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon sx={{ color: grey[50]}}/></IconButton> Volver</div>
-            { products[0] && products[0].price ? <div>
+            { products[0] && products[0].price && products[0].stock > 0 ? <div>
                 <h2 className="homeTitle">Resultados de la Busqueda</h2>
                 <div className="homeTable">
-                    { products.map(a => a.stock === 0 ? null : <Card key={a.id} id={a.id} name={a.name} stock={a.stock} image={a.image} price={a.price} score={a.score}/>) }
+                    { products.map(a => a.stock < 1 ? null : <Card key={a.id} id={a.id} name={a.name} stock={a.stock} image={a.image} price={a.price} score={a.score}/>) }
                 </div>
 
             </div> : <Loading/>}
