@@ -90,7 +90,7 @@ function Row(props) {
         </TableCell> 
        
         <TableCell> 
-        {props.status !== "Completada" && props.status !== "Cancelada" && props.status !== "Rechazada" && props.status !== "Pendiente" ? 
+        {props.status === "En camino" ? 
         <Tooltip title="Confirmar entrega" placement="top-start">
         <IconButton size="large" aria-label="show 4 new mails" color="inherit" name="Completada"
           onClick={()=> dispatch(updateOrderStatus({id:props.id,estado:"Completada"})) }   >
