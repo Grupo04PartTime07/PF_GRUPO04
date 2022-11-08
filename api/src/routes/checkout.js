@@ -29,6 +29,7 @@ router.post('/', async (req, res) => {
       });
 
       cart.map(async (e) => {
+        if(e.id !== 999){
         await cartCreated.addProducts(e.id,
           {
             through: {
@@ -36,7 +37,7 @@ router.post('/', async (req, res) => {
               cantidad: e.quantity
             }
           })
-      });
+    }});
 
       await cartCreated.setStateCarrito(4);
 
@@ -71,6 +72,7 @@ router.post('/', async (req, res) => {
       await carrito.setProducts([]);
 
       cart.map(async (e) => {
+        if(e.id !== 999){
         await carrito.addProducts(e.id,
           {
             through: {
@@ -78,7 +80,7 @@ router.post('/', async (req, res) => {
               cantidad: e.quantity
             }
           })
-      });
+    }});
 
       await carrito.setStateCarrito(4);
 

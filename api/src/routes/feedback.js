@@ -22,7 +22,8 @@ try{
 
 
     if(status === 'approved'){
-        const newItems = items.filter((e) => e.id !== '0');
+        const newItems0 = items.filter((e) => e.id !== '0');
+        const newItems = newItems0.filter((e) => e.id !== '999');
         const shipping = items.find((e) => e.id === '0');
 
         if(shipping.unit_price === 299){

@@ -17,6 +17,7 @@ import ModalShippingAddress from "../modalShippingAddress/modalShippingAddress.j
 import {useAuth0} from '@auth0/auth0-react';
 import { getUserDetails } from '../../redux/actions/get_user_details.js';
 import { grey } from '@mui/material/colors';
+import {scoreUserId} from '../../redux/reducer'
 
 
 export default function ShoppingCartBig(props) {
@@ -37,7 +38,7 @@ export default function ShoppingCartBig(props) {
     useEffect(()=>{
         dispatch(getUserDetails(user && user.email))
     }, [user])
-    const [point, setPoint] = useState("")
+    const [point, setPoint] = useState("0")
     const [shipping, setShipping] = useState("")
     const [modal, setModal] = useState(false)
     const [address, setAddress] = useState(registeredUser && registeredUser.address ? registeredUser.address : "")
@@ -48,25 +49,31 @@ export default function ShoppingCartBig(props) {
             cartItems.length === 0);
     }
 
-    function handlePoint(){
 
+    function handlePoint(){
         let user = registeredUser.email
-        let point = Math.ceil((cartItems.reduce(function (acc, va) {
+        let pointSum = 0
+
+        if (point > 0){
+            pointSum = (-point)
+        }else{
+        
+        pointSum = Math.ceil((cartItems.reduce(function (acc, va) {
             return (acc + (va.quantity * va.price))}
         , 0) * .1)
         );
-
+        }
         let userPoint = {
             option: 'puntos',
-            value: point,
+            value: pointSum,
             userRegistedId: user
         }
         
         dispatch(createScoreUser(userPoint))
         console.log(userPoint)
         // console.log(user)
-        setPoint(point)
-    }
+        // setPoint(point)
+        }
 
     function updateStorage(user, cart){
         let updatedCart = JSON.stringify(cart);
@@ -74,20 +81,45 @@ export default function ShoppingCartBig(props) {
     }
 
     function handlecheckout() {
+        let objTotal = {}
 
+        if(point > 0){
+            let total = cartItems.map(e => {
+                return { id: e.id, title: e.name, unit_price: e.price, quantity: e.quantity }
+            }).concat([
+                {
+                    id: 999, title: "Descuento",
+                    unit_price: - (point / 5) , quantity: 1
+                },
+                {
+                id: 0, title: "Costo de Envio",
+                unit_price: Number(shipping), quantity: 1
+            }])
+    
+            objTotal = { subtotal: cartItems.reduce(function (acc, va) { 
+                return (acc + (va.quantity * va.price)) }, 0) + 
+                Number(shipping)-(point / 5) , cart: total, email: user.email, direccion: address }
+        }
+
+        
+
+        else{
         let total = cartItems.map(e => {
             return { id: e.id, title: e.name, unit_price: e.price, quantity: e.quantity }
         }).concat({
             id: 0, title: "Costo de Envio",
             unit_price: Number(shipping), quantity: 1
         })
-        let objTotal = { subtotal: cartItems.reduce(function (acc, va) { return (acc + (va.quantity * va.price)) }, 0) + Number(shipping), cart: total, email: user.email, direccion: address }
+
+        objTotal = { subtotal: cartItems.reduce(function (acc, va) { 
+            return (acc + (va.quantity * va.price)) }, 0) + 
+            Number(shipping), cart: total, email: user.email, direccion: address }}
        
         dispatch(checkOutCart(objTotal))
         dispatch(deleteCart())
+        dispatch(handlePoint());
         updateStorage(`c${currentUser}`, [])
         
-        dispatch(handlePoint());
         
 
         closeModal()
@@ -100,6 +132,7 @@ export default function ShoppingCartBig(props) {
         setModal(false)
     }
 
+    const score = useSelector(state =>state.scoreUserId)
 
 
     return (
@@ -142,32 +175,33 @@ export default function ShoppingCartBig(props) {
                         >
                             <option disabled value="" >Elije una opcion de entrega:</option>
                             <option value="0">$0 (Retiro en Tienda: 10hs a 20hs - Av. Cordoba 1940, CABA)</option>
-                            <option value="299">$299 (Envio a domicilio: 8hs a 21hs - CABA)</option>
+                            <option value="299" >$299 (Envio a domicilio: 8hs a 21hs - CABA)</option>
                             <option value="349">$349 (Envio a domicilio: 12hs a 16hs - CABA)</option>
                             <option value="399">$399 (Envio a domicilio: 18hs a 21hs - CABA)</option>
                         </select>
                     </div>
                     <div className={styles.divTotal}>
-                        <p className={styles.total}>Con tu compra sumas: </p>
+                        {point > 0 ? <div>
+                        <p className={styles.total}>Tienes un descuento de: $</p>
+                        <span className={styles.cartPrice} > 
+                            {point / 5 }</span></div>: 
+                            <div>
+                            <p className={styles.total}>Con tu compra sumas: </p>
                         <span className={styles.cartPrice} onChange={(e) => setPoint(e.target.value)}> 
                             {Math.ceil((cartItems.reduce(function (acc, va) {
                                 return (acc + (va.quantity * va.price))
                             }, 0) * .1)
                             )} 
-                            Puntos.</span>
-                        <input
-                            className={styles.puntos}
-                            type="number"
-                            // value=
-                            name="puntos"
-                            autocomplete="off"
-                            min="500"
-                            max="2000"
-                        // onChange={e => handleChange(e)}
-                        />
-                        <button className={styles.bttnUse} 
-                        onClick={() => props.addOneToCart(props.id)}
-                        >usar</button>
+                            Puntos.</span></div>}
+                            {score < 500? null :<select className={styles.shippingPrice} name="shipping-costs" id="shipping-costs" defaultValue=""
+                            onChange={(e) => setPoint(e.target.value)}
+                        >
+                            <option value="0" >Canjea tus puntos</option>
+                            {score > 500?<option value="500">500 Pts.</option>: null}
+                            {score > 1000?<option value="1000">1000 Pts.</option>: null}
+                            {score > 1500?<option value="1500">1500 Pts.</option>: null}
+                            {score > 2000?<option value="2000">2000 Pts.</option>: null}
+                        </select>}
                     </div>
                     <div className={styles.divCantProductos}>
                         <p className={styles.pCantProductos}>Cantidad de productos: </p>
@@ -175,7 +209,7 @@ export default function ShoppingCartBig(props) {
                     </div>
                     <div className={styles.divTotal}>
                         <p className={styles.total}>Precio final: </p>
-                        <span className={styles.cartPrice}>$ {cartItems.reduce(function (acc, va) { return (acc + (va.quantity * va.price)) }, 0) + Number(shipping)}</span>
+                        <span className={styles.cartPrice}>$ {cartItems.reduce(function (acc, va) { return (acc + (va.quantity * va.price)) }, 0) + Number(shipping) - (point / 5)}</span>
                     </div>
                     <div className={styles.divBttnPagar} >
                         {user && user.email ? <button className={styles.bttnPagar} disabled={handleDisabled()} onClick={shipping === "0" ? () => handlecheckout() : () => openModal()}>Finalizar compra</button>: <button className={styles.bttnPagar} onClick={loginWithPopup}>Inicia Sesión para Continuar</button>}

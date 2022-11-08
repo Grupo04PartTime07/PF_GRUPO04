@@ -427,6 +427,8 @@ const deleteScore = async (id) => {
     }
 }
 
+
+
 const updateScoreUser = async (option, value, userRegistedId) => {
     console.log(value);
     try {
@@ -493,12 +495,11 @@ module.exports = {
     createScore,
     getScores,
     updateScoreProm,
-
     updateScoreUser,
-
     deleteBrand,
     deleteCategory, 
     deleteProduct,
     deleteScore
+    
 
 }
