@@ -1,9 +1,10 @@
 .brandCard{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin: 1%;
-    margin-right: 40px;
-    height: 100px;
+    margin-right: 10px;
+    padding-right: 10px;
 }
 
 .brandCard:hover{ 
@@ -12,36 +13,11 @@
     cursor: pointer;
 }
 
-.brandImg{
-    position: relative;
-    left: 0%;
-    bottom: 0%;
-    height: 100px;
-    width: 250px;
-}
-
 .brandName{
     display: flex;
-    position: relative;
-    top: 20px;
     font-weight: 500;
 }
 
 @media screen and (max-width: 600px){
-    .brandCard{
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
-        max-width: 250px;
-        min-height: 250px;
-    }
-    .brandImg{
-        position: relative;
-        min-height: 50%;
-    }
-    .brandName{
-        display: flex;
-        position: relative;
-        top: 0px;
-        font-weight: 500;
-    }
+
 }
