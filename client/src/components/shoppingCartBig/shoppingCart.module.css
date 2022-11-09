@@ -116,6 +116,16 @@
     margin-top: 27px; 
     color: rgb(82, 82, 82);
 }
+.pointPrice{
+    /* position: relative;
+    top: 0px;
+    left: 100px; */
+    margin-left: 0px;
+    font-size: 14px;
+    margin-top: 0px; 
+    margin-bottom: 0px;
+    color: rgb(82, 82, 82);
+}
 
 .divCantProductos {
     display:flex;
@@ -142,11 +152,47 @@
     margin-left: 10px;
     font-size: 14px;
 }
+.cartPoint{
+    /* position: relative;
+    top: -36px;
+    left: 125px; */
+    color: rgb(82, 82, 82);
+    margin: 12px;
+    font-size: 14px;
+}
+
+.descPoint{
+    /* position: relative;
+    top: -36px;
+    left: 125px; */
+    color: rgb(82, 82, 82);
+    margin-top: 12px;
+    margin-left: 0px;
+    font-size: 14px;
+}
+
 
 .purchaseContainer{
     margin-left: 5%;
 }
 
+.divTotalScore{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    
+}
+
+.flexpoint{
+    display: flex;
+    flex-direction: row;
+}
+
+.divTotalScoreinside{
+    display: flex;
+    flex-direction: row;
+}
 .divTotal {
     display:flex;
     justify-content: flex-start;
@@ -155,6 +201,17 @@
     color: rgb(82, 82, 82);
     margin-top: 10px;
     margin-left: 10px;
+    font-weight: bold;
+}
+
+.totalDesc{
+    /* position: relative;
+    left: 0px;
+    top: 0px; */
+    
+    color: rgb(82, 82, 82);
+    margin-top: -15px;
+    margin-left: 0px;
     font-weight: bold;
 }
 
@@ -201,4 +258,11 @@
     .divBttnPagar {
         display: flex;
         justify-content: flex-start;
+    }
+
+@media screen and (max-width: 600px){
+    .title {
+        font-size: 25px;
+        padding-top: 15px;
+    }
     }

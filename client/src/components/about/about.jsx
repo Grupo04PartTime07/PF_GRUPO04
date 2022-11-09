@@ -31,9 +31,9 @@ export default function About(){
             name: 'Bernardo Broscheit',
             rol: frontEnd,
             rolLetter: fr,
-            image: '',
-            description: '',
-            linkedIn: '',
+            image: 'https://res.cloudinary.com/de2od3piw/image/upload/v1667955300/pics/perfil_hyqwrp.webp',
+            description: 'Se desempeño prioritariamente en el Front aportando sus conocimientos en el armado de componentes tales como los detalles, formularios y demas. Participo en correcciones de logica de codigos junto a sus compañeros cuando fue requerido.',
+            linkedIn: 'https://www.linkedin.com/in/bernardo-broscheit-94b567144/',
         },
         {
             name: 'Enzo Maidana',
@@ -47,7 +47,7 @@ export default function About(){
             name: 'Alejandro Morales',
             rol: fullStack,
             rolLetter: fs,
-            image: 'https://media-exp1.licdn.com/dms/image/C4D22AQHmZbdgM3LRNQ/feedshare-shrink_2048_1536/0/1667854331023?e=1670457600&v=beta&t=nE6K-cdCKvk8rlo3UpgN3yhReu4u7JFSZY5NogEyjJo',
+            image: 'https://media-exp1.licdn.com/dms/image/C4D22AQH4PRTZ3Wfv4Q/feedshare-shrink_800/0/1667955591772?e=1671062400&v=beta&t=jQwLN7-fFFut4zOh0IWtaPI_DiSZvCtba9Dy9-esW8E',
             description: 'Participó inicialmente creando la API y luego creando rutas, models y pasarela de pago (MP) en back y componentes, actions y reducer en front, tambien colaboró con compañeros para debuguear problemas propios y de otro compañero',
              linkedIn: 'https://www.linkedin.com/in/alejandro-morales-42b47123b/',
         },
@@ -57,14 +57,24 @@ export default function About(){
             rol: fullStack,
             rolLetter: fs,
             image: '',
-            description: ' Participó inicialmente creando el diseño y modelo de datos, implementando la base de datos y rutas de back end. Luego se dedicó especialmente a la gestión de usuario y seguridad de la aplicación, utilizando api de auth0. Tambien colaboró con el equipo para debuguear problemas propios y de los demás',
+            description: 'Participó inicialmente colaborando en la creación del diseño y modelo de datos, implementando la base de datos y rutas de back end. Luego se dedicó especialmente a la gestión de usuario y seguridad de la aplicación, utilizando api de auth0. Tambien colaboró con el equipo para debuguear problemas propios y de los demás',
             linkedIn: 'https://www.linkedin.com/in/david-olivera-89/',
+
+        },
+        {
+            name: 'Gaston Frissiones',
+            rol: frontEnd,
+            rolLetter: fr,
+            image: 'https://res.cloudinary.com/dyycj9vam/image/upload/v1667956914/IMG_HongKong_u59r5z.jpg',
+            description: 'Se desempeño en el Front aportando sus conocimientos en el armado de componentes tales como el carrito de compra, la lista de favoritos y el listado de compras de un usuario, sus funcionalidades, actions, reducer y demas tareas.',
+            linkedIn: 'www.linkedin.com/in/gaston-frissiones-59ba4a253',
+
         }
     ]
     
     return(
         <div>
-            <h1>Conoce al equipo detrás de la aplicación</h1>
+            <h1 className="aboutTitle">Conoce al equipo detrás de HenryMarket</h1>
             <div className="aboutContainer">
             {team.map(member => <AboutCard name={member.name} rol={member.rol} rolLetter={member.rolLetter} image={member.image} description={member.description} linkedIn={member.linkedIn}></AboutCard>)}
             </div>

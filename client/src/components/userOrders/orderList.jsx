@@ -137,6 +137,7 @@ function Row(props) {
                     <TableCell>Nombre</TableCell>
                     <TableCell align="right">Cantidad</TableCell>
                     <TableCell align="right">Precio($)</TableCell>
+                    <TableCell align="right">Total($)</TableCell>
                     <TableCell>
                     <Tooltip title="Repetir la compra" placement="top-start">
                     <IconButton size="large" aria-label="show 4 new mails" color="inherit"
@@ -158,6 +159,7 @@ function Row(props) {
                       <TableCell align="right">
                         {product.price}
                       </TableCell>
+                      <TableCell align="right">{product.quantity * product.price}</TableCell>
                       <TableCell>
                       <Tooltip title="Ver detalle del producto" placement="top-start">
                       <Link className='cardLink' to={`/products/${product.id}`} style={{textDecoration:"none", color: "black"}} >
@@ -171,6 +173,14 @@ function Row(props) {
                     </TableRow>
                   )):null}
                 </TableBody>
+                <TableRow>
+                  <TableCell><Typography sx={{fontSize: '12px', marginTop: '10px'}}>Costo de envío: </Typography></TableCell>
+                  <TableCell>${orderDetail.shippingPrice}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell><Typography sx={{fontSize: '12px', marginTop: '10px'}}>Descuento aplicado: </Typography></TableCell>
+                  <TableCell>${(orderDetail.productos && orderDetail.productos.reduce(function (acc, va) { return (acc + (va.quantity * va.price)) }, 0) - (orderDetail && (orderDetail.total - orderDetail.shippingPrice)) )}</TableCell>
+                </TableRow>
               </Table>
             </Box>
           </Collapse>
