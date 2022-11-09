@@ -56,7 +56,7 @@ export default function About(){
             name: 'David Olivera',
             rol: fullStack,
             rolLetter: fs,
-            image: '',
+            image: 'https://avatars.githubusercontent.com/u/15207910?s=400&u=39025fe351715a1f670cb694e089792abed62999&v=4',
             description: 'Participó inicialmente colaborando en la creación del diseño y modelo de datos, implementando la base de datos y rutas de back end. Luego se dedicó especialmente a la gestión de usuario y seguridad de la aplicación, utilizando api de auth0. Tambien colaboró con el equipo para debuguear problemas propios y de los demás',
             linkedIn: 'https://www.linkedin.com/in/david-olivera-89/',
 
