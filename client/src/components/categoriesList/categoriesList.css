@@ -27,21 +27,5 @@
 }
 
 @media screen and (max-width: 600px){
-    .table{
-        display: block;
-        grid-template-columns: repeat(3, 1fr);
-        margin: 50px;
-        position: relative;
-        left: 5%;
-    }
-    .categorie_card{
-        width: 270px;
-        position: relative;
-        right: 2%;
-    }
-    .categoryIcon{
-        position: relative;
-        left: 22%;
-        top: 15px;
-    }
+
 }
