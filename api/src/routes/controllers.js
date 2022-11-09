@@ -460,17 +460,17 @@ const updateScoreUser = async (option, value, userRegistedId) => {
 const getScoresUser = async (id) => {
     try {
 
-        let scoreUser = await UserRegisted.findByPk(id, {
+        let scoreUser = await UserRegisted.findOne({where : {email: id},
             include: [
                 {
                     model: Promotion,
-                    attributes: ["id","value"],
+                    attributes: ["value"],
                     where: {
                         isDeleted: false
                     }
                 }
             ],
-        });
+    });
 
 
         // if(scoreUser.isDeleted === true){
