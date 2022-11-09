@@ -8,7 +8,10 @@ const { getUsersRegisted, createUserRegisted, getUserDetail, updateUserRegisted,
 router.get('/', async function(req, res){
     try{
         //const { name, categorie, brand } = req.query;
-        const users = await getUsersRegisted();
+        let users = await getUsersRegisted();
+        
+        users = users.filter(u => u.isDeleted == false);
+        //console.log(users);
         res.status(200).send(users);
     }catch(e){
         console.log(e)
@@ -65,8 +68,12 @@ router.put('/admin/', async (req, res) => {
 router.delete('/:email', async function(req, res){
     try{
         const {email} = req.params
+        console.log("deleteuser"+email);
+        
         let result = await deteleUserRegisted(email)
         res.status(200).send(result)
+
+
     }
     catch(error){
         console.log(error)

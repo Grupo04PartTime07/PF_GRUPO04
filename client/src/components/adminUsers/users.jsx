@@ -89,6 +89,11 @@ export default function UpdateInventory(){
         //setSearch("")
     }
 
+    function clearCurrent (){
+        setSearchQuery("");
+        setUser({});
+      }
+
     const getUsuario = (id) => {
         
         return fetch(`${BACK_URL}/users/${id}`)
@@ -209,7 +214,7 @@ export default function UpdateInventory(){
                     </div>
                     {/* {userModificar && abrirModal ? <ModalUser usuario="holanda"></ModalUser> : console.log(userModificar+" nada")}
          */}
-                    {currentUser && display == currentUser.email ? <div><UserForm usuario={currentUser} setDisplay={setDisplay} /></div> : null}
+                    {currentUser && display == currentUser.email ? <div><UserForm usuario={currentUser} setDisplay={setDisplay} clearCurrent={clearCurrent}/></div> : null}
           
                 {/* {productdetail && display == productdetail.id ? <div><CreateProduct product={productdetail} ></CreateProduct></div> : null} */}
                    </div>
