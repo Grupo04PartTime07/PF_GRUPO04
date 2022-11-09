@@ -306,7 +306,9 @@ export default function PrimarySearchAppBar() {
         >
 
           <Badge badgeContent={favorites.reduce(function ( acc, va){return (acc + va.quantity)},0)} color="error"> 
-            <FavoriteTwoToneIcon />
+            <Link to="/wishList" style={{width: '30px', textDecoration:"none", color: "black"} }>
+                <FavoriteTwoToneIcon />
+            </Link>
             </Badge>  
 
         </IconButton>
