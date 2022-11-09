@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -11,13 +10,13 @@ import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import { green } from '@mui/material/colors';
 import { blue } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import '../auxAbout/aboutCard.css'
 
 export default function AboutCard(props) {
 
   return (
-    <Card sx={{ maxWidth: 345, margin: '10px' }}>
+    <Card sx={{ width: 345, margin: '10px' }}>
       <CardHeader
         avatar={
           <Avatar sx={props.rolLetter === 'Fr' ? { bgcolor: red[500]} : props.rolLetter === 'Ba' ? { bgcolor: green[500]} : { bgcolor: blue[500]}} aria-label="recipe">
@@ -33,7 +32,7 @@ export default function AboutCard(props) {
         image={props.image}
         alt={props.name}
       />
-      <CardContent>
+      <CardContent sx={{ heigth: 120 }} className="AboutContent">
         <Typography variant="body2" color="text.secondary">
           {props.description}
         </Typography>
