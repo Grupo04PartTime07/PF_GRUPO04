@@ -55,7 +55,7 @@ export default function About(){
     
     return(
         <div>
-            <h1>Conoce al equipo detrás de la aplicación</h1>
+            <h1 className="aboutTitle">Conoce al equipo detrás de la aplicación</h1>
             <div className="aboutContainer">
             {team.map(member => <AboutCard name={member.name} rol={member.rol} rolLetter={member.rolLetter} image={member.image} description={member.description} linkedIn={member.linkedIn}></AboutCard>)}
             </div>
