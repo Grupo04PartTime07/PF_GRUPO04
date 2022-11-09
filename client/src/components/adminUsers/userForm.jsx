@@ -8,6 +8,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { getAllUsers } from "../../redux/actions/get_all_users";
 import { deleteUser } from "../../redux/actions/delete_user";
+import emailjs from '@emailjs/browser';
 
 export default function UserForm({usuario, setDisplay, clearCurrent}) {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
@@ -125,8 +126,35 @@ export default function UserForm({usuario, setDisplay, clearCurrent}) {
     console.log(cambiaPassword);
   }
 
+  function usuarioBanneado(name,email){
+    var templateParams = {
+      usuario: name,
+      email: email,
+      
+    };
+    console.log(name,email)
+    emailjs.send('service_8hrs3in', 'usuarioBanneado', templateParams, '_p0XHrLrhK3N_rxQy')
+      .then(function(response) {
+         console.log('SUCCESS!', response.status, response.text);
+      }, function(error) {
+         console.log('FAILED...', error);
+      });
+}
 
-
+function usuarioBorrado(name,email){
+  var templateParams = {
+    usuario: name,
+    email: email,
+    
+  };
+ 
+  emailjs.send('service_8hrs3in', 'usuarioBorrado', templateParams, '_p0XHrLrhK3N_rxQy')
+    .then(function(response) {
+       console.log('SUCCESS!', response.status, response.text);
+    }, function(error) {
+       console.log('FAILED...', error);
+    });
+}
 
   function parseBoolean(val) { return val === true || val === "true" }
 
@@ -151,6 +179,9 @@ export default function UserForm({usuario, setDisplay, clearCurrent}) {
       const obj = { name: name, surname: surname, email: usuario.email, address:address, 
         city: city, dni:dni, isAdmin:isAdmin, isBanned:isBanned, password:password, cambiaPassword:cambiaPassword };
       dispatch(userUpdate(obj));
+      console.log(obj.isAdmin)
+      if(obj.isAdmin === false){usuarioBanneado(obj.name,obj.email)}
+        
       setDisplay("")
       setTimeout(()=>{dispatch(getAllUsers())},2000)
     }
@@ -167,6 +198,7 @@ export default function UserForm({usuario, setDisplay, clearCurrent}) {
   }
 
   function HandleDelete(){
+    usuarioBorrado(usuario.email,usuario.email)
     dispatch(deleteUser(usuario.email));
     setDisplay("")
     setTimeout(()=>{dispatch(getAllUsers())},2000)
