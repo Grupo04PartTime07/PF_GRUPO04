@@ -54,8 +54,8 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
     try{
         const { id } = req.params;
-        let props = req.body;
-        let result = await updateProduct(id, props);
+        let {name, price, description, stock, image, brand, categories} = req.body;
+        let result = await updateProduct(id, name, price, description, stock, image, brand, categories);
         result ? res.status(200).json('El producto fue modificado con éxito!') : res.status(400).json('El producto no pudo ser modificado');
     }catch(e){
         console.log(e)

@@ -71,8 +71,12 @@ router.get('/', async function(req, res){
     try{
         const {email} = req.query
         let result = await Cart.findAll({
-            attributes: ["id", "createdAt", "stateCarritoId"], 
-            include:[{
+            include:[
+            {
+                model: StateCarrito,
+                attributes: ['state']
+            },
+            {
                 model: UserRegisted, 
                 attributes: ["id", "email", "isAdmin"]
             }, 
@@ -98,7 +102,27 @@ router.get('/', async function(req, res){
             else return 0
           })
 
-          res.status(200).send(cartsEmail[0])
+        let cartProducts = cartsEmail[0].products
+
+        let productsClean = cartProducts.map((e) => {
+            return {
+                id: e.id,
+                name: e.name,
+                price: e.price,
+                description: e.description
+            }
+        })
+
+        let lastCart = {
+          id: cartsEmail[0].id,
+          subtotal: cartsEmail[0].subtotal,
+          stateCarrito: cartsEmail[0].stateCarrito.state,
+          userRegistedId: cartsEmail[0].userRegistedId,
+          userRegisted: cartsEmail[0].userRegisted.email,
+          products: productsClean
+      }
+
+        res.status(200).send(lastCart)
         }
 
         else{
