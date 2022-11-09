@@ -18,19 +18,20 @@ router.get('/', async (req, res) => {
 
 router.get('/search', async (req, res) =>{
     // console.log("esto es req",req)
-    const id = req.query.id
+    const id = req.query.email
     try {
         let score = await getScoresUser(id);
         if (score.promotions.length > 0){
         let reduce = score.promotions.reduce((acumulador, actual) => acumulador + actual.value, 0);
-console.log(reduce)
-    res.status(200).json(reduce)}
-            else{
+// console.log(reduce)
+    res.status(200).json(reduce)
+        }else{
                 res.status(200).json(0)
             }
 
         // console.log('SOY SCORE',score.promotions)
-    } catch (error) {
+    } catch (error) 
+    {console.log(error)
         res.status(400).json(0)
     }
 })

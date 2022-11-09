@@ -91,24 +91,26 @@ export default function PrimarySearchAppBar() {
   let dhafav = JSON.parse(window.localStorage.getItem(`f${currentUser}`))
   let localStorageEmail = window.localStorage.getItem("userEmail")
  
+  const allUse = useSelector(state => state.users )
+  const score = useSelector(state =>state.scoreUserId)
+  console.log('SOY SCORE',score)
+  console.log('USER', user)
+  console.log('AUTETIC', isAuthenticated);
 
 
   useEffect(() => {
     dispatch(getAllUsers());
   },[]);
        
-  const allUse = useSelector(state => state.users )
    
-  React.useEffect(() => {console.log('ENTRO', score)
+  useEffect(() => {console.log('ENTRO', score)
   if (isAuthenticated){
-    const useFilter = allUse.filter(u => u.email === localStorageEmail)
-    const usuario = useFilter && useFilter[0].id
-    dispatch(getScoreUserId(usuario))};
+        
+    dispatch(getScoreUserId(user.email))};
 
-  },[localStorageEmail])
-
-  const score = useSelector(state =>state.scoreUserId)
-  console.log('SOY SCORE',score)
+  },[isAuthenticated, localStorageEmail])
+  
+  
 
   React.useEffect(()=>{
     if(dhacart && dhacart.length){
@@ -277,16 +279,15 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      {/* <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={cart.reduce(function ( acc, va){return (acc + va.quantity)},0)} color="error">
-            <LocalActivityOutlinedIcon />
-          </Badge>
-        </IconButton>
-        <Link className="chartLink" to="/shoppingCart">
-          <p className='link'>Carrito</p>
-        </Link>
-      </MenuItem> */}
+      <MenuItem>
+      <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+              <Badge badgeContent={cart.reduce(function ( acc, va){return (acc + va.quantity)},0)} color="error">
+              <LocalActivityOutlinedIcon/>
+              {!isAuthenticated || user.name === "admin@admin.com"?null:<p className='PointNav'>{score} Puntos</p>}
+              
+              </Badge>
+            </IconButton>
+      </MenuItem>
       <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={cart.reduce(function ( acc, va){return (acc + va.quantity)},0)} color="error">
@@ -310,7 +311,9 @@ export default function PrimarySearchAppBar() {
             </Badge>  
 
         </IconButton>
-       <p className='link'>Favoritos</p> 
+        <Link className="chartLink" to="/wishList">
+          <p className='link'>Favoritos</p>
+        </Link>
       </MenuItem>
 
       {!isAuthenticated && (
@@ -451,7 +454,7 @@ export default function PrimarySearchAppBar() {
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
           <IconButton sx={{width: '40%', height: '50%'}} size="large" aria-label="show 4 new mails" color="inherit">
               <Badge >
-              {isAuthenticated && user.isAdmin === false?<p className='greetingsPoint'>{score} Pts.</p>:<LocalActivityOutlinedIcon/>}
+              {!isAuthenticated || user.name === "admin@admin.com"?<LocalActivityOutlinedIcon/>:<p className='greetingsPoint'>{score} Pts.</p>}
               
               </Badge>
             </IconButton>
