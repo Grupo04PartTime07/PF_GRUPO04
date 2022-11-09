@@ -69,6 +69,13 @@ export default function About(){
             description: 'Se desempeño en el Front aportando sus conocimientos en el armado de componentes tales como el carrito de compra, la lista de favoritos y el listado de compras de un usuario, sus funcionalidades, actions, reducer y demas tareas.',
             linkedIn: 'www.linkedin.com/in/gaston-frissiones-59ba4a253',
 
+        },
+        {
+            name: "Juan Lopez",
+            Rol: backEnd,
+            rolLetter: ba,
+            image:"https://media-exp1.licdn.com/dms/image/C4E03AQFYEAXnLZKAbg/profile-displayphoto-shrink_800_800/0/1649708293531?e=1673481600&v=beta&t=srbxzUFwGmW3XvMY-eoYCdl71tC3Ljb3EDK0nINF5X0",
+            description: "Se desempeño en el back en la creacion y modificación de distintas rutas relacionadas a la obtención y envio de datos desde y hacia la base de datos respectivamente"
         }
     ]
     
