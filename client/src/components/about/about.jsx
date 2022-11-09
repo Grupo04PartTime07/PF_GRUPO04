@@ -75,7 +75,7 @@ export default function About(){
             Rol: backEnd,
             rolLetter: ba,
             image:"https://media-exp1.licdn.com/dms/image/C4E03AQFYEAXnLZKAbg/profile-displayphoto-shrink_800_800/0/1649708293531?e=1673481600&v=beta&t=srbxzUFwGmW3XvMY-eoYCdl71tC3Ljb3EDK0nINF5X0",
-            description: "Se desempeño en el back en la creacion y modificación de distintas rutas relacionadas a la obtención y envio de datos desde y hacia la base de datos respectivamente"
+            description: "Junto con algunos compañeros, Se desempeño en el back en la creacion y modificación de distintas rutas relacionadas a la obtención, modificación y envío de la información desde y hacia la base de daos, según parámetros requeridos"
         }
     ]
     
