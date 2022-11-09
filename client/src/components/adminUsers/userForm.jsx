@@ -7,8 +7,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import { useEffect } from "react";
 import { getAllUsers } from "../../redux/actions/get_all_users";
+import { deleteUser } from "../../redux/actions/delete_user";
 
-export default function UserForm({usuario, setDisplay}) {
+export default function UserForm({usuario, setDisplay, clearCurrent}) {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
 
   const dispatch = useDispatch();
@@ -161,11 +162,29 @@ export default function UserForm({usuario, setDisplay}) {
     // }
   }
 
+  function HandleCancel(){
+    clearCurrent()
+  }
+
+  function HandleDelete(){
+    dispatch(deleteUser(usuario.email));
+    setDisplay("")
+    setTimeout(()=>{dispatch(getAllUsers())},2000)
+    
+    //clearCurrent()
+  }
+
+
+
   return (
     <div className={styles.centerdiv}>
     <div className={styles.formContainerCat}>
         <form type="POST" className={styles.formDataCat} onSubmit={onSubmit}>
           <div className={styles.formFirstDivCat}>
+            <h2 className={styles.label}>Modificar Usuario:</h2>
+            <h3 className={styles.label}>{usuario.email}</h3>
+
+
             <label className={styles.label}>Nombre: </label>
             <input
               className={styles.valido}
@@ -301,9 +320,23 @@ export default function UserForm({usuario, setDisplay}) {
            {(errorPassword && cambiaPassword) ? <span className={styles.danger}>{errorPassword}</span> : (
               null
             )}
+
+            <label className={styles.labelDanger}>Eliminar Usuario: </label>
+            <button
+
+              className={styles.buttonDanger}
+              type="button"
+              onClick={()=>HandleDelete()}
+              > Eliminar usuario
+            </button>
             
           </div>
+
+          
+          
           {/* {usuario ?  */}
+          <div className={styles.divBotones}>
+
           <button
             name="submit"
             className={styles.button}
@@ -312,7 +345,17 @@ export default function UserForm({usuario, setDisplay}) {
           >
             Modificar Usuario
           </button> 
-         
+
+          <button
+            name="cancel"
+            className={styles.button}
+            type="button"
+            onClick={()=>HandleCancel()}
+            //disabled={ errorDni || (cambiaPassword && errorPassword) ? true : false }
+          >
+            Cancel
+          </button> 
+          </div>
          {/* <button
             name="submit"
             className={styles.button}

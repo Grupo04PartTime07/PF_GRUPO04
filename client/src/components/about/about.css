@@ -3,3 +3,8 @@
     flex-wrap: wrap;
     justify-content: space-around;
 }
+
+.aboutTitle{
+    color: rgb(82, 82, 82);
+    margin-top: 40px;
+}

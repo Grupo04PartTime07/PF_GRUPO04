@@ -24,7 +24,8 @@ import { visuallyHidden } from '@mui/utils';
 import Avatar from '@mui/material/Avatar';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import { getUserDetails } from '../../redux/actions/get_user_details';
-
+import DoneIcon from '@mui/icons-material/Done';
+import ClearIcon from '@mui/icons-material/Clear';
 
 
 function descendingComparator(a, b, orderBy) {
@@ -93,7 +94,7 @@ const headCells = [
     numeric: false,
     disablePadding: false,
     boolean: true,
-    label: 'isAdmin',
+    label: 'Administrador',
     headerAlign: "center",
     align: "center",
   },
@@ -102,7 +103,7 @@ const headCells = [
     numeric: false,
     disablePadding: false,
     boolean: true,
-    label: 'isBanned',
+    label: 'Banneado',
     headerAlign: "center",
     align: "center",
   },
@@ -372,8 +373,8 @@ export default function EnhancedTable({displayUserForm, rows}) {
                       <TableCell align="center">{row.name}</TableCell>
                       <TableCell align="center">{row.surname}</TableCell>
                       <TableCell align="center">{row.email}</TableCell>
-                      <TableCell align="center">{row.isAdmin.toString()}</TableCell>
-                      <TableCell align="center">{row.isBanned.toString()}</TableCell>
+                      <TableCell align="center">{row.isAdmin ? <DoneIcon fontSize='medium'></DoneIcon> : <ClearIcon fontSize='medium' ></ClearIcon>}</TableCell>
+                      <TableCell align="center">{row.isBanned ? <DoneIcon fontSize='medium'></DoneIcon> : <ClearIcon fontSize='medium' ></ClearIcon>}</TableCell>
                       {/* <TableCell align="center">{row.dni}</TableCell>
                       <TableCell align="center">{row.city}</TableCell>
                       <TableCell align="center">{row.address}</TableCell>                      */}
