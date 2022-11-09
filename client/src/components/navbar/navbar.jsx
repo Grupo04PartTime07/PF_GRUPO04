@@ -90,45 +90,22 @@ export default function PrimarySearchAppBar() {
   let dhacart = JSON.parse(window.localStorage.getItem(`c${currentUser}`))
   let dhafav = JSON.parse(window.localStorage.getItem(`f${currentUser}`))
   let localStorageEmail = window.localStorage.getItem("userEmail")
-  // const allUse = useSelector(state => state.users )
-  // console.log(allUse)
+ 
 
   useEffect(() => {
     dispatch(getAllUsers());
+    
     },[]);
     
-    useEffect(() => {
-      if (isAuthenticated){
-        const useFilter = allUse.filter(user => user.email === currentUser)
-        // console.log('SOY useFilter',useFilter)
-        const usuario = useFilter && useFilter[0].id
-        // console.log('SOY USUARIO', usuario)
-        dispatch(getScoreUserId(usuario))
-        };
-        },[user])
-    
-      const allUse = useSelector(state => state.users )
-      // console.log(allUse)
-  
-  
-  // React.useEffect(() => {
-  //   dispatch(getAllUsers());
-  // },[]);
-  
-
-  
-  // React.useEffect(() => {console.log('ENTRO', score)
-  // if (isAuthenticated){
-  //   // window.localStorage.setItem(`userName`, user.name)
-  //   // window.localStorage.setItem(`userEmail`, user.email)
-  //   const useFilter = allUse.filter(u => u.email === localStorageEmail)
-  //   console.log(useFilter)
-  //   const usuario = useFilter && useFilter[0].id
-
-  //   console.log('SOY USUARIO',usuario)
-  //   dispatch(getScoreUserId(usuario))
-  // };
-  // },[localStorageEmail])
+      
+  const allUse = useSelector(state => state.users )
+   
+  React.useEffect(() => {console.log('ENTRO', score)
+  if (isAuthenticated){
+    const useFilter = allUse.filter(u => u.email === localStorageEmail)
+    const usuario = useFilter && useFilter[0].id
+    };
+  },[localStorageEmail])
 
   const score = useSelector(state =>state.scoreUserId)
   console.log('SOY SCORE',score)
@@ -139,7 +116,7 @@ export default function PrimarySearchAppBar() {
         let cguest = JSON.parse(window.localStorage.getItem('cGuest'))
         updateStorage('cGuest', [])
         var nvocart = []
-        var respuesta = cguest[0] ? console.log(cguest[0].id, "soy cguest"):"no se en que estoy pensando"
+        //var respuesta = cguest[0] ? console.log(cguest[0].id, "soy cguest"):"no se en que estoy pensando"
         // console.log(respuesta)
         // console.log(dhacart[0], "soy dhacart") // carrito en local
         
