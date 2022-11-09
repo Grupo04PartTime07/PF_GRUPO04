@@ -39,9 +39,9 @@ export default function About(){
             name: 'Enzo Maidana',
             rol: backEnd,
             rolLetter: ba,
-            image: '',
-            description: '',
-            linkedIn: '',
+            image: 'https://media-exp1.licdn.com/dms/image/C4D03AQHxfq8rTclUBg/profile-displayphoto-shrink_200_200/0/1653277252405?e=2147483647&v=beta&t=9Gd_Ov8-12JerSZuzImIJm-jeT0wri02fRYyGsMDshU',
+            description: 'Participó en el desarrollo de las rutas, la creacion de la pasarela de pago (MP) y el deploy tanto del back, como del front. A su vez, colaboró en el debugueo de problemas y brindó ayuda en las correciones de código.',
+            linkedIn: 'https://www.linkedin.com/in/enzo-maidana',
         },
         {
             name: 'Alejandro Morales',
