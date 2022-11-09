@@ -92,19 +92,19 @@ export default function PrimarySearchAppBar() {
   let localStorageEmail = window.localStorage.getItem("userEmail")
  
 
+
   useEffect(() => {
     dispatch(getAllUsers());
-    
-    },[]);
-    
-      
+  },[]);
+       
   const allUse = useSelector(state => state.users )
    
   React.useEffect(() => {console.log('ENTRO', score)
   if (isAuthenticated){
     const useFilter = allUse.filter(u => u.email === localStorageEmail)
     const usuario = useFilter && useFilter[0].id
-    };
+    dispatch(getScoreUserId(usuario))};
+
   },[localStorageEmail])
 
   const score = useSelector(state =>state.scoreUserId)
@@ -451,7 +451,7 @@ export default function PrimarySearchAppBar() {
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
           <IconButton sx={{width: '40%', height: '50%'}} size="large" aria-label="show 4 new mails" color="inherit">
               <Badge >
-              {isAuthenticated?<p className='greetingsPoint'>{score} Pts.</p>:<LocalActivityOutlinedIcon/>}
+              {isAuthenticated && user.isAdmin === false?<p className='greetingsPoint'>{score} Pts.</p>:<LocalActivityOutlinedIcon/>}
               
               </Badge>
             </IconButton>

@@ -53,7 +53,7 @@ export default function ShoppingCartBig(props) {
     function handlePoint(){
         let user = registeredUser.email
         let pointSum = 0
-
+        
         if (point > 0){
             pointSum = (-point)
         }else{
@@ -180,20 +180,20 @@ export default function ShoppingCartBig(props) {
                             <option value="399">$399 (Envio a domicilio: 18hs a 21hs - CABA)</option>
                         </select>
                     </div>
-                    <div className={styles.divTotal}>
-                        {point > 0 ? <div>
-                        <p className={styles.total}>Tienes un descuento de: $</p>
-                        <span className={styles.cartPrice} > 
-                            {point / 5 }</span></div>: 
-                            <div>
+                    <div className={styles.divTotalScore}>
+                        {point > 0 && user.isAdmin === false? <div className={styles.divTotalScoreinside}>
+                        <p className={styles.total}>Tienes un descuento de: </p>
+                        <p className={styles.cartPoint} > 
+                            ${point / 5 }</p></div>: 
+                            <div className={styles.flexpoint}>
                             <p className={styles.total}>Con tu compra sumas: </p>
-                        <span className={styles.cartPrice} onChange={(e) => setPoint(e.target.value)}> 
+                        <p className={styles.cartPoint} onChange={(e) => setPoint(e.target.value)}> 
                             {Math.ceil((cartItems.reduce(function (acc, va) {
                                 return (acc + (va.quantity * va.price))
                             }, 0) * .1)
                             )} 
-                            Puntos.</span></div>}
-                            {score < 500? null :<select className={styles.shippingPrice} name="shipping-costs" id="shipping-costs" defaultValue=""
+                            Puntos.</p></div>}
+                            {score < 500? null :<select className={styles.pointPrice} name="shipping-costs" id="shipping-costs" defaultValue=""
                             onChange={(e) => setPoint(e.target.value)}
                         >
                             <option value="0" >Canjea tus puntos</option>
