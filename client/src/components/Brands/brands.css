@@ -1,32 +1,16 @@
 .brandTable{
-    display: inline-grid;
-    grid-template-columns: repeat(2, 1fr);
-    margin: 3%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .brandTitle{
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    margin-right: 1050px;
-    margin-bottom: 0%;
+    display: flex;
+    justify-content: center;
     font-weight: 350;
     color: rgb(82, 82, 82);
 }
 
 @media screen and (max-width: 600px){
-    .brandTable{
-        display: inline-grid;
-        grid-template-columns: repeat(1, 1fr);
-        margin: 3%;
-        position: relative;
-        left: 0%;
-    }
-    .brandTitle{
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
-        margin-right: 0px;
-        margin-bottom: 0%;
-        font-weight: 350;
-        color: rgb(82, 82, 82);
-    }
+
 }

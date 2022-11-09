@@ -26,18 +26,15 @@ export default function ImgMediaCard(props) {
                 className='brandImg'
                 component="img"
                 alt={props.name}
-                sx={{ maxWidth: 250 }}
+                sx={{ maxWidth: 200 }}
                 
                 image={props.image}
             />
-            <CardContent>
-                <Typography className="brandName" gutterBottom variant="h5" component="div">
+            <CardContent className="brandName">
+                <Typography gutterBottom variant="h5" component="div">
                     {props.name}
                 </Typography>
             </CardContent>
-            <CardActions>
-
-            </CardActions>
         </Card>
     );
 }
