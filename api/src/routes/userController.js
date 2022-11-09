@@ -287,7 +287,9 @@ const getUserDetail = async (email) => {
         let user = await UserRegisted.findOne({ where: { email: email} })
             // isDeleted:false
             
-
+        if(!user){
+            return "Ese usuario aún no existe";
+        }
 
         if(user.isDeleted === true ){
             user.update({isDeleted:false});
