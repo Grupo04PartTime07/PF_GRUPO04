@@ -281,9 +281,9 @@ export default function PrimarySearchAppBar() {
     >
       <MenuItem>
       <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={cart.reduce(function ( acc, va){return (acc + va.quantity)},0)} color="error">
+              <Badge >
               <LocalActivityOutlinedIcon/>
-              {!isAuthenticated || user.name === "admin@admin.com"?null:<p className='PointNav'>{score} Puntos</p>}
+              {!isAuthenticated || user.name === "admin@admin.com"?<p className='PointNav'>Puntos</p>:<p className='PointNav'>{score} Puntos</p>}
               
               </Badge>
             </IconButton>
