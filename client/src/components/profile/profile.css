@@ -51,8 +51,9 @@
 }
 
 .component{
+    max-width: 70%;
     margin-left: 70px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: flex-start;
 }
