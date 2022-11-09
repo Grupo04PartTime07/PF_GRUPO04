@@ -50,6 +50,14 @@ export default function About(){
             image: 'https://media-exp1.licdn.com/dms/image/C4D22AQH4PRTZ3Wfv4Q/feedshare-shrink_800/0/1667955591772?e=1671062400&v=beta&t=jQwLN7-fFFut4zOh0IWtaPI_DiSZvCtba9Dy9-esW8E',
             description: 'Participó inicialmente creando la API y luego creando rutas, models y pasarela de pago (MP) en back y componentes, actions y reducer en front, tambien colaboró con compañeros para debuguear problemas propios y de otro compañero',
             linkedIn: 'https://www.linkedin.com/in/alejandro-morales-42b47123b/',
+        },
+        {
+            name: 'Gaston Frissiones',
+            rol: frontEnd,
+            rolLetter: fr,
+            image: 'https://res.cloudinary.com/dyycj9vam/image/upload/v1667956914/IMG_HongKong_u59r5z.jpg',
+            description: 'Se desempeño en el Front aportando sus conocimientos en el armado de componentes tales como el carrito de compra, la lista de favoritos y el listado de compras de un usuario, sus funcionalidades, actions, reducer y demas tareas.',
+            linkedIn: 'www.linkedin.com/in/gaston-frissiones-59ba4a253',
         }
     ]
     
