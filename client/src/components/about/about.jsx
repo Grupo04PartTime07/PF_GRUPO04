@@ -49,7 +49,16 @@ export default function About(){
             rolLetter: fs,
             image: 'https://media-exp1.licdn.com/dms/image/C4D22AQHmZbdgM3LRNQ/feedshare-shrink_2048_1536/0/1667854331023?e=1670457600&v=beta&t=nE6K-cdCKvk8rlo3UpgN3yhReu4u7JFSZY5NogEyjJo',
             description: 'Participó inicialmente creando la API y luego creando rutas, models y pasarela de pago (MP) en back y componentes, actions y reducer en front, tambien colaboró con compañeros para debuguear problemas propios y de otro compañero',
-            linkedIn: 'https://www.linkedin.com/in/alejandro-morales-42b47123b/',
+             linkedIn: 'https://www.linkedin.com/in/alejandro-morales-42b47123b/',
+        },
+
+        {
+            name: 'David Olivera',
+            rol: fullStack,
+            rolLetter: fs,
+            image: '',
+            description: ' Participó inicialmente creando el diseño y modelo de datos, implementando la base de datos y rutas de back end. Luego se dedicó especialmente a la gestión de usuario y seguridad de la aplicación, utilizando api de auth0. Tambien colaboró con el equipo para debuguear problemas propios y de los demás',
+            linkedIn: 'https://www.linkedin.com/in/david-olivera-89/',
         }
     ]
     
