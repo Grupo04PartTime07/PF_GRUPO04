@@ -30,7 +30,7 @@ import {useEffect} from 'react';
 import { getScoreUserId } from '../../redux/actions/get_score_user_id';
 import {getAllUsers} from '../../redux/actions/get_all_users';
 import LocalActivityOutlinedIcon from '@mui/icons-material/LocalActivityOutlined';
-import scoreUserId from '../../redux/reducer'
+import Tooltip from '@mui/material/Tooltip';
 const { BACK_URL = 'http://localhost:3001' } = process.env
 
 
@@ -311,7 +311,6 @@ export default function PrimarySearchAppBar() {
                 <FavoriteTwoToneIcon />
             </Link>
             </Badge>  
-
         </IconButton>
         <Link className="chartLink" to="/wishList">
           <p className='link'>Favoritos</p>
@@ -454,17 +453,22 @@ export default function PrimarySearchAppBar() {
           <Box sx={{flexGrow: 0.8}} />
             
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+          <Tooltip title="Acumula puntos con tus compras y canjealos por Descuentos" placement="top-start">
           <IconButton sx={{width: '40%', height: '50%'}} size="large" aria-label="show 4 new mails" color="inherit">
               <Badge >
               {!isAuthenticated || user.name === "admin@admin.com"?<LocalActivityOutlinedIcon/>:<p className='greetingsPoint'>{score} Pts.</p>}
               
               </Badge>
             </IconButton>
+            </Tooltip>
+            <Tooltip title="Dale un vistazo al carrito de compras" placement="top-start">
             <IconButton sx={{width: '40%', height: '50%'}} onClick={handleDisplayCart} size="large" aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={cart.reduce(function ( acc, va){return (acc + va.quantity)},0)} color="error">
                 <ShoppingCartTwoToneIcon />
               </Badge>
             </IconButton>
+            </Tooltip>
+            <Tooltip title="Accede a tus Favoritos" placement="top-start">
             <IconButton 
               sx={{width: '40%', height: '50%'}}
               size="large"
@@ -477,7 +481,7 @@ export default function PrimarySearchAppBar() {
                 </Link>
               </Badge>
             </IconButton>
-
+            </Tooltip>
             <IconButton
               sx={{width: '40%', height: '55px'}}
               size="large"

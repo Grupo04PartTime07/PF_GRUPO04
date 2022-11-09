@@ -171,7 +171,7 @@ function Row(props) {
                       </Tooltip> 
                       </TableCell>
                     </TableRow>
-                  )):null}
+                  )):<Typography sx={{marginTop: '10px'}}>Consultando a la base de datos...</Typography>}
                 </TableBody>
                 <TableRow>
                   <TableCell><Typography sx={{fontSize: '12px', marginTop: '10px'}}>Costo de envío: </Typography></TableCell>
