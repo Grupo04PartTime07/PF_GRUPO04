@@ -60,7 +60,7 @@ export default function Feedback(){
           date:"30/10/2022" // aca iria la fecha de compra si se puede conseguir
         };
        
-        emailjs.send('service_gd3iwqs', 'pagoExitoso', templateParams, 'Seri2s2LqtIOz95kh')
+        emailjs.send('service_hwzrrb5', 'pagoExitoso', templateParams, 'zBcf0oEARFnrqWzGU')
           .then(function(response) {
              console.log('SUCCESS!', response.status, response.text);
           }, function(error) {
@@ -76,7 +76,7 @@ export default function Feedback(){
           date:"30/10/2022" // aca iria la fecha de compra si se puede conseguir
         };
        
-        emailjs.send('service_gd3iwqs', 'pagoErroneo', templateParams, 'Seri2s2LqtIOz95kh')
+        emailjs.send('service_hwzrrb5', 'pagoErroneo', templateParams, 'zBcf0oEARFnrqWzGU')
           .then(function(response) {
              console.log('SUCCESS!', response.status, response.text);
           }, function(error) {
