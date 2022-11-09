@@ -31,9 +31,9 @@ export default function About(){
             name: 'Bernardo Broscheit',
             rol: frontEnd,
             rolLetter: fr,
-            image: '',
-            description: '',
-            linkedIn: '',
+            image: 'https://res.cloudinary.com/de2od3piw/image/upload/v1667955300/pics/perfil_hyqwrp.webp',
+            description: 'Se desempeño prioritariamente en el Front aportando sus conocimientos en el armado de componentes tales como los detalles, formularios y demas. Participo en correcciones de logica de codigos junto a sus compañeros cuando fue requerido.',
+            linkedIn: 'https://www.linkedin.com/in/bernardo-broscheit-94b567144/',
         },
         {
             name: 'Enzo Maidana',
