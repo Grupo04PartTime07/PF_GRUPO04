@@ -16,7 +16,7 @@ export default function About(){
             rol: frontEnd,
             rolLetter: fr,
             image: 'https://media-exp1.licdn.com/dms/image/C4D03AQGmyWK_VvH-dA/profile-displayphoto-shrink_800_800/0/1659626236488?e=1673481600&v=beta&t=jzmDn3dKoCBhaZhw8W9Og45x6EL6vBZyCrjyKHU7xHc',
-            description: 'Participó como coordinador de UI/UX en la toma de decisiones, diseño, desarrollo y supervisión de componentes procurando lograr la armonía e integración del trabajo de todos los miemrbos del equipo.',
+            description: 'Participó como coordinador de UI/UX en la toma de decisiones, diseño, desarrollo y supervisión de componentes procurando lograr la armonía e integración del trabajo de todos los miembros del equipo.',
             linkedIn: 'https://www.linkedin.com/in/react-front/',
         },
         {
