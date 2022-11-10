@@ -292,7 +292,7 @@ function usuarioBorrado(name,email){
               <span className={styles.danger}>{errorDni}</span>
             )}
 
-            <label className={styles.label}>Es Administrador: </label>
+            <label className={styles.label}>Administrador: </label>
             <input
               className={styles.valido}
               key="isAdmin"
@@ -309,7 +309,7 @@ function usuarioBorrado(name,email){
               <span className={styles.danger}>{errorDni}</span>
             )} */}
 
-            <label className={styles.label}>Está Banneado (Prohibición de acceso): </label>
+            <label className={styles.label}>Restringir acceso: </label>
             <input
               className={styles.valido}
               key="isBanned"
@@ -323,7 +323,7 @@ function usuarioBorrado(name,email){
               //autoComplete="off"
             />
 
-            <label className={styles.label}>Establecer nueva contraseña (Danger): </label>
+            <label className={styles.label}>Reestablecer contraseña: </label>
             <input
               className={styles.valido}
               key="cambiaPassword"

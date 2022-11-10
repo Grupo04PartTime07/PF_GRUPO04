@@ -97,7 +97,7 @@ const headCells = [
     numeric: false,
     disablePadding: false,
     boolean: true,
-    label: 'Banneado',
+    label: 'Restringido',
     headerAlign: "center",
     align: "center",
   },
@@ -367,11 +367,11 @@ export default function EnhancedTable({displayUserForm, rows}) {
                       <TableCell align="left">{row.name}</TableCell>
                       <TableCell align="left">{row.surname}</TableCell>
                       <TableCell align="left">{row.email}</TableCell>
-                      <TableCell sx={{paddingLeft: '5%'}} align="left">{row.isAdmin ? <DoneIcon fontSize='medium'></DoneIcon> : <ClearIcon fontSize='medium' ></ClearIcon>}</TableCell>
-                      <TableCell sx={{paddingLeft: '4%'}} align="left">{row.isBanned ? <DoneIcon fontSize='medium'></DoneIcon> : <ClearIcon fontSize='medium' ></ClearIcon>}</TableCell>
+                      <TableCell sx={{paddingLeft: '5%'}} align="left">{row.isAdmin ? <DoneIcon fontSize='medium'></DoneIcon> : null}</TableCell>
+                      <TableCell sx={{paddingLeft: '4%'}} align="left">{row.isBanned ? <DoneIcon fontSize='medium'></DoneIcon> : null}</TableCell>
                       {/* <TableCell align="center">{row.dni}</TableCell>
                       <TableCell align="center">{row.city}</TableCell>
-                      <TableCell align="center">{row.address}</TableCell>                      */}
+                      <TableCell align="center">{row.address}</TableCell>*/}
                       
                       <TableCell align="left">
                         <IconButton id={row.email} onClick={(e)=>displayUserForm(e, rows)} ><EditTwoToneIcon id={row.email}  ></EditTwoToneIcon></IconButton>

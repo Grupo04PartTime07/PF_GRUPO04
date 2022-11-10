@@ -36,31 +36,10 @@ export default function UpdateInventory(){
         };
     }, [dispatch]);
 
-    function handleSearchChange(e){
-        setSearch(e.target.value)
-    }
-
-    function searchSubmit(e){
-        e.preventDefault()
-        //dispatch(cleanProductState())
-        dispatch(getAllUsers())
-        //setSearch("")
-    }
-
     function clearCurrent (){
         setSearchQuery("");
         setUser({});
     }
-
-    const getUsuario = (id) => {
-        
-        return fetch(`${BACK_URL}/users/${id}`)
-        .then(res => res.json())
-        .then(obj =>  alert ("el usaurio es " + obj.email)  )
-       
-        .catch(err => console.log(err));
-     
-    } 
     
     function displayUserForm(e, users){
         //abrirModal=true;
@@ -78,6 +57,11 @@ export default function UpdateInventory(){
         setUser(users.find(u => u.email == e.target.id))
     }
 
+    function handleEnter(e){
+        e.preventDefault()
+        setSearchQuery("")
+      }
+
     const dataFiltered = filterData(searchQuery, users);
 
     return(
@@ -91,17 +75,17 @@ export default function UpdateInventory(){
                             sx={{ backgroundColor: 'white', borderRadius: '7px'}}
                             id="search-bar"
                             className="text"
-                            onInput={(e) => {
-                                setSearchQuery(e.target.value);
-                            }}
                             label="Busca un usuario por email"
                             variant="outlined"
                             placeholder="Busca..."
                             size="small"
+                            value= {searchQuery}    
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onKeyDown={(e) =>{if(e.key === 'Enter'){handleEnter(e)}}}
                         />
-                        {/* <IconButton type="submit" aria-label="search">
+                        { <IconButton aria-label="search">
                          <SearchIcon/>
-                        </IconButton> */}
+                        </IconButton> }
                     </form>
 
                     {dataFiltered && dataFiltered.length? <EnhancedTable rows={dataFiltered} displayUserForm={displayUserForm}></EnhancedTable>:null}           
