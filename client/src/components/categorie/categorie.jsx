@@ -11,11 +11,15 @@ import { grey } from '@mui/material/colors';
 import { useHistory } from "react-router-dom";
 import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
 import IconButton from '@mui/material/IconButton';
+import { getUserDetails } from '../../redux/actions/get_user_details';
+import {useAuth0} from '@auth0/auth0-react';
 
 export default function Categorie(props){
     const history = useHistory()
     const dispatch = useDispatch();
+    const { user, isAuthenticated } = useAuth0();
     const productsaux = useSelector( state => state.productsaux)
+    const profile = useSelector(state => state.userDetail )
     const [ order, setOrder ] = useState('')
 
     useEffect(() => {  // Didmount and DidUpdate controlled
@@ -25,6 +29,12 @@ export default function Categorie(props){
             dispatch(cleanProducts({}))
         })
     },[dispatch, props.history.location.state])
+
+    useEffect(() => {
+        if (isAuthenticated){
+          dispatch(getUserDetails(user.email))    
+          };
+        },[isAuthenticated])
 
     function handlePrice(e){
         dispatch(orderByPrice(e.target.value))
@@ -68,7 +78,7 @@ export default function Categorie(props){
             <div className="productsByCategorie">
                 <h2 className="categorieTitle">{props.history.location.state}</h2>
                 <div className="categorieProductsTable">
-                    { productsaux.map(a => a.stock === 0 ? null : <Card id={a.id} name={a.name} image={a.image} price={a.price} score={a.score}/>) }
+                    { productsaux.map(a => a.stock === 0 ? null : <Card id={a.id} name={a.name} image={a.image} price={a.price} score={a.score} profile={profile.isAdmin} />) }
                 </div>
             </div>
         </div> : <Loading/>

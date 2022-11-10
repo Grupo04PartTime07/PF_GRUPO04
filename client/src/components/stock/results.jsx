@@ -70,13 +70,13 @@ const headCells = [
     id: 'stock',
     numeric: true,
     disablePadding: false,
-    label: 'Cant.',
+    label: 'Cant. (u)',
   },
   {
     id: 'price',
     numeric: true,
     disablePadding: false,
-    label: 'Precio',
+    label: 'Precio ($)',
   },
   {
     id: 'button',

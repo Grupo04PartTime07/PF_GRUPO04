@@ -1,3 +1,6 @@
+.homeContainerss{
+    min-height: 100vh;
+}
 .homeTitle{
     display: flex;
     flex-wrap: wrap;

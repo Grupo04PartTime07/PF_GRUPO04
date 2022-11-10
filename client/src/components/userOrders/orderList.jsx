@@ -135,7 +135,7 @@ function Row(props) {
                     <TableCell></TableCell>
                     
                     <TableCell>Nombre</TableCell>
-                    <TableCell align="right">Cantidad</TableCell>
+                    <TableCell align="right">Cantidad(u)</TableCell>
                     <TableCell align="right">Precio($)</TableCell>
                     <TableCell align="right">Total($)</TableCell>
                     <TableCell>

@@ -98,7 +98,7 @@ export default function ImgMediaCard(props) {
             <AddShoppingCartTwoToneIcon />
         </IconButton>
       </CardActions> : 
-      user.isAdmin ? null : 
+      props.profile ? null : 
       <CardActions>
         <IconButton
             size="large"
