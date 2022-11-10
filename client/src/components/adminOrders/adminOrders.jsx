@@ -86,6 +86,9 @@ function Row(props) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
+          {order.createdAt.slice(0,10)}
+        </TableCell>
+        <TableCell component="th" scope="row">
           {order.estado}
         </TableCell>
         <TableCell align="left">{order.userEmail}</TableCell>
@@ -274,6 +277,7 @@ export default function AdminOrders() {
         <TableHead>
           <TableRow>
             <TableCell />
+            <TableCell>Fecha</TableCell>
             <TableCell>Nro de orden</TableCell>
             <TableCell align="left">Cliente</TableCell>
             <TableCell align="left">Total ($)</TableCell>

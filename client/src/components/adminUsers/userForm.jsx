@@ -277,7 +277,7 @@ function usuarioBorrado(name,email){
               <span className={styles.danger}>{errorAddress}</span>
             )} */}
 
-            <label className={styles.label}>Dni: </label>
+            <label className={styles.label}>DNI: </label>
             <input
               className={errorDni ? styles.invalido : styles.valido}
               key="dni"
@@ -309,7 +309,7 @@ function usuarioBorrado(name,email){
               <span className={styles.danger}>{errorDni}</span>
             )} */}
 
-            <label className={styles.label}>Está Banneado (Prohibicion de acceso): </label>
+            <label className={styles.label}>Está Banneado (Prohibición de acceso): </label>
             <input
               className={styles.valido}
               key="isBanned"
@@ -323,7 +323,7 @@ function usuarioBorrado(name,email){
               //autoComplete="off"
             />
 
-            <label className={styles.label}>Setear nueva password(Danger): </label>
+            <label className={styles.label}>Establecer nueva contraseña (Danger): </label>
             <input
               className={styles.valido}
               key="cambiaPassword"
@@ -337,7 +337,7 @@ function usuarioBorrado(name,email){
               //autoComplete="off"
             />
 
-            <label className={styles.label}>Password: </label>
+            <label className={styles.label}>Contraseña: </label>
             <input
               className={errorPassword ? styles.invalido : styles.valido}
               key="password"
