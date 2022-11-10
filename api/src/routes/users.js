@@ -42,7 +42,7 @@ router.post('/', async (req, res) => {
         const {name, email} = req.body
 
         const user = await getUserDetail(email);
-        if (!user){
+        if (!user.email){
         let created = await createUserRegisted(name, email)
         created ? res.status(200).json({message:'El usuario fue creado con exito!', userRegisted:created}) : res.status(400).json('El usuario no pudo ser creado');
         } else res.status(200).json({message:'El usuario ya existe', userRegisted:user});

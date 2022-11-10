@@ -23,6 +23,7 @@ import ShoppingBar from '../ShoppingCartBar/ShoppingBar';
 import { fulfillCart } from "../../redux/actions/fulfill_cart";
 import { fulfillWishList } from "../../redux/actions/fulfill_wish_list";
 import { getUserDetails } from '../../redux/actions/get_user_details';
+import { getUserDetailToken } from '../../redux/actions/get_user_detail_token';
 import './navbar.css'
 import {useAuth0} from '@auth0/auth0-react';
 import Avatar from '@mui/material/Avatar';
@@ -348,7 +349,7 @@ export default function PrimarySearchAppBar() {
   );
 
 
-  async function callProtectedApiToken2() {
+  async function callProtectedApiToken() {
     try {
       const token = await getAccessTokenSilently();
       const response = await axios.post(
@@ -363,53 +364,29 @@ export default function PrimarySearchAppBar() {
           },
         }
       );
-      // user.isAdmin = response.data.userRegisted.isAdmin;
-      // user.isBanned = response.data.userRegisted.isAdmin;
+     
       window.localStorage.setItem(`userName`, user.name)
       window.localStorage.setItem(`userEmail`, user.email)
       window.localStorage.setItem(`isAdmin`, response.data.userRegisted.isAdmin)
       window.localStorage.setItem(`isBanned`, response.data.userRegisted.isBanned)
       
-      //console.log(response.userRegisted);
-      //console.log(response.message);
-      //console.log(response.data);
-      //console.log(user);
-    } catch (error) {
+      } catch (error) {
       console.log(error);
     }
   }
 
-  // async function pruebaAuth0() {
-  //   try {
-  //     console.log("estamos aca")
-  //     const token = await getAccessTokenSilently();
-  //     const response = await axios.post(
-  //       `${BACK_URL}/infoUserAuth0`,
-  //       {
-          
-  //         email: "xavier@email.com",
-  //         david: "david",
-  //       },
-  //       {
-  //         headers: {
-  //           authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     );
-      
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
-
+  
   useEffect(() => {
     if (isAuthenticated) {
-      return () => {
-        const usuario = callProtectedApiToken2();
-        // console.log(usuario);
-        //localStorage.isAdmin=usuario.isAdmin;
-      };
+      // return () => {
+      //   const usuario = callProtectedApiToken();
+      //   // console.log(usuario);
+      //   //localStorage.isAdmin=usuario.isAdmin;
+      // };
+      const token = getAccessTokenSilently();
+      dispatch(getUserDetailToken(user.email, token));
+
+
     } else {
       window.localStorage.removeItem(`isAdmin`);
       window.localStorage.removeItem(`isBanned`);

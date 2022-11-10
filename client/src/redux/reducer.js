@@ -42,6 +42,7 @@ import { UPDATE_ORDER_STATUS } from "./actions/update_order_status";
 import { SORTED_ORDERS} from "./actions/sorted_orders";
 import { UPDATE_SCORE_PROM } from './actions/update_score_prom'
 import { GET_USER_DETAILS } from './actions/get_user_details'
+import { GET_USER_DETAIL_TOKEN } from './actions/get_user_detail_token'
 import { GET_ALL_USERS } from './actions/get_all_users'
 import { GET_ADMIN_ORDERS } from './actions/get_adminOrders';
 import { GET_USER_MODIFICAR } from './actions/get_user_modificar'
@@ -78,6 +79,7 @@ const initialState = {
     scoreUserId: "",
     users:[],
     userDetail:{},
+    userDetailAuth0:{},
     userModificar:{},
     userUpdate:{},
     userHistory:[],
@@ -103,6 +105,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 userDetail: action.payload
+            }
+        
+        case GET_USER_DETAIL_TOKEN:
+            return {
+                ...state,
+                userDetailAuth0: action.payload
             }
 
         case GET_SCORE_USER_ID:
