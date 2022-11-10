@@ -22,6 +22,7 @@ import { getNameProduct } from "../../redux/actions/search_name";
 import ShoppingBar from '../ShoppingCartBar/ShoppingBar';
 import { fulfillCart } from "../../redux/actions/fulfill_cart";
 import { fulfillWishList } from "../../redux/actions/fulfill_wish_list";
+import { getUserDetails } from '../../redux/actions/get_user_details';
 import './navbar.css'
 import {useAuth0} from '@auth0/auth0-react';
 import Avatar from '@mui/material/Avatar';
@@ -91,7 +92,7 @@ export default function PrimarySearchAppBar() {
   let dhafav = JSON.parse(window.localStorage.getItem(`f${currentUser}`))
   let localStorageEmail = window.localStorage.getItem("userEmail")
  
-  const allUse = useSelector(state => state.users )
+  const profile = useSelector(state => state.userDetail )
   const score = useSelector(state =>state.scoreUserId)
   console.log('SOY SCORE',score)
   console.log('USER', user)
@@ -105,7 +106,7 @@ export default function PrimarySearchAppBar() {
    
   useEffect(() => {console.log('ENTRO', score)
   if (isAuthenticated){
-        
+    dispatch(getUserDetails(user.email))    
     dispatch(getScoreUserId(user.email))};
 
   },[isAuthenticated, localStorageEmail])
@@ -279,11 +280,11 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
+      {profile.isAdmin ? null : <> <MenuItem>
       <IconButton size="large" aria-label="show 4 new mails" color="inherit">
               <Badge >
               <LocalActivityOutlinedIcon/>
-              {!isAuthenticated || user.name === "admin@admin.com"?<p className='PointNav'>Puntos</p>:<p className='PointNav'>{score} Puntos</p>}
+              {!isAuthenticated || profile.isAdmin ? <p className='PointNav'>Puntos</p>:<p className='PointNav'>{score} Puntos</p>}
               
               </Badge>
             </IconButton>
@@ -305,7 +306,6 @@ export default function PrimarySearchAppBar() {
           aria-label="show 17 new notifications"
           color="inherit"
         >
-
           <Badge badgeContent={favorites.reduce(function ( acc, va){return (acc + va.quantity)},0)} color="error"> 
             <Link to="/wishList" style={{width: '30px', textDecoration:"none", color: "black"} }>
                 <FavoriteTwoToneIcon />
@@ -315,7 +315,7 @@ export default function PrimarySearchAppBar() {
         <Link className="chartLink" to="/wishList">
           <p className='link'>Favoritos</p>
         </Link>
-      </MenuItem>
+      </MenuItem></>}
 
       {!isAuthenticated && (
         <MenuItem onClick={handleProfileMenuOpen}>
@@ -454,23 +454,24 @@ export default function PrimarySearchAppBar() {
             
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
           <Tooltip title="Acumula puntos con tus compras y canjealos por Descuentos" placement="top-start">
-          <IconButton sx={{width: '40%', height: '50%'}} size="large" aria-label="show 4 new mails" color="inherit">
+          <IconButton sx={profile.isAdmin ? {width: '40%', height: '50%', visibility:"hidden"} : {width: '40%', height: '50%'}} size="large" aria-label="show 4 new mails" color="inherit">
               <Badge >
-              {!isAuthenticated || user.name === "admin@admin.com"?<LocalActivityOutlinedIcon/>:<p className='greetingsPoint'>{score} Pts.</p>}
+              {!isAuthenticated || profile.isAdmin ?<LocalActivityOutlinedIcon/>:<p className='greetingsPoint'>{score} Pts.</p>}
               
               </Badge>
             </IconButton>
             </Tooltip>
             <Tooltip title="Dale un vistazo al carrito de compras" placement="top-start">
-            <IconButton sx={{width: '40%', height: '50%'}} onClick={handleDisplayCart} size="large" aria-label="show 4 new mails" color="inherit">
+            <IconButton sx={profile.isAdmin ? {width: '40%', height: '50%', visibility:"hidden"} : {width: '40%', height: '50%'}} onClick={handleDisplayCart} size="large" aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={cart.reduce(function ( acc, va){return (acc + va.quantity)},0)} color="error">
                 <ShoppingCartTwoToneIcon />
               </Badge>
             </IconButton>
             </Tooltip>
+            
             <Tooltip title="Accede a tus Favoritos" placement="top-start">
             <IconButton 
-              sx={{width: '40%', height: '50%'}}
+              sx={profile.isAdmin ? {width: '40%', height: '50%', visibility:"hidden"} :{width: '40%', height: '50%'}}
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"

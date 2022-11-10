@@ -25,6 +25,7 @@ import { useHistory } from "react-router-dom";
 import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
 import IconButton from '@mui/material/IconButton';
 import OpinionCard from "./auxDetail/opinionCard";
+import { getUserDetails } from '../../redux/actions/get_user_details';
 
 function Detail(props) {
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
@@ -36,6 +37,7 @@ function Detail(props) {
   const scoreProm = useSelector((state) => state.score_prom);
   const favorites = useSelector(state => state.favorites);
   const userHistory = useSelector(state => state.userHistory);
+  const profile = useSelector(state => state.userDetail )
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -49,6 +51,12 @@ function Detail(props) {
   useEffect(() => {
     if(isAuthenticated) dispatch(getUserHistory(user.email))
   }, [dispatch, user])
+
+  useEffect(() => {
+    if (isAuthenticated){
+      dispatch(getUserDetails(user.email))    
+      };
+    },[isAuthenticated])
 
   function formDisplay() {
     setDisplay(!displayForm);

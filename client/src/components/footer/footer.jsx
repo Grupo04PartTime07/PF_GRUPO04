@@ -7,9 +7,19 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { Link } from "react-router-dom";
 import {useAuth0} from '@auth0/auth0-react';
+import { getUserDetails } from '../../redux/actions/get_user_details';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Footer() {
   const { isAuthenticated, user, loginWithPopup } = useAuth0();
+  const profile = useSelector(state => state.userDetail )
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    if (isAuthenticated){
+      dispatch(getUserDetails(user.email))    
+      };
+    },[isAuthenticated])
 
   return (
     <div className="footerContainer">
@@ -18,8 +28,8 @@ function Footer() {
         <h3>Mi Cuenta</h3>
         <ul className="footerList">
           {isAuthenticated ? <li><Link to='/myProfile'>Perfil</Link></li> : <li className="linkFooter" onClick={loginWithPopup}>Inicia sesión</li>}
-          {isAuthenticated && <li><Link to='/wishList'>Favoritos</Link></li>}
-          {isAuthenticated && <li><Link to='/shoppingCart'>Carrito</Link></li>}
+          {isAuthenticated && profile.isAdmin ? null : <li><Link to='/wishList'>Favoritos</Link></li>}
+          {isAuthenticated && profile.isAdmin ? null : isAuthenticated && <li><Link to='/shoppingCart'>Carrito</Link></li>}
         </ul>
       </div>
 

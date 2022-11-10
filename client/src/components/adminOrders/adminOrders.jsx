@@ -112,8 +112,8 @@ function Row(props) {
                 <TableHead>
                   <TableRow>
                     <TableCell>Producto</TableCell>
-                    <TableCell>Precio</TableCell>
-                    <TableCell align="left">Cantidad</TableCell>
+                    <TableCell>Precio ($)</TableCell>
+                    <TableCell align="left">Cantidad (u)</TableCell>
                     <TableCell align="left">Total ($)</TableCell>
                   </TableRow>
                 </TableHead>
