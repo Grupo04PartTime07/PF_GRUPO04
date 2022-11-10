@@ -20,6 +20,8 @@
     font-weight: 600;
 }
 
+
+
 .volverCategorie:hover{
     cursor: pointer;
     text-decoration: underline;
@@ -118,10 +120,10 @@
         width: 100%;
     }
     .categorieFilters{
-        padding-left: 15%;
+        padding-left: 5%;
         width: 100%;
         height: 100%;
-        padding-top: 40px;
+        padding-top: 20px;
         text-align: start;
         background-color: white;
         z-index: 1;
@@ -141,4 +143,41 @@
         flex-wrap: wrap;
         justify-content: center;
     }
+
+    .buttonVolver{
+        display: none;
+    }
+
+    .volverCategorie{
+        
+        padding: 2px;
+        margin: 10px 0px 0px;
+    }
+
+    .filterContainerCategorie{
+        display: flex;
+    }
+    
+    .buttonsTable{
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .priceFilter, .ratingFilter{
+        margin: 3%;
+        
+    }
+
+    .filterButtons,.ratingButtons {
+        margin-left: 4px;
+        margin-bottom: 0px;
+       
+    }
+    .productsByCategorie{
+        margin-left: 0%;
+    }
+    .filterTitle{
+        margin: 15px 0px;
+    }
+    
 }

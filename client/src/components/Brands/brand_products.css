@@ -19,5 +19,9 @@
 }
 
 @media screen and (max-width: 600px){
-
+    .volverBrand{
+        
+        padding: 2px;
+        margin: 10px 0px 0px;
+    }
 }
