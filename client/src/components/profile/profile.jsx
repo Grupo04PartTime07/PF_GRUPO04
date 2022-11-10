@@ -9,7 +9,6 @@ import {useAuth0} from '@auth0/auth0-react';
 import {useEffect} from 'react';
 import AdminOrders from "../adminOrders/adminOrders";
 import Loading from "../loading/loading";
-
 import { getUserDetails } from "../../redux/actions/get_user_details";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -38,7 +37,7 @@ export default function Profile(){
                 <div className="profileImg">
                     {isAuthenticated && <Avatar sx={{ width: 100, height: 100 }} alt={user.name} src={user.picture} />}
                 </div>
-                {(userdetail.isAdmin )? <h3 className="menuTitle">Bienvenido Administrador</h3> : <h3 className="menuTitle">Bienvenido {isAuthenticated && user.given_name}</h3>}
+                <h3 className="menuTitle">Bienvenido {userdetail.name}</h3>
                 <div className="list">
                     <label>
                         <input className="radioButton" value='datos' type="radio" checked={checked === 'datos'} onChange={(e) => handleCheck(e)}/>
