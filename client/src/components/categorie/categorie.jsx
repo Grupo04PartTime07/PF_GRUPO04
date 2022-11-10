@@ -49,11 +49,12 @@ export default function Categorie(props){
     return(
         productsaux[0] && productsaux[0].price ? <div className="categorieTable">
             <div className="categorieFilters">
-                <div className='volverCategorie' onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon sx={{ color: grey[50]}}/></IconButton> Volver</div>
+                <div className='volverCategorie' onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon sx={{ color: grey[50]}}/></IconButton><span className="buttonVolver">Volver</span> </div>
                 <div>
-                    <h3>Filtrar por:</h3>
+                    <h3 className="filterTitle">Filtrar por:</h3>
                 
                     <div className="categorieOptions">
+                        <div className="filterContainerCategorie">
                         <div className="priceFilter">
                             Precio
                         </div>
@@ -61,12 +62,15 @@ export default function Categorie(props){
                             <button id='asc' className="filterButtons" value='asc' onClick={(e) => handlePrice(e)}>Menor a mayor precio</button>
                             <button id='desc' className="filterButtons" value='desc' onClick={(e) => handlePrice(e)}>Mayor a menor precio</button>
                         </div>
+                        </div>
+                        <div className="filterContainerCategorie">
                         <div className="ratingFilter">
                             Valoración
                         </div>
                         <div className="buttonsTable">
                             <button className="ratingButtons" value='good' onClick={(e) => handleRate(e)}>Más valorado</button>
                             <button className="ratingButtons" value='bad' onClick={(e) => handleRate(e)}>Menos valorado</button>
+                        </div>
                         </div>
                     </div>
                 </div>

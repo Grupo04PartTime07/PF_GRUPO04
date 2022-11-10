@@ -153,6 +153,9 @@
     font-weight: 350;
     color: rgb(82, 82, 82);
 }
+.visibilidad {
+    display:none;
+}
 
 .opinionCard{
     display: grid;
@@ -222,8 +225,13 @@
         padding-left: 0%;
         width: 100%;
         margin-top: 40px;
-        display: block;
+        display: none;
     }
+    .visibilidad{
+        display:block;
+
+    }
+
     .opinionContainer{
         display: flex;
         flex-wrap: wrap;
@@ -266,4 +274,5 @@
     .pocostock{
         display: inline-block;
     }
+    
 }

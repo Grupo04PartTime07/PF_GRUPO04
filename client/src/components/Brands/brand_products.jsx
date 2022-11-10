@@ -39,25 +39,28 @@ export default function Brand(props){
     return(
         productsaux[0] && productsaux[0].price ? <div className="categorieTable">
             <div className="categorieFilters">
-                <div className='volverBrand' onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon sx={{ color: grey[50]}}/></IconButton> Volver</div>
-                <div>
+                <div className='volverBrand' onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon sx={{ color: grey[50]}}/></IconButton> <span className="buttonVolver">Volver</span></div>
+                <div className="filterTitle">
                     Filtrar por:
                 
                     <div className="categorieOptions">
+                    <div className="filterContainerCategorie">
                         <div className="priceFilter">
                             Precio
                         </div>
                         <div className="buttonsTable">
                             <button id='asc' className="filterButtons" value='asc' onClick={(e) => handlePrice(e)}>Menor a mayor precio</button>
                             <button id='desc' className="filterButtons" value='desc' onClick={(e) => handlePrice(e)}>Mayor a menor precio</button>
-                        </div>
+                        </div></div>
+                        <div className="filterContainerCategorie">
                         <div className="ratingFilter">
+                        
                             Valoración
                         </div>
                         <div className="buttonsTable">
                             <button className="ratingButtons" value='good' onClick={(e) => handleRate(e)}>Más valorado</button>
                             <button className="ratingButtons" value='bad' onClick={(e) => handleRate(e)}>Menos valorado</button>
-                        </div>
+                        </div></div>
                     </div>
                 </div>
             </div>

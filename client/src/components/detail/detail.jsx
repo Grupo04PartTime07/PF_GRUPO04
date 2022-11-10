@@ -26,6 +26,10 @@ import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
 import IconButton from '@mui/material/IconButton';
 import OpinionCard from "./auxDetail/opinionCard";
 import { getUserDetails } from '../../redux/actions/get_user_details';
+import AddShoppingCartTwoToneIcon from '@mui/icons-material/AddShoppingCartTwoTone';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+
 
 function Detail(props) {
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
@@ -181,7 +185,63 @@ function Detail(props) {
              {itemFound ? <RemoveTwoToneIcon/> : <AddTwoToneIcon />} Favoritos
             </Button>
           </div>}
-        </div>
+          {isAuthenticated && user.isAdmin === true ? null : <div className="detailButton visibilidad">
+              <span className="buttonMargin">
+                {detail.stock < 1 ? <Button
+                  variant="contained"
+                  disable= {true}
+                >
+                  No disponible
+                </Button> : <Button
+                  onClick={isAuthenticated ? () =>handleComprar() : loginWithRedirect}
+                  variant="contained"
+                >
+                  <ShoppingCartOutlinedIcon/>
+                </Button>}
+              </span>
+            {detail.stock<1 ? null : <span className="buttonMargin">
+              <Button
+                onClick={() =>
+                  dispatch(
+                    addToCart({
+                      id: detail.id,
+                      name: detail.name,
+                      image: detail.image,
+                      price: detail.price,
+                      stock: detail.stock, 
+                      quantity: 1,
+                    })
+                  )
+                }
+                variant="contained"
+              >
+                <AddShoppingCartTwoToneIcon />
+              </Button>
+            </span>}
+            <Button
+              sx={{
+                    minWidth: 80,
+                 }}
+              onClick={() =>
+                dispatch(
+                  addToFavorite({
+                    id: detail.id,
+                    name: detail.name,
+                    image: detail.image,
+                    price: detail.price,
+                    score: detail.score,
+                    stock: detail.stock, 
+                    quantity: 1,
+                  })
+                )
+              }
+              variant="contained"
+            >
+             {itemFound ? <RemoveTwoToneIcon/> : <AddTwoToneIcon />} 
+             <FavoriteBorderOutlinedIcon/>
+            </Button>
+          </div>}
+         </div>
         <div className="detailImagen">
           <ModalImg img={detail.image[indice]} />
           <div className="ContainerMiniaturas">
@@ -198,7 +258,6 @@ function Detail(props) {
           </div>
         </div>
       </div>
-
       <div className="detailContainerOpinion detailMargin">
         <h1 className="opinionTitle">Opiniones</h1>
         <ModalReviews id={id}></ModalReviews><br/>
