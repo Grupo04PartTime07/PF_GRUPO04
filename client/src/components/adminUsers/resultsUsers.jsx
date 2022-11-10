@@ -13,17 +13,11 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-import Avatar from '@mui/material/Avatar';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
-import { getUserDetails } from '../../redux/actions/get_user_details';
 import DoneIcon from '@mui/icons-material/Done';
 import ClearIcon from '@mui/icons-material/Clear';
 
@@ -135,7 +129,7 @@ const headCells = [
     id: 'button',
     numeric: false,
     disablePadding: false,
-    label: '',
+    label: 'Editar',
   },
 ];
 
@@ -149,9 +143,9 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        {/* Tablecell para checkbox cabecera */}
+        {/* Tablecell para checkbox cabecera
          <TableCell padding="checkbox">
-          {/* <Checkbox
+          /* <Checkbox
             color="primary"
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
@@ -159,13 +153,13 @@ function EnhancedTableHead(props) {
             inputProps={{
               'aria-label': 'select all desserts',
             }}
-          /> */}
-        </TableCell> 
+          />
+        </TableCell>  */}
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'center'}
-            padding={headCell.disablePadding ? 'none' : 'normal'}
+            align={headCell.numeric ? 'left' : 'left'}
+            padding={headCell.disablePadding ? 'normal' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
@@ -228,7 +222,7 @@ function EnhancedTableToolbar(props) {
           id="tableTitle"
           component="div"
         >
-          Usuarios:
+          Herramienta de gestión de usuarios
         </Typography>
       )}
 
@@ -347,9 +341,9 @@ export default function EnhancedTable({displayUserForm, rows}) {
                       selected={isItemSelected}
                     >
                       
-                      {/* Aca esta el tablecell del checkbox para eliminar */}
+                      {/* Aca esta el tablecell del checkbox para eliminar
                       
-                       <TableCell padding="checkbox">
+                        <TableCell padding="checkbox">
                         {/* <Checkbox
                           onClick={(event) => handleClick(event, row.id)}
                           color="primary"
@@ -357,8 +351,8 @@ export default function EnhancedTable({displayUserForm, rows}) {
                           inputProps={{
                             'aria-labelledby': labelId,
                           }}
-                        /> */}
-                      </TableCell> 
+                        /> 
+                      </TableCell>  */}
 
 
 
@@ -370,16 +364,16 @@ export default function EnhancedTable({displayUserForm, rows}) {
                       >
                        <Avatar alt={row.name} src={row.image[0]} ></Avatar> 
                       </TableCell> */}
-                      <TableCell align="center">{row.name}</TableCell>
-                      <TableCell align="center">{row.surname}</TableCell>
-                      <TableCell align="center">{row.email}</TableCell>
-                      <TableCell align="center">{row.isAdmin ? <DoneIcon fontSize='medium'></DoneIcon> : <ClearIcon fontSize='medium' ></ClearIcon>}</TableCell>
-                      <TableCell align="center">{row.isBanned ? <DoneIcon fontSize='medium'></DoneIcon> : <ClearIcon fontSize='medium' ></ClearIcon>}</TableCell>
+                      <TableCell align="left">{row.name}</TableCell>
+                      <TableCell align="left">{row.surname}</TableCell>
+                      <TableCell align="left">{row.email}</TableCell>
+                      <TableCell sx={{paddingLeft: '5%'}} align="left">{row.isAdmin ? <DoneIcon fontSize='medium'></DoneIcon> : <ClearIcon fontSize='medium' ></ClearIcon>}</TableCell>
+                      <TableCell sx={{paddingLeft: '4%'}} align="left">{row.isBanned ? <DoneIcon fontSize='medium'></DoneIcon> : <ClearIcon fontSize='medium' ></ClearIcon>}</TableCell>
                       {/* <TableCell align="center">{row.dni}</TableCell>
                       <TableCell align="center">{row.city}</TableCell>
                       <TableCell align="center">{row.address}</TableCell>                      */}
                       
-                      <TableCell align="center">
+                      <TableCell align="left">
                         <IconButton id={row.email} onClick={(e)=>displayUserForm(e, rows)} ><EditTwoToneIcon id={row.email}  ></EditTwoToneIcon></IconButton>
                       </TableCell>
                     </TableRow>
