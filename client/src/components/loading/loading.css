@@ -2,21 +2,35 @@
     min-height: 100vh;
 }
 .henryLoading{
-    margin-top: 50px;
+    width: 50%;
 }
 
 .loadingImg{
     height: 300px;
-    margin-top: 50px;
-    margin-bottom: 100px;
+    margin-bottom: 0%;
 }
 
 .errorImg{
     height: 300px;
-    margin-top: 100px;
+    margin-top: 0%;
 }
 
 .errorText{
     font-weight: 400;
-    margin-bottom: 100px;
+    margin-bottom: 0%;
+}
+
+@media screen and (max-width: 600px){
+    .henryLoading{
+        width: 50%;
+        margin-top: 10%;
+    }
+    .loadingImg{
+        height: 200px;
+        margin-bottom: 0%;
+    }
+    .errorImg{
+        height: 200px;
+        margin-top: 10%;
+    }
 }
