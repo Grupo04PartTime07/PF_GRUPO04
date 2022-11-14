@@ -1,40 +1,37 @@
-.formContainer{
-    margin: 50px auto;
-    width: fit-content;
-    
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-direction: column;
-    border: 2px gray solid;
-    border-radius: 5px;
+.formContainerProd{
+    width: 80%;
+    border: none;
     padding: 30px;
 }
 
-.formData{
+.formDataProd{
     display: flex;
     justify-content: center;
     align-items: space-between;
-
+    flex-direction: column;
 }
 
-.formFirstDiv, .formSecondDiv{
+.formFirstDivProd, .formSecondDivProd, .formThirdDivProd{
+    width: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
     text-align: left;
-    margin: 10px 50px;
+    padding: 30px;
 }
 
-.formFirstDiv label,.formSecondDiv label{
+.formFirstDivProd label,.formSecondDivProd label, .formThirdDivProd label{
     margin-bottom: 8px;
     padding-right: 8px;
     font-weight: 600;
+    font-size: 18px;
+    color: rgb(82, 82, 82);
 }
 
-.formFirstDiv input, .formSecondDiv input{
-    
+.formFirstDivProd input, .formSecondDivProd input , .formThirdDivProd input{
+    width: 90%;
+    height: 30px;
     padding-left: 8px;
     margin-right: 8px;
     border-radius: 5px;
@@ -43,11 +40,29 @@
 
 }
 
-.formSecondDiv{
-    max-width: 200px;
+.formSecondDivProd textarea {
+    width: 90%;
+    height: 100px;
+    padding-left: 8px;
+    margin-right: 8px;
+    border-radius: 5px;
+    border:none;
+    border-bottom: 1px gray solid;
+
+}
+
+.formImageProd{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.formImageProd input{
+    width: 500px;
 }
 
 .button{
+    cursor:pointer;
     border-radius: 5px;
     border:none;
     margin-top: 8px;
@@ -63,7 +78,9 @@
     box-sizing: border-box;
     box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
 }
-
+.button:hover {
+    box-shadow: 0 0 11px rgba(9, 9, 9, 0.2); 
+  }
 .buttonLink{
     color: antiquewhite;
     text-decoration: none;
@@ -71,6 +88,7 @@
 
 .disable{
     background-color: gray;
+    cursor:no-drop
 }
 
 .normal{
@@ -104,4 +122,18 @@
 
 .inputCategories p{
     margin:0px;
+}
+
+.formContainerPreview{
+    height: 120px;
+}
+.formImagenPreview{
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    border: 2px salmon solid;
+}
+.previewContainer{
+    display: flex;
+    
 }

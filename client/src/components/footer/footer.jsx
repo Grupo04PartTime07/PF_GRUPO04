@@ -5,17 +5,31 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { Link } from "react-router-dom";
+import {useAuth0} from '@auth0/auth0-react';
+import { getUserDetails } from '../../redux/actions/get_user_details';
+import { useDispatch, useSelector } from 'react-redux';
 
-function footer() {
+function Footer() {
+  const { isAuthenticated, user, loginWithPopup } = useAuth0();
+  const profile = useSelector(state => state.userDetail )
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    if (isAuthenticated){
+      dispatch(getUserDetails(user.email))    
+      };
+    },[isAuthenticated])
+
   return (
     <div className="footerContainer">
       <div className="container_text">
       <div>
         <h3>Mi Cuenta</h3>
         <ul className="footerList">
-          <li>Perfil</li>
-          <li>Favoritos</li>
-          <li>Carrito</li>
+          {isAuthenticated ? <li><Link to='/myProfile'>Perfil</Link></li> : <li className="linkFooter" onClick={loginWithPopup}>Inicia sesión</li>}
+          {isAuthenticated && profile.isAdmin ? null : <li><Link to='/wishList'>Favoritos</Link></li>}
+          {isAuthenticated && profile.isAdmin ? null : isAuthenticated && <li><Link to='/shoppingCart'>Carrito</Link></li>}
         </ul>
       </div>
 
@@ -28,12 +42,12 @@ function footer() {
         <h3>Redes Sociales</h3>
         <div className="footerSocialIcon">
             <ul>
-                <li><TwitterIcon /></li>
-                <li><FacebookIcon /></li>
-                <li><YouTubeIcon /></li>
-                <li><InstagramIcon /></li>
+                <li><a href="https://twitter.com/soyhenry_ok?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><TwitterIcon/></a></li>
+                <li><a href="https://www.facebook.com/soyhenryok"><FacebookIcon/></a></li>
+                <li><a href="https://www.youtube.com/channel/UCyPi0AHwcuCP-QJxrxq-f2Q"><YouTubeIcon/></a></li>
+                <li><a href="https://www.instagram.com/soyhenry_ok/?hl=es"><InstagramIcon/></a></li>
             </ul>
-         
+        
         </div>
       </div>
       <div>
@@ -63,4 +77,4 @@ function footer() {
   );
 }
 
-export default footer;
+export default Footer;

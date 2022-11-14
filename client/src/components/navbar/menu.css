@@ -2,3 +2,20 @@
     text-decoration: none;
     color: rgb(118, 118, 118)
 }
+
+link:hover{
+    cursor: pointer;
+}
+.henryLogoMenu{
+    width: 150px;
+    margin: 50px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+@media screen and (max-width: 600px){
+    .menuIcon{
+        width: 30;
+        position: 'relative';
+        top: '5px';
+    }
+}

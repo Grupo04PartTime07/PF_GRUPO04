@@ -1,0 +1,41 @@
+.chartLink{
+    text-decoration: none;
+    color: black;
+}
+
+.avatar{
+    position: relative;
+    top: 11px
+}
+.PointNav{
+    position: relative;
+    top: -12px; left: 10px;
+    height: 0px;
+    font-size: 15px;
+    font-weight: 500;
+    color: inherit;
+}
+.greetingsPoint{
+    position: relative;
+    top: -10px; left: 0px;
+    height: 0px;
+    font-size: 15px;
+    font-weight: 500;
+    color: white;
+}
+
+.greetingsUser{
+    height: 10px;
+    font-size: 9px;
+    font-weight: 500;
+    color: white;
+}
+
+@media screen and (max-width: 600px){
+    .navBarBox{
+        width: 100%;
+    }
+    .input{
+        min-width: 20px
+    }
+}

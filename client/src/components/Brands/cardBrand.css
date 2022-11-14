@@ -1,9 +1,10 @@
 .brandCard{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin: 1%;
-    margin-right: 40px;
-    height: 100px;
+    margin-right: 10px;
+    padding-right: 10px;
 }
 
 .brandCard:hover{ 
@@ -12,15 +13,11 @@
     cursor: pointer;
 }
 
-.brandImg{
-    position: relative;
-    left: 0%;
-    bottom: 10%
-}
-
 .brandName{
     display: flex;
-    position: relative;
-    top: 20px;
     font-weight: 500;
+}
+
+@media screen and (max-width: 600px){
+
 }

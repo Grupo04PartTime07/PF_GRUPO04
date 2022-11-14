@@ -2,36 +2,57 @@ import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { guestCreateAccount } from "../../redux/actions/guest_create_account";
+import { clientUpdate } from "../../redux/actions/update_user";
 import { Link, useHistory } from "react-router-dom";
+import {useAuth0} from '@auth0/auth0-react';
 import "./account.css"
 
 function CreateAccount() {
     const dispatch = useDispatch();
     const history = useHistory();
-    let account = useSelector((state) => state.account)
+    let userDetail = useSelector((state) => state.userDetail)
 
+    
+    console.log(userDetail);
+    
     useEffect(() => {
         dispatch(guestCreateAccount)
+        
     }, [])
 
+    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+    
     const [input, setInput] = useState({
-        name: "",
-        lastName: "",
-        mail: "",
-        address: "",
-        country:"",
-        dni: ""
+        name: userDetail.name? userDetail.name:"",
+        surname: userDetail.surname? userDetail.surname:"",
+        email: user.email? user.email:"",
+        address: userDetail.address? userDetail.address:"",
+        city:userDetail.city? userDetail.city:"",
+        dni: userDetail.dni? userDetail.dni:""
     })
+
+    const [dni, setDni] = useState("");
+    const [errorDni, setErrorDni] = useState("");
 
     const [error, setError] = useState("");
     const [button, setButton] = useState({
-        complete: false
+        //complete: false
     })
 
     function handleChange(e) {
         setInput({ ...input, [e.target.name]: e.target.value });
-        setError(validate({ ...input, [e.target.name]: e.target.value }));
+        //setError(validateDni({ ...input, [e.target.name]: e.target.value }));
+        validateDni(e.target.value)
     }
+
+    React.useEffect(() =>{
+       
+        
+          setDni(input.dni)
+        
+        
+      },[])
+
 
 const regexEmail =/\S+@\S+\.\S+/
 
@@ -40,21 +61,23 @@ const regexEmail =/\S+@\S+\.\S+/
         if (!input.name) {
             errors.name = "El campo no debe quedar vacio";
         }
-        if (!input.lastName) {
-            errors.lastName = "El campo no debe quedar vacio";
-        } else if (input.lastName <= 0) {
-            errors.lastName = "El precio no puede ser menor a 0";
-        }
-        if (!regexEmail.test(input.mail)) {
-            errors.mail = "La dirección de email es incorrecta.";
+        if (!input.surname) {
+            errors.surname = "El campo no debe quedar vacio";
         } 
-        if (!input.mail) {
-            errors.mail = "El campo no debe quedar vacio";
+        
+        else if (input.surname <= 0) {
+            errors.surname = "El precio no puede ser menor a 0";
+        }
+        if (!regexEmail.test(input.email)) {
+            errors.email = "La dirección de email es incorrecta.";
+        } 
+        if (!input.email) {
+            errors.email = "El campo no debe quedar vacio";
         } 
         
         
 
-        if (errors.name || errors.lastName || errors.mail) {
+        if (errors.name || errors.surname || errors.email) {
             setButton({
                 complete: false
             })
@@ -68,44 +91,23 @@ const regexEmail =/\S+@\S+\.\S+/
     }
 
 
-    function handleSelect(e) {
-        setInput({
-            ...input,
-            account: [...input.account, e.target.value]
-        })
-
-        setError(validate({
-            ...input,
-            account: [...input.account, e.target.value]
-
-        }))
-    }
-
-
-     function handleSubmit(e) { // crea el nuevo usuario, faltaria agregarle en el dispatch la accion que lo crea
+    function handleSubmit(e) { // modifica el nuevo usuario, faltaria agregarle en el dispatch la accion que lo crea
         e.preventDefault(e);
 
-        //dispatch(newProducts(input));
-        //alert("usuario creado");
-        // setInput({
-        //     name: "",
-        //     lastName: "",
-        //     mail: "",
-        //     address: "",
-        //     country:"",
-        //     dni: ""
-        // });
-        // history.push("/home");
+        dispatch(clientUpdate(input));
+        
+        
+        history.push("/");
     }
 
     function handleReset(e) { // borra todos los inputs, setea los errores en vacio y vuelve a dehabilitar el boton de crear
         e.preventDefault(e);
         setInput({
             name: "",
-            lastName: "",
-            mail: "",
+            surname: "",
+            email: "",
             address: "",
-            country:"",
+            city:"",
             dni: ""
         });
         setError("")
@@ -114,40 +116,63 @@ const regexEmail =/\S+@\S+\.\S+/
         })
     }
 
+    function validateDni(value) {
+        setDni(value);
+        let reDni= /^[\d]{1,3}\.?[\d]{3,3}\.?[\d]{3,3}$/
+        let dniOk=reDni.exec(dni)
+        // if () {
+        //   setErrorDni('El campo no puede quedar vacio');
+        // } else {
+        //     setErrorDni("");
+        // }
+        input.dni = dni;
+        if (!dni=="" && !dniOk) {
+            setErrorDni('El dni ingresado es inválido');
+         }else {
+           setErrorDni("");
+         }
+      }
+
     return (
         <div>
-            <h1>Registro de Usuario</h1>
-            <form className="formContainer" onSubmit={e => handleSubmit(e)}>
+            
+            <form className="formContainer formContainerAccount" onSubmit={e => handleSubmit(e)}>
                 <div className='formData'>
                     <div className='formFirstDiv'>
                         <label>Nombre:</label>
-                        <input
-                            type="text"
-                            value={input.name}
-                            name="name"
-                            onChange={(e) => handleChange(e)}
+                      <input
+                        type="text"
+                        value={input.name}
+                        name="name"
+                        onChange={(e) => handleChange(e)}
                         />
                         <p className={error.name ? "danger" : "normal"}>{error.name}</p>
 
                         <label>Apellido:</label>
-                        <input
-                            type="text"
-                            value={input.lastName}
-                            name="lastName"
-                            onChange={(e) => handleChange(e)}
-                        />
+                       <input
+                        type="text"
+                        value={input.surname}
+                        name="surname"
+                        onChange={(e) => handleChange(e)}
+                    />
 
-                        <p className={error.lastName ? "danger" : "normal"}>{error.lastName}</p>
+                        <p className={error.surname ? "danger" : "normal"}>{error.surname}</p>
                         <label>E-mail:</label>
-                        <input
+                        {user.email?<input
                             type="text"
-                            value={input.mail}
+                            value={input.email}
                             name="mail"
                             onChange={(e) => handleChange(e)}
-                        />
-                        <p className={error.mail ? "danger" : "normal"}>{error.mail}</p>
-                    </div>
-                    <div className="formSecondDiv">
+                            disabled
+                        />:<input
+                        type="text"
+                        value={input.email}
+                        name="email"
+                        onChange={(e) => handleChange(e)}
+                    />}
+                        <p className={error.email ? "danger" : "normal"}>{error.email}</p>
+                    
+                    
                     <label>Domicilio:</label>
                         <input
                             type="text"
@@ -160,25 +185,42 @@ const regexEmail =/\S+@\S+\.\S+/
                         <label>Ciudad:</label>
                         <input
                             type="text"
-                            value={input.country}
-                            name="country"
+                            value={input.city}
+                            name="city"
                             onChange={(e) => handleChange(e)}
                         />
-                        <p className={error.country ? "danger" : "normal"}>{error.country}</p>
+                        <p className={error.city ? "danger" : "normal"}>{error.city}</p>
 
-                        <label>D.N.I.:</label>
+                        {/* <label>D.N.I.:</label>
                         <input
                             type="text"
                             value={input.dni}
                             name="dni"
+                            //onChange={(e) => validateDni(e.target.value)}
                             onChange={(e) => handleChange(e)}
                         />
-                        <p className={error.dni ? "danger" : "normal"}>{error.dni}</p>
+                        <p className={error.dni ? "danger" : "normal"}>{error.dni}</p> */}
+
+
+                        <label >Dni: </label>
+                            <input
+                            //className={errorDni ? styles.invalido : styles.valido}
+                            key="dni"
+                            name="dni"
+                            value={dni}
+                            type="text"
+                            
+                            onChange={(e) => validateDni(e.target.value)}
+                            autoComplete="off"
+                            />
+                        {!errorDni ? null : (
+                            <span >{errorDni}</span>
+                            )}
                     </div>
                 </div>
                 <div >
                 <button className="button buttonLink"><Link to="/" className="buttonLink">Volver</Link></button>
-                    {button.complete === false ? <button disabled="disabled" className="button disable">Crear</button> : <button type="submit" className="button">Crear</button>}
+                    {errorDni? <button disabled="disabled" className="button disable">Guardar</button> : <button type="submit" className="button">Guardar</button>}
                     <button type="boton" onClick={e => handleReset(e)} className="button">Limpiar</button>
                 </div>
             </form>

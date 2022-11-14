@@ -1,0 +1,10 @@
+.aboutContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.aboutTitle{
+    color: rgb(82, 82, 82);
+    margin-top: 40px;
+}

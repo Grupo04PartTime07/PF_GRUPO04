@@ -1,6 +1,7 @@
 import React,{useEffect} from "react";
 import Card from '../card/card'
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { getAllProducts } from '../../redux/actions/get_products';
 import Loading from "../loading/loading";
 import './home.css'
@@ -12,7 +13,14 @@ import PropTypes from 'prop-types';
 import Fab from '@mui/material/Fab';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Toolbar from '@mui/material/Toolbar';
-import { cleanProducts } from "../../redux/actions/clean_products";
+import { cleanOtherProducts } from '../../redux/actions/clean_other_products'
+import BestRatedProducts from "./AuxHome/bestRatedPRoducts";
+import YourFavorites from "./AuxHome/yourFavorites";
+import ArrowLeftRoundedIcon from '@mui/icons-material/ArrowLeftRounded';
+import IconButton from '@mui/material/IconButton';
+import { getUserDetails } from '../../redux/actions/get_user_details';
+import {useAuth0} from '@auth0/auth0-react';
+
 
 function ScrollTop(props) {
     const { children, window } = props;
@@ -32,7 +40,7 @@ function ScrollTop(props) {
   
       if (anchor) {
         anchor.scrollIntoView({
-          block: 'center',
+          block: 'center', behavior: 'smooth'
         });
       }
     };
@@ -42,7 +50,7 @@ function ScrollTop(props) {
         <Box
           onClick={handleClick}
           role="presentation"
-          sx={{ position: 'fixed', bottom: 16, right: 16 }}
+          sx={{ position: 'fixed', bottom: 16, right: 16,  zIndex: 10 }}
         >
           {children}
         </Box>
@@ -65,28 +73,42 @@ export default function Home(props){
 
     const dispatch = useDispatch();
     const products = useSelector( state => state.products)
-    
+    const profile = useSelector(state => state.userDetail )
+    const history = useHistory()
+    const { user, isAuthenticated } = useAuth0();
+    let path = history.location.pathname
+
     useEffect(() => {  // Didmount and DidUpdate controlled
         window.scrollTo(0, 0)
-        dispatch(getAllProducts());
+        if(path === "/") dispatch(getAllProducts());    
         return(() => {
-          dispatch(cleanProducts({}))
-        })
-    },[dispatch]) 
+          dispatch(cleanOtherProducts())
+      })
+    },[dispatch])
+
+    useEffect(() => {
+    if (isAuthenticated){
+      dispatch(getUserDetails(user.email))    
+      };
+    },[isAuthenticated])
 
     return(
-        products[0] && products[0].price ? <div>
-            <Toolbar id="back-to-top-anchor" />
-            <div><Banner/></div>
-            <h2 className="categorieTitle">Todos los productos</h2>
-            <div className="homeTable"> {/*#AgregameUnaEstrella*/}
-                { products.map(a => a.stock === 0 ? null : <Card id={a.id} name={a.name} image={a.image} price={a.price} score={a.score}/>) }
+        products[0] && products[0].price ? <div className="homeContainerss">
+            {path === '/' ? <Toolbar id="back-to-top-anchor" /> : null}
+            {path === '/' ? <div><Banner/></div> : <div className="volver" onClick={() => history.goBack()}><IconButton sx={{ padding: 0 }} ><ArrowLeftRoundedIcon /></IconButton> Volver</div>}
+            <div>
+              {path === '/' ? <YourFavorites/> : null}
+              {path === '/' ? <BestRatedProducts/> : null}
+              {path === '/' ? <h2 className="homeTitle">Todos los productos</h2> : <h2 className="homeTitle">Resultados de la Busqueda</h2>}
+              <div className="homeTable"> {/*#AgregameUnaEstrella*/}
+                  { products.map(a => a.stock < 1 ? null : <Card key={a.id} id={a.id} name={a.name} stock={a.stock} image={a.image} price={a.price} score={a.score} profile={profile.isAdmin} />) }
+              </div>
+              {path === '/' ? <ScrollTop sx={{ zIndex: 10}} {...props}>
+                  <Fab  size="small" aria-label="scroll back to top">
+                      <KeyboardArrowUpIcon/>
+                  </Fab>
+              </ScrollTop> : null}
             </div>
-            <ScrollTop {...props}>
-                <Fab size="small" aria-label="scroll back to top">
-                    <KeyboardArrowUpIcon />
-                </Fab>
-            </ScrollTop>
         </div> : <Loading/>
     )
 }

@@ -1,0 +1,59 @@
+.profile{
+    display: grid;
+    grid-template-columns: 300px 100%;
+    min-height: 100vh;
+}
+.menuTitle{
+    color: rgb(82, 82, 82);
+    font-size: 14px;
+}
+
+.profileMenu{
+    background-color: whitesmoke;
+    -webkit-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
+    box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
+}
+
+.profileImg{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.list{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    height: 0;
+    color: rgb(118, 118, 118);
+    margin-top: 10%;
+}
+
+.menuText{
+    height: 50px;
+    margin: 0%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menuText:hover{
+    cursor: pointer;
+    background-color: rgb(225, 225, 225);
+}
+
+.radioButton:checked + .menuText{
+    background-color: rgb(225, 225, 225);
+}
+
+.radioButton{
+    display: none;
+}
+
+.component{
+    max-width: 70%;
+    margin-left: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}

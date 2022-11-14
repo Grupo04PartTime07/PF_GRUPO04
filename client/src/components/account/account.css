@@ -1,73 +1,67 @@
 .formContainer{
-    margin: 50px auto;
-    width: fit-content;
-    
+    margin-left: 150px;
+    width: 80%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
-    border: 2px gray solid;
-    border-radius: 5px;
+    border: none;
     padding: 30px;
 }
+
+.formContainerAccount{
+    margin-left: 30px;
+    margin-top: 40px;
+}
+
 
 .formData{
     display: flex;
     justify-content: center;
     align-items: space-between;
-
+    flex-direction: column;
 }
 
-.formFirstDiv, .formSecondDiv{
+.formFirstDiv{
+    width: 700px;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
     text-align: left;
     margin: 10px 50px;
+    padding: 30px;
+    border-radius: 10px;
+    -webkit-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
+    box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
 }
 
-.formFirstDiv label,.formSecondDiv label{
+.formFirstDiv label{
     margin-bottom: 8px;
     padding-right: 8px;
     font-weight: 600;
+    font-size: 18px;
+    color: rgb(82, 82, 82);
 }
 
-.formFirstDiv input, .formSecondDiv input{
-    
+.formFirstDiv input{
+    width: 90%;
+    height: 30px;
     padding-left: 8px;
     margin-right: 8px;
     border-radius: 5px;
     border:none;
     border-bottom: 1px gray solid;
-
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
 }
 
-.formSecondDiv{
-    max-width: 200px;
-}
 
 .button{
     border-radius: 5px;
     border:none;
     margin-top: 8px;
-    margin-left: 12px;
-    padding: 8px 25px;
-    background-color: #1976d2;
-    color: white;
-    font-size: 15px;
-    font-family: "Roboto","Helvetica","Arial",sans-serif;
-    line-height: 1.75;
-    letter-spacing: 0.02857em;
-    text-decoration: none;
-    box-sizing: border-box;
-    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
-}
-
-.button2{
-    border-radius: 5px;
-    border:none;
-    margin-top: 0px;
     margin-left: 12px;
     padding: 8px 25px;
     background-color: #1976d2;
@@ -102,23 +96,3 @@
     font-weight: 600;
 }
 
-.formCategories{
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    flex-wrap: wrap;
-    font-size: 12px;
-    
-}
-
-.inputCategories{
-    margin-top: 4px;
-    margin-right: 4px;
-    padding: 4px 9px;
-    border: 1px black solid;
-    border-radius: 9999px;
-}
-
-.inputCategories p{
-    margin:0px;
-}

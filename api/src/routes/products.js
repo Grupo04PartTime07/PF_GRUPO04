@@ -1,7 +1,7 @@
 const {Router} = require('express')
 const router = Router()
 
-const { getProductsDb, createProduct, getProductDetail, updateProduct} = require('./controllers')
+const { getProductsDb, createProduct, getProductDetail, updateProduct, deleteProduct} = require('./controllers')
 
 
 
@@ -43,8 +43,8 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try{
-        const {name, price, description, image,stock, score, categories, brand} = req.body
-        let created = await createProduct(name, price, description, image,stock, score, categories, brand)
+        const {name, price, description, image,stock, categories, brand} = req.body
+        let created = await createProduct(name, price, description, image,stock, categories, brand)
         created ? res.status(200).json('El producto fue creado con exito!') : res.status(400).json('El producto no pudo ser creado');
     }catch(e){
         console.log(e)
@@ -54,12 +54,23 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
     try{
         const { id } = req.params;
-        let props = req.body;
-        let result = await updateProduct(id, props);
-        result ? res.status(200).send('El producto fue modificado con éxito!') : res.status(400).send('El producto no pudo ser modificado');
+        let {name, price, description, stock, image, brand, categories} = req.body;
+        let result = await updateProduct(id, name, price, description, stock, image, brand, categories);
+        result ? res.status(200).json('El producto fue modificado con éxito!') : res.status(400).json('El producto no pudo ser modificado');
     }catch(e){
         console.log(e)
     }
 });
+
+router.delete('/', async function(req, res){
+    const {id} = req.query
+    try {
+        let response = await deleteProduct(id)
+        res.status(200).send(response)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
 
 module.exports = router

@@ -3,13 +3,38 @@
     padding: 15px 35px;
 }
 
+.volverDetail{
+    display: flex;
+    justify-content: left;
+    /* align-items: center; */
+    text-decoration: none;
+    color:whitesmoke;
+    background-color: #1976d2;
+    margin-bottom: 35px;
+    border-radius: 9999px;
+    padding: 6px 15px 6px 8px;
+    width: fit-content;
+    font-weight: 600;
+}
+
+.volverDetail:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 .detailLeft{
     text-align: left;
 }
 .detailContainerArticles{
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: flex-start; */
+    display: grid;
+    width: 70rem;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 6px;
+    grid-row-gap: 0px;
     background-color: whitesmoke;
     border-radius: 5px;
     padding: 25px;
@@ -41,6 +66,7 @@
 }
 
 .detailDescription{
+    margin-top: 0px;
     text-align: left;
     padding-left: 25px;
     color: rgb(82, 82, 82);
@@ -48,22 +74,45 @@
 
 .detailImagen{
     border-radius: 5px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 90% 10%;
     justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    height: 400px;
-    width: 50%;
+    /* align-items: center; */
+    /* overflow: hidden; */
+    /* height: 400px; */
+    /* width: 50%; */
+    width: 90%;
 }
 
 .detailImagen img{
     border-radius: 5px;
-    width: 70%;
+    width: 95%;
+    justify-self: center;
+}
+
+.imgMiniatura{
+    margin-left: -10px;
+    height: 70px;
+    /* width: 70px; */
+}
+.ContainerMiniaturas{
+    /* margin-left: -10px; */
+    /* height: 70px; */
+    width: 80px;
+}
+
+.detailImagen:hover{
+    cursor: pointer;
+}
+
+.imgMiniatura:hover{
+    border: 2px solid rgb(45, 143, 255);
+    cursor: pointer
 }
 
 .detailButton{
     padding-left: 25px;
-    margin-top: 25px;
+    margin-top: 80px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -85,28 +134,145 @@
     justify-content: center;
     align-items: flex-start;
     flex-direction: column;
-    background-color: whitesmoke;
     border-radius: 5px;
-    padding: 25px;
-    -webkit-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
-    -moz-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
-    box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
 }
 
 .opinionContainer{
     display: flex;
     align-items: left;
     margin-bottom: 30px;
-    flex-direction: column;
-    text-align: left;
+
 }
 
-.opinionContainer span{
+.opinionContainerSpan{
     margin-left: 25px;
 }
 
 .opinionTitle{
     padding-left: 25px;
-    margin-bottom: 40px;
-    font-weight: 400;
+    font-weight: 350;
+    color: rgb(82, 82, 82);
+}
+.visibilidad {
+    display:none;
+}
+
+.opinionCard{
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: 40% 60%;
+    width: 100%;
+    align-items: center;
+}
+.relatedTitle{
+    display: flex;
+    margin-left: 30px;
+    margin-bottom: 0%;
+    font-weight: 350;
+    color: rgb(82, 82, 82);
+}
+.divFormOpinions{
+    margin-left: 500px; /*200px*/
+    margin-bottom: 30px;
+}
+
+.divBttnsOpinions{
+    margin-left: 490px; /*200px*/
+    margin-bottom: 20px;
+}
+.stoocks{
+    font-size: medium;
+    font-weight: 500;
+    color: rgb(4, 140, 29);
+}
+.waarning{
+    font-size: medium;
+    color: rgb(227, 31, 31);
+    font-weight: 500;
+}
+.pocostock{
+    font-size: medium;
+    color: rgb(240, 96, 24);
+    font-weight: 500;
+}
+
+.opinionStars{
+    text-align: left;
+    
+}
+
+
+
+@media screen and (max-width: 600px){
+    .detailContainer{
+        padding: 0px;
+    }
+    
+    .detailContainerArticles{
+        display: flex;
+       flex-direction: column-reverse;
+       width: 85%;
+       margin-left: 4px;
+    }
+
+    .detailTitle{
+        text-align: center;
+        padding: 0px 10px;
+        
+    }
+    .detailButton{
+        justify-content: center;
+        padding-left: 0%;
+        width: 100%;
+        margin-top: 40px;
+        display: none;
+    }
+    .visibilidad{
+        display:block;
+
+    }
+
+    .opinionContainer{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        margin-left: 30%;
+    }
+    .opinionTitle{
+        display: flex;
+        position: relative;
+        left: 28%
+    }
+    .opinionDescription{
+        text-align: center;
+    }
+    .opinionStars{
+        text-align: center;
+    }
+    .opinionComment{
+        margin-left: 0%;
+    }
+    .divFormOpinions{
+        width: 185px;
+        margin-left: 50%;
+        margin-bottom: 30px;
+    }
+    .divBttnsOpinions{
+        margin-left: 25%;
+    }
+    .relatedTitle{
+        margin-right: 0px;
+        
+    }
+    .relatedProductsFlex{
+        justify-content: center;
+    }
+    .opinionComment{
+        display: flex;
+        justify-content: center;
+    }
+    .pocostock{
+        display: inline-block;
+    }
+    
 }

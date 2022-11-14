@@ -18,6 +18,30 @@ module.exports = (sequelize) => {
       allowNull: true,
     },
 
+
+    total:{
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+
+    isDeleted:{
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+
+    },
+
+    createdAt: {
+      type: "TIMESTAMP",
+      defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
+      allowNull: true,
+    },
+
+
+
+
+  },
+
     
-  }, {timestamps: false});
+   {timestamps: false});
 };

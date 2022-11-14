@@ -1,0 +1,33 @@
+.tableContainer {
+    margin-top: 40px;
+    
+}
+
+
+.divContainer {
+    display:grid;
+    grid-auto-flow: row;
+
+}
+
+
+.title {
+    margin-left: 65px;
+    font-weight: 600;
+    font-size: 25px;
+    color: rgb(82, 82, 82);
+    display:flex;
+    justify-content: flex-start ;
+}
+
+.MuiButtonBase-root:disabled {
+    cursor: not-allowed;
+    pointer-events: auto;
+  }
+
+  .orderRow:hover{
+    background-color: rgb(225, 225, 225);
+}
+  
+
+

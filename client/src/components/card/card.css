@@ -1,12 +1,14 @@
 .card{
     display: grid;
-    margin: 5%;
+    margin: 15px;
 }
 
 .card:hover{ 
-    
     transition: .2s;
-    transform: translate(-1%, -1%)
+    transform: translate(-1%, -1%);
+    -webkit-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
+    box-shadow: 1px 6px 13px -2px rgba(0,0,0,0.75);
 }
 
 .cardLink:hover{
@@ -15,7 +17,7 @@
 
 .productImg{
     position: relative;
-    left: 11%;
+    left: 15%;
 }
 
 .productPrice{
@@ -25,4 +27,10 @@
 .productName{
     display: flex;
     text-align: left;
+}
+
+@media screen and (max-width: 600px){
+    .card{
+        margin: 5px;
+    }
 }
