@@ -13,7 +13,7 @@ const {
 
 const sequelize = new Sequelize(`postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`, {
   
-//const sequelize = new Sequelize(`postgresql://postgres:Qo0kj2Y8JxAdJ4LEzIHY@containers-us-west-51.railway.app:7815/railway`, {
+//const sequelize = new Sequelize(DB_DEPLOY, {
   logging: false,
   native: false,
 });
