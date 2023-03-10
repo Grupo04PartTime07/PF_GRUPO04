@@ -6,14 +6,14 @@ const path = require('path');
 //const Checkout = require('./models/Checkout');
 
 const {
-  DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_DEPLOY
+  DB_USER, DB_PASSWORD, DB_HOST, DB_NAME
 } = process.env; 
 
 //const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/market`, {
 
-//const sequelize = new Sequelize(`postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`, {
+const sequelize = new Sequelize(`postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`, {
   
-const sequelize = new Sequelize(DB_DEPLOY, {
+//const sequelize = new Sequelize(DB_DEPLOY, {
   logging: false,
   native: false,
   dialect: 'postgres',
