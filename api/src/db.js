@@ -6,16 +6,22 @@ const path = require('path');
 //const Checkout = require('./models/Checkout');
 
 const {
-  DB_USER, DB_PASSWORD, DB_HOST, DB_NAME
+  DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_DEPLOY
 } = process.env; 
 
 //const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/market`, {
 
-const sequelize = new Sequelize(`postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`, {
+//const sequelize = new Sequelize(`postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`, {
   
-//const sequelize = new Sequelize(`postgresql://postgres:Qo0kj2Y8JxAdJ4LEzIHY@containers-us-west-51.railway.app:7815/railway`, {
+const sequelize = new Sequelize(DB_DEPLOY, {
   logging: false,
   native: false,
+  dialect: 'postgres',
+  dialectOptions: {
+    ssl: {
+      rejectUnauthorized: false, // very important
+    }
+  }
 });
 const basename = path.basename(__filename);
 
