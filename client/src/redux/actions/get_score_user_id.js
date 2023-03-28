@@ -4,7 +4,7 @@ const { BACK_URL = 'http://localhost:3001' } = process.env
 
 export const getScoreUserId = (id) => dispatch => {
     // console.log('SOY GET USER ID',id)
-    return fetch(`${BACK_URL}/scoreUser/search?email=${id}`)
+    return fetch(`https://backend-henrymarket.onrender.com/scoreUser/search?email=${id}`)
     .then(res => res.json())
     .then(obj => dispatch({type: GET_SCORE_USER_ID, payload: obj}))
     .catch(err => console.log(err))
