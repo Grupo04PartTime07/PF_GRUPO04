@@ -4,7 +4,7 @@ const { BACK_URL = 'http://localhost:3001' } = process.env
 // id == email
 export const getUserDetailToken = (email, token) => dispatch => {
     //console.log("Payload:",payload)
-    return fetch(`${BACK_URL}/users`,{
+    return fetch(`https://backend-henrymarket.onrender.com/users`,{
         method: "POST", 
         headers: {'Content-Type': 'application/json', authorization: `Bearer ${token}`}, 
         body: JSON.stringify({email:email})})

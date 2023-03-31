@@ -1,5 +1,5 @@
 export const GET_ALL_USERS = "GET_ALL_USERS";
-const { BACK_URL = 'http://localhost:3001' } = process.env
+const { BACK_URL } = process.env
 
 export const getAllUsers = () => dispatch => {;
     return fetch(`${BACK_URL}/users`) 

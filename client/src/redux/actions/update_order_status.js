@@ -5,7 +5,7 @@ const { BACK_URL = 'http://localhost:3001' } = process.env
 
 export const updateOrderStatus = (payload) => dispatch => {
     console.log("Payload UpdateStatus:", payload)
-    return axios.put(`${BACK_URL}/orders/`,payload)
+    return axios.put(`https://backend-henrymarket.onrender.com/orders/`,payload)
     .then(res => dispatch({type: UPDATE_ORDER_STATUS, payload: res.data}) )
     .catch(err => console.log(err))
     }
